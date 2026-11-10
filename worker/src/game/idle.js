@@ -17,6 +17,7 @@ import { TICK_MS, MAX_SETTLE_TICKS, IDLE, DEATH, POTIONS, NEWBIE_EXP_LEVEL, NEWB
 import { makeRelic, makeEliteGear } from './gear.js';
 import { mulberry32 } from './rng.js';
 import { expPerTick, expToNext, dailyGold, mapForLevel } from './formulas.js';
+import { resolveIdleMapForChar } from './idle-map.js';
 import { idleStats, classTier } from './stats.js';
 import { rngFor } from './rng.js';
 import { taipeiDay } from './time.js';
@@ -55,7 +56,7 @@ export function applyExp(c, statsFor) {
     if (c.exp < need) break;
     if (c.level >= gateLevel(c)) { c.exp = need; break; }   // EXP full, waiting at the gate
     c.exp -= need; c.level += 1; gained += 1;
-    const s = statsFor(c.level); c.hp = s.maxHp; c.mp = s.maxMp; c.map_id = mapForLevel(c.level);
+    const s = statsFor(c.level); c.hp = s.maxHp; c.mp = s.maxMp; c.map_id = resolveIdleMapForChar(c).mapId;
   }
   return gained;
 }
@@ -110,7 +111,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     const t = start + i * TICK_MS; const day = taipeiDay(t);
     if (c.penalty_day !== day) { c.penalty_day = day; c.penalties_today = 0; }
     if (c.drop_day !== day) { c.drop_day = day; dropsToday = {}; }
-    const s = statsFor(c.level,t); const mapTier = mapForLevel(c.level);
+    const sel = resolveIdleMapForChar(c); c.map_id = sel.mapId; const s = statsFor(c.level,t); const mapTier = sel.mapId;
     const townRegen = () => { c.hp = Math.min(s.maxHp, c.hp + Math.ceil(IDLE.townRegenPct * s.maxHp)); c.mp = Math.min(s.maxMp, c.mp + Math.ceil(IDLE.townRegenPct * s.maxMp)); };
 
     if (atGate(c)) { setState('gate', t, { level: c.level }); townRegen(); continue; }
@@ -157,12 +158,12 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
         eliteDefeated=true;
         if(special?.eliteProtected&&c.hp<=s.burst)consumeIdleLastStand(c,t);
         c.hp = Math.max(special?.eliteProtected?1:0,c.hp-s.burst); autoRed();
-        eliteGold += goldPerKill(c.level) * MONSTER_GOLD.elite * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());
+        eliteGold += sel.goldPerKill * MONSTER_GOLD.elite * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());
         // Every surviving elite drops one class-usable advanced+ item; 40% chance for a second.
         // At the current 3% encounter rate this averages 2.52 items/hour during active combat.
         const extraGear = eliteGearRng() < guardianChance(0.4,guardianActor) ? 1 : 0;
         for (let drop = 0; drop <= extraGear; drop++) {
-          const item = makeEliteGear({ id: `eg${c.tg_id}${t.toString(36)}${drop}`, tgId: c.tg_id, cls: c.base_class, classPath: c.class_path, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:modeForLevel(c.level).id, rng: mulberry32(Math.floor(eliteGearRng() * 2 ** 32)), now: t });
+          const item = makeEliteGear({ id: `eg${c.tg_id}${t.toString(36)}${drop}`, tgId: c.tg_id, cls: c.base_class, classPath: c.class_path, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:sel.mode, rng: mulberry32(Math.floor(eliteGearRng() * 2 ** 32)), now: t });
           report.eliteGear.push(item);
           events.push({ type: 'elite_gear', at: t, item: { id: item.id, name: item.name, slot: item.slot, classReq: item.class_req, tier: item.tier }, source: 'elite', elite: eliteMonster.name, map: s.map.name });
         }
@@ -176,7 +177,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
         if (relicRng() < guardianChance(RELIC.eliteChance,guardianActor)) {
           if ((dropsToday.relic || 0) >= RELIC.eliteDailyCap) report.drops_capped += 1;
           else {
-            const item = makeRelic({ id: `rl${c.tg_id}${t.toString(36)}`, tgId: c.tg_id, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:modeForLevel(c.level).id, rng: mulberry32(Math.floor(relicRng() * 2 ** 32)), now: t, source: 'relic_elite' });
+            const item = makeRelic({ id: `rl${c.tg_id}${t.toString(36)}`, tgId: c.tg_id, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:sel.mode, rng: mulberry32(Math.floor(relicRng() * 2 ** 32)), now: t, source: 'relic_elite' });
             dropsToday.relic = (dropsToday.relic || 0) + 1; report.relics.push(item);
             events.push({ type: 'relic', at: t, item: { id: item.id, name: item.name, slot: item.slot, classReq: item.class_req, tier: item.tier }, source: 'elite', elite: eliteMonster.name, map: s.map.name });
           }
@@ -199,7 +200,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
 
     // rewards
     const mult = c.level <= NEWBIE_EXP_LEVEL ? NEWBIE_EXP_MULT : 1;
-    const gain = Math.round(expPerTick(c.level) * eff * s.g * s.expFactor * mult);
+    const gain = Math.round(expPerTick(c.level) * eff * s.g * s.expFactor * mult * sel.expFactor);
     c.exp += gain; report.exp_gained += gain;
     goldAcc += dailyGold(c.level) * IDLE.goldPerDayPct / MAX_SETTLE_TICKS * eff;
     killAcc += kills;
@@ -208,7 +209,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;if(thiefNative.statuses.length)round.statuses=thiefNative.statuses;}
     for(const [key,qty]of Object.entries(monsterMaterialPlan(round,materialRng,dropsToday,inv))){inv[key]=(inv[key]||0)+qty;report.drops[key]=(report.drops[key]||0)+qty;}
     realKills+=round.kills+(round.eliteKills||0);report.combat=combat.round;
-    killGold += kills * goldPerKill(c.level) * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());
+    killGold += kills * sel.goldPerKill * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());
     // loot: enhancement / reroll scrolls (one roll per key per fighting tick, always consumed → deterministic)
     const T = Math.min(mapTier, MAX_OPEN_MAP);
     for (const k of DROP_KEYS) {
@@ -228,7 +229,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
   const sround = (v) => Math.floor(v) + (goldRng() < v - Math.floor(v) ? 1 : 0);
   report.gold_kills = sround(killGold); report.gold_elites = sround(eliteGold); report.gold_gained = Math.floor(goldAcc) + report.gold_kills + report.gold_elites; report.kills = realKills;
   c.drops_today = JSON.stringify(dropsToday);
-  report.end_state = c.idle_state; c.gold = (c.gold || 0) + report.gold_gained; c.map_id = mapForLevel(c.level);
+  report.end_state = c.idle_state; c.gold = (c.gold || 0) + report.gold_gained; c.map_id = resolveIdleMapForChar(c).mapId;
   const seen = new Set();
   // Compress repeated state notices only; each awarded equipment item needs its own receipt.
   const out = events.filter((e) => e.type !== 'fighting' && (e.type === 'death' || e.type === 'relic' || e.type === 'blessed_scroll' || e.type === 'elite_gear' || (!seen.has(e.type) && seen.add(e.type))));

@@ -128,12 +128,17 @@
   function idleMapFor(character, art = endgameArt) {
     const level = Math.max(1, Math.min(600, Math.floor(number(character?.level) || 0)));
     if (!number(character?.level) || character.level < 1) return null;
-    const modeIndex = Math.min(4, Math.floor((level - 1) / 120)), local = (level - 1) % 120 + 1, chapter = Math.min(12, Math.ceil(local / 10));
-    const [mode, modeName] = IDLE_MODES[modeIndex], id = 'cycle_' + mode + '_' + String(chapter).padStart(2, '0'), entry = art?.[id];
+    const server = character.idleMap, serverMode = typeof server?.mode === 'string' ? server.mode : null;
+    const serverChapter = Number.isInteger(server?.chapter) ? server.chapter : (Number.isInteger(server?.mapId) ? server.mapId : null);
+    const modeIndexFromServer = serverMode ? IDLE_MODES.findIndex(row => row[0] === serverMode) : -1;
+    const useServer = modeIndexFromServer >= 0 && serverChapter >= 1 && serverChapter <= 12;
+    const modeIndex = useServer ? modeIndexFromServer : Math.min(4, Math.floor((level - 1) / 120));
+    const chapter = useServer ? serverChapter : Math.min(12, Math.ceil(((level - 1) % 120 + 1) / 10));
+    const [mode, modeName] = IDLE_MODES[modeIndex], id = (useServer && typeof server.cycleId === 'string' && server.cycleId) || ('cycle_' + mode + '_' + String(chapter).padStart(2, '0')), entry = art?.[id];
     if (!entry || entry.mode !== mode || entry.chapter !== chapter || !Array.isArray(entry.roster)) return null;
     const themeId = (chapter - 1 + modeIndex * 5) % 12 + 1;
-    const place = entry.name || IDLE_THEME_NAMES[themeId - 1];
-    return { id, name: place + '-' + modeName, place, themeId: null, kind: 'idle', idle: true, progression: { mode, chapter } };
+    const place = (useServer && server.place) || entry.name || IDLE_THEME_NAMES[themeId - 1];
+    return { id, name: (useServer && server.name) || (place + '-' + modeName), place, themeId: null, kind: 'idle', idle: true, progression: { mode, chapter }, follow: useServer ? server.follow !== false : true, maps: useServer && Array.isArray(server.maps) ? server.maps : null };
   }
   // Normal-cycle rosters use prefixed ids (mon_/elite_/boss_[x13_mNN_]) while the map
   // sprite metadata keys are the plain names; resolve to whichever key really exists.
@@ -532,6 +537,76 @@
     }
     function pauseVfx() { vfxBridge?.clear('scene-paused'); }
 
+    let idleMapOpen = false, idleMapBusy = false, idleMapError = '', idleMapSignature = '';
+    function expLabel(factor) {
+      if (factor === 1) return '經驗全額';
+      if (factor === 0.5) return '經驗 50%';
+      return '無經驗';
+    }
+    function ensureIdleMapPicker() {
+      const zone = doc.querySelector('#zone');
+      if (!zone) return null;
+      let box = doc.getElementById('idle-map-picker');
+      if (box) return box;
+      box = doc.createElement('div');
+      box.id = 'idle-map-picker';
+      box.className = 'idle-map-picker';
+      box.hidden = true;
+      zone.insertAdjacentElement('afterend', box);
+      box.addEventListener('click', event => {
+        const toggle = event.target.closest('[data-idle-map-toggle]');
+        if (toggle) { event.preventDefault(); idleMapOpen = !idleMapOpen; idleMapSignature = ''; syncIdleMapPicker(model, awayActivity(model)); return; }
+        const follow = event.target.closest('[data-idle-map-follow]');
+        if (follow) return;
+        const mapBtn = event.target.closest('[data-idle-map]');
+        if (mapBtn && !mapBtn.disabled) void commitIdleMap({ follow: false, mapId: Number(mapBtn.dataset.idleMap) });
+      });
+      box.addEventListener('change', event => {
+        const follow = event.target.closest('[data-idle-map-follow]');
+        if (follow) void commitIdleMap(follow.checked ? { follow: true } : { follow: false, mapId: Number(model?.character?.idleMap?.mapId) || idle?.map?.progression?.chapter });
+      });
+      return box;
+    }
+    async function commitIdleMap(body) {
+      if (idleMapBusy || !global.RpgSceneSession?.request) return;
+      idleMapBusy = true; idleMapError = ''; idleMapSignature = ''; syncIdleMapPicker(model, awayActivity(model));
+      try {
+        await global.RpgSceneSession.request('idle-map', body);
+      } catch (error) {
+        idleMapError = error.message || '地圖切換失敗';
+      } finally {
+        idleMapBusy = false; idleMapSignature = ''; syncIdleMapPicker(model, awayActivity(model));
+      }
+    }
+    function syncIdleMapPicker(value, away) {
+      const box = ensureIdleMapPicker();
+      if (!box) return;
+      const show = !!(value && !value.active && !away && idle?.map);
+      box.hidden = !show;
+      if (!show) { idleMapOpen = false; box.classList.remove('is-open'); return; }
+      const view = value.character?.idleMap || {};
+      const maps = Array.isArray(view.maps) ? view.maps : (Array.isArray(idle.map.maps) ? idle.map.maps : []);
+      const follow = view.follow !== false;
+      const selected = view.mapId || idle.map.progression?.chapter;
+      const signature = [show, idleMapOpen, follow, selected, idleMapBusy, idleMapError, maps.map(m => [m.mapId, m.reached, m.mode, m.expFactor, m.locked].join(':')).join('|')].join('#');
+      if (signature === idleMapSignature) return;
+      idleMapSignature = signature;
+      box.classList.toggle('is-open', idleMapOpen);
+      const list = maps.length ? maps.map(row => {
+        const locked = !row.reached || row.locked;
+        const label = locked ? (row.place || ('地圖 ' + row.mapId)) + ' · 未到達' : (row.place || ('地圖 ' + row.mapId)) + ' · ' + (row.modeName || '') + ' · ' + expLabel(row.expFactor);
+        const selectedClass = !locked && row.mapId === selected ? ' is-selected' : '';
+        const lockedClass = locked ? ' is-locked' : '';
+        return '<li><button type="button" class="idle-map-item' + selectedClass + lockedClass + '" data-idle-map="' + row.mapId + '"' + (locked || idleMapBusy ? ' disabled' : '') + (follow && row.current ? ' data-current="true"' : '') + '>' + (row.emoji ? row.emoji + ' ' : '') + label + '</button></li>';
+      }).join('') : '<li class="idle-map-empty">地圖清單同步中</li>';
+      box.innerHTML = '<button type="button" class="idle-map-toggle" data-idle-map-toggle aria-expanded="' + String(idleMapOpen) + '">' + (idleMapOpen ? '收合地圖' : '選擇地圖') + '</button>'
+        + '<div class="idle-map-panel"' + (idleMapOpen ? '' : ' hidden') + '>'
+        + '<label class="idle-map-follow"><input type="checkbox" data-idle-map-follow' + (follow ? ' checked' : '') + (idleMapBusy ? ' disabled' : '') + '>跟隨等級</label>'
+        + '<p class="idle-map-hint">可選擇曾到達的地圖掛機。低於目前地圖兩張以上沒有經驗；本輪尚未到達的地圖使用上一輪模式。</p>'
+        + (idleMapError ? '<p class="idle-map-error" role="alert">' + idleMapError + '</p>' : '')
+        + '<ul class="idle-map-list">' + list + '</ul></div>';
+    }
+
     function refreshHud() {
       if (!current()) return;
       const value = model, health = value?.hero;
@@ -543,6 +618,7 @@
       const away = awayActivity(value);
       text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : away ? awayTitle(away) : idle ? '掛機中 · ' + idle.map.place : value ? '營地' : '同步中');
       text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : away ? '一般掛機暫停' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
+      syncIdleMapPicker(value, away);
       syncHudActions(value);
       nodes.refresh.disabled = syncBusy;
       scheduleStatusLayout();

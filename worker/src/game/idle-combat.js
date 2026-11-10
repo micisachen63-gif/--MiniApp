@@ -1,6 +1,6 @@
 import {chooseMonster,monsterIdentity,monsterPool} from './monsters.js';
 import {MAPS} from './constants.js';
-import {mapForLevel} from './formulas.js';
+import {resolveIdleMapForChar} from './idle-map.js';
 
 // Persistent enemy HP, advanced only by a committed idle minute. No frontend HP simulation.
 const copy = value => Array.isArray(value)?value.map(e=>({...e})):{...value};
@@ -11,7 +11,7 @@ function spawn(state, char, elite=false) {
   return {...identity,id:`idle:${char.tg_id}:${state.mapId}:${state.generation}:${serial}`,mapId:state.mapId,elite,hp:maxHp,maxHp};
 }
 export function idleCombatState(char) {
-  const mapId=mapForLevel(char.level);let state;
+  const mapId=resolveIdleMapForChar(char).mapId;let state;
   try{state=JSON.parse(char.idle_combat_json||'null');}catch{}
   if(state?.v!==1||state.mapId!==mapId||!Array.isArray(state.enemies)||state.enemies.length!==2||
     !state.enemies.every(e=>e.mapId===mapId&&Number.isInteger(e.hp)&&e.hp>0&&Number.isInteger(e.maxHp)&&e.hp<=e.maxHp&&typeof e.id==='string'&&monsterPool(mapId).some(m=>m.name===e.name))){

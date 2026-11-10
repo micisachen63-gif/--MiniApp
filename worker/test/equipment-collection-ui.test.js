@@ -117,3 +117,32 @@ test('legacy collection late successful submission after disposal retains receip
  wait.resolve({...collectionView({realmId:'permanent',characterId:'hero-a'}),result:{itemId:'gear-0'}});await flushUi();
  assert.equal([...saved.values.values()][0],receipt);assert.equal(h.changes.length,0);
 });
+
+test('unregistered slots show the exchange price and can preview and buy with one requestId', async () => {
+  const snapshot = collectionView({realmId:'permanent',characterId:'hero-a'});
+  snapshot.shop = {gold:20000,dust:80,lockedReason:null};
+  for (const row of snapshot.collections) for (const r of row.requirements) {
+    r.shop = {collectionId:row.id,requirementId:r.id,name:r.name,gold:1800,dust:8,rarityName:r.rarityName,minEnhance:r.minEnhance,bound:true,affordable:true,blockedReason:null};
+  }
+  const bought=[];
+  const h = collectionMount({override: async (action, payload) => {
+    if (action==='equipment-collection') return structuredClone({...snapshot, collections:snapshot.collections});
+    if (action==='equipment-collection/shop/preview') return {ok:true,realmId:'permanent',characterId:'hero-a',kind:undefined,collectionId:payload.collectionId,requirementId:payload.requirementId,name:'需求裝備 0',gold:1800,dust:8,rarityName:'一般',minEnhance:5,affordable:true,warning:'兌換的裝備為綁定',collectionName:'收藏列 0'};
+    if (action==='equipment-collection/shop/buy') { bought.push(payload); return {ok:true,realmId:'permanent',characterId:'hero-a',result:{itemId:'gb1',requestId:payload.requestId}}; }
+  }});
+  await flushUi();
+  assert.match(h.root.innerHTML, /◈ 1,800 · 精煉塵 8/);
+  assert.match(h.root.innerHTML, /錢包 · ◈ 20,000 · 精煉塵 80/);
+  await h.root.event('[data-gearbook-pick="set-0"]','click');
+  assert.ok(h.root.querySelector('[data-gearbook-shop-preview]'));
+  await h.root.event('[data-gearbook-shop-preview]','click');
+  assert.match(h.root.innerHTML, /確認兌換/);
+  await h.root.event('[data-gearbook-ack]','change',{checked:true,event:{target:{checked:true}}});
+  assert.equal(h.root.querySelector('[data-gearbook-shop-buy]').disabled, false);
+  await h.root.event('[data-gearbook-shop-buy]','click');
+  assert.equal(bought.length, 1);
+  assert.equal(bought[0].collectionId, 'set-0');
+  assert.equal(bought[0].requirementId, 'req-0');
+  assert.match(bought[0].requestId, /^draft-operation-\d+$/);
+  h.module.dispose();
+});

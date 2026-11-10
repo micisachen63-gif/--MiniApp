@@ -5,6 +5,7 @@ import {withPlayer} from './player.js';
 import {computeStats} from '../game/stats.js';
 import {gearIconSrc} from '../game/share.js';
 import {activityEventStatements} from './atlas-quests.js';
+import {attachShopOffers,offersFor} from './gearbook-shop.js';
 
 const enabled=env=>String(env.EQUIPMENT_COLLECTION_ENABLED)==='true';
 const fail=(message,code='equipment_collection',status=409)=>{throw new GameError(code,message,status);};
@@ -25,7 +26,9 @@ export async function view(env,charId,now){
   const mock={slot:r.slot,tier:r.tier,class_req:r.baseClass,kind:r.kind,name:r.name};
   return {...r,icon:gearIconSrc(mock),registered:snapshot?{name:snapshot.name,enhance:snapshot.enhance_level,icon:gearIconSrc(snapshot),registeredAt:entry.created_at}:null,candidates:entry?[]:p.equipment.filter(e=>matchesCollectionRequirement(e,r)).map(e=>({id:e.id,name:e.name,enhance:e.enhance_level,rarity:e.element_tier,icon:gearIconSrc(e),blockedReason:itemReason(e,locked)}))};})}));
  const bonuses=equipmentCollectionBonuses(p.char),current=computeStats(p.char,p.equipment);
- return {ok:true,enabled:true,rulesVersion:EQUIPMENT_COLLECTION_VERSION,balanceStatus:'prototype',realmId:env.REALM_CONTEXT?.id||'permanent',characterId:charId,characterName:p.char.name,baseClass:p.char.base_class,level:p.char.level,scope:'character',consumesEquipment:true,lockedReason:activityReason(p.char),collections,completedCount:completed.length,totalCount:catalog.length,bonuses,bonusText:equipmentCollectionText(bonuses),stats:projection(current),now};
+ const shopWallet=await offersFor(env,p,now);
+ const shopCollections=attachShopOffers({collections},p.char,shopWallet);
+ return {ok:true,enabled:true,rulesVersion:EQUIPMENT_COLLECTION_VERSION,balanceStatus:'prototype',realmId:env.REALM_CONTEXT?.id||'permanent',characterId:charId,characterName:p.char.name,baseClass:p.char.base_class,level:p.char.level,scope:'character',consumesEquipment:true,lockedReason:activityReason(p.char),collections:shopCollections,completedCount:completed.length,totalCount:catalog.length,bonuses,bonusText:equipmentCollectionText(bonuses),stats:projection(current),shop:{gold:shopWallet.gold,dust:shopWallet.dust,lockedReason:shopWallet.lockedReason},now};
 }
 export async function preview(env,charId,b,now){
  if(!enabled(env))fail('裝備收藏尚未開放','equipment_collection_unavailable',503);

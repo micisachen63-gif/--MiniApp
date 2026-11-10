@@ -7,6 +7,8 @@ import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
+import * as IDLE_MAP from './services/idle-map.js';
+import * as GEARBOOK_SHOP from './services/gearbook-shop.js';
 import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
 import * as EQUIPMENT_RECOVERY from './services/equipment-recovery.js';
 import * as FORGE_RECEIPT from './services/forge-receipt.js';
@@ -252,9 +254,12 @@ const routes = {
   'POST /rpg/equipment-recovery':(env,b,now)=>EQUIPMENT_RECOVERY.view(env,tgOf(b),now),
   'POST /rpg/equipment-recovery/preview':(env,b,now)=>EQUIPMENT_RECOVERY.preview(env,tgOf(b),b,now),
   'POST /rpg/equipment-recovery/action':(env,b,now)=>EQUIPMENT_RECOVERY.action(env,tgOf(b),b,now),
+  'POST /rpg/idle-map': act((w,c,b)=>IDLE_MAP.setIdleMap(w,c,b)),
   'POST /rpg/equipment-collection':(env,b,now)=>EQUIPMENT_COLLECTION.view(env,tgOf(b),now),
   'POST /rpg/equipment-collection/preview':(env,b,now)=>EQUIPMENT_COLLECTION.preview(env,tgOf(b),b,now),
   'POST /rpg/equipment-collection/submit':(env,b,now)=>EQUIPMENT_COLLECTION.submit(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection/shop/preview':(env,b,now)=>GEARBOOK_SHOP.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection/shop/buy':(env,b,now)=>GEARBOOK_SHOP.buy(env,tgOf(b),b,now),
   'POST /rpg/collection/activate': act((w,c,b)=>activateCollection(w,c,b)),
   'POST /rpg/boss-exchange': act((w,c,b)=>bossExchange(w,c,b)),
   'POST /rpg/daily': act((w, c, b) => P.claimDaily(w, c, b.requestId)),

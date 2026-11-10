@@ -12,6 +12,7 @@ import {specializeNode} from './advanced-specializations.js';
 // Derived character stats (pure). Equipment rows use the D1 rpg_equipment shape.
 import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, RELIC, STAR_RING_GEAR, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
 import { monsterPressure, mapForLevel } from './formulas.js';
+import { resolveIdleMapForChar } from './idle-map.js';
 
 const parseBonus = (b) => (typeof b === 'string' ? (b ? JSON.parse(b) : {}) : (b || {}));
 export const classTier = (path) => String(path || '').length;
@@ -160,6 +161,6 @@ export function idleStats(char, equipped, level = char.level, {balanceVersion=id
   // preserving their reduced per-strike potency; multiplying only speed would inflate drops by 80%.
   const idleNativeDamageMultiplier = s.attackSpeedMultiplier * s.hitAttackMultiplier;
   const killsPerTick = 2 * (1 + 0.15 * (targets - 1)) * idleNativeDamageMultiplier;
-  const map = MAPS[mapForLevel(level)];
+  const map = MAPS[resolveIdleMapForChar({ ...char, level }).mapId];
   return { ...s, balanceVersion:version,std: std.power, r, g, dr, hpLoss, mpRegen, burst, expFactor, killsPerTick, idleNativeDamageMultiplier, map };
 }
