@@ -7,7 +7,7 @@ const authSource=fs.readFileSync(new URL('../public/scene-live-auth.js',import.m
 const sessionSource=fs.readFileSync(new URL('../public/scene-live-session.js',import.meta.url),'utf8');
 const tick=()=>new Promise(r=>setImmediate(r));
 const wireData=new URLSearchParams({user:JSON.stringify({id:12345678,first_name:'旅人'}),hash:'server-verifies-this'}).toString();
-function harness({initData=wireData,endpoint='https://game.example/app/api/',accountId='90101',parentApp=false}={}){
+function harness({initData=wireData,endpoint='https://game.example/app/api/',accountId='90101',parentApp=false,search='',navigation=true,setTimeout=undefined}={}){
  const nodes=[],listeners=new Map(),events=[],calls=[];
  const element=tag=>{const e={tagName:tag,children:[],hidden:false,textContent:'',attributes:{},append(...children){this.children.push(...children);},setAttribute(k,v){this.attributes[k]=v;}};nodes.push(e);return e;};
  const body=element('body'),ui=element('div');body.append(ui);
@@ -15,9 +15,9 @@ function harness({initData=wireData,endpoint='https://game.example/app/api/',acc
  let options,snapshot=null;
  const client={request:async action=>{calls.push(action);return {characters:[]};},getSnapshot:()=>snapshot,getContext:()=>({accountId:'12345678',realmId:'permanent',characterId:null,epoch:0}),refresh:async()=>null,sync:async()=>null,start(){calls.push('start');},dispose(){calls.push('dispose');}};
  const webapp={initData,ready(){calls.push('ready');},expand(){calls.push('expand');}};
- const env={document,location:{origin:'https://game.example'},URLSearchParams,JSON,Error,Promise,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}},
+ const env={document,location:{origin:'https://game.example',search},setTimeout,URLSearchParams,JSON,Error,Promise,CustomEvent:class{constructor(type,options){this.type=type;this.detail=options.detail;}},
   __RpgScenePreviewConfig:{live:true,telegram:true,endpoint,accountId},RpgSceneSession:{create(o){options=o;return client;}},
-  RpgSceneNavigation:{navigate(...v){calls.push(v);}},addEventListener:(k,v)=>listeners.set(k,v),dispatchEvent:e=>events.push(e)};
+  ...(navigation?{RpgSceneNavigation:{navigate(...v){calls.push(v);}}}:{}),addEventListener:(k,v)=>listeners.set(k,v),dispatchEvent:e=>events.push(e)};
  env.window=env;env.parent=parentApp?{location:env.location,Telegram:{WebApp:webapp}}:env;
  if(!parentApp)env.Telegram={WebApp:webapp};
  vm.runInNewContext(authSource,env);
@@ -68,4 +68,21 @@ test('signed-session requests carry Telegram credentials and never a development
  assert.equal(requests[0].init.headers['X-Telegram-Init-Data'],wireData);assert.equal(requests[0].init.headers['X-Dev-Tg-Id'],undefined);
  await session.request('realms');assert.equal(requests.length,2,'Realm catalog must not probe a nonexistent character');assert.ok(requests[1].url.endsWith('/realms'));
  session.dispose();
+});
+
+test('the restored 選擇角色 entry opens the scene character window directly for create/delete',async()=>{
+ const h=harness({search:'?entry=characters'});
+ assert.deepEqual(JSON.parse(JSON.stringify(h.calls)),['ready','expand','start',['characters',{}]]);
+ assert.ok(!h.nodes.some(e=>e.textContent==='正在連接你的旅誌…'),'no connecting cover over the character window');
+ h.options().onError({message:'尚未建立角色'});await tick();
+ assert.ok(!h.calls.includes('characters'),'onboarding probe stays quiet while the character window is open');
+});
+test('if the scene navigation never appears, the entry falls back to the existing character prompt',()=>{
+ const h=harness({search:'?entry=characters',navigation:false,setTimeout:fn=>fn()});
+ assert.equal(h.panel().hidden,false);assert.match(h.nodes.map(e=>e.textContent).join(' '),/請選擇要繼續冒險的角色/);
+ assert.equal(h.nodes.find(e=>e.textContent==='建立／選擇角色').hidden,false);
+});
+test('a normal launch after selection still shows the connecting cover and starts the session once',()=>{
+ const h=harness();assert.deepEqual(h.calls,['ready','expand','start']);assert.equal(h.panel().hidden,false);
+ assert.match(h.nodes.map(e=>e.textContent).join(' '),/正在連接你的旅誌/);
 });
