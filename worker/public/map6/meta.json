@@ -1,0 +1,5186 @@
+{
+ "map6_ground": {
+  "file": "map6_ground.webp",
+  "w": 1024,
+  "h": 1536,
+  "mode": "ground"
+ },
+ "lava_salamander_idle": {
+  "file": "lava_salamander_idle.webp",
+  "parts": [
+   "lava_salamander_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 544,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9585,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 404.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 415.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 403.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 388.2,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 399.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 333.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 387.2,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 409.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "lava_salamander_walk": {
+  "file": "lava_salamander_walk.webp",
+  "parts": [
+   "lava_salamander_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 576,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9648,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 407.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 408.1,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 410.0,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 407.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 406.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 411.0,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 408.1,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 409.1,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "lava_salamander_attack": {
+  "file": "lava_salamander_attack.webp",
+  "parts": [
+   "lava_salamander_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 800,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9676,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 389.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 383.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 345.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 329.0,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 325.1,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 321.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 373.5,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 388.0,
+    "clipLost": 0
+   }
+  ]
+ },
+ "lava_salamander_death": {
+  "file": "lava_salamander_death.webp",
+  "parts": [
+   "lava_salamander_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 672,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0128,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 423.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 400.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 326.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 317.0,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 255.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 185.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 183.3,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 184.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_golem_idle": {
+  "file": "forge_golem_idle.webp",
+  "parts": [
+   "forge_golem_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 640,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9615,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 406.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 418.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 396.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 373.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 403.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 346.1,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 349.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 403.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_golem_walk": {
+  "file": "forge_golem_walk.webp",
+  "parts": [
+   "forge_golem_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 608,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9915,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 424.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 430.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 426.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 424.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 417.4,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 422.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 425.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 421.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_golem_attack": {
+  "file": "forge_golem_attack.webp",
+  "parts": [
+   "forge_golem_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 608,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9641,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 0.917,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 322.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 341.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 315.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 315.3,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 327.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 349.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 380.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_golem_death": {
+  "file": "forge_golem_death.webp",
+  "parts": [
+   "forge_golem_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 704,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0324,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 391.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 393.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 341.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 290.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 249.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 202.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 187.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 187.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "fire_crystal_demon_idle": {
+  "file": "fire_crystal_demon_idle.webp",
+  "parts": [
+   "fire_crystal_demon_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 544,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9302,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 405.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 409.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 407.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 377.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 409.3,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 371.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 393.5,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 410.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "fire_crystal_demon_walk": {
+  "file": "fire_crystal_demon_walk.webp",
+  "parts": [
+   "fire_crystal_demon_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 480,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9479,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 449.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 430.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 434.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 437.9,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 436.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 442.7,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 437.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 436.0,
+    "clipLost": 0
+   }
+  ]
+ },
+ "fire_crystal_demon_attack": {
+  "file": "fire_crystal_demon_attack.webp",
+  "parts": [
+   "fire_crystal_demon_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 704,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0116,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 401.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 426.9,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 384.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 384.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 370.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 383.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 408.7,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 406.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "fire_crystal_demon_death": {
+  "file": "fire_crystal_demon_death.webp",
+  "parts": [
+   "fire_crystal_demon_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 704,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0382,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 422.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 403.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 342.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 315.6,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 273.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 234.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 200.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 199.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_fire_bat_idle": {
+  "file": "forge_fire_bat_idle.webp",
+  "parts": [
+   "forge_fire_bat_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 576,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0584,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 431.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 293.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 329.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 377.8,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 317.5,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 321.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 369.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 419.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_fire_bat_walk": {
+  "file": "forge_fire_bat_walk.webp",
+  "parts": [
+   "forge_fire_bat_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 576,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0683,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 430.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 386.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 339.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 283.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 302.3,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 380.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 315.2,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 388.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_fire_bat_attack": {
+  "file": "forge_fire_bat_attack.webp",
+  "parts": [
+   "forge_fire_bat_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 800,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0728,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 423.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 423.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 381.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 334.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 357.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 345.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 393.7,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 370.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "forge_fire_bat_death": {
+  "file": "forge_fire_bat_death.webp",
+  "parts": [
+   "forge_fire_bat_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 608,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0757,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.943,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 408.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 377.6,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 405.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 391.6,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 238.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 181.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 181.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_drake_idle": {
+  "file": "molten_drake_idle.webp",
+  "parts": [
+   "molten_drake_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 608,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.1161,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 409.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 409.6,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 409.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 363.8,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 347.1,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 406.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 368.3,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 392.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_drake_walk": {
+  "file": "molten_drake_walk.webp",
+  "parts": [
+   "molten_drake_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 736,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.1937,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 420.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 420.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 408.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 415.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 419.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 414.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 403.5,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 410.6,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "molten_drake_attack": {
+  "file": "molten_drake_attack.webp",
+  "parts": [
+   "molten_drake_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 832,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.2038,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.963,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 355.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 353.9,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 415.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 368.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 370.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 431.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 433.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_drake_death": {
+  "file": "molten_drake_death.webp",
+  "parts": [
+   "molten_drake_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 672,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.201,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 438.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 407.1,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 330.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 386.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 275.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 252.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 241.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 245.0,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_spirit_idle": {
+  "file": "furnace_spirit_idle.webp",
+  "parts": [
+   "furnace_spirit_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 576,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9445,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 394.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 413.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 408.0,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 407.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 393.9,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 355.1,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 384.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 395.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_spirit_walk": {
+  "file": "furnace_spirit_walk.webp",
+  "parts": [
+   "furnace_spirit_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 448,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9807,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 388.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 386.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 388.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 381.5,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 380.5,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 384.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 373.6,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 400.1,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "furnace_spirit_attack": {
+  "file": "furnace_spirit_attack.webp",
+  "parts": [
+   "furnace_spirit_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 672,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0075,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 350.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 400.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 318.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 298.2,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 350.6,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 362.7,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 366.7,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 383.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_spirit_death": {
+  "file": "furnace_spirit_death.webp",
+  "parts": [
+   "furnace_spirit_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 640,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.973,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 398.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 382.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 339.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 346.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 260.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 211.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 221.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 221.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "iron_beetle_idle": {
+  "file": "iron_beetle_idle.webp",
+  "parts": [
+   "iron_beetle_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 576,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.185,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.983,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 349.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 348.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 373.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 359.1,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 379.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 333.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 350.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "iron_beetle_walk": {
+  "file": "iron_beetle_walk.webp",
+  "parts": [
+   "iron_beetle_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 608,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.1886,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 368.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 366.1,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 362.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 363.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 369.6,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 349.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 362.5,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 358.9,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "iron_beetle_attack": {
+  "file": "iron_beetle_attack.webp",
+  "parts": [
+   "iron_beetle_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 992,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.2647,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 350.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 363.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 364.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 336.4,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 366.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 361.7,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 369.3,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 370.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "iron_beetle_death": {
+  "file": "iron_beetle_death.webp",
+  "parts": [
+   "iron_beetle_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 832,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.2232,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 0.991,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 352.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 325.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 277.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 252.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 241.0,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 239.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 239.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_guard_idle": {
+  "file": "obsidian_guard_idle.webp",
+  "parts": [
+   "obsidian_guard_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 704,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.013,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 400.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 405.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 405.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 366.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 413.3,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 355.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 382.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 410.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_guard_walk": {
+  "file": "obsidian_guard_walk.webp",
+  "parts": [
+   "obsidian_guard_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 544,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0351,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 445.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 451.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 444.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 435.8,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 447.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 450.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 445.1,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 444.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_guard_attack": {
+  "file": "obsidian_guard_attack.webp",
+  "parts": [
+   "obsidian_guard_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 896,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0783,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.963,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 379.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 378.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 369.9,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 379.6,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 381.7,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 402.2,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 414.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_guard_death": {
+  "file": "obsidian_guard_death.webp",
+  "parts": [
+   "obsidian_guard_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 768,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0991,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.997,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 414.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 348.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 266.0,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 244.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 211.0,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 209.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 209.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "firechain_smith_idle": {
+  "file": "firechain_smith_idle.webp",
+  "parts": [
+   "firechain_smith_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 640,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9653,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 403.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 418.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 401.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 388.0,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 399.6,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 340.7,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 379.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 407.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "firechain_smith_walk": {
+  "file": "firechain_smith_walk.webp",
+  "parts": [
+   "firechain_smith_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 640,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0264,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 415.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 413.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 413.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 416.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 414.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 417.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 415.7,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 416.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "firechain_smith_attack": {
+  "file": "firechain_smith_attack.webp",
+  "parts": [
+   "firechain_smith_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 928,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0365,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.917,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 437.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 455.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 356.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 329.6,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 341.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 315.1,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 373.2,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 384.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "firechain_smith_death": {
+  "file": "firechain_smith_death.webp",
+  "parts": [
+   "firechain_smith_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 672,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0713,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 396.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 393.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 356.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 296.7,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 304.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 234.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 234.6,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 227.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "ash_ghost_idle": {
+  "file": "ash_ghost_idle.webp",
+  "parts": [
+   "ash_ghost_idle_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 512,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9116,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 400.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 409.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 419.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 395.6,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 393.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 380.1,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 391.1,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 392.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "ash_ghost_walk": {
+  "file": "ash_ghost_walk.webp",
+  "parts": [
+   "ash_ghost_walk_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 544,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 0.9408,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 423.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 425.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 425.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 428.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 418.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 419.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 423.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 421.5,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "ash_ghost_attack": {
+  "file": "ash_ghost_attack.webp",
+  "parts": [
+   "ash_ghost_attack_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 864,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0284,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 453.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 452.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 385.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 371.2,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 428.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 400.0,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 425.7,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 427.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "ash_ghost_death": {
+  "file": "ash_ghost_death.webp",
+  "parts": [
+   "ash_ghost_death_sheet.png"
+  ],
+  "cols": 4,
+  "rows": 2,
+  "cellW": 672,
+  "cellH": 512,
+  "ox": 0.5,
+  "oy": 0.92,
+  "scale": 1.0054,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 444.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 421.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 356.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 396.1,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 249.3,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 182.0,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 153.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 155.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_idle": {
+  "file": "molten_forgemaster_idle.webp",
+  "parts": [
+   "molten_forgemaster_idle_sheet.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 832,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9752,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 602.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 638.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 551.0,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 601.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_walk_1": {
+  "file": "molten_forgemaster_walk_1.webp",
+  "parts": [
+   "molten_forgemaster_walk_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 800,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0078,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 649.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 632.9,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 629.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 637.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_attack_1": {
+  "file": "molten_forgemaster_attack_1.webp",
+  "parts": [
+   "molten_forgemaster_attack_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 960,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0213,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 588.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 695.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 600.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 535.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_death_1": {
+  "file": "molten_forgemaster_death_1.webp",
+  "parts": [
+   "molten_forgemaster_death_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 896,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0387,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 579.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 554.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 488.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 330.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_walk": {
+  "file": "molten_forgemaster_walk.webp",
+  "parts": [
+   "molten_forgemaster_walk_sheet_1.png",
+   "molten_forgemaster_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 800,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9996,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 643.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 627.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 624.8,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 632.8,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 648.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 646.8,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 631.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 634.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_attack": {
+  "file": "molten_forgemaster_attack.webp",
+  "parts": [
+   "molten_forgemaster_attack_sheet_1.png",
+   "molten_forgemaster_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 960,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0253,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components",
+  "capRatio": 0.991,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 590.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 698.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 602.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 537.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 567.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 492.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 656.2,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 586.5,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_death": {
+  "file": "molten_forgemaster_death.webp",
+  "parts": [
+   "molten_forgemaster_death_sheet_1.png",
+   "molten_forgemaster_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 960,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0941,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 610.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 584.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 514.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 347.9,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 572.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 413.6,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 388.4,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 339.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_walk_2": {
+  "file": "molten_forgemaster_walk_2.webp",
+  "parts": [
+   "molten_forgemaster_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 800,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9966,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 646.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 644.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 629.8,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 632.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_attack_2": {
+  "file": "molten_forgemaster_attack_2.webp",
+  "parts": [
+   "molten_forgemaster_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 992,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0736,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 593.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 515.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 687.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 614.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_forgemaster_death_2": {
+  "file": "molten_forgemaster_death_2.webp",
+  "parts": [
+   "molten_forgemaster_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 896,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.1121,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 581.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 420.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 394.8,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 344.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_idle": {
+  "file": "obsidian_warlord_idle.webp",
+  "parts": [
+   "obsidian_warlord_idle_sheet.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 736,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9899,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 567.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 697.9,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 562.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 578.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_walk_1": {
+  "file": "obsidian_warlord_walk_1.webp",
+  "parts": [
+   "obsidian_warlord_walk_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 832,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0575,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 618.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 607.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 649.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 645.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_walk_2": {
+  "file": "obsidian_warlord_walk_2.webp",
+  "parts": [
+   "obsidian_warlord_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 832,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9968,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 614.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 627.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 621.0,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 628.0,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_attack_1": {
+  "file": "obsidian_warlord_attack_1.webp",
+  "parts": [
+   "obsidian_warlord_attack_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1024,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0222,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 607.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 678.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 556.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 547.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_attack_2": {
+  "file": "obsidian_warlord_attack_2.webp",
+  "parts": [
+   "obsidian_warlord_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1152,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9544,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 560.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 539.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 585.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 586.0,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_death_1": {
+  "file": "obsidian_warlord_death_1.webp",
+  "parts": [
+   "obsidian_warlord_death_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 864,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9711,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 558.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 518.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 497.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 305.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_death_2": {
+  "file": "obsidian_warlord_death_2.webp",
+  "parts": [
+   "obsidian_warlord_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 896,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0215,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 495.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 346.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 365.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 344.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_idle": {
+  "file": "furnace_warlock_idle.webp",
+  "parts": [
+   "furnace_warlock_idle_sheet.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 896,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0134,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.968,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 544.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 698.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 523.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 542.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_walk_1": {
+  "file": "furnace_warlock_walk_1.webp",
+  "parts": [
+   "furnace_warlock_walk_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 736,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9734,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 538.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 541.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 546.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 547.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_walk_2": {
+  "file": "furnace_warlock_walk_2.webp",
+  "parts": [
+   "furnace_warlock_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 800,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9425,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 563.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 554.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 562.6,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 558.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_attack_1": {
+  "file": "furnace_warlock_attack_1.webp",
+  "parts": [
+   "furnace_warlock_attack_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 960,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9922,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 547.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 687.6,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 641.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 485.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_attack_2": {
+  "file": "furnace_warlock_attack_2.webp",
+  "parts": [
+   "furnace_warlock_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1120,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9971,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 479.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 622.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 534.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 543.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_death_1": {
+  "file": "furnace_warlock_death_1.webp",
+  "parts": [
+   "furnace_warlock_death_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 736,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9948,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 569.0,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 535.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 464.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 366.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_death_2": {
+  "file": "furnace_warlock_death_2.webp",
+  "parts": [
+   "furnace_warlock_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 960,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0866,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 599.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 432.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 323.8,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 328.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_idle_1": {
+  "file": "rotten_tree_king_idle_1.webp",
+  "parts": [
+   "rotten_tree_king_idle_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 896,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9087,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 824.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 814.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_idle_2": {
+  "file": "rotten_tree_king_idle_2.webp",
+  "parts": [
+   "rotten_tree_king_idle_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1120,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9158,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 792.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 846.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_walk_1": {
+  "file": "rotten_tree_king_walk_1.webp",
+  "parts": [
+   "rotten_tree_king_walk_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 896,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9273,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 889.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 853.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_walk_2": {
+  "file": "rotten_tree_king_walk_2.webp",
+  "parts": [
+   "rotten_tree_king_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 928,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9122,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 869.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 844.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_attack_1": {
+  "file": "rotten_tree_king_attack_1.webp",
+  "parts": [
+   "rotten_tree_king_attack_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1088,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.905,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 789.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 855.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_attack_2": {
+  "file": "rotten_tree_king_attack_2.webp",
+  "parts": [
+   "rotten_tree_king_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1216,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9411,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 864.9,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 760.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_attack_3": {
+  "file": "rotten_tree_king_attack_3.webp",
+  "parts": [
+   "rotten_tree_king_attack_sheet_3.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 896,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9291,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 775.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 631.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_attack_4": {
+  "file": "rotten_tree_king_attack_4.webp",
+  "parts": [
+   "rotten_tree_king_attack_sheet_4.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1056,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9085,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 776.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 772.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_cast_1": {
+  "file": "rotten_tree_king_cast_1.webp",
+  "parts": [
+   "rotten_tree_king_cast_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1024,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9151,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 819.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 839.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_cast_2": {
+  "file": "rotten_tree_king_cast_2.webp",
+  "parts": [
+   "rotten_tree_king_cast_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1056,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.8922,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 823.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 805.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_death_1": {
+  "file": "rotten_tree_king_death_1.webp",
+  "parts": [
+   "rotten_tree_king_death_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1056,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.926,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 896.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 743.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_death_2": {
+  "file": "rotten_tree_king_death_2.webp",
+  "parts": [
+   "rotten_tree_king_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1248,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0401,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 795.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 486.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_idle_1": {
+  "file": "molten_iron_wyvern_idle_1.webp",
+  "parts": [
+   "molten_iron_wyvern_idle_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1024,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0259,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 794.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 844.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_idle_2": {
+  "file": "molten_iron_wyvern_idle_2.webp",
+  "parts": [
+   "molten_iron_wyvern_idle_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1280,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0523,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 819.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 818.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_walk_1": {
+  "file": "molten_iron_wyvern_walk_1.webp",
+  "parts": [
+   "molten_iron_wyvern_walk_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1120,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0526,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.909,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 956.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 922.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_walk_2": {
+  "file": "molten_iron_wyvern_walk_2.webp",
+  "parts": [
+   "molten_iron_wyvern_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1248,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0211,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.919,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 956.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 907.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_attack_1": {
+  "file": "molten_iron_wyvern_attack_1.webp",
+  "parts": [
+   "molten_iron_wyvern_attack_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1120,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0072,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.903,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 825.9,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 956.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_attack_2": {
+  "file": "molten_iron_wyvern_attack_2.webp",
+  "parts": [
+   "molten_iron_wyvern_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1248,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9946,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 0.945,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 956.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 786.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_attack_3": {
+  "file": "molten_iron_wyvern_attack_3.webp",
+  "parts": [
+   "molten_iron_wyvern_attack_sheet_3.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1440,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0994,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 879.5,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 809.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_attack_4": {
+  "file": "molten_iron_wyvern_attack_4.webp",
+  "parts": [
+   "molten_iron_wyvern_attack_sheet_4.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1216,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.1084,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 916.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 855.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_cast_1": {
+  "file": "molten_iron_wyvern_cast_1.webp",
+  "parts": [
+   "molten_iron_wyvern_cast_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1088,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0934,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 858.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 885.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_cast_2": {
+  "file": "molten_iron_wyvern_cast_2.webp",
+  "parts": [
+   "molten_iron_wyvern_cast_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1056,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0108,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 764.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 792.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_death_1": {
+  "file": "molten_iron_wyvern_death_1.webp",
+  "parts": [
+   "molten_iron_wyvern_death_sheet_1.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 992,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0931,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 944.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 720.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_death_2": {
+  "file": "molten_iron_wyvern_death_2.webp",
+  "parts": [
+   "molten_iron_wyvern_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 1,
+  "cellW": 1504,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.2513,
+  "facing": "right",
+  "frames": 2,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 844.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 624.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_walk": {
+  "file": "obsidian_warlord_walk.webp",
+  "parts": [
+   "obsidian_warlord_walk_sheet_1.png",
+   "obsidian_warlord_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 864,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0337,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 604.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 593.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 634.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 630.5,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 636.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 650.2,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 644.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 651.2,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_attack": {
+  "file": "obsidian_warlord_attack.webp",
+  "parts": [
+   "obsidian_warlord_attack_sheet_1.png",
+   "obsidian_warlord_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 1248,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0222,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 607.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 678.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 556.1,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 547.9,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 600.0,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 577.5,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 626.6,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 627.6,
+    "clipLost": 0
+   }
+  ]
+ },
+ "obsidian_warlord_death": {
+  "file": "obsidian_warlord_death.webp",
+  "parts": [
+   "obsidian_warlord_death_sheet_1.png",
+   "obsidian_warlord_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 896,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9996,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 574.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 533.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 511.8,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 314.9,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 484.8,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 338.9,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 357.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 336.9,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_walk": {
+  "file": "furnace_warlock_walk.webp",
+  "parts": [
+   "furnace_warlock_walk_sheet_1.png",
+   "furnace_warlock_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 800,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9631,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 532.6,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 535.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 540.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 541.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 575.9,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 566.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 575.0,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 571.1,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "furnace_warlock_attack": {
+  "file": "furnace_warlock_attack.webp",
+  "parts": [
+   "furnace_warlock_attack_sheet_1.png",
+   "furnace_warlock_attack_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 1120,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 0.9922,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 547.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 687.6,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 641.9,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 485.2,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 477.2,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 619.1,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 531.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 540.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "furnace_warlock_death": {
+  "file": "furnace_warlock_death.webp",
+  "parts": [
+   "furnace_warlock_death_sheet_1.png",
+   "furnace_warlock_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 928,
+  "cellH": 768,
+  "ox": 0.5,
+  "oy": 0.93,
+  "scale": 1.0414,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 595.7,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 560.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 486.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 383.2,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 574.9,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 414.5,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 310.3,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 314.5,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_idle": {
+  "file": "rotten_tree_king_idle.webp",
+  "parts": [
+   "rotten_tree_king_idle_sheet_1.png",
+   "rotten_tree_king_idle_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1088,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9012,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 817.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 807.5,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 779.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 832.7,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_walk": {
+  "file": "rotten_tree_king_walk.webp",
+  "parts": [
+   "rotten_tree_king_walk_sheet_1.png",
+   "rotten_tree_king_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 928,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9273,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+grid",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 889.3,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 853.1,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 883.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 858.7,
+    "clipLost": 0
+   }
+  ],
+  "walkAssist": true
+ },
+ "rotten_tree_king_attack": {
+  "file": "rotten_tree_king_attack.webp",
+  "parts": [
+   "rotten_tree_king_attack_sheet_1.png",
+   "rotten_tree_king_attack_sheet_2.png",
+   "rotten_tree_king_attack_sheet_3.png",
+   "rotten_tree_king_attack_sheet_4.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 1216,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.905,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components+components+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 789.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 855.3,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 865.2,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 759.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 755.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 615.4,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 773.8,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 769.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_cast": {
+  "file": "rotten_tree_king_cast.webp",
+  "parts": [
+   "rotten_tree_king_cast_sheet_1.png",
+   "rotten_tree_king_cast_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1088,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9151,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 819.1,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 839.2,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 844.7,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 826.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "rotten_tree_king_death": {
+  "file": "rotten_tree_king_death.webp",
+  "parts": [
+   "rotten_tree_king_death_sheet_1.png",
+   "rotten_tree_king_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1248,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.926,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 896.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 743.6,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 795.4,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 487.1,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_idle": {
+  "file": "molten_iron_wyvern_idle.webp",
+  "parts": [
+   "molten_iron_wyvern_idle_sheet_1.png",
+   "molten_iron_wyvern_idle_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1216,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0458,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced+grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 809.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 860.7,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 787.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 786.4,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_walk": {
+  "file": "molten_iron_wyvern_walk.webp",
+  "parts": [
+   "molten_iron_wyvern_walk_sheet_1.png",
+   "molten_iron_wyvern_walk_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1248,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0526,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components",
+  "capRatio": 0.909,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 956.8,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 922.1,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 946.3,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 896.8,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_attack": {
+  "file": "molten_iron_wyvern_attack.webp",
+  "parts": [
+   "molten_iron_wyvern_attack_sheet_1.png",
+   "molten_iron_wyvern_attack_sheet_2.png",
+   "molten_iron_wyvern_attack_sheet_3.png",
+   "molten_iron_wyvern_attack_sheet_4.png"
+  ],
+  "cols": 2,
+  "rows": 4,
+  "cellW": 1312,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0072,
+  "facing": "right",
+  "frames": 8,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "components+components+components+components",
+  "capRatio": 0.904,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 825.9,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 956.8,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 915.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 752.3,
+    "clipLost": 0
+   },
+   {
+    "src": 5,
+    "h": 805.7,
+    "clipLost": 0
+   },
+   {
+    "src": 6,
+    "h": 741.3,
+    "clipLost": 0
+   },
+   {
+    "src": 7,
+    "h": 832.9,
+    "clipLost": 0
+   },
+   {
+    "src": 8,
+    "h": 777.5,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_cast": {
+  "file": "molten_iron_wyvern_cast.webp",
+  "parts": [
+   "molten_iron_wyvern_cast_sheet_1.png",
+   "molten_iron_wyvern_cast_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1056,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 0.9914,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid-forced+grid-forced",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 778.2,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 803.0,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 749.5,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 777.3,
+    "clipLost": 0
+   }
+  ]
+ },
+ "molten_iron_wyvern_death": {
+  "file": "molten_iron_wyvern_death.webp",
+  "parts": [
+   "molten_iron_wyvern_death_sheet_1.png",
+   "molten_iron_wyvern_death_sheet_2.png"
+  ],
+  "cols": 2,
+  "rows": 2,
+  "cellW": 1504,
+  "cellH": 1024,
+  "ox": 0.5,
+  "oy": 0.95,
+  "scale": 1.0931,
+  "facing": "right",
+  "frames": 4,
+  "droppedFrames": [],
+  "softUpscale": false,
+  "clippedFrames": 0,
+  "extract": "grid+components",
+  "capRatio": 1.0,
+  "frameInfo": [
+   {
+    "src": 1,
+    "h": 944.4,
+    "clipLost": 0
+   },
+   {
+    "src": 2,
+    "h": 720.4,
+    "clipLost": 0
+   },
+   {
+    "src": 3,
+    "h": 845.0,
+    "clipLost": 0
+   },
+   {
+    "src": 4,
+    "h": 624.2,
+    "clipLost": 0
+   }
+  ]
+ }
+}
