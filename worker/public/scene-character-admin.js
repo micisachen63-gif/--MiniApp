@@ -2,8 +2,11 @@
 (() => {
  'use strict';
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ // A switch attempt always changes the session context, which closes this
+ // window. Carry a rejected switch's reason into the reopened window.
+ let carriedNotice='';
  function mount(root,host){
-  let disposed=false,busy=false,message='',data=null,realms=null,meta=null,deletion=null,actors=null;
+  let disposed=false,busy=false,message=carriedNotice;carriedNotice='';let data=null,realms=null,meta=null,deletion=null,actors=null;
   const context=host.getContext(),scope=JSON.stringify(context),current=()=>!disposed&&host.current()&&JSON.stringify(host.getContext())===scope;
   const storageKey='rpg:character-delete:'+context.accountId+':'+context.realmId,draft=host.draft||{};
   try{draft.pendingDelete ||=JSON.parse(sessionStorage.getItem(storageKey)||'null');}catch{}
@@ -19,7 +22,7 @@
     (draft.pendingDelete?'<section class="sl-card"><h3>原刪除操作待核對</h3><p>不會換編號重送刪除。請核對原結果。</p>'+btn('核對原刪除結果','data-ca-delete-status')+'</section>':'')+'</section>';bind();
   }
   function bind(){const each=(s,fn)=>root.querySelectorAll(s).forEach(fn);each('[data-ca-refresh]',b=>b.onclick=refresh);
-   each('[data-ca-select]',b=>b.onclick=async()=>{if(busy)return;busy=true;paint();try{await window.RpgSceneSession.selectCharacter(b.dataset.caSelect);}catch(e){message=e.message;}finally{if(current()){busy=false;paint();}}});
+   each('[data-ca-select]',b=>b.onclick=async()=>{if(busy)return;busy=true;paint();try{await window.RpgSceneSession.selectCharacter(b.dataset.caSelect);}catch(e){if(current())message=e.message;else if(e?.code!=='context_changed'){carriedNotice=e.message;window.RpgSceneNavigation?.navigate('characters',{});}}finally{if(current()){busy=false;paint();}}});
    each('[data-ca-realm]',b=>b.onclick=async()=>{if(busy)return;const realmId=b.dataset.caRealm;window.RpgSceneSession.setContext({realmId,characterId:null});try{await window.RpgSceneSession.refresh();}catch{}window.RpgSceneNavigation.navigate('characters',{});});
    const form=root.querySelector('[data-ca-create]');
    if(form){const preview=()=>{const id=form.elements.baseClass.value,gender=form.elements.gender.value,c=meta?.classes[id],picture=actors?.actors?.find(a=>a.id===id+(gender==='m'?'_m':''))?.portrait;if(!c)return;root.querySelector('[data-ca-class-preview]').innerHTML=(picture?'<img src="'+esc(picture)+'" alt="'+esc(c.name)+'原角色外觀">':'')+'<div><h4>'+esc(c.name)+'</h4><p>'+esc(c.blurb)+'</p><p>'+esc(c.skill.name)+' · '+c.skill.cost+' MP · ×'+c.skill.mult+' · '+c.skill.targets+' 體</p><p>'+esc(c.passive)+'</p></div>';};form.elements.baseClass.onchange=preview;form.elements.gender.onchange=preview;preview();}

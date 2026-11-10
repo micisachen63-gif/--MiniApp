@@ -215,15 +215,38 @@ test('old panels and the actual legacy cron cannot farm the same active Atlas ti
   assert.equal(db.prepare('SELECT gold FROM rpg_characters WHERE tg_id=?').get(id).gold, committed.char.gold);
 });
 
-test('selected-character guards reject inactive starts and switching during a run', async t => {
+test('selected-character guards reject inactive starts; switching away keeps the run advancing in the background', async t => {
   const { env, db, id, account } = await fixture(t);
   const second = await P.createCharacter(env, { tgId: account, name: '星圖測試乙', gender: 'f', baseClass: 'mage' }, T0, mulberry32(8));
   await assert.rejects(Atlas.start(env, second.char.tg_id, body(), T0), error => error.code === 'character_changed');
   await Atlas.start(env, id, body(), T0);
-  await assert.rejects(selectAccountCharacter(env, account, second.char.tg_id, T0), error => error.code === 'atlas_active');
-  assert.equal(await activeCharacterId(env.DB, account), id);
+  // 2026-11-10 regression: the player could not switch back to another character while one was on a dispatch.
+  assert.equal(await selectAccountCharacter(env, account, second.char.tg_id, T0 + MINUTE), second.char.tg_id);
+  assert.equal(await activeCharacterId(env.DB, account), second.char.tg_id);
   assert.equal(db.prepare('SELECT COUNT(*) AS n FROM rpg_atlas_runs').get().n, 1);
+  assert.equal(db.prepare('SELECT atlas_run_id FROM rpg_characters WHERE tg_id=?').get(id).atlas_run_id, readRun(db, id).id);
+  // The other character cannot start a second run for the same account.
+  await assert.rejects(Atlas.start(env, second.char.tg_id, body({ requestId: 'atlas-start-002' }), T0 + MINUTE), error => error.code === 'atlas_active');
+  // The background sweep still finishes the inactive character's run, and no legacy idle is farmed meanwhile.
+  await runCron(env, T0 + 2 * MINUTE);
+  const result = await finish(env, id, T0 + 61 * MINUTE);
+  assert.notEqual(result.run.status, 'running');
+  assert.equal(db.prepare('SELECT atlas_run_id FROM rpg_characters WHERE tg_id=?').get(id).atlas_run_id, null);
+  assert.equal(db.prepare("SELECT COUNT(*) AS n FROM rpg_idle_reports WHERE tg_id=? AND exp_gained>0").get(id).n, 0);
+  // Switching back works and party locks for the Atlas character itself are unchanged during a run.
+  await selectAccountCharacter(env, account, id, T0 + 62 * MINUTE);
+  await Atlas.start(env, id, body({ requestId: 'atlas-start-003' }), T0 + 62 * MINUTE);
   assert.throws(() => db.prepare('UPDATE rpg_characters SET party_id=? WHERE tg_id=?').run('racing-party', id), /atlas_character_busy/);
+});
+
+test('返營 (stop) on a run with a long unsettled backlog returns at once and unlocks the account', async t => {
+  const { env, db, id, account } = await fixture(t);
+  await levelUpFixture(env, id, 30);
+  const start = await Atlas.start(env, id, body({ queueMode: 'duration', mapCount: undefined, durationMinutes: 480, supplies: { hp: 150, mp: 150 } }), T0);
+  const stopped = await Atlas.stop(env, id, { requestId: 'atlas-stop-001', runId: start.run.id }, T0 + 400 * MINUTE);
+  assert.notEqual(stopped.run.status, 'running', JSON.stringify(stopped.run.progress));
+  assert.equal(db.prepare('SELECT atlas_run_id FROM rpg_characters WHERE tg_id=?').get(id).atlas_run_id, null);
+  assert.ok(Number(readRun(db, id).stop_at) <= T0 + 400 * MINUTE);
 });
 
 test('a real party recruitment lobby blocks starting Atlas before the party enters combat', async t => {
@@ -253,14 +276,14 @@ test('stopping a long run fixes one cutoff and finishes multiple bounded chunks 
   const started = await Atlas.start(env, id, body({ mapCount: 96, durationMinutes: 480, supplies: { hp: 150, mp: 150 } }), T0);
   const original = savedState(db, id), cutoff = T0 + 4500 * 1000;
   const stopBody = { requestId: 'stop-fixed-001', runId: started.run.id };
+  // 返營 drains every bounded chunk up to the fixed cutoff in the same request.
   const first = await Atlas.stop(env, id, stopBody, cutoff);
-  assert.equal(first.run.status, 'running');
-  assert.equal(first.run.progress.processedSeconds, 2000);
-  assert.equal(first.run.progress.catchingUp, true);
+  assert.equal(first.run.status, 'stopped');
   assert.equal(readRun(db, id).stop_at, cutoff);
+  assert.equal(db.prepare('SELECT atlas_run_id FROM rpg_characters WHERE tg_id=?').get(id).atlas_run_id, null);
+  // A replayed stop later neither moves the cutoff nor extends combat.
   const second = await Atlas.stop(env, id, stopBody, cutoff + 1000 * 1000);
-  assert.equal(second.run.status, 'running');
-  assert.equal(second.run.progress.processedSeconds, 4000);
+  assert.equal(second.run.status, 'stopped');
   assert.equal(readRun(db, id).stop_at, cutoff);
   const final = await Atlas.settle(env, id, { runId: started.run.id }, cutoff + 2000 * 1000);
   assert.equal(final.run.status, 'stopped');
