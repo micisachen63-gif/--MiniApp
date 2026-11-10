@@ -1,0 +1,67 @@
+/* Candidate-only visual layer. The original prototype stays untouched. */
+html.candidate-active:not(.candidate-hidden) #mini {padding:0;border:0;background:radial-gradient(ellipse 77% 75% at 50% 48%,rgba(5,8,12,.78) 36%,rgba(5,8,12,.40) 66%,transparent 100%);box-shadow:none;}
+html.candidate-active:not(.candidate-hidden) #mini:after {display:none}
+html.candidate-active:not(.candidate-hidden) #minic {opacity:.9;filter:contrast(1.04) saturate(.76);-webkit-mask-image:radial-gradient(ellipse 80% 74% at 50% 48%,#000 44%,transparent 100%);mask-image:radial-gradient(ellipse 80% 74% at 50% 48%,#000 44%,transparent 100%)}
+html.candidate-active:not(.candidate-hidden) #quest {border:0;background:linear-gradient(90deg,transparent,rgba(10,11,15,.58));text-shadow:0 1px 4px #000}
+html.candidate-active:not(.candidate-hidden) #zone {text-shadow:0 1px 4px #000,0 0 7px #000}
+html.candidate-active:not(.candidate-hidden) #mid {width:auto;flex:1;min-width:0;max-width:350px;clip-path:none;padding:3px 3px 5px;margin-bottom:4px;border:1px solid rgba(185,158,113,.28);border-radius:7px 7px 4px 4px;background:linear-gradient(180deg,rgba(16,18,22,.76),rgba(5,7,10,.88));box-shadow:0 3px 12px #000b,inset 0 1px #ffffff14}
+html.candidate-active:not(.candidate-hidden) #mid:before {display:none}
+html.candidate-active:not(.candidate-hidden) #xp {margin:3px 4px 4px;height:4px}
+html.candidate-active:not(.candidate-hidden) #skills {display:flex;justify-content:center;gap:2px;padding:0}
+html.candidate-active:not(.candidate-hidden) .sk {width:clamp(29px,9.2vw,39px);height:auto;aspect-ratio:1;flex:0 1 auto}
+html.candidate-active:not(.candidate-hidden) .sk .k {width:14px;height:14px;line-height:14px;font-size:10px;right:-2px;top:-2px;z-index:1}
+html.candidate-active:not(.candidate-hidden) .sk .t {font-size:14px;z-index:2;text-shadow:0 1px 3px #000,0 0 4px #000}
+html.candidate-active:not(.candidate-hidden) .orb {width:clamp(60px,18vw,80px)}
+html.candidate-active:not(.candidate-hidden) .orb.red {margin-right:-2px}
+html.candidate-active:not(.candidate-hidden) .orb.blue {margin-left:-2px}
+html.candidate-active:not(.candidate-hidden) #buffs {gap:4px;margin-bottom:2px}
+html.candidate-active:not(.candidate-hidden) .buff {width:23px;height:23px}
+html.candidate-active:not(.candidate-hidden) #chat {bottom:calc(160px + var(--sab));background:linear-gradient(90deg,rgba(5,7,10,.7),transparent);border-color:#a99a7b}
+html.candidate-active:not(.candidate-hidden) #fn {background:linear-gradient(transparent,rgba(4,6,9,.83));border-color:#a4926c55}
+html.candidate-active:not(.candidate-hidden) .dark-potions {display:flex;justify-content:center;gap:5px;white-space:nowrap;overflow:hidden;color:#e8decb;font:600 10px/16px sans-serif;text-shadow:0 1px 3px #000}
+html.candidate-active:not(.candidate-hidden) .dark-potions b {color:#e2b87e}
+html.candidate-hidden .dark-potions {display:none}
+html.candidate-active:not(.candidate-hidden) .panel {bottom:calc(158px + var(--sab));border:1px solid rgba(190,165,123,.38);border-radius:7px;background:linear-gradient(145deg,rgba(18,22,29,.84),rgba(5,9,15,.88));box-shadow:0 10px 28px #000a,inset 0 1px #ffffff12;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+html.candidate-active:not(.candidate-hidden) .panel:after,html.candidate-active:not(.candidate-hidden) .panel .mt,html.candidate-active:not(.candidate-hidden) .panel .cn,html.candidate-active:not(.candidate-hidden) .panel .ped {display:none}
+html.candidate-active:not(.candidate-hidden) .panel h2 {top:-1px;left:12px;transform:none;padding:10px 4px;background:none;clip-path:none;filter:none;letter-spacing:.14em;font-size:16px}
+@media (orientation:landscape) and (max-height:500px){
+ html.candidate-active:not(.candidate-hidden) #bottom {width:min(500px,calc(100% - 300px));left:50%;transform:translateX(-50%);right:auto;bottom:calc(4px + var(--sab))}
+ html.candidate-active:not(.candidate-hidden) .orb {width:72px}
+ html.candidate-active:not(.candidate-hidden) .sk {width:42px}
+ html.candidate-active:not(.candidate-hidden) #chat {bottom:calc(8px + var(--sab));max-width:calc(50% - 260px - var(--sal))}
+ html.candidate-active:not(.candidate-hidden) .panel {bottom:calc(8px + var(--sab))}
+}
+@media (orientation:portrait){
+ html.candidate-active:not(.candidate-hidden) #target {left:12px;transform:none;width:calc(100% - 165px)}
+}
+
+/* Touch-friendly mobile layout: six full-size skill targets, wrapped on narrow screens. */
+html.candidate-active:not(.candidate-hidden) .dark-potions {font-size:12px;line-height:17px;flex-wrap:wrap;gap:0 8px;overflow:visible}
+html.candidate-active:not(.candidate-hidden) .dark-potions .dark-potion-group {display:inline-flex;gap:6px;white-space:nowrap}
+html.candidate-active:not(.candidate-hidden) .orb {width:86px}
+html.candidate-active:not(.candidate-hidden) #skills {display:grid;grid-template-columns:repeat(3,44px);gap:4px;justify-content:center}
+html.candidate-active:not(.candidate-hidden) .sk {width:44px;height:44px;flex:none}
+html.candidate-active:not(.candidate-hidden) .sk .k {width:16px;height:16px;line-height:16px;font-size:11px}
+html.candidate-active:not(.candidate-hidden) .sk .t {font-size:16px}
+html.candidate-active:not(.candidate-hidden) #chat {bottom:calc(222px + var(--sab))}
+html.candidate-active:not(.candidate-hidden) .panel {bottom:calc(228px + var(--sab))}
+@media (orientation:landscape) and (max-height:500px){
+ html.candidate-active:not(.candidate-hidden) #bottom {width:min(530px,calc(100% - 290px))}
+ html.candidate-active:not(.candidate-hidden) .orb {width:80px}
+ html.candidate-active:not(.candidate-hidden) #skills {grid-template-columns:repeat(6,44px);gap:3px}
+ html.candidate-active:not(.candidate-hidden) #chat {bottom:calc(8px + var(--sab));max-width:calc(50% - 275px - var(--sal))}
+ html.candidate-active:not(.candidate-hidden) .panel {bottom:calc(8px + var(--sab))}
+}
+/* Larger, brighter candidate icons; retain the original full-size tap targets. */
+html.candidate-active:not(.candidate-hidden) #fn .fb {min-width:44px;min-height:46px;gap:0;line-height:15px}
+html.candidate-active:not(.candidate-hidden) #fn .candidate-menu-icon {width:30px;height:30px;filter:brightness(1.4) contrast(1.12) drop-shadow(0 1px 2px #000)}
+@media (orientation:landscape) and (max-height:500px){
+ html.candidate-active:not(.candidate-hidden) #fn .fb {min-height:48px}
+}
+/* Existing mock cooldown text supplies its own changing number; add the unit. */
+html.candidate-active:not(.candidate-hidden) .sk .t:not(:empty)::after {content:'秒';font-size:10px;margin-left:1px}
+html.candidate-active:not(.candidate-hidden) .sk .t {display:flex;align-items:center;justify-content:center}
+@media (orientation:portrait){
+ html.candidate-active:not(.candidate-hidden) #chat {bottom:calc(240px + var(--sab))}
+ html.candidate-active:not(.candidate-hidden) .panel {bottom:calc(245px + var(--sab))}
+}

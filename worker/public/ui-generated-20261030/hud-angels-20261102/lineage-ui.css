@@ -1,0 +1,176 @@
+/* Original classic MMORPG-inspired interface. No Lineage assets, marks or UI artwork are used. */
+body.greek.v2{--lc-iron:#101719;--lc-iron2:#202727;--lc-silver:#798681;--lc-gold:#c8a46a;--lc-cream:#f0e2c5}
+body.greek.v2 #view .lc-adventure,body.greek.v2 #view .lc-character{margin:0 -3px 14px;padding:8px;background:linear-gradient(140deg,#3c3930,#161e20 18%,#0b1015 80%,#4b4130);border:2px ridge #947955;box-shadow:inset 0 0 0 2px #151718,0 8px 24px #05050588;color:var(--lc-cream)}
+body.greek.v2 .lc-topline,body.greek.v2 .lc-window-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px 9px;font-size:10px;font-weight:800;letter-spacing:1.2px;color:#ead6a7;text-shadow:0 1px 2px #000}
+body.greek.v2 .lc-topline span:last-child{font-size:11px;letter-spacing:0;color:#c4d5c8}
+body.greek.v2 .lc-window-title{border-bottom:1px solid #796849;margin-bottom:9px}
+body.greek.v2 .lc-window-title strong{font-size:12px;color:#f3ebd6;letter-spacing:0}
+body.greek.v2 .card.lc-profile,body.greek.v2 .card.lc-equip{background:linear-gradient(155deg,#272e2c,#111719);border:1px solid #6d634e;border-radius:3px;color:#e8e0cc;box-shadow:inset 0 0 0 1px #3c423e,0 2px 5px #0009;padding:10px;margin-bottom:9px}
+body.greek.v2 .lc-profile::before,body.greek.v2 .lc-equip::before{display:none}
+body.greek.v2 .lc-profile .cls,body.greek.v2 .lc-equip h3{color:#e6c891}
+body.greek.v2 .lc-profile .lv{color:#d0c3a9}
+body.greek.v2 .lc-profile .bar{height:16px;margin-top:5px;border:1px solid #766b56;background:#050908;box-shadow:inset 0 1px 3px #000}
+body.greek.v2 .lc-profile .bar b{line-height:14px}
+body.greek.v2 .lc-battle-shell{border:2px solid #877251;background:#0e1718;box-shadow:inset 0 0 0 2px #323630,0 2px 10px #000a;padding:4px}
+body.greek.v2 .lc-battle-head{display:flex;justify-content:space-between;gap:8px;padding:6px 8px;font-size:11px;font-weight:750;background:linear-gradient(#2c3532,#121a1a);border-bottom:1px solid #625945;color:#e4d4b0}
+body.greek.v2 .lc-battle-head span:last-child{color:#acd7c3;text-align:right;font-size:10px}
+body.greek.v2 .lc-battle-shell .bstage{height:clamp(265px,75vw,440px);margin:0;border:0;border-radius:0;box-shadow:inset 0 0 25px #03060699}
+body.greek.v2 .lc-battle-shell .bstage .hero{height:73%;bottom:7%}
+body.greek.v2 .lc-battle-shell .bstage .mon{bottom:8%}
+body.greek.v2 .lc-battle-shell .bstage .status,body.greek.v2 .lc-battle-shell .bstage .mapname{font-size:10px;border:1px solid #9b855d;border-radius:2px;background:#111b1dd8;color:#eee0bd}
+body.greek.v2 .lc-battle-shell .bstage .bagi{display:none}
+body.greek.v2 .lc-status{display:grid;gap:5px;padding:8px;background:linear-gradient(#29322e,#111919);border-top:2px solid #b99a66;box-shadow:inset 0 0 0 1px #5b6055}
+body.greek.v2 .lc-status-head{display:flex;align-items:center;gap:8px;min-width:0}
+body.greek.v2 .lc-medallion{display:grid;place-items:center;flex:none;width:37px;height:37px;border:2px ridge #bb9a62;border-radius:50%;background:radial-gradient(#485d53,#172523 70%);color:#e6ce9d;font-size:22px}
+body.greek.v2 .lc-status-head>div{min-width:0;flex:1}
+body.greek.v2 .lc-status-head b,body.greek.v2 .lc-status-head small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.greek.v2 .lc-status-head b{font-size:13px;color:#f9e5b8}
+body.greek.v2 .lc-status-head small{font-size:10px;color:#bdc7ba}
+body.greek.v2 .lc-coins{font-size:12px;color:#f4d189;font-weight:800;white-space:nowrap}
+body.greek.v2 .lc-vitals{display:grid;gap:3px}
+body.greek.v2 .lc-vitals .bar{margin-top:0;height:15px;border:1px solid #615e51;border-radius:0;background:#050a0a}
+body.greek.v2 .lc-vitals .bar i{border-radius:0}
+body.greek.v2 .lc-vitals .bar b{font-size:10px;line-height:13px}
+body.greek.v2 .lc-vitals .bar.hp i{background:linear-gradient(#f34f4d,#85252d)}
+body.greek.v2 .lc-vitals .bar.mp i{background:linear-gradient(#579cf5,#1a3c90)}
+body.greek.v2 .lc-vitals .bar.exp i{background:linear-gradient(#c8da72,#5b8939)}
+body.greek.v2 .lc-hotbar{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;padding:7px 4px 4px;border-top:1px solid #5e5745;background:linear-gradient(#161f20,#080e10)}
+body.greek.v2 .lc-hotbar button,body.greek.v2 .lc-hotbar .lc-shortcut{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;height:55px;padding:3px 1px;color:#f2e2bf;background:linear-gradient(145deg,#47504b,#131b1d 65%);border:2px ridge #9c855d;border-radius:3px;box-shadow:inset 0 0 0 1px #090e0e,0 2px 4px #0008;cursor:default}
+body.greek.v2 .lc-hotbar button{cursor:pointer;touch-action:manipulation}
+body.greek.v2 .lc-hotbar button:active{background:#4d594d;transform:translateY(1px)}
+body.greek.v2 .lc-hotbar span{font-size:22px;line-height:25px}
+body.greek.v2 .lc-hotbar small{font-size:9px;color:#dfd2b9;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.greek.v2 .lc-shortcut>img{height:27px;width:28px;object-fit:contain}
+body.greek.v2 .lc-shortcut>em{position:absolute;top:1px;right:2px;font-size:9px;font-style:normal;font-weight:bold;color:#fff;text-shadow:0 1px 2px #000;max-width:100%;overflow:hidden}
+body.greek.v2 .lc-skill>span{color:#98d9ff}
+body.greek.v2 .lc-character .card.lc-equip .doll .fig{min-height:290px;background:radial-gradient(ellipse at 50% 85%,#6e655047,transparent 66%),url(art/v2/bg_town.webp) center/cover;border:2px ridge #9c845b;border-radius:3px}
+body.greek.v2 .lc-character .doll .slot,body.greek.v2 .lc-character .acc .slot{background:linear-gradient(145deg,#39433e,#101918);border:2px ridge #8d7955;color:#eddfc0;border-radius:3px;box-shadow:inset 0 0 6px #000b}
+body.greek.v2 .lc-character .doll .slot:not(.has),body.greek.v2 .lc-character .acc .slot:not(.has){opacity:1;border-style:ridge}
+body.greek.v2 .lc-character .doll .slot small,body.greek.v2 .lc-character .acc .slot small{color:#d9c9a6;text-shadow:0 1px 2px #000}
+body.greek.v2 .lc-character .figstats b{background:#10191ccf;color:#f1dfb4;padding:2px 4px;border:1px solid #807151}
+body.greek.v2 .lc-character~.card{border-radius:3px}
+@media(min-width:700px){body.greek.v2 .lc-adventure,body.greek.v2 .lc-character{max-width:760px;margin-left:auto!important;margin-right:auto!important}body.greek.v2 .lc-battle-shell .bstage{height:450px}}
+@media(max-width:370px){body.greek.v2 .lc-hotbar{gap:2px}body.greek.v2 .lc-hotbar button,body.greek.v2 .lc-hotbar .lc-shortcut{height:49px}body.greek.v2 .lc-hotbar small{font-size:8px}body.greek.v2 .lc-status-head b{font-size:12px}}
+@media(prefers-reduced-motion:reduce){body.greek.v2 .lc-hotbar button:active{transform:none}}
+/* Character progression window adopts the same original forged-metal visual language. */
+body.greek.v2 #view .lc-class-screen{margin:0 -3px 14px;padding:9px;background:linear-gradient(145deg,#343b36,#11181b 24%,#0a1114 85%,#4c4030);border:2px ridge #947955;box-shadow:inset 0 0 0 2px #151918,0 8px 24px #0008}
+body.greek.v2 .lc-class-title{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px 10px;border-bottom:1px solid #796849;color:#e8cd92;font-size:11px;font-weight:800;letter-spacing:1px}
+body.greek.v2 .lc-class-title strong{font-size:12px;letter-spacing:0;color:#f1e7cb}
+body.greek.v2 .lc-class-screen .card{background:linear-gradient(155deg,#28312e,#141a1c);border:1px solid #867250;border-radius:3px;color:#efe4ca;box-shadow:inset 0 0 0 1px #394039;padding:17px 11px 11px}
+body.greek.v2 .lc-class-screen .card::before{display:none}
+body.greek.v2 .lc-class-screen .card h3{color:#f1d397}
+body.greek.v2 .lc-class-screen .card .muted,body.greek.v2 .lc-class-screen .lv{color:#c5bca6}
+body.greek.v2 .lc-class-screen .cls{color:#f0d18a}
+body.greek.v2 .lc-class-screen .hero .info{color:#e8dec8}
+body.greek.v2 .lc-class-screen .branch{border-color:#907a55;border-radius:3px}
+/* Elf ancestry progression: original fantasy artwork direction and preview-only late tiers */
+body.greek.v2 .elf-ancestry{margin:12px 0 5px;padding:12px 9px 14px;border:2px ridge #8d9665;background:radial-gradient(ellipse at 50% 0%,#234b3b 0%,#142c2b 40%,#101920 100%);box-shadow:inset 0 0 0 2px #213c2c,0 6px 14px #0007;color:#e7efd9}
+body.greek.v2 .elf-ancestry-title{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:3px 5px 11px;border-bottom:1px solid #728b6e;font-size:16px;font-weight:900;letter-spacing:.5px;color:#ebdda3}
+body.greek.v2 .elf-ancestry-title small{font-size:10px;letter-spacing:0;color:#b9c8b8;font-weight:500}
+body.greek.v2 .elf-progression{display:grid;gap:11px;padding:12px 3px 4px}
+body.greek.v2 .elf-tier{position:relative;padding-left:13px;border-left:2px solid #6f9b73}
+body.greek.v2 .elf-tier:not(:last-child)::after{content:'⌄';position:absolute;left:-8px;bottom:-13px;color:#d0bd79;font-size:21px;text-shadow:0 0 6px #b9c774}
+body.greek.v2 .elf-tier h4{display:flex;justify-content:space-between;gap:5px;margin:0 0 7px;font-size:12px;color:#e2d7aa}
+body.greek.v2 .elf-tier h4 em{font-size:10px;font-style:normal;color:#a7d6b2}
+body.greek.v2 .elf-nodes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+body.greek.v2 .elf-tier:first-child .elf-nodes{grid-template-columns:1fr}
+body.greek.v2 .elf-node{position:relative;display:grid;grid-template-columns:24px 1fr;align-items:center;gap:0 5px;padding:8px 6px;border:1px solid #67795a;border-radius:3px;background:linear-gradient(120deg,#314938,#152622);box-shadow:inset 0 0 0 1px #182d24;min-width:0}
+body.greek.v2 .elf-node .elf-rune{grid-row:1/3;font-size:22px;color:#c9dba3;text-align:center}
+body.greek.v2 .elf-node strong{font-size:12px;color:#f3e9c6;overflow-wrap:anywhere}
+body.greek.v2 .elf-node small{font-size:10px;color:#b9d1bd;overflow-wrap:anywhere}
+body.greek.v2 .elf-node.chosen{border-color:#dfc578;background:linear-gradient(120deg,#486c4b,#20372e);box-shadow:inset 0 0 0 1px #9d9c69,0 0 10px #b6c16d33}
+body.greek.v2 .elf-node.locked{border-color:#4d5558;background:linear-gradient(120deg,#253136,#141d25);opacity:.86}
+body.greek.v2 .elf-node.locked .elf-rune{color:#9faeaa}
+body.greek.v2 .elf-node.locked i{position:absolute;right:3px;top:2px;font-style:normal;font-size:8px;color:#e0c899;background:#24292f;padding:1px 3px}
+@media(min-width:580px){body.greek.v2 .elf-tier:nth-child(3) .elf-nodes{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:340px){body.greek.v2 .elf-ancestry{padding:8px 4px}body.greek.v2 .elf-node{grid-template-columns:18px 1fr;padding:7px 3px}body.greek.v2 .elf-node .elf-rune{font-size:17px}body.greek.v2 .elf-node strong{font-size:10px}}
+
+body.greek.v2 .elf-node.locked .elf-rune{grid-row:1/4;align-self:center;display:block;width:38px;height:55px;overflow:hidden;background:radial-gradient(ellipse,#416e62,#172729);border:1px solid #78907c;border-radius:3px}
+body.greek.v2 .elf-node.locked{grid-template-columns:38px minmax(0,1fr);min-height:70px}
+body.greek.v2 .elf-preview-art{display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%}
+@media(max-width:340px){body.greek.v2 .elf-node.locked{grid-template-columns:30px minmax(0,1fr)}body.greek.v2 .elf-node.locked .elf-rune{width:30px;height:49px}}
+
+.mage-ancestry{background:radial-gradient(ellipse at 50% 0%,#403055 0%,#1c233a 60%,#121625 100%);border-color:#b19a6e}
+.mage-ancestry .elf-node.available{background:linear-gradient(120deg,#45355d,#252238);border-color:#9474b0}
+.mage-ancestry .elf-node.chosen{border-color:#e2c58e;box-shadow:0 0 11px #a88bd555}
+
+/* Greek-myth AAA pass: the battle viewport takes the space formerly used by
+   duplicated vitals and shortcuts; navigation uses original forged SVG icons. */
+body.greek.v2 .lc-battle-shell{padding:5px;background:linear-gradient(145deg,#52604f 0%,#1b292b 16%,#0a1118 72%,#65502f 100%);border:2px solid #c4a261;box-shadow:inset 0 0 0 1px #f0d99d55,0 8px 26px #000b}
+body.greek.v2 .lc-battle-head{min-height:42px;padding:8px 10px;background:linear-gradient(100deg,#344d53,#15242b 56%,#312818);border-bottom:1px solid #c4a261;color:#f7e7bd;font-family:var(--f-title);font-size:13px;letter-spacing:.25px}
+body.greek.v2 .lc-battle-head span:first-child{display:flex;align-items:center;gap:8px}
+body.greek.v2 .lc-battle-head span:first-child::before{content:"";width:5px;height:19px;background:linear-gradient(#fff0b8,#bd9042);box-shadow:0 0 9px #e7c56d88}
+body.greek.v2 .lc-battle-head span:last-child{font-family:var(--f-ui);font-size:11px;color:#f0d28d}
+body.greek.v2 .lc-battle-shell .bstage{height:clamp(370px,112vw,560px);min-height:370px;border:1px solid #dac17e;border-radius:2px;box-shadow:inset 0 0 0 1px #17191a,inset 0 0 48px #05101888,0 2px 6px #0008}
+body.greek.v2 .lc-battle-shell .bstage .hero{height:76%;bottom:6%}
+body.greek.v2 .lc-battle-shell .bstage .mon{height:58%;bottom:7%}
+body.greek.v2 .lc-battle-shell .bstage .mon.elite{height:67%}
+body.greek.v2 .lc-battle-shell .bstage .mon.boss{height:78%}
+body.greek.v2 .lc-battle-shell .bstage .status,body.greek.v2 .lc-battle-shell .bstage .mapname{padding:5px 9px;border-radius:3px;border:1px solid #e0c77d;background:linear-gradient(145deg,#172a35ed,#121414ed);box-shadow:0 2px 6px #0009;color:#fff0c5;font-family:var(--f-ui);font-size:11px;text-shadow:0 1px 2px #000}
+body.greek.v2 .lc-profile{position:relative;overflow:hidden;background:linear-gradient(112deg,#243331,#101719 68%,#29312d)!important;border:1px solid #a98a52!important;box-shadow:inset 0 0 0 1px #ffffff12,0 3px 12px #0008!important}
+body.greek.v2 .lc-profile::after{content:"";position:absolute;right:-22px;top:-40px;width:110px;height:110px;border:1px solid #d8b66b55;border-radius:50%;box-shadow:0 0 0 8px #d8b66b10,0 0 0 18px #d8b66b08;pointer-events:none}
+body.greek.v2 .lc-profile .portrait{width:100px;height:122px;border:1px solid #d7bc7c;background:radial-gradient(ellipse at 48% 34%,#50625a,#152021 72%);box-shadow:0 3px 12px #0008}
+body.greek.v2 .lc-profile .hero{gap:12px}
+body.greek.v2 .lc-profile .cls{color:#f1d18b;font-size:18px;text-shadow:0 1px 2px #000}
+body.greek.v2 .lc-profile .bar{box-shadow:inset 0 1px 3px #000,0 1px #ffffff0d}
+
+body.greek.v2 #nav{left:50%;transform:translateX(-50%);width:min(100%,980px);display:flex;align-items:stretch;gap:4px;padding:10px 8px calc(7px + var(--safe-b));background:linear-gradient(180deg,#172e3d 0%,#101d2b 62%,#0a131e 100%);border-top:1px solid #ead187;box-shadow:0 -8px 24px #020712a8,inset 0 1px 0 #fff2c144}
+body.greek.v2 #nav::before{top:-13px;height:10px;background-color:#16263c;background-image:var(--meander);background-size:22px 10px;border-top:1px solid #f0d68e;border-bottom:1px solid #82672d}
+body.greek.v2 #nav button{flex:1;max-width:none;min-width:0;gap:3px;padding:0 1px 1px;border:0;border-radius:9px;background:transparent;color:#c2c7bd;text-shadow:0 1px 2px #000;font-family:var(--f-ui);font-size:10px;transition:transform .22s ease,color .22s ease,filter .22s ease}
+body.greek.v2 #nav button .nav-icon{position:relative;display:grid;place-items:center;width:42px;height:38px;font-size:0;filter:drop-shadow(0 2px 2px #0009);transition:transform .22s ease,filter .22s ease}
+body.greek.v2 #nav button .nav-icon::before{content:"";position:absolute;inset:3px 6px;border:1px solid #d5b66866;border-radius:11px 11px 14px 14px;background:linear-gradient(145deg,#35434a,#111b25 63%,#263039);box-shadow:inset 0 1px 0 #fff2c133,0 2px 3px #0008;transform:perspective(35px) rotateX(2deg)}
+body.greek.v2 #nav button .nav-icon::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#ffe6a333,transparent 68%);opacity:0;transition:opacity .22s ease}
+body.greek.v2 #nav button .nav-icon svg{position:relative;z-index:1;width:28px;height:28px;overflow:visible;filter:drop-shadow(0 1px 1px #000)}
+body.greek.v2 #nav button small{position:relative;z-index:1;font-size:10px;line-height:1.1;font-weight:800;letter-spacing:.4px;color:inherit}
+body.greek.v2 #nav button.on{color:#ffe7a3;text-shadow:0 0 9px #f0ca6c66}
+body.greek.v2 #nav button.on .nav-icon{transform:translateY(-3px) scale(1.08);filter:drop-shadow(0 0 7px #e9c56e77)}
+body.greek.v2 #nav button.on .nav-icon::before{border-color:#f1d88f;background:linear-gradient(145deg,#4c5147,#192938 63%,#5a4324);box-shadow:inset 0 1px 0 #fff7d977,0 0 0 1px #765b2a,0 3px 7px #000a}
+body.greek.v2 #nav button.on .nav-icon::after{opacity:1}
+body.greek.v2 #nav button.dot::after{top:0;right:calc(50% - 23px);width:7px;height:7px;border:1px solid #fff2c7;box-shadow:0 0 7px #ffdc77}
+body.greek.v2 #nav button .nb{top:-2px;right:calc(50% - 24px);min-width:17px;height:17px;line-height:15px;border:1px solid #ffe3a1;box-shadow:0 1px 5px #000a}
+body.greek.v2 .btn{position:relative;overflow:hidden;border-radius:5px;border:1px solid #f4db94;box-shadow:inset 0 1px 0 #fff9da,inset 0 -2px 0 #78551c,0 3px 0 #533c18,0 5px 12px #0005;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+body.greek.v2 .btn::after{content:"";position:absolute;inset:1px;border:1px solid #fff6d855;border-radius:3px;pointer-events:none}
+body.greek.v2 .btn:active{transform:translateY(2px);filter:brightness(1.08);box-shadow:inset 0 1px 0 #fff9da,0 1px 0 #533c18,0 2px 5px #0005}
+body.greek.v2 .btn.ghost{border-color:#baa16a;box-shadow:inset 0 1px 0 #fff,0 2px 0 #655333,0 4px 10px #0004}
+@media(min-width:700px){#app{max-width:980px}body.greek.v2 #view .lc-adventure{max-width:none}body.greek.v2 .lc-battle-shell .bstage{height:min(64vh,620px);min-height:460px}body.greek.v2 .lc-battle-shell .bstage .hero{height:80%}body.greek.v2 .lc-battle-shell .bstage .mon{height:64%}}
+/* Move the complete enemy group inward so its art, name, and HP bar stay on stage. */
+body.greek.v2 .lc-battle-shell .bstage .mon{right:calc(5% + 60px)!important}
+/* The sword sheet includes more transparent padding than mage/elf art; enlarge its box to match the visible figure height while keeping the shared foot baseline and left anchor. */
+body.greek.v2 .lc-battle-shell .bstage[data-cls="sword"] .hero{left:3%;height:76%;max-height:170px;bottom:6%}
+/* Maps 2–3 use a compact right-lane monster footprint, overriding generic size and leftward offset. */
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="2"] .mon,
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="2"] .mon.elite,
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="2"] .mon.boss,
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="3"] .mon,
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="3"] .mon.elite,
+body.greek.v2 .lc-battle-shell .bstage[data-map-id="3"] .mon.boss{right:5%!important;height:34%!important;transform:translateX(1cm)}
+@media(max-width:370px){body.greek.v2 #nav{gap:1px;padding-left:4px;padding-right:4px}body.greek.v2 #nav button .nav-icon{width:38px;height:35px}body.greek.v2 #nav button .nav-icon svg{width:26px;height:26px}}
+@media(prefers-reduced-motion:reduce){body.greek.v2 #nav button,body.greek.v2 #nav button .nav-icon,body.greek.v2 #nav button .nav-icon::after{transition:none}}
+
+/* Lineage-inspired four-slot character selection. */
+body.greek.v2 .char-select{max-width:760px;margin:0 auto;padding:20px 14px calc(24px + var(--safe-b));font-family:var(--f-ui);color:#f5e7c0}
+body.greek.v2 .char-select-title{text-align:center;margin:5px 0 18px}
+body.greek.v2 .char-select-title>span{font:700 10px/1.4 var(--f-ui);letter-spacing:2px;color:#d6b86e;text-shadow:0 1px 2px #000}
+body.greek.v2 .char-select-title h1{margin:6px 0 3px;font:900 27px/1.25 var(--f-title,serif);color:#f8e5aa;text-shadow:0 2px 4px #000,0 0 14px #e0b85344}
+body.greek.v2 .char-select-title p{margin:0 auto;max-width:430px;font-size:12px;line-height:1.6;color:#c6c1ae}
+body.greek.v2 .char-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body.greek.v2 .char-card{position:relative;display:flex;min-width:0;min-height:232px;flex-direction:column;align-items:center;justify-content:flex-start;overflow:hidden;padding:12px 9px 11px;border:1px solid #8e7442;border-radius:7px;color:#eee2c3;background:linear-gradient(155deg,#26354a 0%,#111d30 52%,#1a2430 100%);box-shadow:inset 0 0 0 3px #101725,inset 0 0 0 4px #d0ad5a66,0 5px 13px #0008;text-align:center;cursor:pointer}
+body.greek.v2 .char-card::before{position:absolute;inset:5px;border:1px solid #d9bb6a55;content:"";pointer-events:none}
+body.greek.v2 .char-card:active{transform:translateY(1px);filter:brightness(1.12)}
+body.greek.v2 .char-card.char-active{border-color:#f2d887;box-shadow:inset 0 0 0 3px #101725,inset 0 0 0 4px #f1d278,0 0 15px #e6be5a33,0 6px 14px #0008}
+body.greek.v2 .char-slot{position:relative;z-index:1;align-self:flex-start;color:#cfb66f;font-size:10px;font-weight:800;letter-spacing:.35px}
+body.greek.v2 .char-portrait{display:grid;place-items:center;width:100%;height:136px;margin:2px 0 4px;overflow:hidden;background:radial-gradient(ellipse at 50% 70%,#d8bd7040,transparent 62%)}
+body.greek.v2 .char-portrait img{display:block;max-width:100%;width:auto;height:134px;object-fit:contain;filter:drop-shadow(0 4px 4px #0009)}
+body.greek.v2 .char-portrait i{font-style:normal;font-size:48px;color:#e7cc83}
+body.greek.v2 .char-card strong{position:relative;z-index:1;max-width:100%;overflow:hidden;color:#fff0c2;font:800 16px/1.3 var(--f-title,serif);text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 3px #000}
+body.greek.v2 .char-card small{position:relative;z-index:1;margin-top:3px;color:#c6c3b5;font:600 11px/1.35 var(--f-ui)}
+body.greek.v2 .char-card em{position:relative;z-index:1;margin-top:8px;padding:5px 10px;border:1px solid #c4a458;border-radius:3px;color:#f9e7ac;background:linear-gradient(#57451f,#342818);font:800 11px/1.2 var(--f-ui);font-style:normal;box-shadow:inset 0 1px #fff3}
+body.greek.v2 .char-empty{justify-content:center;min-height:232px;border-style:dashed;border-color:#88764e;background:linear-gradient(155deg,#1c293c,#131d2b 64%,#1c2530)}
+body.greek.v2 .char-question{display:grid;place-items:center;width:72px;height:88px;margin:0 0 8px;border:2px solid #bd9c50;border-radius:38px 38px 30px 30px;color:#efd98f;background:radial-gradient(ellipse at 50% 35%,#4a4c49,#182236 68%);font:900 48px/1 var(--f-title,serif);text-shadow:0 2px 5px #000;box-shadow:inset 0 0 0 4px #111a28,inset 0 0 0 5px #d4b76555,0 5px 10px #0008}
+body.greek.v2 .char-empty b{color:#ead99e;font:800 15px/1.3 var(--f-title,serif)}
+body.greek.v2 .char-empty small{margin-top:5px}
+body.greek.v2 .char-select-foot{margin:14px 0 0;text-align:center;color:#b9b7aa;font-size:11px}
+body.greek.v2 .char-back{display:block;width:min(100%,340px);margin:14px auto 0}
+body.greek.v2 #hud .hud-actions{display:flex;align-items:center;gap:7px}
+body.greek.v2 #hud .char-switch{padding:7px 8px;border:1px solid #9a8048;border-radius:4px;color:#f4df9e;background:linear-gradient(#26364a,#142235);font:800 11px var(--f-ui);box-shadow:inset 0 1px #fff3,0 2px 4px #0007}
+@media(max-width:360px){body.greek.v2 .char-grid{gap:8px}body.greek.v2 .char-card{min-height:210px;padding:10px 6px}body.greek.v2 .char-empty{min-height:210px}body.greek.v2 .char-portrait{height:120px}body.greek.v2 .char-portrait img{height:118px}body.greek.v2 .char-card strong{font-size:14px}}

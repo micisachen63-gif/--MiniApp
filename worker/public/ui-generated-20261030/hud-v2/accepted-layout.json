@@ -1,0 +1,12 @@
+{
+  "acceptedOn": "2026-11-01",
+  "status": "visual-layout-approved-by-user",
+  "previewUrl": "http://127.0.0.1:9593/",
+  "entry": "../preview.html",
+  "layout": { "left": "health-orb", "center": ["health-potion", "mana-potion", "whirlwind", "charge", "ground-slam"], "right": "mana-orb", "actionRows": 1 },
+  "assets": ["orb-bezel.png", "orb-bezel.webp", "action-icons.png", "action-icons.webp"],
+  "generation": { "mode": "built-in imagegen", "prompts": "prompts.txt" },
+  "integrationTarget": "Use this 9593 scene and approved HUD when the 2D character animations are ready.",
+  "integrationRequirements": ["Preserve the approved HUD arrangement and floating panels.", "Use actual character direction and action frames, including matching projectile direction.", "Replace demo potion counts and manual resource percentages with game state during integration."],
+  "scope": "Local visual prototype only; not deployed and not connected to player inventory or settlement."
+}

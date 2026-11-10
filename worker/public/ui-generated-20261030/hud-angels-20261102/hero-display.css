@@ -1,0 +1,13 @@
+/* The equipment showcase uses independent full-resolution stills. Battle art,
+   sprite sheets and all battlefield dimensions are intentionally untouched. */
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll {position:relative;min-height:440px;padding:12px 0;isolation:isolate}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .col {position:relative;z-index:2}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll > .col:first-child {grid-column:1;grid-row:1}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll > .col:last-child {grid-column:3;grid-row:1}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig {position:absolute;inset:12px 6px;min-height:0;padding:0;background:none;border:0;box-shadow:none;overflow:hidden;justify-content:center;pointer-events:none}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig img {width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 12px #0009)}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .slot {box-shadow:inset 0 0 0 3px #111d2c,inset 0 0 0 4px #b69a6633,0 3px 10px #000b}
+@media(max-width:370px) {body.greek.v2.mythic.olympus-suite #view .lc-character .doll{min-height:400px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig{inset:12px 4px}}
+@media(min-width:700px) {body.greek.v2.mythic.olympus-suite #view .lc-character .doll{min-height:500px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig{inset:15px 70px}}
+
+body.greek.v2.mythic #view .branch .lineage-portrait{width:88px;height:110px;object-fit:contain;flex-shrink:0;background:linear-gradient(#172638,#0b1625);border:1px solid #ad925c;border-radius:8px}

@@ -1,0 +1,70 @@
+/* The main scene stays mounted beneath every operation window. */
+body.atlas-enabled {
+  --atlas-window-surface: rgba(10, 20, 37, .73);
+  --atlas-window-edge: rgba(221, 195, 139, .52);
+}
+.atlas-legacy-backdrop[hidden] { display: none !important; }
+.atlas-legacy-backdrop, .atlas-panel-backdrop {
+  background: rgba(3, 8, 17, .18);
+  backdrop-filter: none;
+}
+.atlas-legacy-backdrop { position: fixed; inset: 0; z-index: 740; }
+#atlas-panel { padding: max(64px, 10dvh) 24px; }
+.atlas-panel-card {
+  width: min(960px, 100%);
+  max-height: min(80dvh, 860px);
+  background: var(--atlas-window-surface);
+  backdrop-filter: blur(9px);
+  border-color: var(--atlas-window-edge);
+  box-shadow: 0 18px 64px rgba(0, 0, 0, .42), inset 0 0 0 1px rgba(228, 202, 151, .08);
+}
+.atlas-panel-header { background: rgba(13, 23, 39, .4); }
+.atlas-panel-card .atlas-panel-body { background: transparent; }
+#atlas-legacy {
+  top: max(64px, 10dvh);
+  bottom: max(64px, 10dvh);
+  width: min(1000px, calc(100vw - 48px));
+  background: var(--atlas-window-surface);
+  backdrop-filter: blur(9px);
+  border-color: var(--atlas-window-edge);
+}
+#atlas-legacy.atlas-selecting { background: var(--atlas-window-surface); }
+#atlas-legacy #view { overflow-x: hidden; overscroll-behavior: contain; }
+.atlas-enabled #expedition-overlay, .atlas-enabled .fate-overlay {
+  inset: auto;
+  top: max(64px, 10dvh);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1060px, calc(100vw - 48px));
+  height: min(80dvh, calc(100dvh - 128px));
+  background: var(--atlas-window-surface);
+  backdrop-filter: blur(9px);
+  border-color: var(--atlas-window-edge);
+  box-shadow: 0 0 0 100vmax rgba(3, 8, 17, .18), 0 18px 64px rgba(0, 0, 0, .42);
+}
+.atlas-enabled #expedition-overlay iframe, .atlas-enabled .fate-overlay iframe { background: transparent; }
+.atlas-enabled #expedition-overlay>header, .atlas-enabled .fate-overlay-close { background: rgba(13, 23, 39, .4); }
+.atlas-enabled #sheet .sheet-bg { background: rgba(3, 8, 17, .22); backdrop-filter: none; }
+.atlas-enabled #sheet .sheet-card { background: rgba(10, 20, 37, .85); backdrop-filter: blur(9px); }
+@media (max-width: 700px) {
+  #atlas-panel { padding: max(60px, 9dvh) 12px; }
+  .atlas-panel-card { max-height: min(82dvh, calc(100dvh - 120px)); }
+  #atlas-legacy {
+    top: max(60px, 9dvh);
+    bottom: max(60px, 9dvh);
+    width: calc(100vw - 24px);
+  }
+  .atlas-enabled #expedition-overlay, .atlas-enabled .fate-overlay {
+    top: max(60px, 9dvh);
+    left: 12px;
+    width: calc(100vw - 24px);
+    height: min(82dvh, calc(100dvh - 120px));
+    transform: none;
+  }
+}
+@media (max-height: 500px) {
+  #atlas-panel { padding-block: 22px; }
+  .atlas-panel-card { max-height: calc(100dvh - 44px); }
+  #atlas-legacy { top: 22px; bottom: 22px; }
+  .atlas-enabled #expedition-overlay, .atlas-enabled .fate-overlay { top: 22px; height: calc(100dvh - 44px); }
+}

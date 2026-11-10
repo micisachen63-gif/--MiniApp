@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- 星穹旅誌 UI prototype (Greek-myth polish): full-screen Phaser scene, all UI floats over it. Display-only, no network/polling. -->
+<html lang="zh-Hant"><head><script src="/ui-generated-20261030/hud-angels-20261102/monster-expansion-catalog.js"></script><script>window.__RpgScenePreviewConfig={live:true,telegram:true,sceneOrigin:location.origin,endpoint:location.origin+"/app/api/"};</script><base href="/ui-proto/"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>星穹旅誌</title>
+
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="ui.css">
+<script>window.RPG_LIVE_SOCIAL=true;</script><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/scene-chat-ui.css"><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css"><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/scene-hero-readability.css"><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/atlas-talents-ui.css"><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.css"><link rel="stylesheet" href="/ui-generated-20261030/hud-angels-20261102/scene-live-view.css"></head><body>
+<div id="stage"><div id="game"></div><div id="sky"></div><div id="vig"></div>
+<div id="ui">
+  <div id="topL">
+    <div class="portrait"><canvas id="pc" width="112" height="112"></canvas><i>27</i></div>
+    <div class="who"><b>ミカサ</b><span id="gold">◈ 12,480</span></div>
+  </div>
+  <div id="topR">
+    <div id="zone"><b>泰坦山隘</b><span>Lv 27・階級 Ⅱ</span></div>
+    <div id="mini"><canvas id="minic" width="200" height="140"></canvas></div>
+    <div id="quest" class="col"><div class="qt"><span class="qn">◆ 泰坦的試煉</span><span class="qc"><em id="qk">0</em>/40</span><i class="chev">▾</i></div>
+      <div class="qd">擊敗山隘中的怪物<br>首領：熔岩巨像</div></div>
+  </div>
+  <div id="target" class="hide"><div class="tn" id="tname"></div><div class="tbar"><i id="tfill"></i></div></div>
+  <div id="toasts"></div>
+  <div id="chat"><span class="ch">世界</span><span id="chatLine"></span><i class="chev">▴</i></div>
+  <div id="bottom">
+    <div id="buffs"></div>
+    <div id="bar">
+      <div class="orb red"><canvas width="200" height="200"></canvas><span class="ov" id="hpTxt"></span></div>
+      <div id="mid"><div id="xp"><i id="xpfill"></i></div><div id="skills"></div></div>
+      <div class="orb blue"><canvas width="200" height="200"></canvas><span class="ov" id="mpTxt"></span></div>
+    </div>
+  </div>
+  <div id="fn"></div>
+  <div id="panelHost"></div>
+  <div id="tip"></div>
+</div></div>
+<script src="phaser-3.90.0.min.js"></script>
+<script src="ui-art.js"></script>
+<script src="/ui-generated-20261030/scene-bound-20261102/ui.js"></script>
+<script src="/ui-generated-20261030/characters-v1/layered-walk-renderer.js"></script><script src="/ui-generated-20261030/characters-v1/mage-preview-locomotion.js"></script><script src="/ui-generated-20261030/characters-v1/thief-preview-motion-profiles.js"></script><script src="/ui-generated-20261030/characters-v1/thief-preview-locomotion.js"></script><script src="/ui-generated-20261030/characters-v1/character-sprites.js"></script><script src="/ui-generated-20261030/characters-v1/archer-right-preview-locomotion.js"></script><script src="/ui-generated-20261030/characters-v1/archer-right-preview-adapter.js"></script><script src="/ui-generated-20261030/progression-maps-20261102/encounter-catalog.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-live-session.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-live-view.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-hero-readability.js"></script><script src="/ui-generated-20261030/scene-bound-20261102/scene.js"></script>
+<script src="/ui-generated-20261030/hud-angels-20261102/scene-original-rituals.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/atlas-talents-ui.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/atlas-progression-ui.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-atlas-guide.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-chat-ui.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-window-manager.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js"></script></body></html>
