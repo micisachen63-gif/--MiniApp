@@ -4,8 +4,6 @@ import * as AUTH from './auth.js';
 import * as DATA from './data.js';
 import * as GRANTS from './grants.js';
 import {approvePair} from './pairing.js';
-import {drainSeasonStep,sealSeason,importSeasonStep} from '../realm/season-transfer.js';
-import {resolveRealm,transitionRealmPhase} from '../realm/index.js';
 const headers={'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'no-referrer','x-robots-tag':'noindex, nofollow'};
 const json=(body,status=200,extra={})=>new Response(JSON.stringify({ok:true,...body}),{status,headers:{...headers,...extra}});
 const publicAdmin=({id,name,role,csrf,expiresAt})=>({id,name,role,csrf,expiresAt});
@@ -45,17 +43,9 @@ export async function handleAdmin(request,env,now=Date.now(),rootEnv=env){
   }
   const admin=await AUTH.session(request,env,now,{csrf:true});
   if(action.startsWith('season/')){
-   if(String(rootEnv.SEASON_TRANSFER_ENABLED)!=='true')throw new GameError('season_maintenance_disabled','季末維護尚未開放',403);
-   if(typeof b.realmId!=='string'||b.realmId==='permanent')throw new GameError('realm_required','請指定明確賽季');
-   const realm=await resolveRealm(rootEnv,b.realmId);
-   if(action==='season/status')return json({realm:{id:realm.id,phase:realm.phase,fenceEpoch:realm.fenceEpoch,cutoffAt:realm.cutoffAt}});
-   if(b.expectedPhase!==realm.phase||b.expectedFenceEpoch!==realm.fenceEpoch)throw new GameError('realm_fence_changed','請重新核對賽季階段',409);
-   await env.DB.prepare('INSERT INTO rpg_admin_audit(admin_tg_id,action,details,created_at) VALUES(?,?,?,?)').bind(admin.id,action,JSON.stringify({realmId:realm.id,expectedPhase:realm.phase,expectedFenceEpoch:realm.fenceEpoch,cutoffAt:realm.cutoffAt,stage:'intent'}),now).run();
-   if(action==='season/freeze')return json({phase:(await transitionRealmPhase(rootEnv,b.realmId,{expectedPhase:realm.phase,expectedFenceEpoch:realm.fenceEpoch,nextPhase:'FREEZE',cutoffAt:b.cutoffAt,now})).phase});
-   if(action==='season/drain')return json(await drainSeasonStep(rootEnv,b.realmId,{now,limit:b.limit}));
-   if(action==='season/seal'){const sealed=await sealSeason(rootEnv,b.realmId,{now,limit:b.limit});return json(sealed.manifest?{status:sealed.status,manifestHash:sealed.manifestHash,tables:sealed.manifest.tables.length,chunks:sealed.manifest.chunkCount}:sealed);}
-   if(action==='season/import')return json(await importSeasonStep(rootEnv,b.realmId,{now,limit:b.limit}));
-   throw new GameError('not_found','未知的季末維護操作',404);
+   // Seasons remain closed. The retired character/asset import must not become
+   // reachable through its old environment flag; future seasons carry rewards only.
+   throw new GameError('season_maintenance_disabled','賽季尚未開放；不提供賽季角色與資產移轉',403);
   }
   if(action==='logout'){
    await env.DB.prepare('UPDATE rpg_admin_sessions SET revoked_at=? WHERE token_hash=?').bind(now,admin.hash).run();
