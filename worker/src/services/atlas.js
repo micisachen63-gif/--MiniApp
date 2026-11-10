@@ -253,6 +253,7 @@ export async function settle(env,charId,body,now){
  }
 }
 
+const STOP_DRAIN_CHUNKS=15;
 export async function stop(env,charId,body,now){
  const db=env.DB,p=await playerFor(env,charId),account=p.char.account_tg_id||charId,id=requestId(body);
  if(!Object.hasOwn(p.char,'atlas_run_id'))ensure(env,now);
@@ -266,7 +267,12 @@ export async function stop(env,charId,body,now){
   try{await db.batch([db.prepare('UPDATE rpg_atlas_runs SET stop_at=COALESCE(stop_at,?),rev=rev+1 WHERE id=? AND char_id=?').bind(at,target,charId),guardStmt(db),receiptStmt(db,account,id,'stop',signature,{runId:target,stopAt:run.stop_at??at},now)]);}catch(error){if(!await receipt(db,account,id,'stop',signature))throw ruleError(error);}
  }
  if(p.char.atlas_run_id&&p.char.atlas_run_id!==target)return status(env,charId,now);
- return settle(env,charId,{runId:target},now);
+ // 返營 must return now: drain the bounded catch-up chunks up to the stop
+ // point instead of leaving the rest to the minute sweep (which kept the run
+ // "running" and the character locked after the player pressed stop).
+ let result=await settle(env,charId,{runId:target},now);
+ for(let chunk=1;chunk<STOP_DRAIN_CHUNKS&&result?.run?.status==='running'&&result.run.progress?.catchingUp;chunk++)result=await settle(env,charId,{runId:target},now);
+ return result;
 }
 
 export async function craft(env,charId,body,now){

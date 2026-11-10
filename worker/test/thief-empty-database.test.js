@@ -73,6 +73,11 @@ test('fresh initialization preserves historical definitions except reviewed clas
     characterSchema.exec(before.find(row=>row.name==='idx_rpg_characters_account_slot').sql);
     characterSchema.exec('CREATE VIEW rpg_live_characters AS SELECT * FROM rpg_characters WHERE deleted_at IS NULL');
     characterSchema.exec(endgameSql);
+    // 0046 removes exactly one reviewed 0036 trigger: switching away from a character on an Atlas run is allowed.
+    const switchSql=readFileSync(new URL('../migrations/0046_atlas_allow_character_switch.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    assert.deepEqual([...switchSql.matchAll(/^\s*(CREATE|DROP|ALTER|INSERT|UPDATE|DELETE)\b[^;]*;/gim)].map(m=>m[0].trim()),['DROP TRIGGER IF EXISTS rpg_atlas_character_switch_guard;']);
+    assert.equal(realmAtlasObjects.get('rpg_atlas_character_switch_guard'),'trigger');
+    characterSchema.exec(switchSql);realmAtlasObjects.delete('rpg_atlas_character_switch_guard');
     const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
     assert.equal(realmAtlasExpected.length,realmAtlasObjects.size);
     const runningSweep=realmAtlasExpected.find(row=>row.name==='rpg_atlas_running_sweep');
@@ -100,6 +105,7 @@ test('fresh initialization preserves historical definitions except reviewed clas
     // unique indexes and triggers, while keeping the historical SQL comparison exact.
     assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)&&!streamNames.has(row.name)), expected);
     assert.deepEqual(schemaRows(current).filter(row=>realmAtlasObjects.has(row.name)),realmAtlasExpected);
+    assert.equal(schemaRows(current).some(row=>row.name==='rpg_atlas_character_switch_guard'),false);
     for(const [name,type] of retirementObjects){const found=schemaRows(current).filter(r=>r.name===name);assert.equal(found.length,1,name);assert.equal(found[0].type,type,name);}
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);
