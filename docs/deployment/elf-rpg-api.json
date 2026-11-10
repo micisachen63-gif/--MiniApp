@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "ae0e4145569a70ea6bc3b2926310ce5fa52a6651",
+  "sourceCommit": "51995a20f45a2fb13619ffbd49f589cdb019e6ad",
   "service": "elf-rpg-api",
-  "productionVersion": "5381eab5-51f9-4eb0-922b-8728093705ae",
+  "productionVersion": "92a8aa5c-2412-477c-befd-39df20ee8f36",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-10T09:30:28.147Z",
+  "verifiedAt": "2026-11-10T11:24:17.448Z",
   "runtimeSHA256": {
-    "index.js": "444fa7628eacd6292be3a9e15ee2b188e85537bdf1d580780bdb55627f286c64"
+    "index.js": "d14b8fdd905fda0515b73cececec82d794aebcdbc52ca60cd3b86ee1421a47e1"
   },
   "source": {
-    "fileCount": 14578,
-    "sha256": "2b7b26af98712f7b08b8c5828ff556c1fd7992084a4d1663dcc99ee5f4f4d5ac",
+    "fileCount": 14582,
+    "sha256": "ac3ded05958be3acc69b9bd4a62795e66c628f686374be39591e4a82a1137359",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -36359,11 +36359,11 @@
       },
       {
         "file": "worker/public/equipment-collection-ui.css",
-        "sha256": "fd317933b0d5a0a53fdb9bc702eaacaab25684a47a17221dd6623eeab6bc1595"
+        "sha256": "838bc427dc436b4bdceeb0ea3986571e8905444a09ca77024d39d66c5b49ebe0"
       },
       {
         "file": "worker/public/equipment-collection-ui.js",
-        "sha256": "77797d66b62d1f2f3869c7b365019397ee3cecd0019c68b697e30e2d5ab0bf67"
+        "sha256": "a36b090ffdac144f7cf754b1a51db091b4454b39f2713d4e7ebae6979aa6b6f9"
       },
       {
         "file": "worker/public/equipment-live-sync.js",
@@ -42991,7 +42991,7 @@
       },
       {
         "file": "worker/public/request-client.js",
-        "sha256": "a944836bb1baab98b35f25aad41451e466fe947e34bfa865465a1f1b0bfb4dbb"
+        "sha256": "470e147d5cbfe9f1ab7f01886dc46ac053212401ae64265c1bcdf0600bfa551b"
       },
       {
         "file": "worker/public/scene-atlas-guide.js",
@@ -43115,15 +43115,15 @@
       },
       {
         "file": "worker/public/scene-live-session.js",
-        "sha256": "9b3f49b887c8cdc79121b97562fc3faac286a4efb66d456329b543ddb80945e8"
+        "sha256": "012219c405b948df76e3402e3b4b55fdc44b89ae38afa30f4ba41e7bed2ccaca"
       },
       {
         "file": "worker/public/scene-live-view.css",
-        "sha256": "6b64d165ded50f71d8a876fac99f81d5b8e583faceb8fd7a34f450b4703a3cc2"
+        "sha256": "4cbc3417b74087f4ae3aa992c9b817331fc8973d5ed44e5ab0755da15027dcca"
       },
       {
         "file": "worker/public/scene-live-view.js",
-        "sha256": "f42c34c7dd659566073f34c5f6ff006c529d6e815001a38bcafe8952d25e317b"
+        "sha256": "4e7306d371a8b9b995bb20b0160cad9662d6df15ee2d01c0dc9659aa81218340"
       },
       {
         "file": "worker/public/scene-map-preview-controls.js",
@@ -43151,7 +43151,7 @@
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "fae2278d2cd6c20e641666b85ce624412e7e7f2c87e42b8a940f9823896b3282"
+        "sha256": "a91d1b854c93e918395a1587ea38fa2f755bd565fad94be929748f21c4405b67"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -43163,7 +43163,7 @@
       },
       {
         "file": "worker/public/scene-social-preview.css",
-        "sha256": "81f51618f1dda990243c60d7d06716a42eb7d7323ab1380dd08afa59f0b14128"
+        "sha256": "661e6e07eb199039f4937da0252ad9f4db936f055c7bf3304bd1d95836217ccd"
       },
       {
         "file": "worker/public/scene-social-preview.js",
@@ -55739,11 +55739,11 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.css",
-        "sha256": "fd317933b0d5a0a53fdb9bc702eaacaab25684a47a17221dd6623eeab6bc1595"
+        "sha256": "838bc427dc436b4bdceeb0ea3986571e8905444a09ca77024d39d66c5b49ebe0"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.js",
-        "sha256": "77797d66b62d1f2f3869c7b365019397ee3cecd0019c68b697e30e2d5ab0bf67"
+        "sha256": "a36b090ffdac144f7cf754b1a51db091b4454b39f2713d4e7ebae6979aa6b6f9"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/equipment-live-sync.js",
@@ -56035,7 +56035,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/request-client.js",
-        "sha256": "a944836bb1baab98b35f25aad41451e466fe947e34bfa865465a1f1b0bfb4dbb"
+        "sha256": "470e147d5cbfe9f1ab7f01886dc46ac053212401ae64265c1bcdf0600bfa551b"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-atlas-guide.js",
@@ -56155,15 +56155,15 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-        "sha256": "9b3f49b887c8cdc79121b97562fc3faac286a4efb66d456329b543ddb80945e8"
+        "sha256": "012219c405b948df76e3402e3b4b55fdc44b89ae38afa30f4ba41e7bed2ccaca"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
-        "sha256": "6b64d165ded50f71d8a876fac99f81d5b8e583faceb8fd7a34f450b4703a3cc2"
+        "sha256": "4cbc3417b74087f4ae3aa992c9b817331fc8973d5ed44e5ab0755da15027dcca"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-        "sha256": "f42c34c7dd659566073f34c5f6ff006c529d6e815001a38bcafe8952d25e317b"
+        "sha256": "4e7306d371a8b9b995bb20b0160cad9662d6df15ee2d01c0dc9659aa81218340"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-map-preview-controls.js",
@@ -56191,7 +56191,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
-        "sha256": "81f51618f1dda990243c60d7d06716a42eb7d7323ab1380dd08afa59f0b14128"
+        "sha256": "661e6e07eb199039f4937da0252ad9f4db936f055c7bf3304bd1d95836217ccd"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js",
@@ -57687,7 +57687,7 @@
       },
       {
         "file": "worker/src/game/atlas-scene.js",
-        "sha256": "b704118dc7f4e88e162bb7dc471ab32448245f2a5a5bd56d474c724dd02695e0"
+        "sha256": "3161eb536cb45d94ba3e9ddfd7fa7c4f1c2e457d180e30a7ffda2b5ae6ce2e3d"
       },
       {
         "file": "worker/src/game/atlas-supplies.js",
@@ -57807,7 +57807,11 @@
       },
       {
         "file": "worker/src/game/gear.js",
-        "sha256": "8d6e3703610b84a9269a9e4f64770717a3e1a009df40fa0669b896920c9f8346"
+        "sha256": "759246557428c06a8a60e74726e1c0154f10792400fdb59778a9dd2d8e0c1231"
+      },
+      {
+        "file": "worker/src/game/gearbook-shop.js",
+        "sha256": "ed7e3aed30bfa8b47cd169f6c6db2f2e8c1d175c1e8114179920f6ad958aa4a5"
       },
       {
         "file": "worker/src/game/guardian-assist.js",
@@ -57827,7 +57831,11 @@
       },
       {
         "file": "worker/src/game/idle-combat.js",
-        "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+        "sha256": "9ec20bccc5a648733a89e69e57fc05700680932cfc21d8d3cafdf1d6c7c569b5"
+      },
+      {
+        "file": "worker/src/game/idle-map.js",
+        "sha256": "32648a35c06bd134f307976badc6c7d795e1f6e6e2cad1747dc061367f366e36"
       },
       {
         "file": "worker/src/game/idle-skill-rotation.js",
@@ -57835,7 +57843,7 @@
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "88968ea7f545326974c2612dfdd5a346ea209550e81d53a2cdde0bd4ff94c24b"
+        "sha256": "f5bb4becefaae3afce98da2e6f88894be7410ee679e69a79715f7098435c957e"
       },
       {
         "file": "worker/src/game/item-art.js",
@@ -57947,7 +57955,7 @@
       },
       {
         "file": "worker/src/game/stats.js",
-        "sha256": "3b6e948ce0b29f5ad70fba735c705a21de984cf169451e87b16f7763f71e4770"
+        "sha256": "d228b3d96dc023568d0ee8c79e044f72c1ab061c4b97afdff275ae0bc8019727"
       },
       {
         "file": "worker/src/game/thief-advancement.js",
@@ -57979,7 +57987,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "76a5e088dca8e75f4e81efda2808ea594861cab1907387ff2787fc4cc7090589"
+        "sha256": "05313f7d50c199e60c42be91a0e0dedf49c63a26b00de6e3783df20f427ecd9f"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -58091,7 +58099,7 @@
       },
       {
         "file": "worker/src/services/equipment-collection.js",
-        "sha256": "c6daf8a8bc3a0d27cfc1c8e07559916a3bd037fb2ecb4e1d41c2cdc52741c1c9"
+        "sha256": "100ba59f7fd0b52caadd4bbd5d5e6ea67652ab118b8b969f08984755b342e342"
       },
       {
         "file": "worker/src/services/equipment-recovery.js",
@@ -58154,6 +58162,10 @@
         "sha256": "d79fffd7dceaf2353284938654b614de02f542f7a2a6f2ce4c852db3642378d0"
       },
       {
+        "file": "worker/src/services/gearbook-shop.js",
+        "sha256": "9a54680fc12db80aa7d805fcf8dbd29ac885c3547b1de04f3c4da545b9831847"
+      },
+      {
         "file": "worker/src/services/guardian-auto.js",
         "sha256": "cab3fb9bacd752d5d33e8002e222b47dd363c8bbbc754ab67ebad6903ec8ad23"
       },
@@ -58184,6 +58196,10 @@
       {
         "file": "worker/src/services/home-activity.js",
         "sha256": "0480faebc68b7c8aa816ec215c42b4fc7369d74667c0b6637665e827fb174b93"
+      },
+      {
+        "file": "worker/src/services/idle-map.js",
+        "sha256": "d88f8233fcdbfbf80ae6628612f0aab54252e79977ab1bae65a81906932449ba"
       },
       {
         "file": "worker/src/services/journal.js",
@@ -58311,7 +58327,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "c428234a9b88c21effead2691e0f452d5a06fc309ee703f1ed818eededf3b9e7"
+        "sha256": "efa54a641d55e4c7f02a08bbac4e7fc12ceb54b8eaea43ad1fcc63167e3515aa"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -58329,7 +58345,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 232,
+    "verifiedCount": 238,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -58561,14 +58577,20 @@
       "worker/public/thief-fx.js",
       "worker/public/thief-gear-art.js",
       "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A122_m-death-right-arms-v2-private-644fe43b3fcac6f6.png",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-character-admin.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.css",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/request-client.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
       "worker/public/ui-refined.css"
     ]
   },
   "protectedState": {
     "versions": [
       {
-        "version_id": "5381eab5-51f9-4eb0-922b-8728093705ae",
+        "version_id": "92a8aa5c-2412-477c-befd-39df20ee8f36",
         "percentage": 100
       }
     ],
