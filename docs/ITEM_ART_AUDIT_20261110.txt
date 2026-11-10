@@ -24,3 +24,6 @@
 首輪063dd0e的素材上傳於2,084/4,171後ECONNRESET退出；只讀即時狀態已確認仍為舊版d269、綁定／cron與原收據一致，沒有盲重送或回滾玩家。保留首次pending／log，待本批新來源通過後走正常發布。
 新增可選RPG_CF_STABLE_TRANSPORT=1：正常release-sync唯讀HTTP與鎖版Wrangler使用單一IPv4、不重用連線；不改URL、body、憑證、TLS驗證、檢查、備份／收據或Wrangler重試上限。preload由NODE_OPTIONS載入scripts/cf-stable-transport.cjs，undici固定7.29.1（原鎖檔已有同版，改列直接dev依賴）。此為針對實際連線重置的傳送緩解，不宣稱已證實供應商根因。
 官方Undici Client pipelining=0停用keep-alive，與Agent connections上限文件：https://github.com/nodejs/undici/blob/v7.29.1/docs/docs/api/Client.md 。新測試確認三個POST body不變、峰值並行1、各自新連線；仍須實際發布完成才回報同步。
+
+天使與雲層續修（使用者再次指出昨天要求未達）
+原頭頂展示上限160、雲層24px，實測390x844天使124.8px／雲24px，顯示太小。保留原天使與原八格divine-mist貼圖，完整高度場景以顯示相機預留約10%高度，不改玩家world座標／攻擊權威或HUD按鈕。天使目標164–220px並以真不透明人物頭頂壓縮保護；雲54–68px，維持人物頭上10px間隔。雲先出現，天使載入後再延遲0.5秒淡入；動態雲循環有自己的完整keyframes，不依賴他頁偶然載入。小高度橫屏空間不足時仍保護人物，不壓臉。新尺寸與雲出場須以實際手機瀏覽器影像驗收，不把DOM有class當完成。

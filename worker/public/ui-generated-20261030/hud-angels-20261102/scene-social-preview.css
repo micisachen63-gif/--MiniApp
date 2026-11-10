@@ -440,7 +440,7 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
 
 /* The ground remains visible through the five floating destinations. */
 body:has(#ui.scene-unified-root) #vig{background:linear-gradient(#0003,transparent 18%,transparent)!important}
-.scene-live-guardian{position:absolute;object-fit:contain;pointer-events:none;z-index:10;filter:drop-shadow(0 0 5px #ece8d56b) drop-shadow(0 0 11px #d6c99255);animation:scene-guardian-hover 4s ease-in-out infinite}
+.scene-live-guardian{position:absolute;object-fit:contain;pointer-events:none;z-index:10;filter:drop-shadow(0 0 5px #ece8d56b) drop-shadow(0 0 11px #d6c99255);animation:scene-guardian-arrive .65s .5s ease-out both,scene-guardian-hover 4s 1.15s ease-in-out infinite}
 .scene-live-guardian[hidden]{display:none}
 @keyframes scene-guardian-hover{50%{transform:translateY(-5px)}}
 @media(prefers-reduced-motion:reduce){.scene-live-guardian{animation:none}}
@@ -545,11 +545,11 @@ body #ui #scene-original-summon .guardian-preview-feather{touch-action:none}
 @media(max-width:600px){#ui.scene-unified-root .scene-unified-dialog .si-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 @media(max-width:360px){#ui.scene-unified-root .scene-unified-dialog .si-list button.si-row-open{padding:8px!important;gap:3px}#ui.scene-unified-root .scene-unified-dialog .si-list .si-row-copy strong{font-size:11px}#ui.scene-unified-root .scene-unified-dialog .si-card-count{font-size:11px}}
 /* Original eight-frame divine mist bridges the angel's feet and hero head. */
-.scene-live-guardian-cloud{position:absolute;z-index:9;pointer-events:none;opacity:.72;--guardian-idle-color:#e9dfc6}
+.scene-live-guardian-cloud{position:absolute;z-index:9;pointer-events:none;opacity:.96;--guardian-idle-color:#f3e9d0;animation:scene-guardian-cloud-arrive .45s ease-out both}
 .scene-live-guardian-cloud[hidden]{display:none}
-.scene-live-guardian-cloud>i,.scene-live-guardian-cloud>b{position:absolute;inset:0;display:block;mask:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;-webkit-mask:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;animation:guardian-divine-cloud-roll 2.8s steps(1,end) infinite}
-.scene-live-guardian-cloud>i{background:linear-gradient(180deg,#fff9e8,var(--guardian-idle-color) 60%,transparent);filter:drop-shadow(0 0 4px #e9dfc64d)}
-.scene-live-guardian-cloud>b{background:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;mask:none;-webkit-mask:none;opacity:.65;mix-blend-mode:screen}
+.scene-live-guardian-cloud>i,.scene-live-guardian-cloud>b{position:absolute;inset:0;display:block;mask:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;-webkit-mask:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;animation:scene-guardian-cloud-roll 2.8s steps(1,end) infinite}
+.scene-live-guardian-cloud>i{opacity:.32;background:linear-gradient(180deg,#fff9e8,var(--guardian-idle-color) 60%,transparent);filter:drop-shadow(0 2px 3px #17243baa) drop-shadow(0 0 4px #fff0c688)}
+.scene-live-guardian-cloud>b{background:url('/art/guardian-controls-20261014/divine-mist-atlas.png') 0 0/400% 200% no-repeat;mask:none;-webkit-mask:none;opacity:.88;mix-blend-mode:screen}
 @media(prefers-reduced-motion:reduce){.scene-live-guardian-cloud>*{animation:none!important}}
 
 #ui.scene-unified-root .scene-unified-dialog .si-filter-drawer{margin:0 0 12px;border:1px solid #af95644d;border-radius:6px;background:#1121379c}
@@ -612,3 +612,8 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
 .scene-login-status[hidden]{display:none}.scene-login-status h2{font-size:24px;margin:0 0 16px}.scene-login-status p{font-size:15px;line-height:1.8;overflow-wrap:anywhere}.scene-login-status button,.scene-login-status a{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:44px;margin:6px 6px 0 0;padding:9px 12px;border:1px solid #c2a66c66;border-radius:6px;color:#f0d9a8;background:#1a2c43;font:inherit;text-decoration:none;cursor:pointer}.scene-login-status :focus-visible{outline:2px solid #f1d38f;outline-offset:3px}.scene-login-status button[hidden]{display:none}
 
 .scene-producer-credit{display:flex;justify-content:center;gap:8px;margin:18px 0 6px;color:#b8b4a5;font-size:12px;line-height:1.5}.scene-producer-credit strong{font-weight:400;color:#d8c79f}
+
+@keyframes scene-guardian-arrive{from{opacity:0}to{opacity:1}}
+@keyframes scene-guardian-cloud-arrive{from{opacity:0;transform:scale(.82)}to{opacity:.96;transform:scale(1)}}
+@keyframes scene-guardian-cloud-roll{0%,100%{mask-position:0% 0%;-webkit-mask-position:0% 0%;background-position:0% 0%}12.5%{mask-position:33.333333% 0%;-webkit-mask-position:33.333333% 0%;background-position:33.333333% 0%}25%{mask-position:66.666667% 0%;-webkit-mask-position:66.666667% 0%;background-position:66.666667% 0%}37.5%{mask-position:100% 0%;-webkit-mask-position:100% 0%;background-position:100% 0%}50%{mask-position:0% 100%;-webkit-mask-position:0% 100%;background-position:0% 100%}62.5%{mask-position:33.333333% 100%;-webkit-mask-position:33.333333% 100%;background-position:33.333333% 100%}75%{mask-position:66.666667% 100%;-webkit-mask-position:66.666667% 100%;background-position:66.666667% 100%}87.5%{mask-position:100% 100%;-webkit-mask-position:100% 100%;background-position:100% 100%}}
+@media(prefers-reduced-motion:reduce){.scene-live-guardian,.scene-live-guardian-cloud,.scene-live-guardian-cloud>*{animation:none!important}}

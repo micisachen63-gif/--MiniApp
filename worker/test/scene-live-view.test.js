@@ -201,9 +201,17 @@ test('all survey maps reuse only their exact theme and normal or elite assets', 
 test('larger guardian and original cloud stay above every opaque hero head and inside the HUD edges',()=>{
  const api=viewApi(),root={left:10,top:20,width:390,height:844};
  for(const hero of [{x:130,y:280,width:95,height:170},{x:140,y:330,width:120,height:210},{x:120,y:400,width:160,height:230},{x:145,y:500,width:110,height:150}]){
-  const p=api.guardianPlacement(hero,root);assert.ok(p.size>82,'visible angel is larger than old cap');assert.ok(p.top>=94);assert.ok(p.top+p.size<=p.cloudTop+.01);assert.ok(p.cloudTop+p.cloudHeight<=hero.y-root.top-10+.01,'mist cannot cover the hero face');assert.ok(p.cloudLeft>=8&&p.cloudLeft+p.cloudWidth<=root.width-8);
+  const p=api.guardianPlacement(hero,root);assert.ok(p.size>82,'visible angel is larger than old cap');assert.ok(p.top>=64);assert.ok(p.top+p.size<=p.cloudTop+.01);assert.ok(p.cloudTop+p.cloudHeight<=hero.y-root.top-10+.01,'mist cannot cover the hero face');assert.ok(p.cloudLeft>=8&&p.cloudLeft+p.cloudWidth<=root.width-8);
  }
 });
 test('guardian compresses safely near the ceiling and hides when no separate overhead room remains',()=>{
- const api=viewApi(),root={left:0,top:0,width:320,height:390};assert.equal(api.guardianPlacement({x:90,y:150,width:100,height:160},root),null);const p=api.guardianPlacement({x:-25,y:225,width:70,height:130},root);assert.ok(p&&p.top>=94);assert.ok(p.cloudLeft>=8);assert.ok(p.cloudTop+p.cloudHeight<=215);
+ const api=viewApi(),root={left:0,top:0,width:320,height:390};assert.equal(api.guardianPlacement({x:90,y:150,width:100,height:160},root),null);const p=api.guardianPlacement({x:-25,y:225,width:70,height:130},root);assert.ok(p&&p.top>=64);assert.ok(p.cloudLeft>=8);assert.ok(p.cloudTop+p.cloudHeight<=215);
+});
+
+
+test('guardian reserves camera overhead on full-height scenes and keeps cloud before angel',()=>{
+ const api=viewApi();assert.equal(api.guardianCameraOffset(844),84.4);assert.equal(api.guardianCameraOffset(390),0);assert.equal(api.guardianCameraOffset(1200),92);
+ const root={left:0,top:0,width:390,height:844};const hero={x:150,y:253+api.guardianCameraOffset(844),width:85,height:170};const p=api.guardianPlacement(hero,root);
+ assert.ok(p.size>=179&&p.size/124.8>=1.4);assert.ok(p.cloudHeight>=54);assert.ok(p.top>=64);assert.ok(p.top+p.size<=p.cloudTop+.01);assert.ok(p.cloudTop+p.cloudHeight<=hero.y-10+.01);
+ const cloud=viewSource.indexOf('guardianCloud.hidden=false;',viewSource.indexOf('function placeGuardian'));assert.ok(cloud<viewSource.indexOf('if(!guardianReady)',cloud));
 });
