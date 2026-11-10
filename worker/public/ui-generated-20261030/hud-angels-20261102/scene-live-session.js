@@ -189,8 +189,15 @@
         if (!disposed) await refresh({ force: true }).catch(() => {});
       }
     }
+    // Owner decision (2026-11-10): no timed status polling. start() reads the
+    // state once; later reads follow a player action or the manual 同步 control.
+    // Atlas runs keep advancing on the server's one-minute background sweep.
+    // options.autoSync === true restores the former cadence (tests/tools only).
+    let started = false;
     function start() {
-      if (timer || disposed) return;
+      if (started || disposed) return;
+      started = true;
+      if (options.autoSync !== true) { void sync().catch(() => {}); return; }
       const run = () => { if (!selecting && !options.isHidden?.()&&now()>=nextPollAt){nextPollAt=now()+(snapshot?.run?.map?.progression?1000:pollMs);void sync().catch(() => {});} };
       run(); timer = (options.setInterval || globalThis.setInterval)(run, Math.min(1000,pollMs));
     }
@@ -223,7 +230,7 @@
     onError: error => window.dispatchEvent(new CustomEvent('rpg:scene-error', { detail: { message: error.message, code: error.code } })),
   });
   Object.assign(api, session);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) void session.sync().catch(() => {}); });
+  // No refresh on tab return (owner decision 2026-11-10); use the scene's 同步 control.
   window.addEventListener('pagehide', () => session.dispose(), { once: true });
   session.start();
 })();

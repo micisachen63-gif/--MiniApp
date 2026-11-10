@@ -237,12 +237,11 @@ test('offline state removes skill projections and marks retained potion values a
   assert.equal(h.api.inspectHUD().status, 'error'); assert.equal(h.skill(0).dataset.skillId, '');
   assert.equal(h.skill(0).querySelector('.hud-v2-count').textContent, '', 'no simulated cooldown');
 });
-test('hidden-page snapshots do not start new skill requests; visibility resumes one scoped read', async () => {
+test('a committed snapshot reads skills once even when hidden; returning to the tab does not poll again', async () => {
   const h = harness(); h.visibility(true); const snap = snapshot(); h.publish(snap); await tick();
-  assert.equal(h.requests.length, 0);
-  h.visibility(false); await tick(); assert.equal(h.requests.length, 1);
+  assert.equal(h.requests.length, 1);
   h.requests[0].resolve(skills(snap)); await tick();
-  h.visibility(false); await tick(); assert.equal(h.requests.length, 1);
+  h.visibility(false); await tick(); h.visibility(true); h.visibility(false); await tick(); assert.equal(h.requests.length, 1);
 });
 
 test('a valid snapshot renders genuine resources even before the Phaser viewer finishes mounting', async () => {
@@ -261,13 +260,12 @@ test('a context switch before the pending microtask does not issue an obsolete r
   assert.equal(h.skill(0).dataset.skillId, ''); assert.equal(h.skill(0).disabled, true);
 });
 
-test('accepted skill revision floor survives same-context offline and visibility resets', async () => {
-  for (const reset of ['offline', 'hidden']) {
+test('accepted skill revision floor survives a same-context offline reset', async () => {
+  for (const reset of ['offline']) {
     const snap = snapshot({ revision: 7 }), h = harness(snap); await tick();
     h.requests[0].resolve(skills(snap, { revision: 9 })); await tick();
     assert.equal(h.api.inspectHUD().revision, 9);
-    if (reset === 'offline') { h.error(); h.publish(snap); }
-    else { h.visibility(true); h.publish(snap); h.visibility(false); }
+    h.error(); h.publish(snap);
     await tick(); h.requests[1].resolve(skills(snap, { revision: 8, loadout: ['mage-flame'] })); await tick();
     assert.equal(h.api.inspectHUD().status, 'error', reset);
     assert.equal(h.skill(0).dataset.skillId, '', reset);

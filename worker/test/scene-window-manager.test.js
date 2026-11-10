@@ -138,7 +138,8 @@ test('functional tabs retain every hub feature and preserve local tab state',()=
  const start=social.indexOf('function paintHub('),end=social.indexOf('async function mountUnified(',start);
  const box={actor:{name:'旅人',level:120},liveSession:{getSnapshot:()=>({run:{active:false}})},document:{createElement:hubNode}};
  vm.runInNewContext(social.slice(start,end)+'\nglobalThis.paint=paintHub;',box);
- const expected={character:['equipment','inventory','star-ring-shop','guardian','characters','skills','career','build','talents','book-tools','progression','ledger','lineage'],adventure:['expedition','live-status','progression','supplies','maps','party','tower','boss','star-ring','quests','fate','bestiary','daily','journal'],camp:['workshop','tower-imprint','inscription','recovery','gearbook','shop','exchange','direct-trade','supplies','guardian-summon','fate-gifts','boss-essence','star-ring-shop','collections']};
+ const expected={character:['equipment','inventory','star-ring-shop','guardian','characters','skills','career','build','talents','book-tools','progression','ledger','lineage'],adventure:['expedition','live-status','progression','supplies','maps','party','tower','boss','star-ring','quests','fate','daily','journal'],camp:['workshop','tower-imprint','inscription','recovery','gearbook','shop','exchange','direct-trade','supplies','guardian-summon','fate-gifts','boss-essence','star-ring-shop','collections']};
+ assert.doesNotMatch(social.slice(start,end),/bestiary|怪物圖鑑/,'怪物圖鑑 removed from 冒險 > 任務旅章 (owner decision 2026-11-10)');
  for(const [route,routes] of Object.entries(expected)){
   const body=hubNode(),calls=[],host={draft:{},navigate:(...v)=>calls.push(v)};box.paint(body,route,host);
   const tabs=body.children[0].children.map(t=>t.dataset.hubTab),found=[];
@@ -148,4 +149,12 @@ test('functional tabs retain every hub feature and preserve local tab state',()=
   let prevented=false;body.children[0].children.at(-1).onkeydown({key:'Home',preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.equal(host.draft.hubTab,tabs[0]);
   host.draft.hubTab='unrelated-category';box.paint(body,route,host);assert.equal(host.draft.hubTab,tabs[0]);
  }
+});
+
+test('scene social layer polls chat only while the chat window is open and has no quest poll (owner decision 2026-11-10)',()=>{
+ const social=fs.readFileSync(new URL('../public/scene-social-preview.js',import.meta.url),'utf8');
+ const polls=[...social.matchAll(/setInterval\(([\s\S]{0,160}?),(\d+)\)/g)].filter(m=>/chat\.refresh|refreshQuests/.test(m[1]));
+ assert.equal(polls.length,1);assert.match(polls[0][1],/kind!=='chat'/);assert.equal(polls[0][2],'5000');
+ assert.doesNotMatch(social,/questPoll/);assert.match(social,/rpg:scene-manual-refresh/);
+ assert.doesNotMatch(social,/['"]bestiary['"]/,'no bestiary route or hub tile');
 });

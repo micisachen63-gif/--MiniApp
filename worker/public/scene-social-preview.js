@@ -150,12 +150,14 @@
  }
 
  document.addEventListener('keydown',e=>{if(windowManager||!dialog)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close();return;}if(e.key==='Tab'){const items=[...dialog.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')].filter(el=>el.tabIndex>=0&&!el.disabled&&el.getClientRects().length),first=items[0],last=items.at(-1);if(e.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}},true);
- const poll=setInterval(()=>{if(document.hidden||disposed)return;if(kind==='chat')void chat.refresh();else if(Date.now()-(chat.state.syncedAt||0)>=30000)void chat.refresh();},5000);
- const questPoll=setInterval(()=>{if(!document.hidden&&!disposed)void bootstrap();},30000);
- window.addEventListener('pagehide',()=>{disposed=true;clearInterval(poll);clearInterval(questPoll);windowManager?.dispose();chat.dispose();},{once:true});
+ // Owner decision (2026-11-10): chat polls every 5 s only while the chat window is open and visible;
+ // quests and the chat strip refresh after player actions and the manual 同步 control, never on a timer.
+ const poll=setInterval(()=>{if(document.hidden||disposed||kind!=='chat')return;void chat.refresh();},5000);
+ window.addEventListener('rpg:scene-manual-refresh',()=>{if(!disposed&&actor)void Promise.all([chat.refresh(),refreshQuests()]).catch(()=>{});});
+ window.addEventListener('pagehide',()=>{disposed=true;clearInterval(poll);windowManager?.dispose();chat.dispose();},{once:true});
 
  const unifiedRoutes={
-  lineage:{title:'完整成長樹',group:'character'},'equipment-tools':{title:'裝備服務',group:'character'},'book-tools':{title:'技能書分享與交易',group:'character'},maps:{title:'地圖圖鑑',group:'adventure'},bestiary:{title:'怪物圖鑑',group:'adventure'},collections:{title:'地圖收藏與祝福',group:'camp'},daily:{title:'每日補給金',group:'adventure'},journal:{title:'旅團日誌',group:'adventure'},hall:{title:'英雄殿堂',group:'social'},duel:{title:'競技決鬥',group:'social'},
+  lineage:{title:'完整成長樹',group:'character'},'equipment-tools':{title:'裝備服務',group:'character'},'book-tools':{title:'技能書分享與交易',group:'character'},maps:{title:'地圖圖鑑',group:'adventure'},collections:{title:'地圖收藏與祝福',group:'camp'},daily:{title:'每日補給金',group:'adventure'},journal:{title:'旅團日誌',group:'adventure'},hall:{title:'英雄殿堂',group:'social'},duel:{title:'競技決鬥',group:'social'},
   character:{title:'角色',group:'character'},ledger:{title:'帳務紀錄',group:'character'},'direct-trade':{title:'雙方交易',group:'camp'},exchange:{title:'旅人交易所',group:'camp'},equipment:{title:'目前裝備',group:'character'},item:{title:'裝備詳情',group:'inventory'},
   inventory:{title:'背包',group:'inventory'},adventure:{title:'冒險',group:'adventure'},camp:{title:'營地',group:'camp'},
   chat:{title:'聊天與社交',group:'social'},quests:{title:'任務與委託',group:'adventure'},characters:{title:'選擇角色',group:'character'},
@@ -202,7 +204,7 @@
  function paintHub(body,route,host){
   const groups={
    character:[['hero','英雄武裝',['equipment','inventory','star-ring-shop','guardian','characters']],['build','技能天賦',['skills','career','build','talents','book-tools']],['records','成長紀錄',['progression','ledger','lineage']]],
-   adventure:[['explore','星圖探索',['expedition','live-status','progression','supplies','maps']],['party','組隊討伐',['party','tower','boss','star-ring']],['story','任務旅章',['quests','fate','bestiary','daily','journal']]],
+   adventure:[['explore','星圖探索',['expedition','live-status','progression','supplies','maps']],['party','組隊討伐',['party','tower','boss','star-ring']],['story','任務旅章',['quests','fate','daily','journal']]],
    camp:[['forge','裝備工坊',['workshop','tower-imprint','inscription','recovery','gearbook']],['market','商店交易',['shop','exchange','direct-trade','supplies']],['summon','召喚寶庫',['guardian-summon','fate-gifts']],['rewards','戰利兌換',['boss-essence','star-ring-shop','collections']]]
   };
   const art={equipment:'nav-bag',inventory:'nav-bag','star-ring-shop':'nav-class',ledger:'hud-coin-v2',skills:'item-research_fragment',career:'nav-class',guardian:'item-guardian_voucher',build:'item-research_fragment',talents:'nav-class',progression:'nav-home',characters:'hud-race-sword-v2',expedition:'nav-home','live-status':'command-boss_time',quests:'journal-cover',party:'nav-boss',tower:'item-tower_fragment',boss:'nav-boss','star-ring':'nav-class',fate:'journal-cover',supplies:'command-shop','direct-trade':'command-trade',exchange:'command-trade',workshop:'forge-scroll','tower-imprint':'item-tower_fragment','boss-essence':'item-boss_essence','guardian-summon':'item-guardian_voucher','fate-gifts':'command-collect',recovery:'item-boss_essence',gearbook:'journal-cover',inscription:'item-research_fragment',shop:'command-shop'};
@@ -220,7 +222,7 @@
   ];
 
   if(route==='character')entries.push(['lineage','完整成長樹','全職業一至四轉原圖與路線'],['book-tools','技能書分享與交易','原技能書群組卡片與玩家交易']);
-  if(route==='adventure')entries.push(['maps','地圖圖鑑','原版十二地圖、等級與出現怪物'],['bestiary','怪物圖鑑','一般、菁英與地圖首領原畫'],['daily','每日補給金','原版每日補給與首週加成'],['journal','旅團日誌','每日合作委託與卷軸獎勵']);
+  if(route==='adventure')entries.push(['maps','地圖圖鑑','原版十二地圖、等級與出現怪物'],['daily','每日補給金','原版每日補給與首週加成'],['journal','旅團日誌','每日合作委託與卷軸獎勵']);
   if(route==='camp')entries.push(['collections','地圖收藏與祝福','十二地圖徽記、核心兌換與材料精煉']);
   body.replaceChildren();
   const tablist=document.createElement('nav');tablist.className='scene-hub-tabs';tablist.setAttribute('role','tablist');tablist.setAttribute('aria-label','功能分類');
@@ -242,7 +244,7 @@
   if(entry.route==='characters'){const module=await loadSceneModule('scene-character-admin','RpgSceneCharacterAdmin');if(api.current())return module.mount(body,unifiedHost(api,entry));return;}
   if(!actor)await bootstrap();if(!api.current()||!actor)return;
   const host=unifiedHost(api,entry);
-  if(['maps','bestiary','collections','daily','journal','hall','duel','equipment-tools','book-tools','lineage'].includes(entry.route)){
+  if(['maps','collections','daily','journal','hall','duel','equipment-tools','book-tools','lineage'].includes(entry.route)){
     if(entry.route==='duel'){await loadSceneModule('scene-duel-replay','RpgSceneDuelReplay');if(!api.current())return;}
     for(const [file,name]of [['collection-ui','RpgCollectionUI'],['monster-catalog','RpgMonsterCatalog'],['hero-hall-ui','RpgHeroHallUI'],['scene-library-ui','RpgSceneLibrary']]){await loadSceneModule(file,name);if(!api.current())return;}return window.RpgSceneLibrary.mount(body,host,{tab:entry.route});
   }
