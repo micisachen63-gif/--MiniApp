@@ -158,6 +158,61 @@
       || !Number.isFinite(source.ox) || !Number.isFinite(source.oy) || !heights.length) throw Error('怪物動作資料待核對');
     return { ...source, body: heights.reduce((sum, value) => sum + value, 0) / heights.length };
   }
+  // Classic 星環遠征中 / 組隊冒險中 away view. The server snapshot carries the
+  // character's party_id (ring:* for 星環); while it is set, normal idle is paused,
+  // so show the classic full-screen expedition video instead of an idle 營地.
+  const AWAY_BASE = '/ui-generated-20261030/hud-angels-20261102/expedition-away';
+  function awayActivity(value) {
+    if (!value || value.active) return null;
+    const id = value.live?.partyId;
+    if (typeof id !== 'string' || !id) return null;
+    return { kind: id.startsWith('ring:') ? 'star-ring' : 'party', id };
+  }
+  const awayTitle = activity => activity.kind === 'star-ring' ? '星環遠征中' : '組隊冒險中';
+  let awayState = { key: '', layer: null, unmount: null }, awayLoad = null;
+  function loadAway(doc) {
+    if (global.RpgExpeditionAway?.markup) return Promise.resolve(global.RpgExpeditionAway);
+    if (!awayLoad) awayLoad = new Promise((resolve, reject) => {
+      if (!doc.querySelector('link[data-scene-away-css]')) {
+        const link = doc.createElement('link'); link.rel = 'stylesheet'; link.href = AWAY_BASE + '.css'; link.setAttribute('data-scene-away-css', ''); doc.head.appendChild(link);
+      }
+      const script = doc.createElement('script'); script.src = AWAY_BASE + '.js';
+      script.onload = () => global.RpgExpeditionAway?.markup ? resolve(global.RpgExpeditionAway) : reject(Error('expedition-away'));
+      script.onerror = () => reject(Error('expedition-away'));
+      doc.head.appendChild(script);
+    }).catch(error => { awayLoad = null; throw error; });
+    return awayLoad;
+  }
+  function clearAway(doc) {
+    if (!awayState.key && !awayState.layer && !awayState.unmount) return;
+    try { awayState.unmount?.(); } catch {}
+    awayState.layer?.remove();
+    awayState = { key: '', layer: null, unmount: null };
+    try { doc?.documentElement?.classList?.remove?.('rpg-scene-away'); } catch {}
+  }
+  function syncAway(value) {
+    const doc = global.document;
+    if (!doc || !liveMode()) return Promise.resolve(null);
+    const activity = awayActivity(value);
+    if (!activity) { clearAway(doc); return Promise.resolve(null); }
+    const key = value.context + ':' + activity.id;
+    if (awayState.key === key) return Promise.resolve(awayState.layer);
+    awayState.key = key;
+    return loadAway(doc).then(away => {
+      if (awayState.key !== key) return null;
+      const html = away.markup({ activity, character: { tgId: value.character.id, partyId: activity.id } });
+      try { awayState.unmount?.(); } catch {}
+      awayState.layer?.remove(); awayState.layer = null; awayState.unmount = null;
+      if (!html) { clearAway(doc); return null; }
+      const stage = doc.getElementById('stage') || doc.body, hud = doc.getElementById('ui');
+      const layer = doc.createElement('div'); layer.className = 'scene-away-layer'; layer.innerHTML = html;
+      if (hud && hud.parentNode === stage) stage.insertBefore(layer, hud); else stage.appendChild(layer);
+      awayState.layer = layer; awayState.unmount = away.mount(layer);
+      doc.documentElement.classList.add('rpg-scene-away');
+      return layer;
+    }).catch(() => { if (awayState.key === key) awayState.key = ''; return null; });
+  }
+  global.RpgExpeditionOpen ||= kind => global.RpgSceneNavigation?.navigate(kind === 'star-ring' ? 'star-ring' : 'party', kind === 'star-ring' ? {} : { tab: 'current' });
   function publish(snapshot) {
     if (!liveMode()) return;
     lastSnapshot = snapshot || null; lastSyncError = '';
@@ -165,6 +220,7 @@
     if (hudMounted) readHudSkills(lastSnapshot);
     viewers.forEach(view => view.apply(lastSnapshot));
     syncHudActions(normalize(lastSnapshot));
+    void syncAway(normalize(lastSnapshot));
   }
   function publishCombatTrace(trace, receiptScene = null) {
     if (!liveMode()) return Promise.resolve([]);
@@ -453,8 +509,9 @@
       text(doc.querySelector('#topL .who b'), value?.character.name ? value.character.name+' · '+(value.character.progression?.modeName||'普通') : '角色同步中');
       text(doc.querySelector('#topL .portrait i'), value ? pretty(value.character.level) : '—');
       text(byId('gold'), value ? '◈ ' + pretty(value.live.gold) : '◈ —');
-      text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : value ? '營地' : '同步中');
-      text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
+      const away = awayActivity(value);
+      text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : away ? awayTitle(away) : value ? '營地' : '同步中');
+      text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : away ? '一般掛機暫停' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
       syncHudActions(value);
       nodes.refresh.disabled = syncBusy;
       scheduleStatusLayout();
@@ -462,7 +519,8 @@
     function status() {
       if (!current()) return;
       const value = model, run = value?.run;
-      text(nodes.title, value ? value.active ? '星圖探索中' : '營地' : '正在同步角色');
+      const away = awayActivity(value);
+      text(nodes.title, value ? value.active ? '星圖探索中' : away ? awayTitle(away) : '營地' : '正在同步角色');
       text(nodes.sync, value?.snapshot.serverNow ? new Date(value.snapshot.serverNow).toLocaleTimeString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false }) : '');
       text(nodes.progress, value ? value.active ? '已結算 ' + pretty(run.processedSeconds) + ' 秒 · 擊敗 ' + pretty(run.report?.kills) + ' 隻' : run ? '最近派遣：' + ({ completed: '已完成', stopped: '已返營', dead: '倒地返營' }[run.status] || '已結束') : '選擇星圖並派遣後，這裡會顯示實際進度。' : '等待遊戲服務回覆。');
       text(nodes.supplies, value ? (value.active ? '隨身補給' : '可攜帶補給') + ' · 生命 ' + pretty(value.supplies?.hp) + ' / 魔力 ' + pretty(value.supplies?.mp) : '補給 —');
@@ -922,6 +980,6 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, awayActivity, syncAway, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
   loadEndgameArt();
 })(window);

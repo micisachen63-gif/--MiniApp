@@ -61,5 +61,20 @@
   try { app.ready(); app.expand(); } catch {}
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)void session.sync().catch(()=>{});});
   window.addEventListener('pagehide',()=>{disposed=true;session.dispose();},{once:true});
-  cover('正在連接你的旅誌…'); session.start();
+  // entry-gate.js (the restored 選擇角色 screen) opens the scene with ?entry=characters
+  // for create/delete; jump straight to the scene's character window instead of the cover.
+  let entryRoute = '';
+  try { entryRoute = new URLSearchParams(location.search).get('entry') || ''; } catch {}
+  if (entryRoute === 'characters') {
+    onboardingOpen = true; session.start();
+    let tries = 0;
+    const openCharacters = () => {
+      if (disposed) return;
+      const nav = window.RpgSceneNavigation;
+      if (typeof nav?.navigate === 'function') { nav.navigate('characters',{}); if (panel) panel.hidden = true; return; }
+      if (++tries < 50) { setTimeout(openCharacters,200); return; }
+      cover('請選擇要繼續冒險的角色。'); choose.hidden = false;
+    };
+    openCharacters();
+  } else { cover('正在連接你的旅誌…'); session.start(); }
 })();

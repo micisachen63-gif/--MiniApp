@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13614,
+  "publicFileCount": 13618,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -81,8 +81,8 @@
     },
     {
       "url": "/index.html",
-      "bytes": 1689,
-      "sha256": "8901e601300acca5ea82806163dfffe501f6c5b04760552d632f7b1842e953d3",
+      "bytes": 1858,
+      "sha256": "011018ff860b1ad6ccc8394dc317587ea2727bc896fbb62877fff3dc7dab9730",
       "kind": "entrypoint"
     },
     {
@@ -30165,6 +30165,20 @@
       "source": "elf-low-tier-weapon-fx.js"
     },
     {
+      "url": "/ui-generated-20261030/hud-angels-20261102/entry-gate.css",
+      "bytes": 685,
+      "sha256": "21804a4381500bf587bf4c0196ff4e10ca4ca7d385247aeb0b27f70718ad0a3f",
+      "kind": "alias",
+      "source": "entry-gate.css"
+    },
+    {
+      "url": "/ui-generated-20261030/hud-angels-20261102/entry-gate.js",
+      "bytes": 13089,
+      "sha256": "3b125a41271c213c65fd1869277878a4e55d3c14af5759b58d350ca000c74296",
+      "kind": "alias",
+      "source": "entry-gate.js"
+    },
+    {
       "url": "/ui-generated-20261030/hud-angels-20261102/equipment-collection-ui.css",
       "bytes": 4086,
       "sha256": "fd317933b0d5a0a53fdb9bc702eaacaab25684a47a17221dd6623eeab6bc1595",
@@ -30887,8 +30901,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js",
-      "bytes": 4564,
-      "sha256": "7ea10c861027bef3eefde3eac62fb65bff12a379832751a8fa384e3bff3d1523",
+      "bytes": 5375,
+      "sha256": "89715d4119932b35f7eb919d1f88f5dba25a39e4815d2aa3d36d587be8d50851",
       "kind": "alias",
       "source": "scene-live-auth.js"
     },
@@ -30901,15 +30915,15 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
-      "bytes": 8350,
-      "sha256": "cf228e30e0d07c50f9b2dc140bffda364fa3abaa0d807dea6160a7154b50aa3a",
+      "bytes": 9569,
+      "sha256": "2d1a4b923fc6f45fc8820d3e1919927014c02419228be7e82fa69b5419be86ee",
       "kind": "alias",
       "source": "scene-live-view.css"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "bytes": 72015,
-      "sha256": "c50e14513e4d3b7dc8eefba6eb3c22c1d62544866e71de9743e832d8bd0e7116",
+      "bytes": 75681,
+      "sha256": "814f9232475ebf5408ed4387daf51ab018cf9e44daa95ff66744a440e953f183",
       "kind": "alias",
       "source": "scene-live-view.js"
     },

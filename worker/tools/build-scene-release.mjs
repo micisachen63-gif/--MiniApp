@@ -5,6 +5,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {boundPreviewInputPaths,boundPreviewResponse} from './scene-preview-bindings.mjs';
+import {withEntryGate} from './entry-gate-html.mjs';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const publicRoot = path.join(repo,'worker/public');
@@ -84,7 +85,8 @@ const main=entries.get('/ui-generated-20261030/preview.html');
 // index.html is the one deliberate entrypoint replacement. Its original bytes
 // are retained as classic.html; any later rebuild is guarded by the manifest.
 if(!old.has('/index.html'))old.set('/index.html',{sha256:sha(await fs.readFile(path.join(publicRoot,'index.html')))});
-await write('/index.html',await fs.readFile(path.join(publicRoot,'.'+main.url)),'entrypoint');
+// The restored classic splash and 選擇角色 layer (entry-gate.js) opens the scene.
+await write('/index.html',Buffer.from(withEntryGate(await fs.readFile(path.join(publicRoot,'.'+main.url),'utf8'))),'entrypoint');
 // Bind the generated choreography sidecar when it belongs to this exact catalog.
 // First build copies reviewed sources; generate policies, then build once more.
 try{

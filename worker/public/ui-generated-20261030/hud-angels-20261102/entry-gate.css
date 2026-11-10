@@ -1,0 +1,9 @@
+/* Restored classic entry layer. The classic stylesheets supply the look; this
+ * only places the layer above the (not yet loaded) scene frame. */
+.entry-gate{position:fixed;inset:0;z-index:40;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;margin:0 auto}
+.entry-gate #view{min-height:100%}
+.entry-gate .journey-loading{min-height:100svh}
+.entry-gate .char-select{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.entry-gate .char-select>.game-credit{display:flex;justify-content:center;margin-top:16px}
+.entry-gate .char-card[disabled]{opacity:.7;cursor:progress}
+.entry-gate-notice{margin:10px 0 0;color:#ffb4a8;font-size:13px}
