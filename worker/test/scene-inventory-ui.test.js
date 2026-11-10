@@ -483,3 +483,14 @@ test('stale material status is never retried after the character context changes
   delayed.reject(Object.assign(new Error('stale from old character'),{code:'stale_response',uncertain:false}));await settle();
   assert.equal(h.calls.filter(call=>call.action==='atlas/status').length,1);assert.equal(h.root.innerHTML,html);h.module.dispose();
 });
+
+
+test('original inventory art and new Atlas materials survive list/detail projections without consuming items',async()=>{
+ const h=harness({override:async action=>{
+  if(action==='meta')return {ok:true,meta:{items:{red_1:{name:'red',kind:'red',iconSrc:'/art/potions-20261019/red_1.webp'},scroll_w:{name:'scroll',kind:'scroll',iconSrc:'/art/items-scrolls-cutout-20261011/scroll_w.webp'}}}};
+  if(action==='atlas/status')return {ok:true,enabled:true,realmId:'permanent',characterId:'c1',materials:{atlas_shard:7}};
+  if(action==='atlas/catalog')return {ok:true,catalog:{materials:[{id:'atlas_shard',name:'shard',iconSrc:'/art/materials-20261110/atlas_shard.png'}]}};
+ }});await settle();
+ for(const path of ['/art/potions-20261019/red_1.webp','/art/items-scrolls-cutout-20261011/scroll_w.webp','/art/materials-20261110/atlas_shard.png','/art/materials-20261110/recovery_dust.png'])assert.ok(h.root.innerHTML.includes('https://assets.invalid'+path),path);
+ await h.root.click('detail','atlas:atlas_shard');assert.ok(h.root.innerHTML.includes('/art/materials-20261110/atlas_shard.png'));assert.equal(writes(h).length,0);h.module.dispose();
+});

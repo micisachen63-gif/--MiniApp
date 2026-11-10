@@ -1,3 +1,4 @@
+import {itemIconSrc} from '../game/item-art.js';
 // Read only: one character's committed exchange ledger, using the existing owner index.
 import { GameError } from '../game/classes.js';
 import { ITEMS, RARITIES } from '../game/constants.js';
@@ -41,7 +42,7 @@ function snapshotItem(row,char) {
     }
     if(raw.item!==row.ref||!Object.hasOwn(ITEMS,row.ref))return fallback;
     const data=ITEMS[row.ref],skill=data.skillId?SKILL_MAP[data.skillId]:null;
-    return {...fallback,name:data.name,emoji:data.emoji,desc:data.desc||null,quality:skill?.rarity||null,qualityName:skill?.rarity||null,tier:null,enhance:null,classReq:skill?baseOf(skill):'any',advancementTier:skill?.advancementTier||null,requiredLevel:skill?.level||null,eligibleJob:skill?.eligibleJob||null,snapshotAvailable:true};
+    return {...fallback,name:data.name,emoji:data.emoji,art:itemIconSrc(row.ref),desc:data.desc||null,quality:skill?.rarity||null,qualityName:skill?.rarity||null,tier:null,enhance:null,classReq:skill?baseOf(skill):'any',advancementTier:skill?.advancementTier||null,requiredLevel:skill?.level||null,eligibleJob:skill?.eligibleJob||null,snapshotAvailable:true};
   } catch {return fallback;}
 }
 

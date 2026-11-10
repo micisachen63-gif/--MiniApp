@@ -2,6 +2,7 @@
 import { ITEMS, CLASSES, RARITIES, TRADE } from '../game/constants.js';
 import { SKILL_MAP, baseOf } from '../game/special.js';
 import { GameError } from '../game/classes.js';
+import {itemIconSrc} from '../game/item-art.js';
 import { checkEquipLine } from '../game/trade.js';
 import { equipmentView } from '../views.js';
 import {gearRarity,gearRaritySql} from '../game/gear-quality.js';
@@ -62,7 +63,7 @@ function itemInfo(item) {
   const data=ITEMS[item]; if(!data)return null;
   const skill=data.skillId?SKILL_MAP[data.skillId]:null;
   const collection=COLLECTION_ITEMS.includes(item);
-  return {kind:'item',equipId:null,item,name:data.name,emoji:data.emoji||'✦',desc:collection?'用於地圖收藏製作；可在交易所買賣，完成的魔法徽記仍永久綁定角色。':data.desc||null,art:null,equipment:null,
+  return {kind:'item',equipId:null,item,name:data.name,emoji:data.emoji||'✦',desc:collection?'用於地圖收藏製作；可在交易所買賣，完成的魔法徽記仍永久綁定角色。':data.desc||null,art:itemIconSrc(item),equipment:null,
     category:data.kind==='scroll'?'scroll':data.kind==='skill_book'?'skillbook':/^(?:hunt_|collection_)/.test(item)?'collection':'other',
     classReq:skill?baseOf(skill):'any',tier:null,itemTier:skill?null:(data.tier??null),mapId:collection?data.tier:null,quality:skill?.rarity??null,qualityName:skill?.rarity??null,enhance:null,
     advancementTier:skill?.advancementTier??null,requiredLevel:skill?.level??null,eligibleJob:skill?.eligibleJob??null};

@@ -231,10 +231,10 @@
     function artNode(item) {
       const wrap = node('span',undefined,'se-art');
       const equipment = item.equipment, value = equipment?.art, itemArt = typeof item.art === 'string' && /^\/?(?:art|expedition)\//.test(item.art) ? item.art : null;
-      let raw = itemArt || (typeof value === 'string' ? value : value?.icon || value?.src || value?.path);
+      let raw = itemArt || equipment?.iconSrc || (typeof value === 'string' ? value : value?.icon || value?.src || value?.path);
       // Preserve the scene inventory's known icon mapping; special collections keep their symbol fallback.
       const artId = typeof value === 'string' ? value : typeof item.art === 'string' ? item.art : null;
-      if (equipment && !itemArt && typeof artId === 'string' && /^[a-z0-9_]+$/i.test(artId) && !artId.startsWith('star_ring_') && equipment.source !== 'star_ring' && equipment.classReq !== 'thief') raw = '/art/v2/' + artId + '.webp';
+      if (equipment && !itemArt && !equipment.iconSrc && typeof artId === 'string' && /^[a-z0-9_]+$/i.test(artId) && !artId.startsWith('star_ring_') && equipment.source !== 'star_ring' && equipment.classReq !== 'thief') raw = '/art/v2/' + artId + '.webp';
       if (!equipment && !itemArt && typeof item.item === 'string' && /^book_[a-z0-9_]+$/i.test(item.item)) raw = '/expedition/assets/skills-painted-20261011/' + item.item.slice(5) + '.webp';
       const symbol = item.emoji || (equipment?.slot === 'weapon' ? '⚔' : item.kind === 'equip' ? '◇' : '✦');
       if (typeof raw === 'string' && /^\/?(?:art|expedition)\/[A-Za-z0-9_./@-]+\.(?:webp|png|jpg|jpeg|avif)$/.test(raw) && !raw.split('/').includes('..')) {

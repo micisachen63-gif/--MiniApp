@@ -117,7 +117,7 @@
         return {id,quantity:Number(quantity),...meta,group:consumable ? 'items' : 'materials',origin:'inventory'};
       });
       for (const [id,quantity] of Object.entries(state.atlas?.materials || {})) if (Number(quantity) > 0) list.push({...(names.get(id) || {name:id}),id:'atlas:' + id,materialId:id,quantity:Number(quantity),group:'materials',origin:'atlas',emoji:'✦'});
-      if (state.recovery?.enabled && Number(state.recovery.dust) > 0) list.push({id:'recovery:dust',name:'裝備精煉材料',quantity:Number(state.recovery.dust),group:'materials',origin:'recovery',emoji:'✧',desc:'角色專用精煉材料，用於回收與重洗；不進入交易。'});
+      if (state.recovery?.enabled && Number(state.recovery.dust) > 0) list.push({id:'recovery:dust',name:'裝備精煉材料',quantity:Number(state.recovery.dust),group:'materials',origin:'recovery',iconSrc:'/art/materials-20261110/recovery_dust.png',emoji:'✧',desc:'角色專用精煉材料，用於回收與重洗；不進入交易。'});
       return list;
     }
     function allRows() { return [...gear().map(e => ({...e,group:'equipment',origin:'equipment'})),...materials()]; }

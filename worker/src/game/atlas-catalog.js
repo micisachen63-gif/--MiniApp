@@ -1,6 +1,7 @@
 import { MAPS } from './constants.js';
 import {cycleMaps,WORLD_MODES,ENDGAME_VERSION} from './endgame.js';
 import {AWAKENINGS} from './awakening.js';
+import {itemIconSrc} from './item-art.js';
 
 /** Prototype values, not production-approved balance. Never retune a saved run. */
 export const ATLAS_RULESET_VERSION = 'atlas-v4';
@@ -169,7 +170,7 @@ export function getAtlasCatalog() {
     maxDurationSeconds: ATLAS_MAX_DURATION_SECONDS, maxMapCount: ATLAS_MAX_MAP_COUNT,
     queueModes: ATLAS_QUEUE_MODES, defaultQueueMode: 'duration',
     themes: ATLAS_THEMES, maps: ATLAS_MAPS, builds: ATLAS_BUILDS,
-    supports: ATLAS_SUPPORTS, automation: ATLAS_AUTOMATION, materials: ATLAS_MATERIALS,
+    supports: ATLAS_SUPPORTS, automation: ATLAS_AUTOMATION, materials: ATLAS_MATERIALS.map(m=>({...m,iconSrc:itemIconSrc(m.id)})),
   });
 }
 

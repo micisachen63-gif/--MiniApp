@@ -6,12 +6,13 @@
   // Use the real opaque hero bounds; the cloud and full angel stay above the face.
   function guardianPlacement(bounds,root){
     if(!bounds||!root)return null;
-    const ceiling=94,gap=10,cloudHeight=24,available=bounds.y-root.top-ceiling-gap-cloudHeight;
+    const ceiling=64,gap=10,cloudHeight=Math.min(68,Math.max(54,root.width*.17)),available=bounds.y-root.top-ceiling-gap-cloudHeight;
     if(available<64)return null;
-    const size=Math.min(160,Math.max(112,root.width*.32),available),cloudWidth=Math.min(root.width-16,size*1.12);
+    const size=Math.min(220,Math.max(164,bounds.height*.95,root.width*.46),available),cloudWidth=Math.min(root.width-16,size*1.08);
     const center=Math.max(cloudWidth/2+8,Math.min(root.width-cloudWidth/2-8,bounds.x+bounds.width/2-root.left));
     return {size,left:center-size/2,top:bounds.y-root.top-gap-cloudHeight-size,cloudLeft:center-cloudWidth/2,cloudTop:bounds.y-root.top-gap-cloudHeight,cloudWidth,cloudHeight};
   }
+  const guardianCameraOffset=height=>height>=600?Math.min(92,height*.1):0;
   const liveMode = () => global.__RpgScenePreviewConfig?.live === true;
   const MAPS = Object.freeze({
     laurel_intro: { themeId: 1, kind: 'tutorial', sourceMap: 1 },
@@ -323,14 +324,15 @@
     guardianNode.onload=()=>{guardianReady=true;};guardianNode.onerror=()=>{guardianReady=false;guardianNode.hidden=true;};
     function placeGuardian(){
       const guardian=model?.character?.guardian;
-      const heroGeometry=guardian?geometry().hero:null,bounds=heroGeometry?.visibleBounds||heroGeometry?.screenBounds,root=guardian?byId('ui')?.getBoundingClientRect():null;
+      const heroGeometry=guardian&&animator.ready&&hero.visible?geometry().hero:null,bounds=heroGeometry?.visibleBounds||heroGeometry?.screenBounds,root=guardian?byId('ui')?.getBoundingClientRect():null;
       if(!guardian||!['melee','ranged','magic','loot'].includes(guardian.type)||!bounds||!root){guardianCloud.hidden=true;guardianNode.hidden=true;guardianSource='';guardianReady=false;return;}
       const src='/art/guardian-sigil-20261013/'+guardian.type+'.webp';
-      if(guardianSource!==src){guardianSource=src;guardianReady=false;guardianNode.src=src;}
-      if(!guardianReady){guardianNode.hidden=true;guardianCloud.hidden=true;return;}
       const p=guardianPlacement(bounds,root);if(!p){guardianNode.hidden=true;guardianCloud.hidden=true;return;}
-      guardianNode.style.width=p.size+'px';guardianNode.style.height=p.size+'px';guardianNode.style.left=p.left+'px';guardianNode.style.top=p.top+'px';guardianNode.hidden=false;
+      // The cloud is visible while the exact original angel image loads.
       guardianCloud.style.left=p.cloudLeft+'px';guardianCloud.style.top=p.cloudTop+'px';guardianCloud.style.width=p.cloudWidth+'px';guardianCloud.style.height=p.cloudHeight+'px';guardianCloud.hidden=false;
+      if(guardianSource!==src){guardianSource=src;guardianReady=false;guardianNode.hidden=true;guardianNode.src=src;}
+      if(!guardianReady){guardianNode.hidden=true;return;}
+      guardianNode.style.width=p.size+'px';guardianNode.style.height=p.size+'px';guardianNode.style.left=p.left+'px';guardianNode.style.top=p.top+'px';guardianNode.hidden=false;
     }
 
     hero.setVisible(false); ground?.setVisible(false); hooks.clearDecorations?.(); hpGraphics?.clear(); ui.target(null);
@@ -544,7 +546,8 @@
       // A committed snapshot repositions the whole encounter at once. The art
       // demo's lerped follow otherwise leaves actors off-screen after map/size
       // changes even though their world coordinates and visibility are valid.
-      camera.stopFollow().centerOn(hero.x, hero.y);
+      // Reserve overhead space for the full angel/cloud stack; only the camera moves.
+      camera.stopFollow().centerOn(hero.x, hero.y-(model?.character?.guardian?guardianCameraOffset(height):0));
       hero.setDepth(hero.y); drawBars(); scheduleStatusLayout();
       const layoutKey = JSON.stringify([width, height, world.w, world.h, hero.x, hero.y, slots.map(slot => [slot.entity.enemy.id, slot.x, slot.y])]);
       // setMap already invalidates the old scene. The first ready background
@@ -919,6 +922,6 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, experienceLabel, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
   loadEndgameArt();
 })(window);

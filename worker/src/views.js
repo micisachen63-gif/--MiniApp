@@ -83,7 +83,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
   };
 }
 
-export function shopView(char) { return { items: itemOffers(char), gear: gearOffers(char), gacha: gachaOffers(char), gachaRates: GACHA_RATES.map(([rarity,pct])=>({rarity,pct})) }; }
+export function shopView(char) { return { items: itemOffers(char), gear: gearOffers(char).map(o=>({...o,iconSrc:gearIconSrc({...o,class_req:['belt','undershirt','earring','ring'].includes(o.slot)?'any':char.base_class})})), gacha: gachaOffers(char), gachaRates: GACHA_RATES.map(([rarity,pct])=>({rarity,pct})) }; }
 
 export function bossView(boss, attackers = [], now = Date.now()) {
   if (!boss) return null;

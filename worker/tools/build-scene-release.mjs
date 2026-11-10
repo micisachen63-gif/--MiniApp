@@ -91,6 +91,9 @@ try{
  const policyBytes=await fs.readFile(path.join(publicRoot,'scene-native-cast-profiles.json')),policy=JSON.parse(policyBytes);
  if(policy.catalogSha256===args['index-sha'])entries.set('/scene-native-cast-profiles.json',{url:'/scene-native-cast-profiles.json',bytes:policyBytes.length,sha256:sha(policyBytes),kind:'choreography',source:'packaged-character-clips'});
 }catch(error){if(error.code!=='ENOENT')throw error;}
+// New item art joins the same hash-bound release inventory.
+const materialRoot=path.join(publicRoot,'art/materials-20261110');
+try{for(const file of await fs.readdir(materialRoot)){if(!/\.(?:png|json)$/.test(file))continue;const data=await fs.readFile(path.join(materialRoot,file)),url='/art/materials-20261110/'+file;entries.set(url,{url,bytes:data.length,sha256:sha(data),kind:'material-art',source:'imagegen-20261110'});}}catch(error){if(error.code!=='ENOENT')throw error;}
 const inventory=[];async function scan(folder){for(const e of await fs.readdir(folder,{withFileTypes:true})){const p=path.join(folder,e.name);if(e.isSymbolicLink())throw Error('Public symlink: '+p);if(e.isDirectory())await scan(p);else{const size=(await fs.stat(p)).size;if(size>25*1024*1024)throw Error('Public asset exceeds 25 MiB: '+p);inventory.push(p);}}}await scan(publicRoot);
 if(inventory.length+1>20000)throw Error('Public inventory exceeds conservative 20,000 file ceiling');
 const manifest={schemaVersion:1,reviewedCatalogSha256:args['index-sha'],reviewedRendererSha256:args['renderer-sha'],appearances:248,populatedSlots:3968,sourceWritten:false,sourcePixelsModified:false,finalArtApprovalPromoted:false,publicFileCount:inventory.length+Number(!inventory.includes(previousFile)),entries:[...entries.values()].sort((a,b)=>a.url.localeCompare(b.url))};

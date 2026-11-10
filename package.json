@@ -20,6 +20,7 @@
     "monster:review": "cd worker && node tools/build-monster-review-data.mjs"
   },
   "devDependencies": {
+    "undici": "7.29.1",
     "wrangler": "4.148.0"
   },
   "engines": {
