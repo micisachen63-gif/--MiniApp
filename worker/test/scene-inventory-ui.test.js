@@ -494,3 +494,39 @@ test('original inventory art and new Atlas materials survive list/detail project
  for(const path of ['/art/potions-20261019/red_1.webp','/art/items-scrolls-cutout-20261011/scroll_w.webp','/art/materials-20261110/atlas_shard.png','/art/materials-20261110/recovery_dust.png'])assert.ok(h.root.innerHTML.includes('https://assets.invalid'+path),path);
  await h.root.click('detail','atlas:atlas_shard');assert.ok(h.root.innerHTML.includes('/art/materials-20261110/atlas_shard.png'));assert.equal(writes(h).length,0);h.module.dispose();
 });
+
+test('classic item stats: quality colour, compact stat line, 部位分頁 tabs and full detail rows from existing fields',async()=>{
+  const ring=equipment('ring-1',{slot:'ring',slotName:'戒指',name:'星環指環',rarity:'epic',rarityName:'極品',mode:'hell',modeName:'地獄',levelReq:481,statName:'魔力',stat:90,
+    enhance:3,enhanceNext:{success:.4,nothing:.5,break:.1},enhanceGrowth:{statName:'魔力',byLevel:[60,70,80,90,99]},towerImprint:{level:2,max:5,bonusPct:4},affix:{critPct:.02},
+    affixes:{quality:'S',slots:2,lines:[{name:'暴擊',value:.031,quality:'S',recommended:true}]}});
+  const h=harness({me:player([equipment('one'),ring]),override:action=>action==='equipment-recovery'?{ok:true,realmId:'permanent',characterId:'c1',enabled:true,dust:0,items:[{id:'ring-1',archived:true}]}:undefined});
+  await settle();
+  const html=h.root.innerHTML;
+  assert.match(html,/<nav class="si-slot-tabs" aria-label="裝備部位分頁">/);
+  for(const name of ['全部','武器','頭盔','盔甲','手套','長靴','腰帶','內衣','耳環','戒指'])assert.match(html,new RegExp('data-inv-action="slot-tab" data-slot="[a-z]+" aria-pressed="(?:true|false)">'+name+'<small>'));
+  assert.match(html,/data-slot="all" aria-pressed="true">全部<small>2<\/small>/);
+  assert.match(html,/<strong class="sis-q-epic">\+3 星環指環<\/strong>/,'quality colour + enhancement on the list title');
+  assert.match(html,/魔力 90 · 風 \+2 · 生命值 \+5 · 爆擊 \+1% · ✦遺物詞條 · 詞條 1\/2 S · 塔印 2/,'compact line: main, element, extras, relic, affix summary, imprint');
+  assert.match(html,/極品 · 地獄 · T1 · 戒指 · Lv\.481/);
+  await h.root.fire('click',h.root.button('slot-tab'));
+  const tab=h.root.target({dataset:{invAction:'slot-tab',slot:'ring'}});await h.root.fire('click',tab);
+  assert.equal(h.draft.slot,'ring');assert.equal(h.draft.category,'equipment');
+  assert.doesNotMatch(h.root.innerHTML,/data-inv-row="one"/);assert.match(h.root.innerHTML,/data-inv-row="ring-1"/);
+  assert.match(h.root.innerHTML,/data-slot="ring" aria-pressed="true">戒指/);
+  await h.root.fire('click',h.root.target({dataset:{invAction:'slot-tab',slot:'all'}}));
+  assert.equal(h.draft.slot,'all');assert.equal(h.draft.category,'all');assert.match(h.root.innerHTML,/data-inv-row="one"/);
+  const stats=h.api.stats;
+  assert.equal(stats.enhanceText(ring),'+3 → +4：成功 40% · 爆裝 10%');
+  assert.deepEqual(clone(stats.gain(ring)),{name:'魔力',before:90,after:99,delta:9,from:3,to:4});
+  const rows=Object.fromEntries(stats.kvRows(ring,{archived:true}));
+  assert.equal(rows['裝備階'],'T1 · Lv.481');assert.equal(rows['世界模式'],'地獄');assert.equal(rows['遺物詞條'],'爆擊 +2%');assert.equal(rows['典藏'],'已典藏');
+  assert.equal(rows['塔印'],'2／5 · 主能力 +4%（已計入）');assert.equal(rows['交易'],'可交易');
+  assert.equal(stats.modeName({mode:'normal',modeName:'普通'}),'','normal mode stays implicit like classic names');
+  assert.equal(stats.compactLine({}),'','absent fields are skipped, never invented');
+  const d=harness({mode:'item',itemId:'ring-1',me:player([ring]),override:action=>action==='equipment-recovery'?{ok:true,realmId:'permanent',characterId:'c1',enabled:true,dust:0,items:[{id:'ring-1',archived:true}]}:undefined});
+  await settle();
+  const detail=d.root.innerHTML;
+  assert.match(detail,/<h3 class="sis-q-epic">\+3 星環指環<\/h3>/);
+  for(const [k,v] of [['裝備階','T1 · Lv.481'],['世界模式','地獄'],['強化','+3 → +4：成功 40% · 爆裝 10%'],['典藏','已典藏']])assert.ok(detail.includes('<dt>'+k+'</dt><dd>'+v+'</dd>'),k);
+  assert.match(detail,/強化成功後 · \+3 → \+4：魔力 90 → <b>99<\/b>（\+9）/);
+});

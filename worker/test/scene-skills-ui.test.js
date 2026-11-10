@@ -327,3 +327,28 @@ test('a newer same-character scene fences an already-running read until a fresh 
   hold=false;const latest=player();latest.character.revision=3;h.setMe(latest);await h.module.refresh();
   assert.equal(h.root.button('settings').disabled,false);assert.equal(writes(h).length,0);
 });
+
+test('特殊技能配置 slot cards, the skill list and the detail show the painted skill art and the description (classic parity)',async()=>{
+  const me=player({special:{learned:['skill_01_1','skill_01_2'],loadout:['skill_01_1','skill_01_2']}});
+  const h=harness({me});await settle();
+  const slots=h.root.innerHTML.slice(h.root.innerHTML.indexOf('特殊技能配置'),h.root.innerHTML.indexOf('自動補水策略'));
+  assert.match(slots,/<img class="sc-skill-art" src="\/expedition\/assets\/skills-painted-20261011\/skill_01_1\.webp"/);
+  assert.match(slots,/<img class="sc-skill-art" src="\/expedition\/assets\/skills-painted-20261011\/skill_01_2\.webp"/);
+  assert.match(slots,/<p class="sc-effect">技能倍率|<p class="sc-effect">3\.0A，單體 · 斬擊並回復生命<\/p>/);
+  const list=h.root.innerHTML.slice(h.root.innerHTML.indexOf('技能傳承</h3>'));
+  assert.match(list,/skills-painted-20261011\/skill_02_1\.webp/);assert.match(list,/sc-unlearned/);
+  assert.doesNotMatch(h.root.innerHTML,/skills-painted-20261011\/archer\.webp/,'ids without painted art keep the text-only card');
+  await h.root.click('detail','skill_01_2');
+  assert.match(h.root.innerHTML,/sc-skill-art sc-skill-art-large" src="\/expedition\/assets\/skills-painted-20261011\/skill_01_2\.webp"/);
+  assert.match(h.root.innerHTML,/<p class="sc-effect">3\.0A，單體 · 斬擊並回復生命<\/p>/);
+  const errorHandlers=[...h.root.events.get('error')||[]];assert.equal(errorHandlers.length,1,'one capture handler hides a failed image');
+  const img={classList:{contains:c=>c==='sc-skill-art'},hidden:false};errorHandlers[0]({target:img});assert.equal(img.hidden,true);
+});
+
+test('every server special skill has a painted icon file',async()=>{
+  const {LEGACY_SPECIAL_SKILLS}=await import('../src/game/special-data.js'),{THIEF_SKILLS}=await import('../src/game/thief-skills.js');
+  const ids=[...LEGACY_SPECIAL_SKILLS,...THIEF_SKILLS].map(s=>s.id);assert.ok(ids.length>=60);
+  const missing=ids.filter(id=>!fs.existsSync(new URL('../public/expedition/assets/skills-painted-20261011/'+id+'.webp',import.meta.url)));
+  assert.deepEqual(missing,[]);
+  assert.ok(ids.every(id=>/^skill_(?:\d{2}_\d|thief_\d{2})$/.test(id)),'scene icon rule covers every id');
+});

@@ -283,3 +283,52 @@ test('the away view styles keep the full-screen video under the HUD (stylesheet 
   assert.match(tail, /^\.scene-away-layer \{ position: absolute; inset: 0;/); assert.doesNotMatch(tail.split('}')[0], /z-index/);
   assert.match(css, /\.scene-away-layer \.expedition-away \{ position: absolute; inset: 0; aspect-ratio: auto; min-height: 0; \}/);
 });
+test('HUD skill buttons resolve painted skill icons for every server skill id and keep text only as a fallback', async () => {
+  const api = viewApi();
+  assert.equal(api.skillIconUrl('skill_01_1'), '/expedition/assets/skills-painted-20261011/skill_01_1.webp');
+  assert.equal(api.skillIconUrl('skill_thief_03'), '/expedition/assets/skills-painted-20261011/skill_thief_03.webp');
+  for (const bad of ['', null, '../x', 'skill_01_1.webp', 'skill_1_1', 'archer']) assert.equal(api.skillIconUrl(bad), null, String(bad));
+  const { LEGACY_SPECIAL_SKILLS } = await import('../src/game/special-data.js'), { THIEF_SKILLS } = await import('../src/game/thief-skills.js');
+  for (const { id } of [...LEGACY_SPECIAL_SKILLS, ...THIEF_SKILLS]) assert.ok(fs.existsSync(new URL('../public' + api.skillIconUrl(id), import.meta.url)), id);
+  const css = fs.readFileSync(new URL('../public/scene-live-view.css', import.meta.url), 'utf8');
+  assert.match(css, /\.hud-v2-skill-art \{[^}]*object-fit: cover/);
+});
+test('the away view offers a manual 重新整理狀態 tap instead of polling', async () => {
+  const h = awayHarness(), layer = await h.api.syncAway(h.api.normalize(awaySnapshot('p-9')));
+  assert.match(layer.innerHTML, /<button type="button" class="btn ghost" data-away-refresh>重新整理狀態<\/button>/);
+  assert.equal(typeof h.api.manualRefresh, 'function');
+});
+test('idle camp shows the character current cycle map, matching server map names, without network or timers', async () => {
+  const api = viewApi(), art = JSON.parse(fs.readFileSync(new URL('../public/endgame-map-art.json', import.meta.url), 'utf8'));
+  const { MAPS } = await import('../src/game/constants.js'), { cycleMaps } = await import('../src/game/endgame.js');
+  const server = new Map(cycleMaps(MAPS, () => null).map(map => [map.id, map]));
+  const cases = [[1, 'cycle_normal_01'], [10, 'cycle_normal_01'], [11, 'cycle_normal_02'], [120, 'cycle_normal_12'], [121, 'cycle_elite_01'], [481, 'cycle_hell_01'], [600, 'cycle_hell_12']];
+  for (const [level, id] of cases) {
+    const map = api.idleMapFor({ level }, art);
+    assert.equal(map.id, id, 'Lv' + level); assert.equal(map.idle, true);
+    assert.equal(map.name, server.get(id).name, 'client idle name must match the server cycle map name');
+    assert.equal(map.progression.mode, server.get(id).progression.mode); assert.equal(map.progression.chapter, server.get(id).progression.chapter);
+    assert.ok(art[id]?.background, 'idle map art exists');
+  }
+  assert.equal(api.idleMapFor({ level: 481 }, null), null, 'missing art falls back to the empty camp');
+  assert.equal(api.idleMapFor({ level: 481 }, { cycle_hell_02: {} }), null);
+  assert.equal(api.idleMapFor(null, art), null);
+  assert.equal(api.resolveSprite({ frost_wolf_idle: {} }, { spriteId: 'mon_frost_wolf' }).spriteId, 'frost_wolf');
+  assert.equal(api.resolveSprite({ titan_idle: {} }, { spriteId: 'boss_x13_m02_titan' }).spriteId, 'titan');
+  assert.equal(api.resolveSprite({ mon_x_idle: {} }, { spriteId: 'mon_x' }).spriteId, 'mon_x', 'exact keys stay untouched');
+  assert.equal(api.resolveSprite({}, { spriteId: 'elite_ghost' }).spriteId, 'elite_ghost', 'unknown ids stay unresolved (rendered as missing art)');
+  const start = viewSource.indexOf('function startIdle('), end = viewSource.indexOf('function ', viewSource.indexOf('function idleTick(') + 20);
+  const idleCode = viewSource.slice(start, end);
+  assert.ok(start > 0 && idleCode.includes('beginDeath'), 'idle loop reuses the Atlas death path');
+  assert.doesNotMatch(idleCode, /setInterval|setTimeout|fetch\(|request\(|refresh\(/, 'idle combat is purely cosmetic: frame clock only');
+  assert.match(viewSource, /'掛機中 · ' \+ idle\.map\.place/);
+});
+test('idle monsters stand in a stable side band at Atlas scale, clear of the overhead guardian', () => {
+  const start = viewSource.indexOf('function idleSlot('), code = viewSource.slice(start, viewSource.indexOf('function startIdle(', start));
+  assert.ok(start > 0);
+  assert.match(code, /hero\.x \+ side \* dx/, 'monsters flank the hero left/right');
+  assert.match(code, /y: hero\.y \+ height \* \(far \? \.1 : narrow \? \.06 : \.03\)/, 'never above the hero (guardian space)');
+  assert.match(viewSource, /return \{ entity, \.\.\.idleSlot\(entity, entity\.enemy\.slot\) \}/, 'slot is stable through death/respawn');
+  assert.match(viewSource, /let slot = 0; while \(used\.has\(slot\)\) slot\+\+;/);
+  assert.doesNotMatch(code, /setScale/, 'scale stays the shared Atlas minion scale');
+});

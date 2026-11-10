@@ -22,13 +22,16 @@ import {assistSupply} from './game/guardian-assist.js';
 import {guardianStatsView} from './game/guardian-effects.js';
 import {activeSettings} from './game/guardian-sigil-config.js';
 import { enhanceOdds, scrollFor, blessedScrollFor, scrollCost } from './game/enhance.js';
+import {itemMode} from './game/endgame.js';
+// World mode the item was created in (普通/菁英/專家/惡夢/地獄); display only, invalid metadata reads as unknown.
+function itemModeView(e){try{const m=itemMode(e);return {mode:m.id,modeName:m.name};}catch{return {mode:null,modeName:null};}}
 import {equippedAura} from './game/star-ring-cosmetics.js';
 
 export function equipmentView(char, e) {
   const st = itemStat(e, char.base_class); const x = itemExtras({ ...e, affix_json: null }); const ms = mainStatOf(e.slot);   // extras shown without the relic affix (listed separately)
   const base=itemStat({...e,enhance_level:0},char.base_class).main;
   const rarity=gearRarity(e);
-  return { id: e.id, slot: e.slot, slotName: SLOT_NAMES[e.slot], position: e.is_equipped || 0, name: e.name, tier: e.tier, rarity, rarityName: RARITIES[rarity]?.name,
+  return { id: e.id, slot: e.slot, slotName: SLOT_NAMES[e.slot], position: e.is_equipped || 0, name: e.name, tier: e.tier, rarity, rarityName: RARITIES[rarity]?.name, ...itemModeView(e),
     affixes:affixView(e,char.class_path,char.base_class),rerollCost:affixCost(e),rerollPrices:Array.from({length:affixView(e).slots},(_,n)=>({locks:n,scrolls:Math.max(1,e.tier)*[1,2,4,7,11][n],fee:Math.max(1,e.tier)*30*(n+1)**2})),grade: e.grade || 'normal', gradeName: e.grade === 'relic' ? '遺物' : null, affix: e.affix_json ? JSON.parse(e.affix_json) : null,
     relicProtection:e.grade==='relic'?'遺物最低傳說品質；強化加成提高25%':null,
     expeditionProtection:e.source==='star_ring'?'星征裝備最低傳說品質；主屬性、強化、元素與固定副屬性提高25%':null,

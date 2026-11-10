@@ -26,7 +26,6 @@ async function channelsFor(db,a) {
   const rows=await db.prepare(`SELECT 'party:'||p.id AS id,CASE WHEN p.kind='tower' THEN '爬塔隊伍' ELSE '打寶隊伍' END AS name FROM rpg_party_presence pp JOIN rpg_parties p ON p.id=pp.party_id JOIN rpg_party_members m ON m.party_id=p.id AND m.char_id=pp.char_id WHERE pp.account_id=? AND pp.char_id=? AND m.account_id=? AND p.status IN ('lobby','combat')
     UNION ALL SELECT 'ring:'||r.id AS id,'遠征隊伍' AS name FROM rpg_star_ring_members m JOIN rpg_star_ring_runs r ON r.id=m.run_id WHERE m.char_id=? AND m.account_id=? AND m.left_at IS NULL AND r.status IN ('lobby','running') ORDER BY id`).bind(a.account,a.charId,a.account,a.charId,a.account).all();
   return [{id:'world',channel:'world',name:'世界',enabled:true},
-    {id:'guild',channel:'guild',name:'公會',enabled:false,reason:'公會系統尚未開放'},
     ...(rows.results.length?rows.results.map(r=>({...r,channel:'party',enabled:true})):[{id:'party',channel:'party',name:'隊伍',enabled:false,reason:'加入招募中或進行中的隊伍後即可聊天'}])];
 }
 const publicMessage=(m,a)=>({seq:m.seq,channel:m.channel,roomId:m.room_id,name:m.sender_name,level:m.sender_level,baseClass:m.base_class,text:m.body,createdAt:m.created_at,own:m.account_id===a.account});
@@ -34,6 +33,7 @@ const cursor=value=>{if(value===undefined||value===null)return null;if(!Number.i
 export async function view(env,charId,body={},now) {
   enabled(env);time(now);
   const a=await actor(env.DB,charId),channels=await channelsFor(env.DB,a),channel=body.channel||'all';
+  // 'guild' (never opened; tab removed 2026-11-10) stays a valid empty filter so older clients do not error.
   if(!['all','world','guild','party'].includes(channel))throw new GameError('chat_input','聊天頻道無效');
   const allowed=channels.filter(c=>c.enabled&&(channel==='all'||c.channel===channel));
   if(body.roomId!==undefined && !allowed.some(c=>c.id===body.roomId))throw new GameError('chat_room','你目前無法查看這個聊天頻道',403);

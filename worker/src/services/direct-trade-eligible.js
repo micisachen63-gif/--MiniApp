@@ -3,12 +3,24 @@
  * scoped to account, realm, character, context epoch, trade row+offer revision
  * and filter; candidates are never a permission or a reservation. */
 import { GameError } from '../game/classes.js';
-import { TRADE, ITEMS } from '../game/constants.js';
+import { TRADE, ITEMS, RARITIES, ELEMENTS, SLOT_NAMES } from '../game/constants.js';
+import { itemStat, mainStatOf } from '../game/stats.js';
+import { gearRarity } from '../game/gear-quality.js';
+import { affixView } from '../game/affixes.js';
 import { tradeBlock } from '../game/gear.js';
 import { isTradeableItem } from '../game/trade.js';
 import { sigilView } from './guardian-sigil.js';
 import { runningRingId, canManageBackpackInParty } from './party-presence.js';
 
+// Display-only stat summary (classic trade picker parity); never a permission or price.
+function gearSummary(e){
+  try{
+    const st=e.base_stat!=null?itemStat(e):{main:null,elem:null},rarity=gearRarity(e),aff=affixView(e);
+    return {rarity,rarityName:RARITIES[rarity]?.name||null,slotName:SLOT_NAMES[e.slot]||null,levelReq:e.level_req??null,
+      statName:{atk:'攻擊力',def:'防禦力',mp:'魔力',hp:'生命值'}[mainStatOf(e.slot)]||null,stat:st.main??null,
+      elementName:ELEMENTS[e.element]?.name||null,elemStat:st.elem??null,affixes:{slots:aff.slots,quality:aff.quality||null,lines:aff.lines||[]}};
+  }catch{return {};}
+}
 const PAGE_SIZE=30;
 const KINDS=new Set(['all','equip','item','guardian']);
 const fail=(code,message,status=400)=>{throw new GameError(code,message,status);};
@@ -113,7 +125,7 @@ export async function eligible(env,tg,input={},now=Date.now()){
       const e=await db.prepare('SELECT * FROM rpg_equipment WHERE id=? AND tg_id=?').bind(item.ref,id).first();
       if(!e||e.source==='starter'||tradeBlock(e))continue;
       items.push({kind:'equip',ref:e.id,qty:1,name:e.name||e.id,slot:e.slot||null,tier:e.tier||null,
-        enhance:Number(e.enhance_level)||0});
+        enhance:Number(e.enhance_level)||0,...gearSummary(e)});
     }else if(item.kind==='guardian'){
       const g=await db.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=? AND char_id=?').bind(item.ref,id).first();
       if(!g||g.bound||g.active||g.locked||g.trade_id||g.exchange_id)continue;

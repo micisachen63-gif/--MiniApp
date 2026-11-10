@@ -306,9 +306,9 @@ function eventTarget(target = {}) {
   return target;
 }
 
-test('browser visibility and pagehide keep one poller and never poll after disposal', async () => {
+test('browser page reads once at start, never polls on a timer or tab return, and stops after pagehide', async () => {
   const time = clock(), net = network(), stateEvents = [];
-  const document = eventTarget({ hidden: true });
+  const document = eventTarget({ hidden: false });
   const sandbox = eventTarget({
     AbortController, queueMicrotask, console, document, fetch: net.fetch,
     location: { origin: 'http://127.0.0.1:9595' },
@@ -322,38 +322,38 @@ test('browser visibility and pagehide keep one poller and never poll after dispo
   vm.runInNewContext(source, sandbox, { filename: 'scene-live-session.js' });
   const client = sandbox.RpgSceneSession;
   client.start(); client.start();
-  assert.equal(time.intervals.size, 1);
-  time.tick();
-  assert.equal(net.calls.length, 0);
-  document.hidden = false;
-  document.dispatchEvent({ type: 'visibilitychange' });
-  document.dispatchEvent({ type: 'visibilitychange' });
-  time.tick();
-  assert.equal(net.calls.length, 1);
+  assert.equal(time.intervals.size, 0, 'no status poller');
+  assert.equal(net.calls.length, 1, 'exactly one initial read');
   net.calls[0].reply({ ok: true, scene: scene({ runId: null }) });
   await drain();
-  document.hidden = true;
-  time.tick(); time.tick();
-  assert.equal(net.calls.length, 1);
-  document.hidden = false;
-  document.dispatchEvent({ type: 'visibilitychange' });
-  assert.equal(net.calls.length, 2);
+  for (let i = 0; i < 8; i++) time.tick();
+  document.hidden = true; document.dispatchEvent({ type: 'visibilitychange' });
+  document.hidden = false; document.dispatchEvent({ type: 'visibilitychange' });
+  await drain();
+  assert.equal(net.calls.length, 1, 'tab return does not refresh');
+  const manual = client.sync(); assert.equal(net.calls.length, 2, 'manual 同步 still reads');
+  net.calls[1].reply({ ok: true, scene: scene({ runId: null, revision: 2 }) }); await manual.catch(() => {}); await drain();
+  const late = client.sync().catch(() => {});
   sandbox.dispatchEvent({ type: 'pagehide' });
-  assert.equal(time.intervals.size, 0);
-  assert.equal(net.calls[1].options.signal.aborted, true);
+  assert.equal(net.calls[2].options.signal.aborted, true);
   assert.equal(client.getSnapshot(), null);
-  net.calls[1].reply({ ok: true, scene: scene({ revision: 20 }) });
-  await drain();
-  time.tick();
-  document.dispatchEvent({ type: 'visibilitychange' });
-  client.start();
-  await drain();
-  assert.equal(net.calls.length, 2);
-  assert.equal(time.intervals.size, 0);
-  assert.equal(client.getSnapshot(), null);
+  net.calls[2].reply({ ok: true, scene: scene({ revision: 20 }) });
+  await late; await drain();
+  client.start(); time.tick(); await drain();
+  assert.equal(net.calls.length, 3);
   assert.equal(stateEvents.at(-1), null);
-  assert.deepEqual(stateEvents.filter(Boolean).map(value => value.live.revision), [1]);
+  assert.deepEqual(stateEvents.filter(Boolean).map(value => value.live.revision), [1, 2]);
   assert.ok(net.calls.every(call => call.action === 'atlas/status'));
+});
+
+test('autoSync is opt-in: without it start() performs one sync and installs no interval', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start(); h.client.start();
+  assert.equal(h.time.intervals.size, 0);
+  h.net.calls[0].reply({ ok: true, scene: scene({ runId: null }) }); await drain(); await drain();
+  assert.equal(h.time.deadlines.size, 0, 'no active run, no timer');
+  const before = h.net.calls.length; for (let i = 0; i < 10; i++) h.time.tick(); await drain();
+  assert.equal(h.net.calls.length, before, 'no further reads without a player action');
 });
 
 function guideHarness() {
@@ -578,8 +578,8 @@ test('an invalid settlement scene falls back to a read without replaying the ack
   assert.equal(h.net.calls.filter(call => call.action === 'atlas/settle').length, 1);
 });
 
-test('the visible page timer discovers and advances a run every fifteen seconds', async t => {
-  const h = harness();
+test('the opt-in autoSync timer discovers and advances a run every fifteen seconds', async t => {
+  const h = harness({ autoSync: true });
   t.after(() => h.client.dispose());
   h.client.start();
   assert.equal([...h.time.intervals.values()][0].ms, 1000);
@@ -598,8 +598,8 @@ test('the visible page timer discovers and advances a run every fifteen seconds'
   assert.equal(h.net.calls.length, 4);
 });
 
-test('a five-cycle run receives one-second committed combat updates while legacy runs retain their cadence',async t=>{
- const h=harness();t.after(()=>h.client.dispose());h.client.start();const value=scene();value.run.map={id:'cycle_elite_01',progression:{mode:'elite'}};
+test('a five-cycle run receives one-second committed combat updates while legacy runs retain their cadence (opt-in autoSync)',async t=>{
+ const h=harness({autoSync:true});t.after(()=>h.client.dispose());h.client.start();const value=scene();value.run.map={id:'cycle_elite_01',progression:{mode:'elite'}};
  h.net.calls[0].reply({ok:true,scene:value});await drain();h.net.calls[1].reply({ok:true,scene:{...value,run:{...value.run,revision:2}}});await drain();
  h.time.advance(1000);for(const timer of h.time.intervals.values())timer.fn();h.net.calls[2].reply({ok:true,scene:{...value,run:{...value.run,revision:2}}});await drain();h.net.calls[3].reply({ok:true,scene:{...value,run:{...value.run,revision:3}}});await drain();assert.equal(h.net.calls.filter(c=>c.action==='atlas/settle').length,2);
 });
@@ -960,4 +960,44 @@ test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atla
     if(action==='fate/action-scoped'){const follow=h.net.calls.at(-1);assert.equal(follow.action,'atlas/status');follow.reply({ok:true,scene:scene({runId:null})});}
     assert.equal((await current).marker,'current-a');assert.equal(h.client.getContext().epoch,2);
   });
+});
+
+function activeTimers(h) { return [...h.time.deadlines.entries()].filter(([, d]) => d.ms === 3000 || d.ms === 10000); }
+function progressionScene(extra = {}) { const value = scene(extra); if (value.run) value.run.map = { id: 'cycle_elite_01', progression: { mode: 'elite' } }; return value; }
+test('an ACTIVE five-cycle Atlas run syncs every 3 s while visible and stops when the run ends', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: progressionScene() }); await drain();
+  assert.equal(h.net.calls[1].action, 'atlas/settle');
+  h.net.calls[1].reply({ ok: true, scene: progressionScene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  let timers = activeTimers(h); assert.equal(timers.length, 1); assert.equal(timers[0][1].ms, 3000);
+  assert.equal(h.time.intervals.size, 0, 'no interval poller');
+  h.time.advance(3000); h.time.deadlines.delete(timers[0][0]); timers[0][1].fn();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  h.net.calls[2].reply({ ok: true, scene: progressionScene({ revision: 3, runRevision: 2, serverNow: 63000 }) }); await drain();
+  assert.equal(h.net.calls[3].action, 'atlas/settle', 'the tick advances the run so new combat events arrive');
+  h.net.calls[3].reply({ ok: true, scene: scene({ revision: 4, runId: null }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 0, 'run ended: timer stopped');
+  const before = h.net.calls.length; h.time.advance(30000); await drain(); assert.equal(h.net.calls.length, before);
+});
+test('a legacy active run syncs every 10 s; hiding stops the timer at once and showing resumes it', async t => {
+  let hidden = false; const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: scene() }); await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h)[0][1].ms, 10000);
+  hidden = true; h.client.visibilityChanged();
+  assert.equal(activeTimers(h).length, 0, 'hidden: timer cleared immediately');
+  const before = h.net.calls.length;
+  hidden = false; h.client.visibilityChanged();
+  assert.equal(h.net.calls.length, before + 1, 'visible with an active run: one immediate sync');
+  h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 3, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 1, 'timer resumed');
+  h.client.dispose(); assert.equal(activeTimers(h).length, 0);
+});
+test('becoming visible without an active run does not refresh', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start(); h.net.calls[0].reply({ ok: true, scene: scene({ runId: null }) }); await drain();
+  h.client.visibilityChanged(); await drain();
+  assert.equal(h.net.calls.length, 1); assert.equal(h.time.deadlines.size, 0);
 });

@@ -157,3 +157,50 @@ test('packaged manifest matches the entry, the gate and the scene aliases', () =
     assert.ok(entry, path); assert.equal(entry.bytes, data.length, path); assert.equal(entry.sha256, crypto.createHash('sha256').update(data).digest('hex'), path);
   }
 });
+
+test('bot deep links map to the scene windows that replaced the classic tabs', () => {
+  const { RpgEntryGate } = gateApi(), map = v => plain(RpgEntryGate.deepLink(v));
+  const expect = { bag: 'inventory', shop: 'shop', gacha: 'shop', boss: 'boss', guardian: 'guardian', fate: 'fate', 'star-ring': 'star-ring', class: 'career', trade: 'direct-trade', pk: 'duel' };
+  for (const [screen, route] of Object.entries(expect)) { assert.deepEqual(map(screen), { route, params: {} }, screen); assert.deepEqual(map('rpg' + screen), { route, params: {} }, 'rpg' + screen); }
+  assert.deepEqual(map('trade_t0123456789a'), { route: 'direct-trade', params: { tradeId: 't0123456789a' } });
+  assert.deepEqual(map('req_q0123456789a'), { route: 'direct-trade', params: {} });
+  assert.deepEqual(map('pk_p0123456789a'), { route: 'duel', params: {} });
+  assert.deepEqual(map('party_abc123'), { route: 'party', params: { tab: 'current' } });
+  assert.deepEqual(map('ring_' + 'f'.repeat(32)), { ring: true });
+  assert.deepEqual(map('admin'), { admin: '/admin/' });
+  assert.deepEqual(map('admin_' + 'a'.repeat(64)), { admin: '/admin/?approve=' + 'a'.repeat(64) });
+  for (const none of ['', 'home', 'rpg', 'bestiary', 'trade_x', '../admin', 'admin_zz']) assert.equal(RpgEntryGate.deepLink(none), null, none);
+  assert.equal(RpgEntryGate.sceneUrl('/s.html', { route: 'direct-trade', params: { tradeId: 't0123456789a', evil: 'x' } }), '/s.html?entry=direct-trade&tradeId=t0123456789a');
+  assert.equal(RpgEntryGate.sceneUrl('/s.html', {}), '/s.html');
+});
+
+test('every screen the bot emits (cloud-bot deepLink/appBtn) resolves to a scene destination', () => {
+  const { RpgEntryGate } = gateApi(), dir = new URL('../../cloud-bot/src/adapter/', import.meta.url), screens = new Set();
+  for (const name of fs.readdirSync(dir).filter(n => n.endsWith('.js'))) {
+    const src = fs.readFileSync(new URL(name, dir), 'utf8');
+    for (const m of src.matchAll(/(?:deepLink|appBtn)\((?:'[^']*',\s*)?'([a-z-]+)'\)/g)) screens.add(m[1]);
+    for (const m of src.matchAll(/(?:deepLink|appBtn)\([^)]*`([a-z]+)_\$\{/g)) screens.add(m[1] + '_');
+    for (const m of src.matchAll(/(?:deepLink|appBtn)\('([a-z]+)_'\+/g)) screens.add(m[1] + '_');
+    for (const m of src.matchAll(/screen = [^;]*?'([a-z-]+)'/g)) screens.add(m[1]);
+  }
+  for (const s of ['bag', 'shop', 'gacha', 'boss', 'guardian', 'fate', 'star-ring', 'trade_', 'pk_', 'party_', 'ring_']) assert.ok(screens.has(s), 'scan found ' + s);
+  const sample = { trade_: 'trade_t0123456789a', req_: 'req_q0123456789a', pk_: 'pk_p0123456789a', party_: 'party_p1', ring_: 'ring_' + '0'.repeat(32) };
+  assert.equal(RpgEntryGate.deepLink('home'), null, 'home is the default scene');
+  const unmapped = [...screens].filter(s => !['home', 'material', 'relic', 'trade_request', 'trade_rejected'].includes(s)).filter(s => !RpgEntryGate.deepLink(sample[s] || s));
+  assert.deepEqual(unmapped, []);
+});
+
+test('a deep link survives the select screen and opens its window; admin links leave before the splash', async () => {
+  const { RpgEntryGate } = gateApi(), handoffs = [], screens = [], redirects = [];
+  const deps = (startParam, extra = {}) => ({ signed: true, startParam, request: async a => a === 'characters' ? { characters: roster } : { ok: true }, portraits: async () => ({}),
+    render: (s) => screens.push(s), handoff: o => handoffs.push(o), wait: async () => {}, redirect: url => redirects.push(url), ...extra });
+  const bag = RpgEntryGate.createGate(deps('bag')); await bag.start();
+  assert.equal(screens.at(-1), 'select', 'still chooses a character first (classic behaviour)');
+  await bag.choose('12'); assert.deepEqual(plain(handoffs.at(-1)), { route: 'inventory', params: {} });
+  const trade = RpgEntryGate.createGate(deps('rpgtrade_t0123456789a')); await trade.start(); trade.enter();
+  assert.deepEqual(plain(handoffs.at(-1)), { route: 'direct-trade', params: { tradeId: 't0123456789a' } });
+  const unsigned = RpgEntryGate.createGate(deps('boss', { signed: false })); await unsigned.start();
+  assert.deepEqual(plain(handoffs.at(-1)), { route: 'boss', params: {} });
+  screens.length = 0; const admin = RpgEntryGate.createGate(deps('admin')); await admin.start();
+  assert.deepEqual(redirects, ['/admin/']); assert.deepEqual(screens, []);
+});

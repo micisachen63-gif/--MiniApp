@@ -243,7 +243,12 @@
       } else wrap.append(node('span',symbol));
       return wrap;
     }
-    function metadata(item) { return node('p',summaryOf(item),'se-item-meta'); }
+    // Classic listing parity: equipment cards also carry the compact stat line (main/element/extras/詞條).
+    function metadata(item) {
+      const meta = node('p',summaryOf(item),'se-item-meta'), stats = globalThis.RpgSceneItemStats, line = stats && item.equipment ? stats.compactLine(item.equipment) : '';
+      if (line) meta.append(node('small',line,'se-stat'));
+      return meta;
+    }
     function assetRef(item) { return item.ref || item[item.kind === 'equip' ? 'equipId' : item.kind === 'guardian' ? 'guardianId' : 'item']; }
     function quote(item,qty=item.qty,price=item.price) {
       return {kind:item.kind,ref:assetRef(item),qty,price,sellerCharacterId:item.seller?.characterId || host.getContext().characterId,sellerName:item.seller?.name || host.getActor?.()?.name || host.actor?.name || '',name:item.name};

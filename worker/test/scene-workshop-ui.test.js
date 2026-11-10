@@ -292,3 +292,21 @@ test('mounted equipment resolves existing art IDs and metadata paths like invent
     mounted.dispose();h.client.dispose();
   }
 });
+
+test('workshop picker lists stats and keeps the classic current-stat card visible when the shared item stats are loaded',async()=>{
+  const inventorySource=readFileSync(new URL('../public/scene-inventory-ui.js',import.meta.url),'utf8');
+  const window={},sandbox={window,crypto:webcrypto,URL,console,setTimeout,clearTimeout,Date,Promise,Intl,Math,AbortController};
+  sandbox.globalThis=sandbox;vm.runInNewContext(inventorySource+'\n;'+source,sandbox);
+  const h=harness(undefined,{api:window.RpgSceneWorkshop,draft:{itemId:'gear-a',tab:'enhance'}});
+  const root={innerHTML:'',scrollTop:0,contains:()=>false,querySelectorAll:()=>[],querySelector:()=>null,addEventListener(){},removeEventListener(){}};
+  const mounted=h.api.mount(root,h.host);await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+  assert.match(root.innerHTML,/>\+4 調查長劍 · T2 · 攻擊力 180 · 詞條 B</,'picker options carry the main stat and affix quality');
+  assert.match(root.innerHTML,/<details class="sw-item-stats" open><summary>目前能力<\/summary><dl class="sis-kv">/);
+  assert.ok(root.innerHTML.includes('<dt>強化</dt><dd>+4 → +5：成功 50% · 爆裝 10%</dd>'));
+  assert.match(root.innerHTML,/能力詞條 · B（3\/3）/);
+  assert.match(root.innerHTML,/成功 <b>50%<\/b>/,'existing odds card still shown');
+  mounted.dispose();
+  const plainApi=module(),h2=harness(undefined,{api:plainApi,draft:{itemId:'gear-a',tab:'enhance'}}),root2={...root,innerHTML:''};
+  const m2=plainApi.mount(root2,h2.host);await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+  assert.doesNotMatch(root2.innerHTML,/sw-item-stats/,'without the shared helper the workshop still renders its own summary');assert.match(root2.innerHTML,/攻擊力 180/);m2.dispose();
+});

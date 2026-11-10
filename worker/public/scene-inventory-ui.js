@@ -45,6 +45,57 @@
     link.addEventListener?.('error',() => link.remove(),{once:true});
     doc.head.append(link);
   }
+  // Classic item presentation (app.js itemSheet / bagView / tradeGearDetailsHtml), shared by the
+  // scene item windows through globalThis.RpgSceneItemStats. Display only: every value comes from
+  // the existing API projection; absent fields are skipped, never invented.
+  const ItemStats = (() => {
+    const QUALITY = new Set(['common','advanced','epic','legendary','supreme']);
+    const BONUS = {atk:'攻擊力',def:'防禦力',hp:'生命值',mp:'魔力',critPct:'爆擊',takenPct:'受傷',maxHpPct:'生命上限',maxMpPct:'魔力上限',expPct:'經驗值',atkPct:'攻擊力',defPct:'防禦力',hpPct:'生命',mpPct:'魔力',critDamagePct:'暴擊傷害',damagePct:'傷害',damageReducePct:'減傷',attackSpeedPct:'攻速',healPct:'治療'};
+    const SLOT_TABS = Object.freeze([['all','全部'],['weapon','武器'],['helmet','頭盔'],['armor','盔甲'],['gloves','手套'],['boots','長靴'],['belt','腰帶'],['undershirt','內衣'],['earring','耳環'],['ring','戒指']]);
+    const has = value => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));
+    const bonusText = (key,value) => { const v = Number(value); return (BONUS[key] || key) + ' ' + (v > 0 ? '+' : '−') + (/Pct$/.test(key) ? Math.round(Math.abs(v) * 1000) / 10 + '%' : fmt(Math.abs(v))); };
+    const extrasText = item => [...Object.entries(item?.extras || {}),...Object.entries(item?.pct || {})].filter(([,v]) => Number(v)).map(([k,v]) => bonusText(k,v)).join(' · ');
+    const relicText = item => Object.entries(item?.affix || {}).filter(([,v]) => Number(v)).map(([k,v]) => bonusText(k,v)).join(' · ');
+    const qualityClass = item => 'sis-q-' + (item?.grade === 'relic' ? 'relic' : QUALITY.has(item?.rarity) ? item.rarity : 'common');
+    const modeName = item => item?.modeName && item.mode && item.mode !== 'normal' ? String(item.modeName) : '';
+    const affixSummary = item => item?.affixes ? '詞條 ' + (item.affixes.lines?.length || 0) + '/' + (item.affixes.slots || 1) + (item.affixes.quality ? ' ' + item.affixes.quality : '') : '';
+    const title = item => (Number(item?.enhance) ? '+' + Number(item.enhance) + ' ' : '') + (item?.name || item?.id || '');
+    function compactLine(item) {
+      if (!item) return '';
+      return [item.statName && has(item.stat) ? item.statName + ' ' + fmt(item.stat) : '',item.elementName && has(item.elemStat) ? item.elementName + ' +' + fmt(item.elemStat) : '',
+        extrasText(item),item.affix ? '✦遺物詞條' : '',affixSummary(item),Number(item.towerImprint?.level) ? '塔印 ' + Number(item.towerImprint.level) : ''].filter(Boolean).join(' · ');
+    }
+    const tagLine = item => [item?.rarityName,item?.gradeName,modeName(item),has(item?.tier) ? 'T' + item.tier : '',item?.slotName,has(item?.levelReq) ? 'Lv.' + item.levelReq : ''].filter(Boolean).join(' · ');
+    const tradeText = item => item?.inTrade ? '交易中（保管）' : item?.tradeBlock ? '不可交易：' + item.tradeBlock : '可交易';
+    function enhanceText(item) {
+      const next = item?.enhanceNext, level = Number(item?.enhance || 0);
+      if (!next) return item && 'enhanceNext' in item ? '已達上限' : '';
+      return '+' + level + ' → +' + (level + 1) + '：成功 ' + Math.round(Number(next.success) * 100) + '%' + (Number(next.break) ? ' · 爆裝 ' + Math.round(Number(next.break) * 100) + '%' : '（安全）');
+    }
+    function gain(item,target) {
+      const levels = item?.enhanceGrowth?.byLevel, from = Number(item?.enhance), to = target == null ? from + 1 : Number(target);
+      if (!Array.isArray(levels) || !Number.isInteger(from) || !Number.isInteger(to) || to <= from || !has(levels[from]) || !has(levels[to])) return null;
+      return {name:item.enhanceGrowth.statName || item.statName,before:Number(levels[from]),after:Number(levels[to]),delta:Number(levels[to]) - Number(levels[from]),from,to};
+    }
+    function affixLines(item) {
+      const lines = item?.affixes?.lines;
+      if (!Array.isArray(lines) || !lines.length) return '';
+      return '<section class="sis-affix-block"><h4>能力詞條 · ' + esc(item.affixes.quality || '未鑑定') + '（' + lines.length + '/' + esc(item.affixes.slots || lines.length) + '）</h4><ul class="sis-affixes">' + lines.map(line => '<li><span>' + esc(line.name) + ' <b>+' + (Number(line.value) * 100).toFixed(2) + '%</b></span><small>' + esc(line.quality || '') + (line.recommended ? ' ⭐' : '') + '</small></li>').join('') + '</ul></section>';
+    }
+    function kvRows(item,extra = {}) {
+      if (!item) return [];
+      const imprint = item.towerImprint, extras = extrasText(item), relic = relicText(item);
+      return [[item.statName || '主能力',has(item.stat) ? fmt(item.stat) : ''],['附加',extras],['遺物詞條',relic],['屬性',item.elementName ? item.elementName + ' +' + fmt(item.elemStat || 0) : ''],
+        ['裝備階',[has(item.tier) ? 'T' + item.tier : '',has(item.levelReq) ? 'Lv.' + item.levelReq : ''].filter(Boolean).join(' · ')],['世界模式',modeName(item)],['路線',item.branchReq ? item.branchReq + ' 路線限定' : ''],
+        ['交易',tradeText(item)],['綁定',typeof item.bound === 'boolean' ? item.bound ? '已綁定' : '未綁定' : ''],['強化',enhanceText(item)],
+        ['塔印',Number(imprint?.level) ? fmt(imprint.level) + '／' + fmt(imprint.max) + ' · 主能力 +' + fmt(imprint.bonusPct) + '%（已計入）' : ''],
+        ['典藏',extra.archived === true ? '已典藏' : extra.archived === false ? '尚未典藏' : '']].filter(([,value]) => value);
+    }
+    const kvHtml = (item,extra) => '<dl class="sis-kv">' + kvRows(item,extra).map(([k,v]) => '<div><dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd></div>').join('') + '</dl>';
+    const gainHtml = (item,target) => { const g = gain(item,target); return g ? '<p class="sis-gain">強化成功後 · +' + g.from + ' → +' + g.to + '：' + esc(g.name) + ' ' + fmt(g.before) + ' → <b>' + fmt(g.after) + '</b>（+' + fmt(g.delta) + '）</p>' : ''; };
+    return Object.freeze({SLOT_TABS,bonusText,extrasText,relicText,qualityClass,modeName,affixSummary,title,compactLine,tagLine,tradeText,enhanceText,gain,affixLines,kvRows,kvHtml,gainHtml});
+  })();
+  globalThis.RpgSceneItemStats = ItemStats;
   function mount(root, host, options = {}) {
     if (!root || !host?.request || !host?.getContext) throw new Error('Inventory host is required');
     ensureStyles(root);
@@ -163,7 +214,7 @@
     function equippedSlots() {
       return '<section class="si-equipped" aria-label="目前穿戴">' + Object.entries(SLOTS).flatMap(([slot,name]) => Array.from({length:MULTI.has(slot) ? 2 : 1},(_,i) => {
         const position = i + 1, item = gear().find(e => e.equipped && e.slot === slot && Number(e.position || 1) === position);
-        return '<button type="button" class="si-slot ' + (item ? '' : 'si-empty-slot') + '" data-inv-action="' + (item ? 'detail' : 'slot-filter') + '" data-item-id="' + esc(item?.id || '') + '" data-slot="' + esc(slot) + '"><small>' + esc(name + (MULTI.has(slot) ? ' ' + position : '')) + '</small>' + (item ? icon(item) + '<span>' + esc(title(item)) + '</span>' : '<span>未穿戴</span>') + '</button>';
+        return '<button type="button" class="si-slot ' + (item ? '' : 'si-empty-slot') + '" data-inv-action="' + (item ? 'detail' : 'slot-filter') + '" data-item-id="' + esc(item?.id || '') + '" data-slot="' + esc(slot) + '"><small>' + esc(name + (MULTI.has(slot) ? ' ' + position : '')) + '</small>' + (item ? icon(item) + '<span class="' + ItemStats.qualityClass(item) + '">' + esc(title(item)) + '</span><small class="si-slot-stat">' + esc([item.statName && item.statName + ' ' + fmt(item.stat),item.elementName && item.elementName + ' +' + fmt(item.elemStat)].filter(Boolean).join(' · ')) + '</small>' : '<span>未穿戴</span>') + '</button>';
       })).join('') + '</section>';
     }
     function filterControls() {
@@ -176,16 +227,21 @@
     }
     function rowHtml(row) {
       const isGear = row.group === 'equipment', block = isGear ? sellBlock(row) : null;
-      const badges = isGear ? [row.rarityName,'T' + row.tier,row.slotName,row.equipped ? '穿戴中' : '',row.bound ? '已綁定' : '',row.inTrade ? '交易託管中' : '',jobBlock(row) ? '背景作業中' : '',row.grade === 'relic' ? '遺物' : ''].filter(Boolean).join(' · ') : row.origin === 'atlas' ? '星圖材料 · 角色持有' : row.origin === 'recovery' ? '精煉材料 · 角色專用' : row.group === 'materials' ? '材料' : '道具';
+      const badges = isGear ? [row.rarityName,ItemStats.modeName(row),'T' + row.tier,row.slotName,row.levelReq ? 'Lv.' + row.levelReq : '',row.equipped ? '穿戴中' : '',row.bound ? '已綁定' : '',row.inTrade ? '交易託管中' : '',jobBlock(row) ? '背景作業中' : '',row.grade === 'relic' ? '遺物' : ''].filter(Boolean).join(' · ') : row.origin === 'atlas' ? '星圖材料 · 角色持有' : row.origin === 'recovery' ? '精煉材料 · 角色專用' : row.group === 'materials' ? '材料' : '道具';
       return '<article class="si-row" data-rarity="'+esc(row.rarity||'')+'" data-selected="'+draft.selected.includes(String(row.id))+'" data-inv-row="' + esc(row.id) + '">' + (isGear ? '<label class="si-select" title="' + esc(block || '選入出售清單') + '"><input type="checkbox" name="inventorySelected" data-item-id="' + esc(row.id) + '"' + (draft.selected.includes(String(row.id)) ? ' checked' : '') + (!safeToSelect(row) || locked() ? ' disabled' : '') + ' aria-label="選取 ' + esc(title(row)) + '"></label>' : '<span class="si-row-spacer"></span>') +
-        '<button type="button" class="si-row-open" data-inv-action="detail" data-item-id="' + esc(row.id) + '" aria-label="'+esc((isGear?title(row):row.name)+' · '+badges)+'" title="'+esc((isGear?title(row):row.name)+' · '+badges)+'"><span class="si-card-art">' + icon(row) + '<span class="si-card-count">'+(isGear?'+'+fmt(row.enhance||0):'×'+fmt(row.quantity))+'</span></span><span class="si-row-copy"><strong>' + esc(row.name) + '</strong><small>' + esc(badges) + '</small>' + (isGear ? '<small class="si-card-stat">' + esc(row.statName) + ' ' + fmt(row.stat) + (row.elementName ? ' · ' + esc(row.elementName) + ' +' + fmt(row.elemStat) : '') + '</small>' : '') + '</span><span class="si-row-value">' + (isGear ? (block ? '<small>' + esc(block) + '</small>' : fmt(row.sellPrice) + '<small>金幣售價</small>') : '×' + fmt(row.quantity)) + '</span></button></article>';
+        '<button type="button" class="si-row-open" data-inv-action="detail" data-item-id="' + esc(row.id) + '" aria-label="'+esc((isGear?title(row):row.name)+' · '+badges)+'" title="'+esc((isGear?title(row):row.name)+' · '+badges)+'"><span class="si-card-art">' + icon(row) + '<span class="si-card-count">'+(isGear?'+'+fmt(row.enhance||0):'×'+fmt(row.quantity))+'</span></span><span class="si-row-copy"><strong' + (isGear ? ' class="' + ItemStats.qualityClass(row) + '"' : '') + '>' + esc(isGear ? ItemStats.title(row) : row.name) + '</strong><small>' + esc(badges) + '</small>' + (isGear ? '<small class="si-card-stat">' + esc(ItemStats.compactLine(row)) + '</small>' : '') + '</span><span class="si-row-value">' + (isGear ? (block ? '<small>' + esc(block) + '</small>' : fmt(row.sellPrice) + '<small>金幣售價</small>') : '×' + fmt(row.quantity)) + '</span></button></article>';
     }
     function listView() {
       const rows = filteredRows(), selected = draft.selected.map(itemById).filter(Boolean);
       return (mode === 'equipment' ? equippedSlots() : '') + '<nav class="si-quick" aria-label="物品功能">' + actionButton('navigate',mode === 'equipment' ? '查看背包' : '目前穿戴',{route:mode === 'equipment' ? 'inventory' : 'equipment'}) + actionButton('navigate','裝備收藏冊',{route:'gearbook'}) + actionButton('navigate','典藏與精煉',{route:'recovery',disabled:state.recovery?.enabled !== true}) + actionButton('navigate','工坊',{route:'workshop'}) + '</nav>' +
         '<details class="si-filter-drawer" data-inv-filters '+(draft.filtersOpen?'open':'')+'><summary>搜尋與篩選<span>名稱 · 分類 · 部位 · 品質 · 狀態</span></summary>'+filterControls()+'</details>' + '<div class="si-list-tools"><span>找到 ' + rows.length + ' 項' + (draft.selected.length ? ' · 已選 ' + draft.selected.length + ' 件裝備（包含其他篩選）' : '') + '</span><div class="si-actions">' + actionButton('select-visible','選取此頁一般裝備',{disabled:locked() || !rows.some(r => r.group === 'equipment' && safeToSelect(r) && !isPrecious(r))}) + actionButton('clear-selection','清除選取',{disabled:locked() || !draft.selected.length}) + '</div></div>' +
-        '<div class="si-list" data-inv-list>' + (rows.length ? rows.map(rowHtml).join('') : '<p class="si-empty">沒有符合條件的持有物品。可更改搜尋或篩選。</p>') + '</div>' +
+        slotTabs() + '<div class="si-list" data-inv-list>' + (rows.length ? rows.map(rowHtml).join('') : '<p class="si-empty">沒有符合條件的持有物品。可更改搜尋或篩選。</p>') + '</div>' +
         (draft.selected.length ? '<footer class="si-bulk"><span><b>' + draft.selected.length + '</b> 件已選 · 目前售價合計 <b>' + fmt(selected.reduce((sum,e) => sum + Number(e.sellPrice || 0),0)) + '</b> 金幣<small>每批最多 ' + MAX_SELL + ' 件；確認前會重新讀取物品。</small></span>' + actionButton('preview-batch','預覽出售',{disabled:locked() || !selected.length,kind:'si-danger'}) + '</footer>' : '');
+    }
+    // Classic 部位分頁 (app.js BAG_EQUIP_FILTERS): 全部 + nine slots with counts; same draft.slot as the filter drawer.
+    function slotTabs() {
+      const list = gear(), current = ItemStats.SLOT_TABS.some(([slot]) => slot === draft.slot) && (draft.category === 'equipment' || draft.slot === 'all') ? draft.slot : 'all';
+      return '<nav class="si-slot-tabs" aria-label="裝備部位分頁">' + ItemStats.SLOT_TABS.map(([slot,name]) => '<button type="button" data-inv-action="slot-tab" data-slot="' + slot + '" aria-pressed="' + (slot === current) + '">' + esc(name) + '<small>' + fmt(slot === 'all' ? list.length : list.filter(e => e.slot === slot).length) + '</small></button>').join('') + '</nav>';
     }
     function statsRows(object, percent = false) {
       return Object.entries(object || {}).filter(([,v]) => Number(v) !== 0).map(([k,v]) => '<div><dt>' + esc(LABELS[k] || k) + '</dt><dd>' + (Number(v) > 0 ? '+' : '') + fmt(percent ? Number(v) * 100 : v) + (percent ? '%' : '') + '</dd></div>').join('');
@@ -196,12 +252,14 @@
       const same = other?.id === item.id, delta = Number(item.stat) - Number(other?.stat || 0);
       return '<section class="si-compare"><h3>同部位比較</h3>' + (MULTI.has(item.slot) ? '<label>比較位置 <select name="inventoryPosition"><option value="1"' + (position === 1 ? ' selected' : '') + '>' + esc(SLOTS[item.slot]) + ' 1</option><option value="2"' + (position === 2 ? ' selected' : '') + '>' + esc(SLOTS[item.slot]) + ' 2</option></select></label>' : '') + '<div class="si-compare-grid"><div><small>目前穿戴</small><strong>' + esc(other ? title(other) : '空位') + '</strong><span>' + esc(item.statName) + ' ' + fmt(other?.stat || 0) + '</span></div><div><small>選取裝備</small><strong>' + esc(title(item)) + '</strong><span>' + esc(item.statName) + ' ' + fmt(item.stat) + '</span></div></div><p class="si-muted">' + (same ? '這件就是目前位置的裝備。' : '單件主屬性差 ' + (delta > 0 ? '+' : '') + fmt(delta) + '。') + ' 僅比較此部位的主屬性；元素、詞條、整套能力與天賦請一併查看，不代表總戰力差。</p></section>';
     }
+    function archived(item) { const row = Array.isArray(state.recovery?.items) ? state.recovery.items.find(entry => String(entry.id) === String(item.id)) : null; return typeof row?.archived === 'boolean' ? row.archived : null; }
     function equipmentDetail(item) {
       const block = equipBlock(item), sale = sellBlock(item), current = item.equipped;
-      return '<section class="si-detail" data-inv-detail="' + esc(item.id) + '"><div class="si-detail-hero">' + icon(item) + '<div><p class="si-eyebrow">' + esc([item.rarityName,item.gradeName,item.slotName,'T' + item.tier].filter(Boolean).join(' · ')) + '</p><h3>' + esc(title(item)) + '</h3><p>' + esc(item.type || item.className) + ' · 需求 Lv.' + esc(item.levelReq) + (item.branchReq ? ' · ' + esc(item.branchReq) + ' 路線' : '') + '</p></div></div>' +
-        '<dl class="si-stats"><div><dt>' + esc(item.statName) + '</dt><dd>' + fmt(item.stat) + '</dd></div><div><dt>元素</dt><dd>' + esc(item.elementName || '無') + ' +' + fmt(item.elemStat) + '</dd></div>' + statsRows(item.extras) + statsRows(item.pct,true) + '<div><dt>來源</dt><dd>' + esc(SOURCE_NAMES[item.source] || item.source || '未標示') + '</dd></div><div><dt>綁定</dt><dd>' + (item.bound ? '已綁定' : '未綁定，穿戴後會綁定') + '</dd></div><div><dt>交易</dt><dd>' + esc(item.inTrade ? '交易託管中' : item.tradeBlock || '可交易') + '</dd></div><div><dt>分享</dt><dd>' + esc(item.shareBlock || '可分享') + '</dd></div><div><dt>商店售價</dt><dd>' + fmt(item.sellPrice) + ' 金幣</dd></div></dl>' +
+      return '<section class="si-detail" data-inv-detail="' + esc(item.id) + '"><div class="si-detail-hero">' + icon(item) + '<div><p class="si-eyebrow">' + esc([item.rarityName,item.gradeName,ItemStats.modeName(item),item.slotName,'T' + item.tier].filter(Boolean).join(' · ')) + '</p><h3 class="' + ItemStats.qualityClass(item) + '">' + esc(title(item)) + '</h3><p>' + esc(item.type || item.className) + ' · 需求 Lv.' + esc(item.levelReq) + (item.branchReq ? ' · ' + esc(item.branchReq) + ' 路線' : '') + '</p></div></div>' +
+        '<dl class="si-stats"><div><dt>' + esc(item.statName) + '</dt><dd>' + fmt(item.stat) + '</dd></div><div><dt>元素</dt><dd>' + esc(item.elementName || '無') + ' +' + fmt(item.elemStat) + '</dd></div>' + statsRows(item.extras) + statsRows(item.pct,true) + '<div><dt>裝備階</dt><dd>T' + esc(item.tier) + ' · Lv.' + esc(item.levelReq) + '</dd></div>' + (ItemStats.modeName(item) ? '<div><dt>世界模式</dt><dd>' + esc(ItemStats.modeName(item)) + '</dd></div>' : '') + (ItemStats.enhanceText(item) ? '<div><dt>強化</dt><dd>' + esc(ItemStats.enhanceText(item)) + '</dd></div>' : '') + (archived(item) !== null ? '<div><dt>典藏</dt><dd>' + (archived(item) ? '已典藏' : '尚未典藏') + '</dd></div>' : '') + '<div><dt>來源</dt><dd>' + esc(SOURCE_NAMES[item.source] || item.source || '未標示') + '</dd></div><div><dt>綁定</dt><dd>' + (item.bound ? '已綁定' : '未綁定，穿戴後會綁定') + '</dd></div><div><dt>交易</dt><dd>' + esc(item.inTrade ? '交易託管中' : item.tradeBlock || '可交易') + '</dd></div><div><dt>分享</dt><dd>' + esc(item.shareBlock || '可分享') + '</dd></div><div><dt>商店售價</dt><dd>' + fmt(item.sellPrice) + ' 金幣</dd></div></dl>' +
         (item.affixes?.lines?.length ? '<section><h4>能力詞條 · ' + esc(item.affixes.quality || '') + '</h4><ul class="si-affixes">' + item.affixes.lines.map(line => '<li>' + esc(line.name) + ' <b>+' + fmt(Number(line.value) * 100) + '%</b> <small>' + esc(line.quality || '') + (line.recommended ? ' · 適合目前職業' : '') + '</small></li>').join('') + '</ul></section>' : '') +
         (item.affix ? '<section><h4>遺物詞條</h4><dl class="si-stats">' + statsRows(item.affix,true) + '</dl></section>' : '') +
+        ItemStats.gainHtml(item) +
         (item.growth ? '<p class="si-muted">' + esc(item.statName) + '組成：基礎 ' + fmt(item.growth.base) + ' ＋ 強化 ' + fmt(item.growth.enhancement) + '（已計入裝備加成）。</p>' : '') +
         (craftCount(item) ? '<p class="si-muted">星圖銘刻 ' + fmt(craftCount(item)) + ' 次；已計入目前裝備主能力。</p>' : '') +
         (Number(item.towerImprint?.level) ? '<p class="si-muted">塔印 ' + fmt(item.towerImprint.level) + '／' + fmt(item.towerImprint.max) + ' · 主能力 +' + fmt(item.towerImprint.bonusPct) + '%，已計入上方能力。</p>' : '') +
@@ -415,6 +473,7 @@
       if (action === 'navigate') { navigate(button.dataset.route,{...(id ? {itemId:id} : {}),...(button.dataset.tab ? {tab:button.dataset.tab} : {})}); return; }
       if (action === 'detail') { navigate('item',{itemId:id}); return; }
       if (action === 'slot-filter') { draft.category='equipment';draft.slot=button.dataset.slot;render();return; }
+      if (action === 'slot-tab') { const slot = ItemStats.SLOT_TABS.some(([key]) => key === button.dataset.slot) ? button.dataset.slot : 'all'; draft.slot = slot; draft.category = slot !== 'all' || mode === 'equipment' ? 'equipment' : 'all'; render(); return; }
       if (locked()) return;
       if (action === 'select-visible') {
         const ids = filteredRows().filter(r => r.group === 'equipment' && safeToSelect(r) && !isPrecious(r)).map(r=>String(r.id));
@@ -498,5 +557,5 @@
       }
     };
   }
-  globalThis.RpgSceneInventory = Object.freeze({mount});
+  globalThis.RpgSceneInventory = Object.freeze({mount,stats:ItemStats});
 })();

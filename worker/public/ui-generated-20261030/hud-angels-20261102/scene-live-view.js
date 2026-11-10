@@ -120,6 +120,28 @@
     const row = ENEMIES.find(row => row[0] === map.id && row[1] === enemy?.rank && row[2] === enemy?.name);
     return row ? { ...source, spriteId: row[3] } : null;
   }
+  // Idle (no Atlas run, not away): show the character's current idle map, the same
+  // level band the server idles on (formulas.mapForLevel + endgame cycle), instead of
+  // an empty 營地. Purely cosmetic and local: no request, no timer, no extrapolation.
+  const IDLE_THEME_NAMES = ['阿耳忒彌斯月桂林', '雅典娜百柱神殿', '阿卡迪亞聖林', '波賽頓愛琴海崖', '克里特迷宮門庭', '赫淮斯托斯熔爐', '冥河斯堤克斯渡口', '德爾菲阿波羅神諭谷', '泰坦諸神山隘', '奧林帕斯雲門', '至福樂土', '奧林帕斯星穹聖殿'];
+  const IDLE_MODES = [['normal', '普通'], ['elite', '菁英'], ['expert', '專家'], ['nightmare', '惡夢'], ['hell', '地獄']];
+  function idleMapFor(character, art = endgameArt) {
+    const level = Math.max(1, Math.min(600, Math.floor(number(character?.level) || 0)));
+    if (!number(character?.level) || character.level < 1) return null;
+    const modeIndex = Math.min(4, Math.floor((level - 1) / 120)), local = (level - 1) % 120 + 1, chapter = Math.min(12, Math.ceil(local / 10));
+    const [mode, modeName] = IDLE_MODES[modeIndex], id = 'cycle_' + mode + '_' + String(chapter).padStart(2, '0'), entry = art?.[id];
+    if (!entry || entry.mode !== mode || entry.chapter !== chapter || !Array.isArray(entry.roster)) return null;
+    const themeId = (chapter - 1 + modeIndex * 5) % 12 + 1;
+    const place = entry.name || IDLE_THEME_NAMES[themeId - 1];
+    return { id, name: place + '-' + modeName, place, themeId: null, kind: 'idle', idle: true, progression: { mode, chapter } };
+  }
+  // Normal-cycle rosters use prefixed ids (mon_/elite_/boss_[x13_mNN_]) while the map
+  // sprite metadata keys are the plain names; resolve to whichever key really exists.
+  function resolveSprite(data, asset) {
+    if (!asset?.spriteId || data?.[asset.spriteId + '_idle']) return asset;
+    const plain = String(asset.spriteId).replace(/^(?:mon|elite|boss)_(?:x13_m\d{2}_)?/, '');
+    return plain !== asset.spriteId && data?.[plain + '_idle'] ? { ...asset, spriteId: plain } : asset;
+  }
   function normalize(snapshot) {
     if (!snapshot || snapshot.schemaVersion !== 1 || !snapshot.characterId || !snapshot.realmId || !snapshot.accountId || !snapshot.character || !snapshot.live) return null;
     if (String(snapshot.character.id) !== String(snapshot.characterId)) return null;
@@ -205,7 +227,16 @@
       awayState.layer?.remove(); awayState.layer = null; awayState.unmount = null;
       if (!html) { clearAway(doc); return null; }
       const stage = doc.getElementById('stage') || doc.body, hud = doc.getElementById('ui');
-      const layer = doc.createElement('div'); layer.className = 'scene-away-layer'; layer.innerHTML = html;
+      // No timed polling: the player taps 重新整理狀態 to see whether the expedition has ended.
+      const refreshButton = '<button type="button" class="btn ghost" data-away-refresh>重新整理狀態</button>';
+      const tail = html.lastIndexOf('</div></section>');
+      const layer = doc.createElement('div'); layer.className = 'scene-away-layer';
+      layer.innerHTML = tail >= 0 ? html.slice(0, tail) + refreshButton + html.slice(tail) : html;
+      layer.addEventListener?.('click', event => {
+        const button = event.target?.closest?.('[data-away-refresh]'); if (!button || syncBusy) return;
+        button.disabled = true; button.textContent = '讀取中…';
+        void refresh().finally(() => { if (button.isConnected !== false) { button.disabled = false; button.textContent = '重新整理狀態'; } });
+      });
       if (hud && hud.parentNode === stage) stage.insertBefore(layer, hud); else stage.appendChild(layer);
       awayState.layer = layer; awayState.unmount = away.mount(layer);
       doc.documentElement.classList.add('rpg-scene-away');
@@ -243,7 +274,7 @@
     const { hero, animator, ui, ground, hpGraphics } = hooks;
     const viewId = ++nextViewId, entities = new Map(), resources = new Map(), textureKeys = new Set(), animationKeys = new Set();
     let disposed = false, model = null, context = '', appearance = null, actorGeneration = 0, mapGeneration = 0, currentMap = '', currentRoom = '', currentRun = '', lastRevision = null;
-    let campReady = false;
+    let campReady = false, idle = null;
     let groundReady = false, mapLoading = false, groundImage = null, width = 0, height = 0, actorIssue = '', mapIssue = '', syncError = lastSyncError, assetIssues = new Map(), seenEvents = new Set();
     const doc = global.document;
     let vfxPlayer = null, vfxBridge = null, vfxCanvas = null, vfxInit = null, vfxIssue = '', vfxLayout = '', vfxLayoutChanges = 0, vfxSize = '', vfxLastTrace = null, vfxTraceSequence = 0;
@@ -510,7 +541,7 @@
       text(doc.querySelector('#topL .portrait i'), value ? pretty(value.character.level) : '—');
       text(byId('gold'), value ? '◈ ' + pretty(value.live.gold) : '◈ —');
       const away = awayActivity(value);
-      text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : away ? awayTitle(away) : value ? '營地' : '同步中');
+      text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : away ? awayTitle(away) : idle ? '掛機中 · ' + idle.map.place : value ? '營地' : '同步中');
       text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : away ? '一般掛機暫停' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
       syncHudActions(value);
       nodes.refresh.disabled = syncBusy;
@@ -520,7 +551,7 @@
       if (!current()) return;
       const value = model, run = value?.run;
       const away = awayActivity(value);
-      text(nodes.title, value ? value.active ? '星圖探索中' : away ? awayTitle(away) : '營地' : '正在同步角色');
+      text(nodes.title, value ? value.active ? '星圖探索中' : away ? awayTitle(away) : idle ? '掛機中 · ' + idle.map.place : '營地' : '正在同步角色');
       text(nodes.sync, value?.snapshot.serverNow ? new Date(value.snapshot.serverNow).toLocaleTimeString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false }) : '');
       text(nodes.progress, value ? value.active ? '已結算 ' + pretty(run.processedSeconds) + ' 秒 · 擊敗 ' + pretty(run.report?.kills) + ' 隻' : run ? '最近派遣：' + ({ completed: '已完成', stopped: '已返營', dead: '倒地返營' }[run.status] || '已結束') : '選擇星圖並派遣後，這裡會顯示實際進度。' : '等待遊戲服務回覆。');
       text(nodes.supplies, value ? (value.active ? '隨身補給' : '可攜帶補給') + ' · 生命 ' + pretty(value.supplies?.hp) + ' / 魔力 ' + pretty(value.supplies?.mp) : '補給 —');
@@ -590,6 +621,7 @@
       // invalidate a real cast waiting for its target's geometry.
       const roster = [...entities.values()];
       const slots = roster.map((entity, index) => {
+        if (entity.key.startsWith('idle:') && Number.isInteger(entity.enemy.slot)) return { entity, ...idleSlot(entity, entity.enemy.slot) };
         const angle = -Math.PI + (index + 1) / (roster.length + 1) * Math.PI;
         const radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
         return { entity, x: hero.x + Math.cos(angle) * Math.min(radius, width * .3),
@@ -619,6 +651,7 @@
     function setMap(map) {
       vfxBridge?.clear('map-changed'); vfxLayout = '';
       ++mapGeneration; currentMap = map ? [map.id, map.themeId, map.kind].join(':') : ''; currentRoom = ''; assetIssues.clear(); releaseAssets(); mapIssue = '';
+      if (map?.idle && !mapAsset(map)) map = null;
       if (!map) {
         if(model){const generation=mapGeneration;
           void resource('image','live-'+viewId+'-'+generation+'-camp','/ui-proto/assets/ground.webp').then(texture=>{
@@ -634,14 +667,14 @@
       void resource('image', key, asset.background||'/map' + asset.sourceMap + '/map' + asset.sourceMap + '_ground.webp').then(texture => {
         if (!texture || !current() || generation !== mapGeneration) return;
         ground.setTexture(texture).setVisible(true); groundImage = scene.textures.get(texture).getSourceImage(); groundReady = true; layout();
-      }).catch(() => { if (current() && generation === mapGeneration) { mapIssue = '地圖背景尚未載入'; status(); } })
+      }).catch(() => { if (current() && generation === mapGeneration) { if (map.idle) { idle = null; currentMap = ''; setMap(null); return; } mapIssue = '地圖背景尚未載入'; status(); } })
         .finally(() => { if (current() && generation === mapGeneration) mapLoading = false; });
       layout();
     }
     async function loadEnemy(entity) {
-      const generation = mapGeneration, asset = entity.asset; entity.loading = true;
+      const generation = mapGeneration; entity.loading = true;
       try {
-        const data = await readMetadata(asset.sourceMap), idle = spriteMetadata(data, asset, 'idle');
+        const data = await readMetadata(entity.asset.sourceMap), asset = entity.asset = resolveSprite(data, entity.asset), idle = spriteMetadata(data, asset, 'idle');
         if (!current() || generation !== mapGeneration || entities.get(entity.key) !== entity) return;
         const key = 'live-' + viewId + '-' + generation + '-' + asset.spriteId + '-idle';
         const texture = await resource('spritesheet', key, '/map' + asset.sourceMap + '/' + idle.file, { frameWidth: idle.cellW, frameHeight: idle.cellH, endFrame: idle.frames - 1 });
@@ -679,11 +712,12 @@
       })();
     }
     function reconcileEnemies() {
-      const room = model?.active ? [model.run.id, model.run.mapIndex, model.run.roomIndex].join(':') : '';
+      const room = model?.active ? [model.run.id, model.run.mapIndex, model.run.roomIndex].join(':') : idle ? 'idle:' + idle.map.id : '';
+      const encounterMap = model?.active ? model.map : idle?.map || null, encounter = model?.active ? model.enemies : idle?.enemies || [];
       if (room !== currentRoom) { vfxBridge?.clear('room-changed'); for (const entity of entities.values()) destroyEntity(entity); entities.clear(); assetIssues.clear(); currentRoom = room; }
       const wanted = new Set();
-      for (const enemy of model?.enemies || []) {
-        const key = room + ':' + enemy.id, asset = enemyAsset(model.map, enemy); wanted.add(key);
+      for (const enemy of encounter) {
+        const key = room + ':' + enemy.id, asset = enemyAsset(encounterMap, enemy); wanted.add(key);
         let entity = entities.get(key);
         if (entity) {
           entity.enemy = enemy;
@@ -701,7 +735,8 @@
         const sprite = entity.sprite, ratio = clamp(entity.enemy.hp / Math.max(1, entity.enemy.maxHp)), w = scene.scale.height * (entity.enemy.rank === 'boss' ? .16 : entity.enemy.rank === 'elite' ? .09 : .06), h = Math.max(3, scene.scale.height * .006), x = sprite.x - w / 2, y = sprite.y - scene.scale.height * sprite.pct * 1.08;
         hpGraphics?.fillStyle(0x000000, .75).fillRect(x - 1, y - 1, w + 2, h + 2); hpGraphics?.fillStyle(0xb84135, 1).fillRect(x, y, w * ratio, h);
       }
-      const target = model?.enemies.find(enemy => enemy.hp > 0 && enemy.rank === 'boss') || model?.enemies.find(enemy => enemy.hp > 0 && enemy.rank === 'elite') || model?.enemies.find(enemy => enemy.hp > 0);
+      const list = model?.active ? model.enemies : idle?.enemies || [];
+      const target = list.find(enemy => enemy.hp > 0 && enemy.rank === 'boss') || list.find(enemy => enemy.hp > 0 && enemy.rank === 'elite') || list.find(enemy => enemy.hp > 0);
       if (target) ui.target(target.name, target.rank === 'normal' ? 'minion' : target.rank, clamp(target.hp / Math.max(1, target.maxHp))); else ui.target(null);
     }
     function clearActor() {
@@ -725,11 +760,76 @@
         status();
       }).catch(() => { if (current() && generation === actorGeneration) { appearance = null; hero.setVisible(false); actorIssue = '此角色素材尚未交付或載入失敗'; status(); } });
     }
+    // Cosmetic idle combat on the idle map: the hero swings at a nearby monster, it
+    // takes hits, dies with its own death clip and a new one respawns. Driven only by
+    // the Phaser frame clock in update(); committed numbers come from the server.
+    const IDLE_SWING_MS = 1150, IDLE_RESPAWN_MS = 1600;
+    // Idle camp: a band beside/in front of the hero at the hero's own depth, so the
+    // guardian angel above and the HUD below stay clear. Same sprite scale as Atlas.
+    function idleCount() { return width >= 700 ? 4 : 2; }
+    function idleSlot(entity, slot) {
+      const half = height * .07; // visible body half-width at the Atlas minion scale (frames carry padding)
+      // Never closer than hero + monster half-widths (narrow phones may clip the outer edge instead).
+      const clear = height * .065 + half * .85, narrow = width < 360;
+      const near = Math.max(clear, Math.min(width / 2 - half, Math.max(height * .16, Math.min(width * .3, height * .3))));
+      const side = slot % 2 ? 1 : -1, far = slot >= 2;
+      const dx = far ? Math.max(near * 1.35, Math.min(width / 2 - half, near * 1.5)) : near;
+      return { x: hero.x + side * dx, y: hero.y + height * (far ? .1 : narrow ? .06 : .03) };
+    }
+    function startIdle(map) {
+      const state = { map, enemies: [], rows: [], next: 0, seq: 0, clock: 0, swingAt: 600, respawnAt: 0, hitAt: 0, target: null, attacking: 0 };
+      const roster = (endgameArt?.[map.id]?.roster || []).filter(row => row.role === 'normal');
+      void Promise.all(roster.map(row => readMetadata(row.sourceMap).then(data => {
+        const asset = resolveSprite(data, { spriteId: row.id });
+        try { spriteMetadata(data, asset, 'idle'); spriteMetadata(data, asset, 'death'); return row; } catch { return null; }
+      }).catch(() => null))).then(rows => {
+        if (idle !== state || !current()) return;
+        state.rows = rows.filter(Boolean);
+        while (state.rows.length && state.enemies.length < idleCount()) spawnIdle(state);
+        reconcileEnemies(); drawBars();
+      });
+      return state;
+    }
+    function spawnIdle(state) {
+      const row = state.rows[state.next++ % state.rows.length], used = new Set(state.enemies.map(enemy => enemy.slot));
+      let slot = 0; while (used.has(slot)) slot++;
+      state.enemies.push({ id: 'idle-' + (++state.seq), slot, name: row.name + '-' + (IDLE_MODES.find(([id]) => id === state.map.progression.mode)?.[1] || ''), rank: 'normal', hp: 100, maxHp: 100, art: { spriteId: row.id, sourceMap: row.sourceMap } });
+    }
+    function idleTick(ms) {
+      const state = idle; if (!state || !model || model.active || !state.rows.length) return;
+      state.clock += ms;
+      const alive = () => [...entities.values()].filter(entity => entity.sprite?.active && !entity.dying && entity.enemy.hp > 0 && entity.key.startsWith('idle:'));
+      if (state.hitAt && state.clock >= state.hitAt) {
+        state.hitAt = 0; const entity = state.target; state.target = null;
+        if (entity && entities.get(entity.key) === entity && !entity.dying) {
+          const enemy = state.enemies.find(item => entity.key.endsWith(':' + item.id));
+          const damage = 28 + Math.floor(Math.random() * 18);
+          if (enemy) { enemy.hp = Math.max(0, enemy.hp - damage); entity.enemy = { ...entity.enemy, hp: enemy.hp }; entity.sprite.hp = enemy.hp; }
+          entity.sprite.setTintFill?.(0xffffff); scene.time?.delayedCall?.(90, () => { if (entity.sprite?.active) entity.sprite.clearTint?.(); });
+          if (enemy && enemy.hp <= 0) { beginDeath(entity); if (!state.respawnAt) state.respawnAt = state.clock + IDLE_RESPAWN_MS; }
+          drawBars();
+        }
+      }
+      if (state.attacking && state.clock >= state.attacking) { state.attacking = 0; if (animator.action === 'attack') animator.play('idle', animator.activeDirection || 'down', true); }
+      if (state.respawnAt && state.clock >= state.respawnAt) {
+        state.respawnAt = 0; state.enemies = state.enemies.filter(enemy => enemy.hp > 0);
+        while (state.enemies.length < idleCount()) spawnIdle(state);
+        reconcileEnemies();
+      }
+      if (state.clock < state.swingAt || state.hitAt) return;
+      state.swingAt = state.clock + IDLE_SWING_MS;
+      const target = alive()[0]; if (!target) return;
+      const direction = animator.face?.(target.sprite.x - hero.x, target.sprite.y - hero.y) || 'down';
+      const swung = animator.ready && animator.play('attack', direction, true);
+      const release = swung ? Math.max(120, Math.min(700, animator.releaseDelay?.() || 300)) : 250;
+      state.target = target; state.hitAt = state.clock + release;
+      if (swung) state.attacking = state.clock + Math.max(release + 80, animator.duration?.('attack', direction) || 600);
+    }
     function apply(snapshot) {
       if (!current()) return;
       const next = normalize(snapshot);
       if (!next) {
-        model = null; context = ''; currentRun = ''; currentRoom = ''; lastRevision = null; seenEvents.clear(); clearActor(); setMap(null); vfxBridge?.syncContext(); actorIssue = ''; status(); return;
+        model = null; idle = null; context = ''; currentRun = ''; currentRoom = ''; lastRevision = null; seenEvents.clear(); clearActor(); setMap(null); vfxBridge?.syncContext(); actorIssue = ''; status(); return;
       }
       const changedContext = context !== next.context;
       if (changedContext) { clearActor(); context = next.context; currentRun = ''; lastRevision = null; seenEvents.clear(); }
@@ -737,7 +837,9 @@
       if (!changedContext && nextRun === currentRun && number(next.run?.revision) !== null && number(lastRevision) !== null && next.run.revision < lastRevision) return;
       const previousRun = currentRun; currentRun = nextRun; lastRevision = next.run?.revision ?? null;
       model = next; syncError = '';
-      if (changedContext || currentMap !== (next.map ? [next.map.id, next.map.themeId, next.map.kind].join(':') : '') || (next.map && !groundReady && !mapLoading && mapAsset(next.map))) setMap(next.map);
+      const idleMap = !next.active && !awayActivity(next) ? idleMapFor(next.character) : null, viewMap = next.map || idleMap;
+      if (!idleMap || idle?.map.id !== idleMap.id) idle = idleMap ? startIdle(idleMap) : null;
+      if (changedContext || currentMap !== (viewMap ? [viewMap.id, viewMap.themeId, viewMap.kind].join(':') : '') || (viewMap && !groundReady && !mapLoading && mapAsset(viewMap))) setMap(viewMap);
       ensureActor();
       const events = next.run?.events || [];
       if (previousRun !== currentRun) seenEvents.clear();
@@ -798,8 +900,8 @@
     const view = {
       apply, mountStatus, refreshHUD: refreshHud, ingestCombatTrace,
       showSyncError(message) { syncError = message; status(); },
-      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); placeGuardian(); },
-      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, campReady, guardianVisible: !guardianNode.hidden, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
+      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { idleTick(Math.min(100, Math.max(0, ms))); animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); placeGuardian(); },
+      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, idleMapId: idle?.map.id || null, idleEnemies: idle ? idle.enemies.filter(enemy => enemy.hp > 0).length : 0, mapReady: groundReady, campReady, guardianVisible: !guardianNode.hidden, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
       dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); if(pc&&pc.drawImage===portraitDraw)pc.drawImage=originalPortraitDraw;guardianNode.remove();guardianCloud.remove();clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
     };
     const pagehideVfx = () => view.dispose();
@@ -819,8 +921,12 @@
   async function refresh() {
     if (syncBusy || !liveMode()) return;
     syncBusy = true; viewers.forEach(view => view.refreshHUD());
-    try { await global.RpgSceneSession?.refresh(); } catch (_) { /* Session owns connection errors and clears stale contexts. */ }
+    // Manual 同步: the only timed-free way to read new status (owner decision 2026-11-10).
+    // sync() also asks the server to settle a running Atlas chunk, like the former timer did.
+    const session = global.RpgSceneSession;
+    try { await (typeof session?.sync === 'function' ? session.sync() : session?.refresh()); } catch (_) { /* Session owns connection errors and clears stale contexts. */ }
     finally { syncBusy = false; viewers.forEach(view => view.refreshHUD()); }
+    try { global.dispatchEvent?.(new global.CustomEvent('rpg:scene-manual-refresh')); } catch (_) {}
   }
   // This row is a scoped read projection and navigation surface. The existing
   // supply/skill windows retain every confirmation, pending write and game rule.
@@ -885,8 +991,8 @@
     const scope = hudScope(snapshot);
     if (!scope) { clearHudSkills(); syncHudActions(null); return; }
     if (hudSkills.scope !== scope.key) clearHudSkills();
-    if (lastSyncError || global.document?.hidden) {
-      clearHudSkills(lastSyncError ? 'offline' : 'unknown', true); syncHudActions(scope.model); return;
+    if (lastSyncError) {
+      clearHudSkills('offline', true); syncHudActions(scope.model); return;
     }
     if (hudSkills.scope === scope.key && ['loading', 'ready'].includes(hudSkills.status)
       && scope.revision <= Math.max(hudSkills.requestedRevision, hudSkills.revision)) return;
@@ -932,11 +1038,31 @@
       const skill = ready ? hudSkills.slots[index] : null;
       const pending = hudSkills.status === 'loading', label = ready ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
       text(button.querySelector('.hud-v2-name'), label);
-      text(button.querySelector('.hud-v2-icon'), ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
+      setSkillIcon(button.querySelector('.hud-v2-icon'), ready && skill ? skillIconUrl(skill.id) : null, ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
       button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : 'unknown'; button.disabled = !navigable;
       const description = '第 ' + (index + 1) + ' 格：' + label + '，開啟技能配置；施放與冷卻請在技能視窗確認';
       button.title = description; button.setAttribute('aria-label', description);
     }
+  }
+  // Painted skill art, the same files classic used (special-skill-widgets.js / skill books).
+  // The first character of the name is only a last-resort fallback when the image fails.
+  const SKILL_ICON_ROOT = '/expedition/assets/skills-painted-20261011/';
+  function skillIconUrl(id) {
+    return /^skill_(?:\d{2}_\d|thief_\d{2})$/.test(String(id || '')) ? SKILL_ICON_ROOT + id + '.webp' : null;
+  }
+  function setSkillIcon(node, url, fallback) {
+    if (!node) return;
+    const failed = !!url && node.dataset.iconUrl === 'failed:' + url;
+    if (url && !failed) {
+      if (node.dataset.iconUrl === url && node.querySelector?.('img')) return;
+      node.dataset.iconUrl = url; node.textContent = '';
+      const img = global.document.createElement('img'); img.className = 'hud-v2-skill-art'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
+      img.onerror = () => { img.remove(); node.dataset.iconUrl = 'failed:' + url; node.classList?.remove('has-art'); node.textContent = fallback; };
+      img.src = url; node.appendChild(img); node.classList?.add('has-art');
+      return;
+    }
+    if (!failed) node.dataset.iconUrl = '';
+    node.classList?.remove('has-art'); text(node, fallback);
   }
   function navigateHud(route) {
     if (!liveMode() || !hudScope(lastSnapshot) || typeof global.RpgSceneNavigation?.navigate !== 'function') return;
@@ -977,9 +1103,7 @@
     syncHudResources(hudScope(lastSnapshot)?.model || null);
     readHudSkills(lastSnapshot); syncHudActions(normalize(lastSnapshot)); viewers.forEach(view => view.refreshHUD());
   }
-  global.document?.addEventListener?.('visibilitychange', () => {
-    if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
-  });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, awayActivity, syncAway, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  // No skill re-read on tab return (owner decision 2026-11-10); new snapshots and 同步 re-read when needed.
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, awayActivity, syncAway, manualRefresh: refresh, skillIconUrl, mapAsset, enemyAsset, spriteMetadata, experienceProgress, idleMapFor, resolveSprite };
   loadEndgameArt();
 })(window);

@@ -86,3 +86,17 @@ test('a normal launch after selection still shows the connecting cover and start
  const h=harness();assert.deepEqual(h.calls,['ready','expand','start']);assert.equal(h.panel().hidden,false);
  assert.match(h.nodes.map(e=>e.textContent).join(' '),/正在連接你的旅誌/);
 });
+test('a bot deep link handed off by the entry gate opens its window once, after the first snapshot',async()=>{
+ const timers=[];const h=harness({search:'?entry=direct-trade&tradeId=t0123456789a&tab=evil<',setTimeout:fn=>timers.push(fn)});
+ assert.deepEqual(h.calls,['ready','expand','start']);assert.match(h.nodes.map(e=>e.textContent).join(' '),/正在連接你的旅誌/);
+ h.options().onSnapshot(null);assert.equal(timers.length,0,'no navigation before a committed snapshot');
+ h.options().onSnapshot({live:{revision:1}});h.options().onSnapshot({live:{revision:2}});
+ assert.equal(timers.length,1);timers.shift()();
+ assert.deepEqual(JSON.parse(JSON.stringify(h.calls.slice(3))),[['direct-trade',{tradeId:'t0123456789a'}]]);
+});
+test('unknown entry routes are ignored; tab return only notifies the session (no forced sync)',()=>{
+ const timers=[];const h=harness({search:'?entry=bestiary',setTimeout:fn=>timers.push(fn)});
+ h.options().onSnapshot({live:{revision:1}});assert.equal(timers.length,0);
+ let notified=0,synced=0;h.client.visibilityChanged=()=>notified++;h.client.sync=async()=>{synced++;};
+ h.listeners.get('visibilitychange')();assert.equal(notified,1);assert.equal(synced,0);
+});

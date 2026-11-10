@@ -17,6 +17,7 @@
   const MODES = {manual:'只手動',ready:'冷卻完成',elite:'菁英巡獵',lowHp:'低血量'};
   const MANUAL_ONLY = new Set(['skill_17_2','skill_24_2']);
   const BOOK_BASE = {技術書:'sword',精靈水晶:'archer',魔法書:'mage'};
+  const SKILL_ICON_ROOT = '/expedition/assets/skills-painted-20261011/';
   const researchCost = s => Number.isInteger(s?.researchCost) && s.researchCost >= 0 ? s.researchCost : null;
   const pendingMemory = new Map();
   const sheets = new WeakMap();
@@ -183,6 +184,12 @@
       const damage = Number(s.damage);
       return [typeof s.damage === 'string' ? s.damage : Number.isFinite(damage) && damage > 0 ? '技能倍率 ' + fmt(damage) + '×' : '',s.effect || ''].filter(Boolean).join(' · ');
     }
+    // Painted skill art (same files as classic special-skill-widgets.js); hidden if an image fails.
+    function skillArt(s, size = '') {
+      const id = String(s?.id || '');
+      if (!/^skill_(?:\d{2}_\d|thief_\d{2})$/.test(id)) return '';
+      return '<img class="sc-skill-art' + (size ? ' sc-skill-art-' + size : '') + '" src="' + SKILL_ICON_ROOT + id + '.webp" alt="" loading="lazy" decoding="async" draggable="false">';
+    }
     function cooldown(s) { return Math.max(0,Math.ceil(((Number(data()?.special?.cooldowns?.[s.id]) || 0) - now()) / 1000)); }
     function castReason(s) {
       if (party()) return '組隊中請由原冒險操作技能';
@@ -200,7 +207,7 @@
           const s = skill(ids[i]);
           if (!s) return '<article class="sc-slot sc-empty"><b>第 ' + (i + 1) + ' 格</b><span>從下方選擇已學會的技能</span></article>';
           const reason = castReason(s), qualified = eligible(s.id), mode = draft['auto:' + s.id] || data().special.auto?.[s.id] || 'manual';
-          return '<article class="sc-slot" data-sc-slot="' + i + '"><strong>' + esc(s.name) + '</strong>' + (!qualified ? '<p class="sc-error" data-sc-ineligible>目前職業無法施放；可移除此技能。</p>' : '') + '<small>魔力 ' + fmt(s.mp) + ' · 冷卻 ' + fmt(s.cooldownSeconds) + ' 秒</small><div class="sc-actions">' +
+          return '<article class="sc-slot" data-sc-slot="' + i + '"><div class="sc-skill-head">' + skillArt(s) + '<div><strong>' + esc(s.name) + '</strong><small>魔力 ' + fmt(s.mp) + ' · 冷卻 ' + fmt(s.cooldownSeconds) + ' 秒</small></div></div>' + (skillEffect(s) ? '<p class="sc-effect">' + esc(skillEffect(s)) + '</p>' : '') + (!qualified ? '<p class="sc-error" data-sc-ineligible>目前職業無法施放；可移除此技能。</p>' : '') + '<div class="sc-actions">' +
             button('detail','查看',{skillId:s.id}) + button('remove','移除',{skillId:s.id,disabled:blocked}) +
             button('move-left','前移',{skillId:s.id,disabled:blocked || !qualified || i === 0}) + button('move-right','後移',{skillId:s.id,disabled:blocked || !qualified || i === ids.length - 1}) + '</div>' +
             '<label>自動施放<select name="skillAuto" data-skill-id="' + esc(s.id) + '"' + (blocked || !qualified ? ' disabled' : '') + '>' +
@@ -230,7 +237,7 @@
       const busy = lock() || backpackBlocked();
       const eligibleText = eligible(s.id) ? '符合目前職業與等級' : '目前職業或等級未達需求';
       return '<section class="sc-detail" data-sc-detail="' + esc(s.id) + '" aria-labelledby="sc-skill-title">' +
-        button('list','返回技能清單') + '<h3 id="sc-skill-title">' + esc(s.name) + '</h3><p>' + esc(s.rarity || '') + ' · 需求 Lv.' + fmt(s.level) + ' · ' + esc(eligibleText) + '</p>' +
+        button('list','返回技能清單') + '<div class="sc-skill-head">' + skillArt(s,'large') + '<h3 id="sc-skill-title">' + esc(s.name) + '</h3></div><p>' + esc(s.eligibleJob || '') + (s.bookType ? ' · ' + esc(s.bookType) : '') + ' · ' + esc(s.rarity || '') + ' · 需求 Lv.' + fmt(s.level) + ' · ' + esc(eligibleText) + '</p>' +
         '<dl class="sc-facts"><div><dt>技能等級</dt><dd>' + level + '／' + fmt(m.max || 10) + '</dd></div><div><dt>技能書</dt><dd>' + own + ' 本</dd></div><div><dt>魔力</dt><dd>' + fmt(s.mp) + '</dd></div><div><dt>冷卻</dt><dd>' + fmt(s.cooldownSeconds) + ' 秒</dd></div></dl>' +
         '<p class="sc-effect">' + esc(skillEffect(s)) + '</p><p class="sc-muted">技能進修加成：輸出 ' + fmt(m.outputPct || 0) + '% · 輔助 ' + fmt(m.utilityPct || 0) + '%</p>' +
         '<div class="sc-actions">' + button('learn',level ? '進修技能' : '學習技能',{skillId:s.id,primary:true,disabled:busy || !eligible(s.id) || m.nextCost == null || own < cost}) +
@@ -252,7 +259,7 @@
           '<label>職業範圍<select name="skillScope"><option value="mine"' + (draft.scope === 'mine' ? ' selected' : '') + '>目前職業</option><option value="all"' + (draft.scope === 'all' ? ' selected' : '') + '>全部職業</option></select></label>' +
           '<label>持有狀態<select name="skillFilter">' + [['all','全部技能'],['learned','已學會'],['available','符合需求'],['books','持有技能書']].map(([key,label]) => '<option value="' + key + '"' + (draft.filter === key ? ' selected' : '') + '>' + label + '</option>').join('') + '</select></label></div>' +
           '<p class="sc-muted" aria-live="polite">' + rows.length + ' 個技能</p><div class="sc-skill-grid">' + rows.map(s =>
-            '<article class="sc-card"><h4>' + esc(s.name) + '</h4><small>Lv.' + fmt(s.level) + ' · ' + esc(s.rarity || '') + '</small><p>' + esc(skillEffect(s)) + '</p><span>' +
+            '<article class="sc-card' + (learned(s.id) ? '' : ' sc-unlearned') + '"><div class="sc-skill-head">' + skillArt(s) + '<div><h4>' + esc(s.name) + '</h4><small>Lv.' + fmt(s.level) + ' · ' + esc(s.rarity || '') + ' · 魔力 ' + fmt(s.mp) + ' · 冷卻 ' + fmt(s.cooldownSeconds) + ' 秒</small></div></div><p class="sc-effect">' + esc(skillEffect(s)) + '</p><span>' +
             (learned(s.id) ? '已學會 Lv.' + fmt(s.mastery?.level || 1) : '尚未學會') + ' · 技能書 ' + books(s.id) + '</span>' +
             button('detail','查看技能',{skillId:s.id,extra:' aria-label="查看 ' + esc(s.name) + '"'}) + '</article>').join('') +
           (!rows.length ? '<p class="sc-muted">沒有符合篩選的技能。可調整搜尋或職業範圍。</p>' : '') + '</div></section>');
@@ -422,6 +429,8 @@
     const compositionStart = event => { if (root.contains?.(event.target)) composing = true; };
     const compositionEnd = event => { if (!current()) return;composing = false;if (event.target?.name === 'skillSearch') draft.search = event.target.value;if (deferredPaint || event.target?.name === 'skillSearch') paint(); };
     root.addEventListener('click',click);root.addEventListener('input',input);root.addEventListener('change',change);
+    const artError = event => { if (event.target?.classList?.contains('sc-skill-art')) event.target.hidden = true; };
+    root.addEventListener('error',artError,true);
     root.addEventListener('compositionstart',compositionStart);root.addEventListener('compositionend',compositionEnd);
     const handle = {
       refresh,
@@ -444,7 +453,7 @@
       dispose() {
         if (disposed) return;
         disposed = true;generation++;controller?.abort();
-        root.removeEventListener('click',click);root.removeEventListener('input',input);root.removeEventListener('change',change);
+        root.removeEventListener('click',click);root.removeEventListener('error',artError,true);root.removeEventListener('input',input);root.removeEventListener('change',change);
         root.removeEventListener('compositionstart',compositionStart);root.removeEventListener('compositionend',compositionEnd);
       }
     };

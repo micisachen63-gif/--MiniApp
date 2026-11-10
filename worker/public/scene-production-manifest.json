@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13618,
+  "publicFileCount": 13626,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -78,6 +78,62 @@
       "sha256": "1ef9873d3b06b4343903daef63cc7397f22b7c1a51892f1dfc423aed1cceb30d",
       "kind": "material-art",
       "source": "imagegen-20261110"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.png",
+      "bytes": 7964,
+      "sha256": "27c14612a0360299198855d310ba23a11b541ac01a255afc60b36d3c864aa61e",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.webp",
+      "bytes": 8142,
+      "sha256": "4ea47f3e8513c0f633dc8b4e91736a49aa299fe9456df0b5c1d7ee5e3e2c057d",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.png",
+      "bytes": 8376,
+      "sha256": "bcf7ee4dfafcbdc924ed23bd600df5194795dde1c080574243b619c51918e846",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.webp",
+      "bytes": 8476,
+      "sha256": "447f824a4121ca0f7c21ab4ffbbb73024ccdf4b84ac821463cefa98ea5a90930",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.png",
+      "bytes": 9506,
+      "sha256": "a897179b1837293bd31c33ba2b198c72df837b8eb1e73083f69029d7c0c114d6",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.webp",
+      "bytes": 9658,
+      "sha256": "2403886ae4894b34d7aade5078b70ac16523c874cd125af7fce13590ea44557c",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.png",
+      "bytes": 12543,
+      "sha256": "de5419f7a079649337df45f6ad06fca67d5d1c776dd8fb7e4ba5c9e46b39fb1f",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.webp",
+      "bytes": 13240,
+      "sha256": "942946adab5e68871258fc28147f5f629e7b29e4fb13753bde6bccd9bcbc6360",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
     },
     {
       "url": "/index.html",
@@ -30173,8 +30229,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/entry-gate.js",
-      "bytes": 13089,
-      "sha256": "3b125a41271c213c65fd1869277878a4e55d3c14af5759b58d350ca000c74296",
+      "bytes": 15200,
+      "sha256": "585f7a6ed7ba44cab793582fb46ffa006b3ef1046dfc545a12d40945e50f4f93",
       "kind": "alias",
       "source": "entry-gate.js"
     },
@@ -30740,8 +30796,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-chat-ui.js",
-      "bytes": 9385,
-      "sha256": "bf092daf7df8d56d8c2b327f54d224934eb4dd88bb78babc1477cd5aa1b0eca2",
+      "bytes": 9298,
+      "sha256": "533da24cbf70c6f6367d0fc2cfd31cbb6767695ee0cbc8ce6ec3c35296114f5e",
       "kind": "alias",
       "source": "scene-chat-ui.js"
     },
@@ -30768,8 +30824,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-direct-trade-ui.js",
-      "bytes": 33387,
-      "sha256": "3f129fb98adac176c9692fa00bfaf4edf9899005d04ef730f08c21cbb4879838",
+      "bytes": 34301,
+      "sha256": "cef42eb6a059b3d8563c2c728a5a6dcf5c44195c5303a280b80fe336fd9b7b3c",
       "kind": "alias",
       "source": "scene-direct-trade-ui.js"
     },
@@ -30796,8 +30852,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-exchange-ui.js",
-      "bytes": 55881,
-      "sha256": "b1522b34f2db2f3a81dfae530b2bc56baa817191a3113546c96132bdcde21bdd",
+      "bytes": 56201,
+      "sha256": "a403350a973b5f6560952d58ec66e9e8913fa9167c2845d1deadc8b6a01bee82",
       "kind": "alias",
       "source": "scene-exchange-ui.js"
     },
@@ -30873,8 +30929,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-inventory-ui.js",
-      "bytes": 49477,
-      "sha256": "e69b86df930be854f12418994e011fc4d2fb276e16c5b280ae8985a3d005181e",
+      "bytes": 57895,
+      "sha256": "2f9beff78c7055193239edacc9ddb3a96f81b4856dd8cd3e77ca8e24b8a8eb10",
       "kind": "alias",
       "source": "scene-inventory-ui.js"
     },
@@ -30894,36 +30950,36 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-library-ui.js",
-      "bytes": 20200,
-      "sha256": "25ee42c7ae1f62500937abcea976991137726686470189e5398a0fe3b5e9f11b",
+      "bytes": 20825,
+      "sha256": "b8d040861ecaa21136d27ce9e724a26e14cb681ebeca780f81f587f373e90cd2",
       "kind": "alias",
       "source": "scene-library-ui.js"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js",
-      "bytes": 5375,
-      "sha256": "89715d4119932b35f7eb919d1f88f5dba25a39e4815d2aa3d36d587be8d50851",
+      "bytes": 6503,
+      "sha256": "c824371b45284b709a58a12c6caedebeeb7d8c053fff2fc2d3cc8951ba3a5730",
       "kind": "alias",
       "source": "scene-live-auth.js"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-      "bytes": 16467,
-      "sha256": "746185b626c6248a46824a63f41cc458d606dfec1dcb453d37082d297e4eb768",
+      "bytes": 19073,
+      "sha256": "9b3f49b887c8cdc79121b97562fc3faac286a4efb66d456329b543ddb80945e8",
       "kind": "alias",
       "source": "scene-live-session.js"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
-      "bytes": 9569,
-      "sha256": "2d1a4b923fc6f45fc8820d3e1919927014c02419228be7e82fa69b5419be86ee",
+      "bytes": 10054,
+      "sha256": "6b64d165ded50f71d8a876fac99f81d5b8e583faceb8fd7a34f450b4703a3cc2",
       "kind": "alias",
       "source": "scene-live-view.css"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "bytes": 75681,
-      "sha256": "814f9232475ebf5408ed4387daf51ab018cf9e44daa95ff66744a440e953f183",
+      "bytes": 85975,
+      "sha256": "f42c34c7dd659566073f34c5f6ff006c529d6e815001a38bcafe8952d25e317b",
       "kind": "alias",
       "source": "scene-live-view.js"
     },
@@ -30957,29 +31013,29 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.css",
-      "bytes": 3909,
-      "sha256": "6546b61b52a9b369ef9df3da539cbf329f18521fc9c3d71dc19dc02eb3505d00",
+      "bytes": 4640,
+      "sha256": "086e1dea6981c5b55844d86e969a2e137c92154619ff9091ef922b06e8f1450a",
       "kind": "alias",
       "source": "scene-skills-ui.css"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.js",
-      "bytes": 41607,
-      "sha256": "bcaf317d8f720eba0c96c3823c77820868b9140bcd767b096d51b2c874af709f",
+      "bytes": 42827,
+      "sha256": "0f488159ce612992afd64e1a7e639ed45132b4779d457a6bc13fe70307376f65",
       "kind": "alias",
       "source": "scene-skills-ui.js"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
-      "bytes": 77431,
-      "sha256": "641b4588b23a26004e68cfa2cb450553e2b46f1355a6122a8ca1754cd23c6d07",
+      "bytes": 88945,
+      "sha256": "81f51618f1dda990243c60d7d06716a42eb7d7323ab1380dd08afa59f0b14128",
       "kind": "alias",
       "source": "scene-social-preview.css"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js",
-      "bytes": 44220,
-      "sha256": "cdab1691a751d63f722e9b94ca5c2ba36ce63c5853d84a2475c3268e4af1b6e8",
+      "bytes": 44622,
+      "sha256": "fcef17b43d33ab3632cb82b4904c6fee33cbf8787647beceb0854d967bcdddf5",
       "kind": "alias",
       "source": "scene-social-preview.js"
     },
@@ -31006,8 +31062,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-supply-ui.js",
-      "bytes": 37175,
-      "sha256": "39b67c363b4f36862ce03c2a965a9a7e5ed01f96df9328afc785307c86ff7391",
+      "bytes": 37217,
+      "sha256": "d20e55418f0c5f254cff5e0286f7c56f14817461f13e61171eb9271b7d77099e",
       "kind": "alias",
       "source": "scene-supply-ui.js"
     },
@@ -31055,8 +31111,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-workshop-ui.js",
-      "bytes": 48093,
-      "sha256": "ed17cf1530c7eb3bd94ea449b94d45e580f330c43d875d404d6da43405b7b832",
+      "bytes": 48686,
+      "sha256": "2356db4bcd95b44c6182bf05730a928bad3bd27d3872b60951a8386c7860944d",
       "kind": "alias",
       "source": "scene-workshop-ui.js"
     },

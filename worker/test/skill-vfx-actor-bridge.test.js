@@ -336,7 +336,9 @@ function nativeFixture(marker=false){
  f.player.getRecipe=()=>({durationMs:1400,phases:[{id:'release',from:.22,to:.57},{id:'impact',from:.57,to:.8}]});
  return f;
 }
-async function nativeStart(f){for(let i=0;i<100&&f.animator.action!=='attack';i++){await new Promise(resolve=>setImmediate(resolve));f.bridge.update();}assert.equal(f.animator.action,'attack');}
+// Source verification (fetch + WebCrypto SHA-256) completes on the libuv threadpool, not in a
+// fixed number of event-loop turns; bound the wait by wall time so a loaded parallel run cannot starve it.
+async function nativeStart(f){const deadline=Date.now()+5000;while(f.animator.action!=='attack'&&Date.now()<deadline){await new Promise(resolve=>setImmediate(resolve));f.bridge.update();}assert.equal(f.animator.action,'attack');}
 test('a source-bound native cast plays its actor and the real target impact with no invented projectile',async()=>{
  const f=nativeFixture(),pending=f.bridge.ingestTrace(f.trace());await nativeStart(f);await f.tick(227);assert.equal(f.calls.length,0);await f.tick(2);
  assert.equal((await pending).results[0].accepted,true);assert.equal(f.calls[0].presentationMode,'impact');assert.equal(f.calls[0].startProgress,0);assert.deepEqual(f.calls[0].from,f.targets.get('0:0:0'));assert.deepEqual(f.calls[0].to,f.calls[0].from);assert.equal(f.bridge.stats().lastRelease.timingAuthority,'skill-recipe-impact');f.bridge.destroy();
