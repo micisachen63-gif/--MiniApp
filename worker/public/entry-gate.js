@@ -59,25 +59,50 @@
       + (retry ? '<button class="btn" type="button" data-entry-retry>重新讀取角色</button>' : '')
       + (enter ? '<button class="btn ghost mt" type="button" data-entry-enter>直接進入旅誌</button>' : '') + '</div>' + CREDIT + '</section>';
   }
-  const ringInvite = value => /^(?:rpg_?)?ring_[0-9a-f]{32}$/.test(String(value || ''));
+  // Bot links (cloud-bot rpg-flow deepLink/appBtn: ?startapp=<x> or web_app ?screen=<x>) mapped to the
+  // scene window that replaced each classic tab (classic app.js boot() at 3c6729a).
+  const SCREEN_ROUTES = Object.freeze({ bag: 'inventory', shop: 'shop', gacha: 'shop', boss: 'boss', guardian: 'guardian', fate: 'fate',
+    'star-ring': 'star-ring', class: 'career', trade: 'direct-trade', pk: 'duel' });
+  function deepLink(value) {
+    const raw = String(value || '').trim(), spx = raw.replace(/^rpg_?/, '');
+    if (!spx || spx === 'home') return null;
+    if (spx === 'admin') return { admin: '/admin/' };
+    const approve = /^admin_([0-9a-f]{64})$/.exec(spx); if (approve) return { admin: '/admin/?approve=' + approve[1] };
+    if (/^ring_[0-9a-f]{32}$/.test(spx)) return { ring: true }; // the scene's 星環 window reads the invite itself
+    const trade = /^trade_?(t[0-9a-f]{11})$/.exec(spx); if (trade) return { route: 'direct-trade', params: { tradeId: trade[1] } };
+    if (/^req_?q[0-9a-f]{11}$/.test(spx)) return { route: 'direct-trade', params: {} };
+    if (/^pk_?p[0-9a-f]{11}$/.test(spx)) return { route: 'duel', params: {} };
+    if (/^party_[A-Za-z0-9:_-]{1,80}$/.test(spx)) return { route: 'party', params: { tab: 'current' } };
+    return SCREEN_ROUTES[spx] ? { route: SCREEN_ROUTES[spx], params: {} } : null;
+  }
+  /** Scene iframe URL for a hand-off: ?entry=<route> plus whitelisted window params. */
+  function sceneUrl(sceneSrc, { route, params } = {}) {
+    if (!route) return sceneSrc;
+    const query = new URLSearchParams({ entry: route });
+    for (const [key, value] of Object.entries(params || {})) if (['tradeId', 'tab'].includes(key) && value) query.set(key, String(value));
+    return sceneSrc + '?' + query.toString();
+  }
 
   /** DOM-free controller: render(screen, html), request(action, body), handoff({route}). */
   function createGate(deps) {
     const wait = deps.wait || (ms => new Promise(resolve => setTimeout(resolve, ms)));
     let characters = [], portraits = {}, busy = false, done = false, generation = 0;
+    const destination = deepLink(deps.startParam);
     function handoff(options = {}) { if (done) return false; done = true; deps.handoff(options); return true; }
+    const go = () => handoff(destination?.route ? { route: destination.route, params: destination.params } : {});
     function showSelect(notice = '') { if (!done) deps.render('select', selectMarkup(characters, portraits, notice)); }
     async function start() {
       if (done) return;
       const run = ++generation, started = Date.now();
+      if (destination?.admin && deps.redirect) { done = true; deps.redirect(destination.admin); return; }
       deps.render('splash', splashMarkup());
-      if (!deps.signed) return handoff({});
+      if (!deps.signed) return go();
       try {
         const [list, art] = await Promise.all([deps.request('characters'), Promise.resolve().then(() => deps.portraits?.()).catch(() => null)]);
         if (run !== generation || done) return;
         characters = Array.isArray(list?.characters) ? list.characters : []; portraits = art || {};
         const active = characters.find(c => c.active);
-        if (active && ringInvite(deps.startParam)) return handoff({});
+        if (active && destination?.ring) return handoff({});
         const left = MIN_SPLASH_MS - (Date.now() - started); if (left > 0) await wait(left);
         if (run !== generation || done) return;
         showSelect();
@@ -90,13 +115,13 @@
     async function choose(charId) {
       if (busy || done || !characters.some(c => String(c.charId) === String(charId))) return false;
       busy = true;
-      try { await deps.request('select', { charId: String(charId) }); deps.haptic?.('ok'); return handoff({}); }
+      try { await deps.request('select', { charId: String(charId) }); deps.haptic?.('ok'); return go(); }
       catch (error) { showSelect(error?.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : (error?.message || '選擇角色失敗，請再試一次')); return false; }
       finally { busy = false; }
     }
     // Creation and deletion keep their current owner: the scene's character window.
     const manage = () => handoff({ route: 'characters' });
-    return { start, choose, manage, enter: () => handoff({}), state: () => ({ characters, busy, done }) };
+    return { start, choose, manage, enter: go, destination, state: () => ({ characters, busy, done }) };
   }
 
   function boot(doc) {
@@ -135,9 +160,10 @@
         .then(index => Object.fromEntries((index?.actors || []).filter(a => typeof a?.portrait === 'string' && a.portrait.startsWith('/')).map(a => [a.id, a.portrait]))),
       haptic: kind => { try { tg?.HapticFeedback?.notificationOccurred?.(kind === 'ok' ? 'success' : 'error'); } catch {} },
       render(screen, html) { view.dataset.screen = screen; view.innerHTML = html; root.scrollTop = 0; },
-      handoff({ route } = {}) {
+      redirect: url => { root.remove(); links.forEach(link => link.remove()); doc.body.classList.remove(...BODY_CLASSES); global.location.replace(url + (global.location.hash || '')); },
+      handoff({ route, params } = {}) {
         root.remove(); links.forEach(link => link.remove()); doc.body.classList.remove(...BODY_CLASSES);
-        frame.src = sceneSrc + (route ? '?entry=' + encodeURIComponent(route) : '');
+        frame.src = sceneUrl(sceneSrc, { route, params });
         global.dispatchEvent?.(new global.CustomEvent('rpg:entry-handoff', { detail: { route: route || null } }));
       },
     });
@@ -156,7 +182,7 @@
     void gate.start();
   }
 
-  global.RpgEntryGate = { SCENE_SRC, CLASSIC_CSS, splashMarkup, selectMarkup, messageMarkup, appearanceKey, portraitFor, createGate, boot };
+  global.RpgEntryGate = { SCENE_SRC, CLASSIC_CSS, deepLink, sceneUrl, splashMarkup, selectMarkup, messageMarkup, appearanceKey, portraitFor, createGate, boot };
   const doc = global.document;
   if (doc?.getElementById?.('demo')) {
     try { boot(doc); }

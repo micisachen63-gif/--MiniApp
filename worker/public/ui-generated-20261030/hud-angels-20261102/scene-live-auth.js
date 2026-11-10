@@ -13,7 +13,12 @@
   let app = window.Telegram?.WebApp;
   try { if (!app && parent !== window && parent.location.origin === origin) app = parent.Telegram?.WebApp; } catch {}
   if (app) window.Telegram = {WebApp:app};
-  let panel, message, retry, choose, probed = false, disposed = false, onboardingOpen = false;
+  let panel, message, retry, choose, probed = false, disposed = false, onboardingOpen = false, pendingEntry = null;
+  // A deep link opens its window once, after the first committed snapshot enables the scene windows.
+  function openEntry() {
+    const entry = pendingEntry; pendingEntry = null;
+    setTimeout(() => whenNavigation(nav => nav.navigate(entry.route, entry.params)), 0);
+  }
   function cover(text) {
     if (!document.body) { document.addEventListener('DOMContentLoaded',()=>cover(text),{once:true}); return; }
     if (!panel) {
@@ -53,28 +58,42 @@
   }
   const session = api.create({endpoint:config.endpoint,accountId,realmId:'permanent',telegramInitData:initData,
     isHidden:()=>document.hidden,
-    onSnapshot:value=>{ if (value && panel) panel.hidden=true; window.dispatchEvent(new CustomEvent('rpg:scene-state',{detail:value})); },
+    onSnapshot:value=>{ if (value && panel) panel.hidden=true; window.dispatchEvent(new CustomEvent('rpg:scene-state',{detail:value})); if (value && pendingEntry) openEntry(); },
     onCombatTrace:(trace,scene)=>window.dispatchEvent(new CustomEvent('rpg:combat-trace',{detail:{trace,scene}})),
     onError:error=>{ window.dispatchEvent(new CustomEvent('rpg:scene-error',{detail:{message:error.message,code:error.code}})); void onError(error); },
   });
   Object.assign(api,session);
   try { app.ready(); app.expand(); } catch {}
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)void session.sync().catch(()=>{});});
+  // No refresh on every return to the tab (owner decision 2026-11-10); the scene's 同步 control reads state.
   window.addEventListener('pagehide',()=>{disposed=true;session.dispose();},{once:true});
-  // entry-gate.js (the restored 選擇角色 screen) opens the scene with ?entry=characters
-  // for create/delete; jump straight to the scene's character window instead of the cover.
-  let entryRoute = '';
-  try { entryRoute = new URLSearchParams(location.search).get('entry') || ''; } catch {}
-  if (entryRoute === 'characters') {
-    onboardingOpen = true; session.start();
+  // entry-gate.js (the restored 選擇角色 screen) hands off with ?entry=<route>: 'characters' for
+  // create/delete, or a bot deep link (bag, boss, star-ring, trade_…) to open once the scene is ready.
+  const ENTRY_ROUTES = new Set(['inventory','shop','boss','guardian','fate','star-ring','career','direct-trade','duel','party']);
+  let entryRoute = '', entryParams = {};
+  try {
+    const query = new URLSearchParams(location.search);
+    entryRoute = query.get('entry') || '';
+    const tradeId = query.get('tradeId'), tab = query.get('tab');
+    if (tradeId && /^t[0-9a-f]{11}$/.test(tradeId)) entryParams.tradeId = tradeId;
+    if (tab && /^[a-z-]{1,20}$/.test(tab)) entryParams.tab = tab;
+  } catch {}
+  function whenNavigation(open, fallback) {
     let tries = 0;
-    const openCharacters = () => {
+    const attempt = () => {
       if (disposed) return;
       const nav = window.RpgSceneNavigation;
-      if (typeof nav?.navigate === 'function') { nav.navigate('characters',{}); if (panel) panel.hidden = true; return; }
-      if (++tries < 50) { setTimeout(openCharacters,200); return; }
-      cover('請選擇要繼續冒險的角色。'); choose.hidden = false;
+      if (typeof nav?.navigate === 'function') { open(nav); return; }
+      if (++tries < 50) { setTimeout(attempt,200); return; }
+      fallback?.();
     };
-    openCharacters();
-  } else { cover('正在連接你的旅誌…'); session.start(); }
+    attempt();
+  }
+  if (entryRoute === 'characters') {
+    onboardingOpen = true; session.start();
+    whenNavigation(nav => { nav.navigate('characters',{}); if (panel) panel.hidden = true; },
+      () => { cover('請選擇要繼續冒險的角色。'); choose.hidden = false; });
+  } else {
+    cover('正在連接你的旅誌…'); session.start();
+    if (ENTRY_ROUTES.has(entryRoute)) pendingEntry = { route: entryRoute, params: entryParams };
+  }
 })();
