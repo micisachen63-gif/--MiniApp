@@ -617,3 +617,73 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
 @keyframes scene-guardian-cloud-arrive{from{opacity:0;transform:scale(.82)}to{opacity:.96;transform:scale(1)}}
 @keyframes scene-guardian-cloud-roll{0%,100%{mask-position:0% 0%;-webkit-mask-position:0% 0%;background-position:0% 0%}12.5%{mask-position:33.333333% 0%;-webkit-mask-position:33.333333% 0%;background-position:33.333333% 0%}25%{mask-position:66.666667% 0%;-webkit-mask-position:66.666667% 0%;background-position:66.666667% 0%}37.5%{mask-position:100% 0%;-webkit-mask-position:100% 0%;background-position:100% 0%}50%{mask-position:0% 100%;-webkit-mask-position:0% 100%;background-position:0% 100%}62.5%{mask-position:33.333333% 100%;-webkit-mask-position:33.333333% 100%;background-position:33.333333% 100%}75%{mask-position:66.666667% 100%;-webkit-mask-position:66.666667% 100%;background-position:66.666667% 100%}87.5%{mask-position:100% 100%;-webkit-mask-position:100% 100%;background-position:100% 100%}}
 @media(prefers-reduced-motion:reduce){.scene-live-guardian,.scene-live-guardian-cloud,.scene-live-guardian-cloud>*{animation:none!important}}
+/* Gold-frame navy 3D buttons (owner pick 2026-11-10, /ui/button-materials/buttons-3d-20261110/).
+   Three-slice via border-image: the laurel caps keep their aspect (cap width follows the
+   button height) and only the plain middle stretches, so no laurel distortion at any width.
+   The selected tab hides the crest rows of its sprite in the frame and redraws the crest
+   unstretched as an overlay. Selected state reads as pressed-in. */
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs){
+  --b3-gap:clamp(6px,2.2vw,12px);
+  display:grid!important;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);grid-template-columns:none;
+  gap:var(--b3-gap)!important;align-items:end;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;
+  border:0!important;flex-wrap:nowrap;overflow:visible;
+}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts{max-width:600px;padding:20px 0 4px;margin-bottom:12px;justify-content:center}
+#ui.scene-unified-root .scene-unified-dialog .scene-chat-tabs{max-width:420px;padding:2px 0 10px;margin-left:0;border-bottom:1px solid #9e835c55!important}
+#ui.scene-unified-root .scene-unified-dialog .hall-tabs{max-width:560px;margin:14px auto}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs)[class][class][class] button{
+  --b3-h:52px;--b3-k:calc(var(--b3-h) / 112);--b3-cap:calc(var(--b3-h) * 64 / 112);--b3-slice:64;
+  --b3-art:url('/ui/button-materials/buttons-3d-20261110/tab-normal.webp');
+  position:relative;isolation:isolate;display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;min-width:0!important;height:var(--b3-h);min-height:44px!important;margin:0;
+  padding:0 calc(var(--b3-cap) * .55) 2px!important;box-sizing:border-box;
+  background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;clip-path:none!important;
+  color:#f3e2b8!important;font-size:clamp(12px,3.6vw,15px)!important;font-weight:700;letter-spacing:.06em;line-height:1.15;
+  white-space:nowrap;overflow:visible;text-overflow:clip;
+  text-shadow:0 1px 0 #000,0 0 3px #000d,0 0 8px #02061499;
+  filter:drop-shadow(0 3px 2px #0007);transform:none;transition:transform .08s ease,filter .12s ease;
+}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-chat-tabs,.hall-tabs)[class][class][class] button{
+  --b3-h:46px;--b3-cap:calc(var(--b3-h) * 54 / 96);--b3-slice:54;
+  --b3-art:url('/ui/button-materials/buttons-3d-20261110/pill-normal.webp');
+  font-size:clamp(12px,3.4vw,14px)!important;
+}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs)[class][class][class] button::after{
+  content:""!important;position:absolute;inset:0;z-index:-2;pointer-events:none;display:block!important;
+  clip-path:none;background:none;box-shadow:none;border-radius:0;
+  border:1px solid transparent;border-image-source:var(--b3-art);border-image-slice:0 var(--b3-slice) fill;
+  border-image-width:0 min(var(--b3-cap),24%);box-sizing:border-box;border-image-repeat:stretch;border-image-outset:0;
+}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs)[class][class][class] button::before{display:none;content:none}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs)[class][class][class] button:hover{filter:drop-shadow(0 3px 2px #0007) brightness(1.08)}
+/* Selected / current: selected sprite, pressed 1px, tighter shadow, inner shade. */
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-social-shortcuts,.scene-chat-tabs,.hall-tabs)[class][class][class] button:is([aria-selected=true],[aria-current=page],:active){
+  transform:translateY(1px);filter:drop-shadow(0 1px 1px #0008) brightness(1.04);color:#fff4d6!important;
+}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-chat-tabs,.hall-tabs)[class][class][class] button:is([aria-selected=true],[aria-current=page]){
+  --b3-art:url('/ui/button-materials/buttons-3d-20261110/pill-selected.webp');--b3-slice:55;
+}
+#ui.scene-unified-root .scene-unified-dialog :is(.scene-chat-tabs,.hall-tabs)[class][class][class] button:is([aria-selected=true],[aria-current=page])::before{
+  content:""!important;display:block!important;position:absolute;z-index:-1;pointer-events:none;clip-path:none;
+  inset:22% calc(min(var(--b3-cap),24%) * .78) 24%;border-radius:999px;
+  background:radial-gradient(ellipse at 50% 0%,#00000059,transparent 70%);box-shadow:inset 0 2px 4px #000a;
+}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button:is([aria-selected=true],[aria-current=page]){
+  --b3-art:url('/ui/button-materials/buttons-3d-20261110/tab-selected.webp');
+}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button:is([aria-selected=true],[aria-current=page])::after{border-image-slice:34 var(--b3-slice) 0 fill}
+/* Crest: drawn at its natural aspect above the frame (rows 0-40 of tab-selected). */
+#ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button:is([aria-selected=true],[aria-current=page])::before{
+  content:""!important;display:block!important;position:absolute;z-index:-1;pointer-events:none;clip-path:none;box-shadow:none;border:0;
+  left:50%;top:calc(var(--b3-k) * -34);width:calc(var(--b3-k) * 104);height:calc(var(--b3-k) * 40);transform:translateX(-50%);
+  background:var(--b3-art) 50% 0/calc(var(--b3-k) * 335) calc(var(--b3-k) * 145) no-repeat;
+}
+#ui.scene-unified-root .scene-unified-dialog .hall-tabs[class][class][class] button small{display:block;font-size:10px!important;font-weight:600;opacity:.85;margin-top:1px;letter-spacing:0}
+@media (min-width:700px){
+  #ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button{--b3-h:56px}
+  #ui.scene-unified-root .scene-unified-dialog :is(.scene-chat-tabs,.hall-tabs)[class][class][class] button{--b3-h:48px}
+}
+@media (max-width:340px){
+  #ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button{--b3-h:48px;letter-spacing:.02em}
+  #ui.scene-unified-root .scene-unified-dialog .hall-tabs[class][class][class] button{letter-spacing:0;padding:0 4px 2px!important}
+}

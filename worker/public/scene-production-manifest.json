@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13618,
+  "publicFileCount": 13626,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -78,6 +78,62 @@
       "sha256": "1ef9873d3b06b4343903daef63cc7397f22b7c1a51892f1dfc423aed1cceb30d",
       "kind": "material-art",
       "source": "imagegen-20261110"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.png",
+      "bytes": 7964,
+      "sha256": "27c14612a0360299198855d310ba23a11b541ac01a255afc60b36d3c864aa61e",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.webp",
+      "bytes": 8142,
+      "sha256": "4ea47f3e8513c0f633dc8b4e91736a49aa299fe9456df0b5c1d7ee5e3e2c057d",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.png",
+      "bytes": 8376,
+      "sha256": "bcf7ee4dfafcbdc924ed23bd600df5194795dde1c080574243b619c51918e846",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.webp",
+      "bytes": 8476,
+      "sha256": "447f824a4121ca0f7c21ab4ffbbb73024ccdf4b84ac821463cefa98ea5a90930",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.png",
+      "bytes": 9506,
+      "sha256": "a897179b1837293bd31c33ba2b198c72df837b8eb1e73083f69029d7c0c114d6",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.webp",
+      "bytes": 9658,
+      "sha256": "2403886ae4894b34d7aade5078b70ac16523c874cd125af7fce13590ea44557c",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.png",
+      "bytes": 12543,
+      "sha256": "de5419f7a079649337df45f6ad06fca67d5d1c776dd8fb7e4ba5c9e46b39fb1f",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.webp",
+      "bytes": 13240,
+      "sha256": "942946adab5e68871258fc28147f5f629e7b29e4fb13753bde6bccd9bcbc6360",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
     },
     {
       "url": "/index.html",
@@ -30894,8 +30950,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-library-ui.js",
-      "bytes": 20200,
-      "sha256": "25ee42c7ae1f62500937abcea976991137726686470189e5398a0fe3b5e9f11b",
+      "bytes": 20825,
+      "sha256": "b8d040861ecaa21136d27ce9e724a26e14cb681ebeca780f81f587f373e90cd2",
       "kind": "alias",
       "source": "scene-library-ui.js"
     },
@@ -30971,15 +31027,15 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
-      "bytes": 77431,
-      "sha256": "641b4588b23a26004e68cfa2cb450553e2b46f1355a6122a8ca1754cd23c6d07",
+      "bytes": 83844,
+      "sha256": "8bf3b56095d24581bc2855228dfedbb4009a16c6cc5e76c22de6b7565fddf673",
       "kind": "alias",
       "source": "scene-social-preview.css"
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js",
-      "bytes": 44249,
-      "sha256": "e515ed9cb129f05a2523c241830e7d93792d7f178c206d9a12fcf4055a3e44d6",
+      "bytes": 44260,
+      "sha256": "6490d93930faf12669caf19438973aa78efc1973350b54c0840cb12835f6bc15",
       "kind": "alias",
       "source": "scene-social-preview.js"
     },
