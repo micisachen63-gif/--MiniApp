@@ -264,27 +264,45 @@
             button('detail','查看技能',{skillId:s.id,extra:' aria-label="查看 ' + esc(s.name) + '"'}) + '</article>').join('') +
           (!rows.length ? '<p class="sc-muted">沒有符合篩選的技能。可調整搜尋或職業範圍。</p>' : '') + '</div></section>');
     }
-    function careerSkill(s) {
+    function careerIconKey(path) {
+      const base = data()?.character?.baseClass || '';
+      if (!/^(sword|archer|mage|thief)$/.test(base)) return '';
+      const raw = String(path || '');
+      if (!raw) return base;
+      const head = raw[0], rest = raw.slice(1).replace(/A/g, '1').replace(/B/g, '2');
+      const key = /^[AB]$/.test(head) && /^[12]{0,3}$/.test(rest) ? base + '_' + head + rest : '';
+      return /^(sword|archer|mage|thief)(?:_[AB][12]{0,3})?$/.test(key) ? key : base;
+    }
+    function careerArt(s, path) {
+      const src = String(s?.iconSrc || '');
+      const url = /^\/art\/career-skill-icons-20261110\/(sword|archer|mage|thief)(?:_[AB][12]{0,3})?\.webp$/.test(src)
+        ? src
+        : (careerIconKey(path) ? '/art/career-skill-icons-20261110/' + careerIconKey(path) + '.webp' : '');
+      if (!url) return '';
+      return '<img class="sc-skill-art" src="' + url + '" alt="" loading="lazy" decoding="async" draggable="false">';
+    }
+    function careerSkill(s, path) {
       if (!s) return '';
-      return '<p>' + esc(s.name || '') + ' · 魔力 ' + fmt(s.cost) + ' · 倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標</p>';
+      const text = s.description || ('倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標 · 魔力 ' + fmt(s.cost));
+      return '<div class="sc-skill-head">' + careerArt(s, path) + '<div><strong>' + esc(s.name || '') + '</strong><small>魔力 ' + fmt(s.cost) + ' · 倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標</small></div></div><p class="sc-effect">' + esc(text) + '</p>';
     }
     function careerView() {
       const c = data()?.career;
       if (!c) return '<p class="sc-muted">轉職資料尚未提供，請重新整理。</p>';
       const info = c.current, next = c.next, tiers = c.reselect?.tiers || [];
       return '<section class="sc-section"><h3>' + esc(info.name) + '</h3><p>Lv.' + fmt(data().character.level) + ' · 第 ' + fmt(info.tier) + ' 階 · 路線 ' + esc(info.path || '初始') + '</p>' +
-        careerSkill(info.skill) + '<p class="sc-effect">' + esc(info.passive || '') + '</p>' +
+        careerSkill(info.skill, info.path) + '<p class="sc-effect">' + esc(info.passive || '') + '</p>' +
         (info.weapon ? '<p class="sc-muted">職業武器：' + esc(info.weapon) + '</p>' : '') +
         (c.activity?.atlasRunId ? '<p class="sc-muted">星圖正在進行；這次改職會影響下次出發，本趟戰鬥快照維持出發時配置。</p>' : '') + '</section>' +
         '<section class="sc-section"><h3>下一階轉職</h3>' + (!next ? '<p>已完成所有可用轉職階段。</p>' :
           '<p>第 ' + fmt(next.tier) + ' 階 · 需要 Lv.' + fmt(next.requiredLevel) + '</p><p>材料：' + esc(next.material.name) + ' ' + fmt(next.material.have) + '／' + fmt(next.material.required) + '</p>' +
           (next.reason ? '<p class="sc-muted" data-sc-advance-reason>' + esc(next.reason.message) + '</p>' : '') +
-          '<div class="sc-career-grid">' + next.choices.map(choice => '<article class="sc-card"><h4>' + esc(choice.name) + '</h4><small>路線 ' + esc(choice.path) + '</small>' + careerSkill(choice.skill) + '<p>' + esc(choice.passive || '') + '</p>' +
+          '<div class="sc-career-grid">' + next.choices.map(choice => '<article class="sc-card"><h4>' + esc(choice.name) + '</h4><small>路線 ' + esc(choice.path) + '</small>' + careerSkill(choice.skill, choice.path) + '<p>' + esc(choice.passive || '') + '</p>' +
             button('advance','轉職為 ' + choice.name,{branch:choice.branch,tier:choice.tier,primary:true,disabled:lock() || !next.canAdvance}) + '</article>').join('') + '</div>') + '</section>' +
         '<section class="sc-section"><h3>重選職業路線</h3><p class="sc-muted">重選會保留後續分支，並依新路線重新計算最終職業。不符合路線的專屬裝備會自動卸下。</p>' +
         ((c.reselect?.cooldownRemainingMs || 0) > 0 ? '<p class="sc-muted">共用冷卻剩餘約 ' + Math.ceil(c.reselect.cooldownRemainingMs / 60000) + ' 分鐘。到期後重新整理可用狀態。</p>' : '') +
         tiers.map(t => !t.book?.id ? '<div class="sc-reselect-tier" data-sc-reselect-tier="' + t.tier + '"><h4>第 ' + fmt(t.tier) + ' 階重選</h4><p class="sc-muted">' + esc(t.choices?.find(choice => choice.reason)?.reason?.message || t.book?.name || '此階尚未開放重選') + '</p></div>' : '<div class="sc-reselect-tier" data-sc-reselect-tier="' + t.tier + '"><h4>第 ' + fmt(t.tier) + ' 階重選</h4><p>' + esc(t.book.name) + ' ' + fmt(t.book.have) + '／' + fmt(t.book.required) + '</p><div class="sc-career-grid">' +
-          t.choices.map(choice => '<article class="sc-card' + (choice.selected ? ' sc-selected' : '') + '"><h4>' + esc(choice.branchName || choice.name) + (choice.selected ? ' · 目前分支' : '') + '</h4><p>最終職業：' + esc(choice.name) + ' · ' + esc(choice.path) + '</p>' + careerSkill(choice.skill) +
+          t.choices.map(choice => '<article class="sc-card' + (choice.selected ? ' sc-selected' : '') + '"><h4>' + esc(choice.branchName || choice.name) + (choice.selected ? ' · 目前分支' : '') + '</h4><p>最終職業：' + esc(choice.name) + ' · ' + esc(choice.path) + '</p>' + careerSkill(choice.skill, choice.path) +
             '<p>' + esc(choice.passive || '') + '</p>' + (choice.unequipped?.length ? '<p class="sc-muted">會卸下：' + choice.unequipped.map(item => esc(item.name)).join('、') + '</p>' : '') +
             (choice.reason && !choice.selected ? '<p class="sc-muted">' + esc(choice.reason.message) + '</p>' : '') +
             button('reselect',choice.selected ? '目前路線' : '重選為 ' + (choice.branchName || choice.name),{branch:choice.branch,tier:t.tier,disabled:lock() || !choice.canReselect || choice.selected}) + '</article>').join('') +

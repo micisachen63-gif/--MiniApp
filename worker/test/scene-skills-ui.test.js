@@ -345,6 +345,17 @@ test('特殊技能配置 slot cards, the skill list and the detail show the pain
   const img={classList:{contains:c=>c==='sc-skill-art'},hidden:false};errorHandlers[0]({target:img});assert.equal(img.hidden,true);
 });
 
+test('career tab shows compact skill art and a description, never a text glyph as the icon',async()=>{
+  const h=harness({tab:'career'});await settle();
+  assert.match(h.root.innerHTML,/sc-skill-art" src="\/art\/career-skill-icons-20261110\/sword_A\.webp"/);
+  assert.match(h.root.innerHTML,/sc-skill-art" src="\/art\/career-skill-icons-20261110\/sword_A1\.webp"/);
+  assert.match(h.root.innerHTML,/<p class="sc-effect">/);
+  assert.doesNotMatch(h.root.innerHTML, /class="sc-skill-art">[＋+…\w]/);
+  const html=h.root.innerHTML;
+  const career=html.slice(html.indexOf('騎士'), html.indexOf('重選')>-1?html.indexOf('重選'):html.length);
+  assert.doesNotMatch(career, /<span class="sc-skill-art">/);
+});
+
 test('every server special skill has a painted icon file',async()=>{
   const {LEGACY_SPECIAL_SKILLS}=await import('../src/game/special-data.js'),{THIEF_SKILLS}=await import('../src/game/thief-skills.js');
   const ids=[...LEGACY_SPECIAL_SKILLS,...THIEF_SKILLS].map(s=>s.id);assert.ok(ids.length>=60);

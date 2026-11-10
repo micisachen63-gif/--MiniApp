@@ -8,11 +8,24 @@ import { CLASSES, GENERAL_WEAPON, ITEMS, MAX_OPEN_CLASS_TIER, RESELECT_COOLDOWN_
 
 const READ_ONLY_MESSAGE = '這個世界已停止接受新操作，目前僅供查看';
 
+function careerIconSrc(baseClass, path) {
+  const key = String(path || '') ? baseClass + '_' + path : baseClass;
+  return /^(sword|archer|mage|thief)(?:_[AB][12]{0,3})?$/.test(key) ? '/art/career-skill-icons-20261110/' + key + '.webp' : null;
+}
+function skillDescription(skill) {
+  const damage = Number(skill?.mult), cost = Number(skill?.cost), targets = Number(skill?.targets) || 1;
+  const parts = [];
+  if (Number.isFinite(damage)) parts.push(damage + '× 攻擊');
+  parts.push(targets + ' 個目標');
+  if (Number.isFinite(cost)) parts.push('基礎耗魔 ' + cost);
+  return parts.join(' · ') + '。';
+}
 function nodeView(baseClass, path) {
   const node = nodeFor(baseClass, path);
   return {
     path: node.path, tier: node.tier, name: node.name,
-    skill: { ...node.skill }, passive: node.passiveText || '',
+    skill: { ...node.skill, description: node.skill?.description || skillDescription(node.skill), iconSrc: careerIconSrc(baseClass, node.path) },
+    passive: node.passiveText || '',
     weapon: WEAPON_KINDS[node.weapon || GENERAL_WEAPON[baseClass]]?.type || null,
   };
 }
