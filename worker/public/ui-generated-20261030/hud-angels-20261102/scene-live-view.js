@@ -205,7 +205,16 @@
       awayState.layer?.remove(); awayState.layer = null; awayState.unmount = null;
       if (!html) { clearAway(doc); return null; }
       const stage = doc.getElementById('stage') || doc.body, hud = doc.getElementById('ui');
-      const layer = doc.createElement('div'); layer.className = 'scene-away-layer'; layer.innerHTML = html;
+      // No timed polling: the player taps 重新整理狀態 to see whether the expedition has ended.
+      const refreshButton = '<button type="button" class="btn ghost" data-away-refresh>重新整理狀態</button>';
+      const tail = html.lastIndexOf('</div></section>');
+      const layer = doc.createElement('div'); layer.className = 'scene-away-layer';
+      layer.innerHTML = tail >= 0 ? html.slice(0, tail) + refreshButton + html.slice(tail) : html;
+      layer.addEventListener?.('click', event => {
+        const button = event.target?.closest?.('[data-away-refresh]'); if (!button || syncBusy) return;
+        button.disabled = true; button.textContent = '讀取中…';
+        void refresh().finally(() => { if (button.isConnected !== false) { button.disabled = false; button.textContent = '重新整理狀態'; } });
+      });
       if (hud && hud.parentNode === stage) stage.insertBefore(layer, hud); else stage.appendChild(layer);
       awayState.layer = layer; awayState.unmount = away.mount(layer);
       doc.documentElement.classList.add('rpg-scene-away');
@@ -819,8 +828,12 @@
   async function refresh() {
     if (syncBusy || !liveMode()) return;
     syncBusy = true; viewers.forEach(view => view.refreshHUD());
-    try { await global.RpgSceneSession?.refresh(); } catch (_) { /* Session owns connection errors and clears stale contexts. */ }
+    // Manual 同步: the only timed-free way to read new status (owner decision 2026-11-10).
+    // sync() also asks the server to settle a running Atlas chunk, like the former timer did.
+    const session = global.RpgSceneSession;
+    try { await (typeof session?.sync === 'function' ? session.sync() : session?.refresh()); } catch (_) { /* Session owns connection errors and clears stale contexts. */ }
     finally { syncBusy = false; viewers.forEach(view => view.refreshHUD()); }
+    try { global.dispatchEvent?.(new global.CustomEvent('rpg:scene-manual-refresh')); } catch (_) {}
   }
   // This row is a scoped read projection and navigation surface. The existing
   // supply/skill windows retain every confirmation, pending write and game rule.
@@ -885,8 +898,8 @@
     const scope = hudScope(snapshot);
     if (!scope) { clearHudSkills(); syncHudActions(null); return; }
     if (hudSkills.scope !== scope.key) clearHudSkills();
-    if (lastSyncError || global.document?.hidden) {
-      clearHudSkills(lastSyncError ? 'offline' : 'unknown', true); syncHudActions(scope.model); return;
+    if (lastSyncError) {
+      clearHudSkills('offline', true); syncHudActions(scope.model); return;
     }
     if (hudSkills.scope === scope.key && ['loading', 'ready'].includes(hudSkills.status)
       && scope.revision <= Math.max(hudSkills.requestedRevision, hudSkills.revision)) return;
@@ -932,11 +945,31 @@
       const skill = ready ? hudSkills.slots[index] : null;
       const pending = hudSkills.status === 'loading', label = ready ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
       text(button.querySelector('.hud-v2-name'), label);
-      text(button.querySelector('.hud-v2-icon'), ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
+      setSkillIcon(button.querySelector('.hud-v2-icon'), ready && skill ? skillIconUrl(skill.id) : null, ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
       button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : 'unknown'; button.disabled = !navigable;
       const description = '第 ' + (index + 1) + ' 格：' + label + '，開啟技能配置；施放與冷卻請在技能視窗確認';
       button.title = description; button.setAttribute('aria-label', description);
     }
+  }
+  // Painted skill art, the same files classic used (special-skill-widgets.js / skill books).
+  // The first character of the name is only a last-resort fallback when the image fails.
+  const SKILL_ICON_ROOT = '/expedition/assets/skills-painted-20261011/';
+  function skillIconUrl(id) {
+    return /^skill_(?:\d{2}_\d|thief_\d{2})$/.test(String(id || '')) ? SKILL_ICON_ROOT + id + '.webp' : null;
+  }
+  function setSkillIcon(node, url, fallback) {
+    if (!node) return;
+    const failed = !!url && node.dataset.iconUrl === 'failed:' + url;
+    if (url && !failed) {
+      if (node.dataset.iconUrl === url && node.querySelector?.('img')) return;
+      node.dataset.iconUrl = url; node.textContent = '';
+      const img = global.document.createElement('img'); img.className = 'hud-v2-skill-art'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
+      img.onerror = () => { img.remove(); node.dataset.iconUrl = 'failed:' + url; node.classList?.remove('has-art'); node.textContent = fallback; };
+      img.src = url; node.appendChild(img); node.classList?.add('has-art');
+      return;
+    }
+    if (!failed) node.dataset.iconUrl = '';
+    node.classList?.remove('has-art'); text(node, fallback);
   }
   function navigateHud(route) {
     if (!liveMode() || !hudScope(lastSnapshot) || typeof global.RpgSceneNavigation?.navigate !== 'function') return;
@@ -977,9 +1010,7 @@
     syncHudResources(hudScope(lastSnapshot)?.model || null);
     readHudSkills(lastSnapshot); syncHudActions(normalize(lastSnapshot)); viewers.forEach(view => view.refreshHUD());
   }
-  global.document?.addEventListener?.('visibilitychange', () => {
-    if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
-  });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, awayActivity, syncAway, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  // No skill re-read on tab return (owner decision 2026-11-10); new snapshots and 同步 re-read when needed.
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, guardianCameraOffset, experienceLabel, normalize, awayActivity, syncAway, manualRefresh: refresh, skillIconUrl, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
   loadEndgameArt();
 })(window);
