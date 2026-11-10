@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>視窗標題列 320 測試</title>
+<link rel="stylesheet" href="/ui/button-materials/huninn/font.css?v=20261109-1">
+<link rel="stylesheet" href="/scene-social-preview.css">
+<style>
+html,body{margin:0;background:#050b14;height:100%}
+/* Reproduce the in-game window chrome at a known width. */
+#stage{width:320px;height:100vh;margin:0 auto;position:relative;background:#09111c;overflow:hidden}
+#ui{position:absolute;inset:0}
+.scene-unified-dialog .scene-social-card{left:10px;right:10px;top:24px;bottom:auto;transform:none;width:auto;max-height:none;position:absolute}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="ui" class="scene-unified-root">
+    <div class="scene-unified-dialog scene-social-dialog">
+      <div class="scene-social-card" tabindex="-1">
+        <header>
+          <button type="button" class="scene-window-back" aria-label="返回" title="上一頁">
+            <svg class="scene-chrome-icon" viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><defs><linearGradient id="scene-back-metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0c5"/><stop offset=".45" stop-color="#ad884d"/><stop offset=".7" stop-color="#e2c48b"/><stop offset="1" stop-color="#876535"/></linearGradient><radialGradient id="scene-back-face" cx=".35" cy=".2" r=".85"><stop stop-color="#344158" stop-opacity=".62"/><stop offset="1" stop-color="#0b1525" stop-opacity=".24"/></radialGradient></defs><circle cx="22" cy="22" r="17" fill="url(#scene-back-face)" stroke="url(#scene-back-metal)" stroke-width="1.1"/><circle cx="22" cy="22" r="14.5" fill="none" stroke="#e8d7ac" stroke-opacity=".12" stroke-width=".6"/><path d="M11.8 15.8a12 12 0 0 1 9-5.7" fill="none" stroke="#fff1ce" stroke-opacity=".45" stroke-width=".7" stroke-linecap="round"/><path d="M24 15.5 17.5 22 24 28.5M18 22h11" fill="none" stroke="url(#scene-back-metal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <h2 id="scene-social-title">英雄殿堂</h2>
+          <button type="button" class="scene-window-readability" aria-pressed="false" title="提高文字與面板對比">易讀模式</button>
+          <button type="button" class="scene-window-close" aria-label="關閉視窗" title="關閉視窗">
+            <svg class="scene-chrome-icon" viewBox="0 0 44 44" width="44" height="44" aria-hidden="true" focusable="false"><defs><linearGradient id="scene-close-metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff0c5"/><stop offset=".45" stop-color="#ad884d"/><stop offset=".7" stop-color="#e2c48b"/><stop offset="1" stop-color="#876535"/></linearGradient><radialGradient id="scene-close-face" cx=".35" cy=".2" r=".85"><stop stop-color="#344158" stop-opacity=".62"/><stop offset="1" stop-color="#0b1525" stop-opacity=".24"/></radialGradient></defs><circle cx="22" cy="22" r="17" fill="url(#scene-close-face)" stroke="url(#scene-close-metal)" stroke-width="1.1"/><circle cx="22" cy="22" r="14.5" fill="none" stroke="#e8d7ac" stroke-opacity=".12" stroke-width=".6"/><path d="M11.8 15.8a12 12 0 0 1 9-5.7" fill="none" stroke="#fff1ce" stroke-opacity=".45" stroke-width=".7" stroke-linecap="round"/><path d="M17 17l10 10M27 17 17 27" fill="none" stroke="url(#scene-close-metal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </header>
+        <p class="scene-window-context">320px 標題列測試（示例）</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
