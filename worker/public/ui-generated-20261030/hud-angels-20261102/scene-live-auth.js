@@ -65,6 +65,8 @@
   Object.assign(api,session);
   try { app.ready(); app.expand(); } catch {}
   // No refresh on every return to the tab (owner decision 2026-11-10); the scene's 同步 control reads state.
+  // Only an active Atlas run's timer stops when hidden and resumes when visible again.
+  document.addEventListener('visibilitychange',()=>session.visibilityChanged?.());
   window.addEventListener('pagehide',()=>{disposed=true;session.dispose();},{once:true});
   // entry-gate.js (the restored 選擇角色 screen) hands off with ?entry=<route>: 'characters' for
   // create/delete, or a bot deep link (bag, boss, star-ring, trade_…) to open once the scene is ready.

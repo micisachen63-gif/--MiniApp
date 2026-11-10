@@ -94,8 +94,9 @@ test('a bot deep link handed off by the entry gate opens its window once, after 
  assert.equal(timers.length,1);timers.shift()();
  assert.deepEqual(JSON.parse(JSON.stringify(h.calls.slice(3))),[['direct-trade',{tradeId:'t0123456789a'}]]);
 });
-test('unknown entry routes are ignored and the auth layer no longer refreshes on tab return',()=>{
+test('unknown entry routes are ignored; tab return only notifies the session (no forced sync)',()=>{
  const timers=[];const h=harness({search:'?entry=bestiary',setTimeout:fn=>timers.push(fn)});
  h.options().onSnapshot({live:{revision:1}});assert.equal(timers.length,0);
- assert.equal(h.listeners.has('visibilitychange'),false);
+ let notified=0,synced=0;h.client.visibilityChanged=()=>notified++;h.client.sync=async()=>{synced++;};
+ h.listeners.get('visibilitychange')();assert.equal(notified,1);assert.equal(synced,0);
 });

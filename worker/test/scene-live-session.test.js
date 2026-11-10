@@ -350,8 +350,8 @@ test('autoSync is opt-in: without it start() performs one sync and installs no i
   const h = harness(); t.after(() => h.client.dispose());
   h.client.start(); h.client.start();
   assert.equal(h.time.intervals.size, 0);
-  h.net.calls[0].reply({ ok: true, scene: scene() }); await drain();
-  h.net.calls[1]?.reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) }); await drain();
+  h.net.calls[0].reply({ ok: true, scene: scene({ runId: null }) }); await drain(); await drain();
+  assert.equal(h.time.deadlines.size, 0, 'no active run, no timer');
   const before = h.net.calls.length; for (let i = 0; i < 10; i++) h.time.tick(); await drain();
   assert.equal(h.net.calls.length, before, 'no further reads without a player action');
 });
@@ -960,4 +960,44 @@ test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atla
     if(action==='fate/action-scoped'){const follow=h.net.calls.at(-1);assert.equal(follow.action,'atlas/status');follow.reply({ok:true,scene:scene({runId:null})});}
     assert.equal((await current).marker,'current-a');assert.equal(h.client.getContext().epoch,2);
   });
+});
+
+function activeTimers(h) { return [...h.time.deadlines.entries()].filter(([, d]) => d.ms === 3000 || d.ms === 10000); }
+function progressionScene(extra = {}) { const value = scene(extra); if (value.run) value.run.map = { id: 'cycle_elite_01', progression: { mode: 'elite' } }; return value; }
+test('an ACTIVE five-cycle Atlas run syncs every 3 s while visible and stops when the run ends', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: progressionScene() }); await drain();
+  assert.equal(h.net.calls[1].action, 'atlas/settle');
+  h.net.calls[1].reply({ ok: true, scene: progressionScene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  let timers = activeTimers(h); assert.equal(timers.length, 1); assert.equal(timers[0][1].ms, 3000);
+  assert.equal(h.time.intervals.size, 0, 'no interval poller');
+  h.time.advance(3000); h.time.deadlines.delete(timers[0][0]); timers[0][1].fn();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  h.net.calls[2].reply({ ok: true, scene: progressionScene({ revision: 3, runRevision: 2, serverNow: 63000 }) }); await drain();
+  assert.equal(h.net.calls[3].action, 'atlas/settle', 'the tick advances the run so new combat events arrive');
+  h.net.calls[3].reply({ ok: true, scene: scene({ revision: 4, runId: null }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 0, 'run ended: timer stopped');
+  const before = h.net.calls.length; h.time.advance(30000); await drain(); assert.equal(h.net.calls.length, before);
+});
+test('a legacy active run syncs every 10 s; hiding stops the timer at once and showing resumes it', async t => {
+  let hidden = false; const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: scene() }); await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h)[0][1].ms, 10000);
+  hidden = true; h.client.visibilityChanged();
+  assert.equal(activeTimers(h).length, 0, 'hidden: timer cleared immediately');
+  const before = h.net.calls.length;
+  hidden = false; h.client.visibilityChanged();
+  assert.equal(h.net.calls.length, before + 1, 'visible with an active run: one immediate sync');
+  h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 3, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 1, 'timer resumed');
+  h.client.dispose(); assert.equal(activeTimers(h).length, 0);
+});
+test('becoming visible without an active run does not refresh', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start(); h.net.calls[0].reply({ ok: true, scene: scene({ runId: null }) }); await drain();
+  h.client.visibilityChanged(); await drain();
+  assert.equal(h.net.calls.length, 1); assert.equal(h.time.deadlines.size, 0);
 });

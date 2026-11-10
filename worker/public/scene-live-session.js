@@ -15,6 +15,7 @@
     function emit(value) {
       if(!!value?.run?.map?.progression!==!!snapshot?.run?.map?.progression){nextPollAt=0;nextAdvanceAt=0;}
       snapshot = value;
+      scheduleActive();
       for (const listener of listeners) { try { listener(value); } catch (error) { options.onListenerError?.(error); } }
       options.onSnapshot?.(value);
     }
@@ -155,7 +156,7 @@
         const run = snapshot?.run;
         if (!run?.active || run.status !== 'running' || snapshot.live?.activeRunId !== run.id) return snapshot;
         if (!Number.isFinite(snapshot.serverNow) || !Number.isFinite(run.processedAt) || snapshot.serverNow - run.processedAt < 1000) return snapshot;
-        nextAdvanceAt = now() + (snapshot?.run?.map?.progression?1000:pollMs);
+        nextAdvanceAt = now() + (options.autoSync === true ? (snapshot?.run?.map?.progression?1000:pollMs) : activeCadence(snapshot) - 500);
         try {
           // One bounded server chunk (at most 2,000 engine steps) per cadence.
           await request('atlas/settle', { runId: run.id }, { preferScene: true });
@@ -189,26 +190,58 @@
         if (!disposed) await refresh({ force: true }).catch(() => {});
       }
     }
-    // Owner decision (2026-11-10): no timed status polling. start() reads the
-    // state once; later reads follow a player action or the manual 同步 control.
-    // Atlas runs keep advancing on the server's one-minute background sweep.
-    // options.autoSync === true restores the former cadence (tests/tools only).
-    let started = false;
+    // Owner decisions (2026-11-10): no timed status polling, except while an Atlas
+    // run is ACTIVE and the page is visible, so the battle animation and progress
+    // keep moving. Committed skill VFX older than 5 s are dropped by the actor
+    // bridge (skill-vfx-actor-bridge.mjs maxAgeMs), so five-cycle runs sync every
+    // 3 s (every event still lands inside that window); legacy runs every 10 s.
+    // The timer stops as soon as the run ends or the page is hidden; becoming
+    // visible again with a known active run resumes it. Otherwise reads follow a
+    // player action or the manual 同步 control (Atlas also advances server-side
+    // every minute). options.autoSync === true restores the former cadence.
+    const ACTIVE_PROGRESSION_MS = 3000, ACTIVE_LEGACY_MS = 10000;
+    let started = false, activeTimer = null;
+    function activeCadence(value) { return value?.run?.map?.progression ? ACTIVE_PROGRESSION_MS : ACTIVE_LEGACY_MS; }
+    function runActive(value) {
+      const run = value?.run;
+      return !!run?.active && run.status === 'running' && value.live?.activeRunId === run.id;
+    }
+    function stopActive() {
+      if (activeTimer) (options.clearTimeout || globalThis.clearTimeout)(activeTimer);
+      activeTimer = null;
+    }
+    function scheduleActive() {
+      if (!started || disposed || options.autoSync === true) return;
+      if (!runActive(snapshot) || options.isHidden?.()) { stopActive(); return; }
+      if (activeTimer) return;
+      activeTimer = (options.setTimeout || globalThis.setTimeout)(() => {
+        activeTimer = null;
+        if (disposed || options.isHidden?.() || !runActive(snapshot)) return;
+        void sync().catch(() => {}).finally(() => scheduleActive());
+      }, activeCadence(snapshot));
+    }
+    // Called by the host on visibilitychange: hidden stops the active-run timer at once,
+    // visible resumes it (one immediate sync) only when the last snapshot shows an active run.
+    function visibilityChanged() {
+      if (!started || disposed || options.autoSync === true) return;
+      if (options.isHidden?.()) { stopActive(); return; }
+      if (runActive(snapshot) && !activeTimer) void sync().catch(() => {}).finally(() => scheduleActive());
+    }
     function start() {
       if (started || disposed) return;
       started = true;
-      if (options.autoSync !== true) { void sync().catch(() => {}); return; }
+      if (options.autoSync !== true) { void sync().catch(() => {}).finally(() => scheduleActive()); return; }
       const run = () => { if (!selecting && !options.isHidden?.()&&now()>=nextPollAt){nextPollAt=now()+(snapshot?.run?.map?.progression?1000:pollMs);void sync().catch(() => {});} };
       run(); timer = (options.setInterval || globalThis.setInterval)(run, Math.min(1000,pollMs));
     }
     function dispose() {
       if (disposed) return; disposed = true;
       if (timer) (options.clearInterval || globalThis.clearInterval)(timer);
-      timer = null; epoch++;
+      timer = null; stopActive(); epoch++;
       for (const controller of controllers) controller.abort();
       controllers.clear(); writes.clear(); flight = null; advanceFlight = null; emit(null); listeners.clear(); traceListeners.clear();
     }
-    return { request, refresh, sync, setContext, getContext, selectCharacter, start, dispose,
+    return { request, refresh, sync, setContext, getContext, selectCharacter, start, dispose, visibilityChanged,
       getSnapshot: () => snapshot, getError: () => lastError,
       subscribe(listener) { listeners.add(listener); listener(snapshot); return () => listeners.delete(listener); },
       // No replay on subscribe: a settled receipt is a one-time visual event.
@@ -230,7 +263,8 @@
     onError: error => window.dispatchEvent(new CustomEvent('rpg:scene-error', { detail: { message: error.message, code: error.code } })),
   });
   Object.assign(api, session);
-  // No refresh on tab return (owner decision 2026-11-10); use the scene's 同步 control.
+  // No general refresh on tab return (owner decision 2026-11-10); only an active Atlas run resumes its timer.
+  document.addEventListener('visibilitychange', () => session.visibilityChanged());
   window.addEventListener('pagehide', () => session.dispose(), { once: true });
   session.start();
 })();
