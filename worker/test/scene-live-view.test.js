@@ -215,3 +215,71 @@ test('guardian reserves camera overhead on full-height scenes and keeps cloud be
  assert.ok(p.size>=179&&p.size/124.8>=1.4);assert.ok(p.cloudHeight>=54);assert.ok(p.top>=64);assert.ok(p.top+p.size<=p.cloudTop+.01);assert.ok(p.cloudTop+p.cloudHeight<=hero.y-10+.01);
  const cloud=viewSource.indexOf('guardianCloud.hidden=false;',viewSource.indexOf('function placeGuardian'));assert.ok(cloud<viewSource.indexOf('if(!guardianReady)',cloud));
 });
+
+// Restored classic 星環遠征中 / 組隊冒險中 away view.
+const awaySource = fs.readFileSync(new URL('../public/expedition-away.js', import.meta.url), 'utf8');
+function awayHarness() {
+  const navigations = [], heads = [], htmlClasses = new Set();
+  const stage = { id: 'stage', children: [], insertBefore(node, ref) { node.parentNode = stage; this.children.splice(this.children.indexOf(ref), 0, node); return node; }, appendChild(node) { node.parentNode = stage; this.children.push(node); return node; } };
+  const ui = { id: 'ui', parentNode: stage }; stage.children.push({ id: 'game' }, ui);
+  const video = { paused: true, pause() { this.paused = true; }, play() { this.paused = false; return Promise.resolve(); }, addEventListener() {}, classList: { add() {} } };
+  const element = tag => {
+    const node = { tagName: tag, className: '', innerHTML: '', dataset: {}, setAttribute() {},
+      remove() { const i = stage.children.indexOf(node); if (i >= 0) stage.children.splice(i, 1); node.parentNode = null; },
+      querySelector(selector) {
+        if (selector !== '.expedition-away' || !node.innerHTML.includes('class="expedition-away"')) return null;
+        if (node.section?.html !== node.innerHTML) {
+          const button = { dataset: { awayOpen: /data-away-open="([^"]+)"/.exec(node.innerHTML)[1] } };
+          node.section = { html: node.innerHTML, isConnected: true, querySelector: s => s === 'video' ? video : s === '[data-away-open]' ? button : null, button };
+        }
+        return node.section;
+      } };
+    return node;
+  };
+  const document = { hidden: false, head: { appendChild: n => heads.push(n) }, documentElement: { classList: { add: c => htmlClasses.add(c), remove: c => htmlClasses.delete(c) } },
+    getElementById: id => ({ stage, ui })[id] || null, querySelector: () => null, createElement: element, addEventListener() {}, removeEventListener() {} };
+  const window = { __RpgScenePreviewConfig: { live: true }, addEventListener() {}, document, RpgSceneNavigation: { navigate: (...args) => navigations.push(args) } };
+  const context = { window, document, matchMedia: () => ({ matches: false, addEventListener() {}, removeEventListener() {} }), setInterval: () => 1, clearInterval() {}, Intl, Number, Object, Set, Map, String, Error, Date, Promise };
+  vm.createContext(context);
+  vm.runInContext(awaySource, context); vm.runInContext(viewSource, context);
+  const layer = () => stage.children.find(n => n.className === 'scene-away-layer');
+  return { api: window.RpgSceneLiveView, window, stage, video, heads, htmlClasses, navigations, layer };
+}
+function awaySnapshot(partyId) {
+  const data = snapshot(); data.run.active = false; data.run.status = 'stopped'; data.live.activeRunId = null; data.live.partyId = partyId; return data;
+}
+test('server party state maps to the classic away activity; an active Atlas run or no party keeps the normal scene', () => {
+  const api = viewApi(), ring = 'ring:' + 'ab'.repeat(16);
+  assert.deepEqual(JSON.parse(JSON.stringify(api.awayActivity(api.normalize(awaySnapshot(ring))))), { kind: 'star-ring', id: ring });
+  assert.deepEqual(JSON.parse(JSON.stringify(api.awayActivity(api.normalize(awaySnapshot('p-42'))))), { kind: 'party', id: 'p-42' });
+  assert.equal(api.awayActivity(api.normalize(awaySnapshot(null))), null);
+  const running = snapshot(); running.live.partyId = ring; assert.equal(api.awayActivity(api.normalize(running)), null);
+  assert.equal(api.awayActivity(null), null);
+});
+test('a 星環 expedition renders the classic 星環遠征中 full-screen video under the HUD and clears on return', async () => {
+  const h = awayHarness(), ring = 'ring:' + 'cd'.repeat(16);
+  const layer = await h.api.syncAway(h.api.normalize(awaySnapshot(ring)));
+  assert.equal(layer, h.layer()); assert.ok(h.htmlClasses.has('rpg-scene-away'));
+  assert.ok(h.stage.children.indexOf(layer) < h.stage.children.findIndex(n => n.id === 'ui'), 'HUD stays above the away view');
+  for (const text of ['星環遠征中', '一般掛機暫停 · 戰果由隊伍獨立結算', '/art/expedition-away-20261020/loop.mp4', '/art/expedition-away-20261020/poster.webp', '查看遠征戰況']) assert.ok(layer.innerHTML.includes(text), text);
+  assert.equal(h.video.paused, false, 'loop video plays');
+  layer.querySelector('.expedition-away').button.onclick({ currentTarget: layer.querySelector('.expedition-away').button });
+  assert.deepEqual(JSON.parse(JSON.stringify(h.navigations)), [['star-ring', {}]]);
+  assert.equal(await h.api.syncAway(h.api.normalize(awaySnapshot(ring))), layer, 'same expedition is not remounted');
+  await h.api.syncAway(h.api.normalize(awaySnapshot(null)));
+  assert.equal(h.layer(), undefined); assert.ok(!h.htmlClasses.has('rpg-scene-away')); assert.equal(h.video.paused, true);
+});
+test('a party expedition shows 組隊冒險中 and opens the current party', async () => {
+  const h = awayHarness(), layer = await h.api.syncAway(h.api.normalize(awaySnapshot('p-7')));
+  assert.ok(layer.innerHTML.includes('組隊冒險中') && layer.innerHTML.includes('查看組隊戰況'));
+  const section = layer.querySelector('.expedition-away'); section.button.onclick({ currentTarget: section.button });
+  assert.deepEqual(JSON.parse(JSON.stringify(h.navigations)), [['party', { tab: 'current' }]]);
+});
+test('the away view styles keep the full-screen video under the HUD (stylesheet braces balanced)', () => {
+  const css = fs.readFileSync(new URL('../public/scene-live-view.css', import.meta.url), 'utf8');
+  let depth = 0; for (const c of css.replace(/\/\*[\s\S]*?\*\//g, '')) { depth += c === '{' ? 1 : c === '}' ? -1 : 0; assert.ok(depth >= 0); }
+  assert.equal(depth, 0);
+  const tail = css.slice(css.indexOf('.scene-away-layer {'));
+  assert.match(tail, /^\.scene-away-layer \{ position: absolute; inset: 0;/); assert.doesNotMatch(tail.split('}')[0], /z-index/);
+  assert.match(css, /\.scene-away-layer \.expedition-away \{ position: absolute; inset: 0; aspect-ratio: auto; min-height: 0; \}/);
+});
