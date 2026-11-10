@@ -332,3 +332,27 @@ test('idle monsters stand in a stable side band at Atlas scale, clear of the ove
   assert.match(viewSource, /let slot = 0; while \(used\.has\(slot\)\) slot\+\+;/);
   assert.doesNotMatch(code, /setScale/, 'scale stays the shared Atlas minion scale');
 });
+
+test('idleMapFor prefers the server selected map, including a previous-round pin', () => {
+  const api = viewApi(), art = JSON.parse(fs.readFileSync(new URL('../public/endgame-map-art.json', import.meta.url), 'utf8'));
+  const follow = api.idleMapFor({ level: 125, idleMap: { follow: true, mode: 'elite', modeName: '菁英', mapId: 1, chapter: 1, cycleId: 'cycle_elite_01', place: '日耀聖庭', name: '日耀聖庭-菁英', maps: [] } }, art);
+  assert.equal(follow.id, 'cycle_elite_01');
+  assert.equal(follow.place, '日耀聖庭');
+  assert.equal(follow.follow, true);
+  const pin = api.idleMapFor({ level: 125, idleMap: { follow: false, mode: 'normal', modeName: '普通', mapId: 8, chapter: 8, cycleId: 'cycle_normal_08', place: art.cycle_normal_08?.name || '德爾菲阿波羅神諭谷', name: '德爾菲阿波羅神諭谷-普通' } }, art);
+  assert.equal(pin.id, 'cycle_normal_08');
+  assert.equal(pin.progression.mode, 'normal');
+  assert.equal(pin.progression.chapter, 8);
+  assert.equal(pin.follow, false);
+  assert.equal(api.idleMapFor({ level: 125 }, art).id, 'cycle_elite_01', 'without a server pin, still derive the current-level map');
+});
+test('the hang-idle HUD injects a follow-level toggle and a reached-map picker next to the zone header', () => {
+  assert.match(viewSource, /id="idle-map-picker"|idle-map-picker/);
+  assert.match(viewSource, /跟隨等級/);
+  assert.match(viewSource, /data-idle-map-follow/);
+  assert.match(viewSource, /RpgSceneSession\.request\('idle-map'/);
+  assert.match(viewSource, /is-locked/);
+  const css = fs.readFileSync(new URL('../public/scene-live-view.css', import.meta.url), 'utf8');
+  assert.match(css, /idle-map-picker/);
+  assert.match(css, /idle-map-item\.is-locked/);
+});

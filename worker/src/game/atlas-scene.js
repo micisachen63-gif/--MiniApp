@@ -1,6 +1,7 @@
 import { computeStats } from './stats.js';
 import {progressionView} from './endgame.js';
 import { expToNext } from './formulas.js';
+import { idleMapView } from './idle-map.js';
 import { ATLAS_SUPPLY_RULES_VERSION, ATLAS_POTION_KEYS, atlasSupplyPolicyForCharacter, isVersionedAtlasSupplies } from './atlas-supplies.js';
 
 const CLASSES = new Set(['sword', 'archer', 'mage', 'thief']);
@@ -102,6 +103,7 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
     id: String(char.tg_id), name: char.name, baseClass: char.base_class,
     gender: char.gender, classPath: char.class_path || '',
     level: number(char.level), revision: number(char.rev),progression:progressionView(char.level),
+    idleMap: idleMapView(char),
   };
   character.appearanceKey = atlasAppearanceKey(character);
   // The equipped guardian's public appearance only; ownership/stats stay server-side.

@@ -141,7 +141,7 @@ export function gearSellBlock(item) {
 /** v0.4: trade lock — starter gear, anything ever equipped (bound) and gear in a trade can't be offered */
 export function tradeBlock(item) {
   if (item.is_equipped) return '穿戴中的裝備要先卸下';
-  if (item.bound) return item.grade === 'relic' ? '遺物穿過後已綁定，不能交易' : item.source === 'starter' ? '新手裝備不能交易' : '穿過的裝備已綁定，不能交易';
+  if (item.bound) return item.source === 'gearbook_shop' ? '收藏兌換裝備為綁定，不能交易' : item.grade === 'relic' ? '遺物穿過後已綁定，不能交易' : item.source === 'starter' ? '新手裝備不能交易' : '穿過的裝備已綁定，不能交易';
   if (item.trade_id) return '這件裝備已經在另一筆交易中';
   return null;
 }

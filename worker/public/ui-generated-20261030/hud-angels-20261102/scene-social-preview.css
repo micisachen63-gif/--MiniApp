@@ -87,17 +87,17 @@
   box-shadow:inset 0 1px 0 #ffffff1c,inset 0 -2px 2px #0005;
 }
 /* The primary family uses the actual plate. Its transparent margin is cropped in CSS. */
-#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit]),
+#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit],[data-gearbook-shop-buy],[data-gearbook-shop-preview]),
 #ui.scene-unified-root .scene-unified-dialog .scene-guide-content form>button,
 #ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button{
   --sb-height:52px;--sb-cut:14px;--sb-depth:5px;
   padding:calc(11px + var(--sb-press)) 23px calc(14px - var(--sb-press));
   font-size:14px;color:#fff0cf;
 }
-#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit])::before,
+#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit],[data-gearbook-shop-buy],[data-gearbook-shop-preview])::before,
 #ui.scene-unified-root .scene-unified-dialog .scene-guide-content form>button::before,
 #ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button::before{display:none}
-#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit])::after,
+#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit],[data-gearbook-shop-buy],[data-gearbook-shop-preview])::after,
 #ui.scene-unified-root .scene-unified-dialog .scene-guide-content form>button::after,
 #ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button::after{
   top:var(--sb-press);bottom:calc(0px - var(--sb-press));
@@ -301,7 +301,7 @@
 #ui.scene-unified-root :is(.scene-unified-dialog,.scene-live-buttons) button::before{
  display:none!important;clip-path:none;background:none;
 }
-#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit]),
+#ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit],[data-gearbook-shop-buy],[data-gearbook-shop-preview]),
 #ui.scene-unified-root .scene-unified-dialog .scene-guide-content form>button,
 #ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button{
  border:1px solid #d4b97788;border-image:none;background:linear-gradient(145deg,#354458,#192a3e);

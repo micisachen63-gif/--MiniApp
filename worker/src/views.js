@@ -9,6 +9,7 @@ import {affixView,affixCost} from './game/affixes.js';
 // JSON views returned to 小精靈 (and later the Mini App).
 import { CLASSES, MAPS, ITEMS, SLOT_NAMES, RARITIES, ELEMENTS, WEAPON_KINDS, ARMOR_FAMILIES, BOSS, SHARED_SLOTS } from './game/constants.js';
 import { expToNext, mapForLevel } from './game/formulas.js';
+import { idleMapView } from './game/idle-map.js';
 import { idleStats, itemStat, itemExtras, mainStatOf, classTier, nodeFor } from './game/stats.js';
 import {idleCombatState} from './game/idle-combat.js';
 import { supplyHours, refillPlan, atGate, gateLevel, canAdvanceNow, choosePotion } from './game/idle.js';
@@ -50,7 +51,7 @@ export function equipmentView(char, e) {
 const branchView = (b) => ({ branch: b.branch, path: b.path, tier: b.tier, name: b.name, line: b.line, skill: b.skill, passive: b.passive.text, blurb: b.blurb, weapon: WEAPON_KINDS[b.weapon]?.type });
 export function playerView({ char, inv, equipment }, { now, report = null, compact = false } = {}) {
   const equipped = equipment.filter((e) => e.is_equipped);
-  const s = idleStats(char, equipped); const node = nodeFor(char.base_class, char.class_path); const map = MAPS[mapForLevel(char.level)];
+  const s = idleStats(char, equipped); const node = nodeFor(char.base_class, char.class_path); const idleMap = idleMapView(char); const map = MAPS[idleMap.mapId];
   const need = expToNext(char.level); const tier = classTier(char.class_path);
   const gateMat=tier+1>=3?`trial_${tier+1}`:`mat_${tier+1}`;
   const gate = { atGate: atGate(char), gateLevel: gateLevel(char), canAdvance: canAdvanceNow(char), material: gateMat, materialName: ITEMS[gateMat]?.name, have: inv[gateMat] || 0 };
@@ -59,7 +60,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, aura:equippedAura(char),title:towerTitle(char), name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
       className: node.name, classPath: char.class_path, classTier: tier, level: char.level, exp: char.exp, expNeed: Number.isFinite(need) ? need : null,
       expPct: Number.isFinite(need) ? Math.min(100, Math.floor((char.exp / need) * 1000) / 10) : 100, hp: char.hp, mp: char.mp, maxHp: s.maxHp, maxMp: s.maxMp,
-      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char), autoRedPotion:potionPreference(char,'red'), autoBluePotion:potionPreference(char,'blue'),
+      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, idleMap, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char), autoRedPotion:potionPreference(char,'red'), autoBluePotion:potionPreference(char,'blue'),
       penaltiesToday: char.penalty_day && char.penalty_day === new Date(now + 8 * 3600e3).toISOString().slice(0, 10) ? char.penalties_today : 0,
       deathsTotal: char.deaths_total, bossDownUntil: char.boss_down_until && char.boss_down_until > now ? char.boss_down_until : null, lastReselectAt: char.last_reselect_at },
     stats: { ...guardianStatsView(s,char), attackSpeedMultiplier:s.attackSpeedMultiplier,hitAttackMultiplier:s.hitAttackMultiplier, weaponElem:s.weaponElem,elementResist:s.elementResist,elementResistance:s.elementResistance,def: s.def, maxHp: s.maxHp, maxMp: s.maxMp, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 10, standard: s.std, r: Math.round(s.r * 100) / 100, skill: s.skill, passive: node.passiveText, taken: Math.round(s.taken * 100) / 100, element: s.element },
