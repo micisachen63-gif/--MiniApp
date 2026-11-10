@@ -327,6 +327,7 @@ function mount(root,host,options={}) {
     let path=typeof item?.art==='object'?item.art?.src||item.art?.path:null;
     if(typeof path!=='string')path=null;
     // Match the shared inventory's existing equipment IDs; special art stays a symbol.
+    if(!path&&typeof item?.iconSrc==='string')path=item.iconSrc;
     if(!path&&typeof item?.art==='string'&&item.source!=='star_ring'&&item.classReq!=='thief'&&/^[a-z0-9_]+$/i.test(item.art))path='/art/v2/'+item.art+'.webp';
     const url=path&&host.artUrl?.(path);
     return url?'<img class="sw-item-art" src="'+esc(url)+'" alt="" decoding="async">':'<span class="sw-item-art sw-art-empty" aria-hidden="true">'+esc(item?.emoji||(item?.slot==='weapon'?'⚔':'◇'))+'</span>';

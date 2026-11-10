@@ -31,6 +31,9 @@ crons = ["*/30 * * * *", "* * * * *"]
 
 [vars]
 ENVIRONMENT = "production"
+ATLAS_ENABLED = "true"
+EQUIPMENT_COLLECTION_ENABLED = "true"
+EQUIPMENT_RECOVERY_ENABLED = "true"
 GROUP_CHAT_ID = "-1004342516953"   # 星穹旅誌｜冒險者之庭；不可恢復舊小精靈群組 ID
 
 # Secrets (never in this file):  npx wrangler secret put SERVICE_SECRET   (same value as 小精靈 rpg.local.json serviceSecret)

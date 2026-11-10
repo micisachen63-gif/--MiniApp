@@ -1,7 +1,7 @@
 /* One context for the local scene and its real Atlas windows. Reads never settle. */
 (() => {
   'use strict';
-  const READS = new Set(['trade/scene-scoped','trade/eligible-scoped','trade/receipt','trade/invitation-receipt','exchange/scene','exchange/sellable-scene','exchange/receipt','meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','fate/scene','fate/receipt','fate/private/scene','fate/private/profile','fate/private/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','ledger/history','fate/gifts/summary','chat/state']);
+  const READS = new Set(['trade/scene-scoped','trade/eligible-scoped','trade/receipt','trade/invitation-receipt','exchange/scene','exchange/sellable-scene','exchange/receipt','meta','realms','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','fate/scene','fate/receipt','fate/private/scene','fate/private/profile','fate/private/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','ledger/history','fate/gifts/summary','chat/state']);
   const SCOPED_REALM_ACTIONS = new Set(['trade/scene-scoped','trade/eligible-scoped','trade/receipt','trade/invitation-receipt','trade/action-scoped','trade/invitation-scoped','exchange/scene','exchange/sellable-scene','exchange/receipt','exchange/action-scoped','ledger/history','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','guardian/scene','guardian/receipt','guardian/action-scoped','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
@@ -70,7 +70,9 @@
       let response, data, acceptedScene = false;
       try {
         try {
-          const headers = { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': captured.accountId, 'X-Realm-Id': captured.realmId };
+          const headers = { 'Content-Type': 'application/json', 'X-Realm-Id': captured.realmId };
+          if (options.telegramInitData) headers['X-Telegram-Init-Data'] = options.telegramInitData;
+          else headers['X-Dev-Tg-Id'] = captured.accountId;
           const artRevision = globalThis.RpgMonsterExpansion?.revision || globalThis.RpgMonsterExpansionArtRevision;
           if (typeof artRevision === 'string' && /^[\x21-\x7e]{1,200}$/.test(artRevision)) headers['X-Monster-Art-Revision'] = artRevision;
           response = await send(endpoint + action, {
@@ -81,7 +83,7 @@
           data = await response.json();
         } catch (cause) {
           if (generation !== epoch || disposed) throw contextError();
-          throw Object.assign(new Error('本機遊戲服務尚未連線，請重新同步'), { cause, uncertain: !read, code: controller.signal.aborted ? 'request_aborted' : 'connection_failed' });
+          throw Object.assign(new Error(options.telegramInitData?'遊戲服務暫時無法連線，請重新同步':'本機遊戲服務尚未連線，請重新同步'), { cause, uncertain: !read, code: controller.signal.aborted ? 'request_aborted' : 'connection_failed' });
         }
         if (generation !== epoch || disposed) throw contextError();
         if (!response.ok || data.ok === false) {
@@ -209,6 +211,9 @@
   const api = { create };
   globalThis.RpgSceneSession = api;
   const config = globalThis.__RpgScenePreviewConfig;
+  // The production host installs a signed Telegram session, including on local
+  // staging. Never fall through to the preview's synthetic identity.
+  if (config?.telegram === true) return;
   if (!config?.live || !globalThis.document || !/^http:\/\/127\.0\.0\.1:\d+$/.test(globalThis.location?.origin || '')) return;
   if (!/^http:\/\/127\.0\.0\.1:\d+\/app\/api\/$/.test(config.endpoint || '')) throw new Error('Local scene endpoint must use loopback');
   const session = create({ endpoint: config.endpoint, accountId: config.accountId || '90101', realmId: config.realmId || 'permanent',

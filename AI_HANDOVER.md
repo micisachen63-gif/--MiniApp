@@ -1,3 +1,17 @@
+# 2026-11-10｜正式改版整合候選：戰鬥出手資料待補，尚未發布
+
+使用者已授權最終確認無問題後改版；本線承接131be4。已接正式Telegram簽章登入／原創角、完整自足原素材public封裝、跨OS SHA一致、發布前素材與345 schema物件／保護bindings守衛。原classic入口、原圖和其他owner預覽保留。
+
+實際createActorReleaseResolver逐248×4方向查核：625/992目標型施放可解析；367缺出手起點或時間（劍士238、弓手96、法師0、刺客33），其中212也缺非投射施放的時間。真場景adv4_sword_A111_m已重現missing-release-origin，覺醒仍可播。不能因3968格有圖便提升finalArtApproved或直接發布。
+
+發布準備、缺項與接手：docs/RELEASE_INTEGRATION_20261110.txt、docs/release-integration-20261110/character-combat-gaps.json。正式仍僅SELECT，0035..0045尚未執行；舊0026..28 Fate物件已存在，不可盲套pending migrations。80匿名合成角色／960裝備的正式schema形狀增補演練通過，原欄位與+N完全不變。
+
+另修新版背包／工坊漏用原刺客與星征裝備圖：equipmentView加原契約iconSrc，舊art ID保持；沿既有圖，不造新圖、不改裝備屬性。
+
+本批當前來源、具體測試HEAD及exit請讀D:/StarJournal/handoff/non-character/release-final-check-20261110/STATUS.json及candidate-gate/；不得以基底4343或focused數字代替本批最終gate。GitHub／main／正式狀態以該證據及即時receipt為準。
+
+---
+
 # 2026-11-09｜完整回歸第二輪修補
 
 f1e13dd完整gate原exit1，Worker4123/4126：兩項公開命運分享style.css快取與入口不同，一項共享CPU牆鐘效能門檻。原來源前後相同、失敗完整保留。

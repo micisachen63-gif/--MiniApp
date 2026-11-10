@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {spawnSync} from 'node:child_process';
+import {equipmentView} from '../src/views.js';
 import {gearOffers} from '../src/game/gear.js';
 import {gearArt,cardPhoto,CARD_FRAMES} from '../src/game/share.js';
 import {thiefGearArt,isThiefClassGear,thiefGearCardPhoto,iconForArtId,THIEF_GEAR_ART_IDS} from '../src/game/gear-art.js';
@@ -26,7 +27,7 @@ test('all 82 real thief designs resolve through the actual browser gearIcon chai
  const specialized=[...offers.values()].filter(isThiefClassGear);
  assert.equal(specialized.length,82);assert.equal(THIEF_GEAR_ART_IDS.length,82);assert.equal(new Set(THIEF_GEAR_ART_IDS).size,82);
  for(const item of specialized){
-  const art=thiefGearArt(item);assert.ok(art);assert.equal(gearArt(item),art.artId);assert.equal(iconForArtId(art.artId),art.iconSrc);
+  const art=thiefGearArt(item);assert.ok(art);const view=equipmentView({tg_id:'qa',base_class:'thief',class_path:'A',level:120},{...item,class_req:'thief',tg_id:'qa',enhance_level:0,base_stat:10,element_stat:0});assert.equal(view.iconSrc,'/'+art.iconSrc);assert.equal(view.art,art.artId);assert.equal(gearArt(item),art.artId);assert.equal(iconForArtId(art.artId),art.iconSrc);
   assert.equal(browser.src('gear',item),art.iconSrc,item.name);assert.ok(browser.icon(item,'?').includes('src="'+art.iconSrc+'"'),item.name);
   assert.ok(!art.artId.includes('sword')&&!art.artId.endsWith('_plate'));
   for(const rarity of CARD_FRAMES){assert.equal(thiefGearCardPhoto(item,rarity),art.cardPrefix+'_'+rarity+'.jpg');assert.equal(cardPhoto({...item,rarity,grade:rarity==='relic'?'relic':'normal'}),THIEF_RELEASE_READY?art.cardPrefix+'_'+rarity+'.jpg':null);}

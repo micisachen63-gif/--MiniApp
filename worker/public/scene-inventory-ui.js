@@ -138,6 +138,7 @@
     }
     function icon(item) {
       let path = typeof item.art === 'object' ? item.art?.src || item.art?.path : null;
+      if (!path && typeof item.iconSrc === 'string') path = item.iconSrc;
       if (!path && typeof item.art === 'string' && item.source !== 'star_ring' && item.classReq !== 'thief' && /^[a-z0-9_]+$/i.test(item.art)) path = '/art/v2/' + item.art + '.webp';
       if (!path && item.origin === 'inventory' && /^book_[a-z0-9_]+$/i.test(item.id)) path = '/expedition/assets/skills-painted-20261011/' + item.id.slice(5) + '.webp';
       const url = path && host.artUrl?.(path);

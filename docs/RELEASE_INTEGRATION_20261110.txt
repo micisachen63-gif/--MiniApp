@@ -1,0 +1,36 @@
+星穹旅誌｜正式改版整合候選（2026-11-10）
+
+狀態：尚未發布。使用者已授權最終確認通過後改版；本候選因實際戰鬥出手資料不齊而擋下，不能把「3968動作格有圖」當成完整戰鬥驗收。
+
+本次整合
+1. 正式入口改接同源 Telegram WebApp 簽章。身分仍由伺服器驗證 HMAC；前端不使用開發帳號登入，也不把憑證保存至 DOM、localStorage 或日誌。無登入資料時阻擋遊戲請求；新玩家沿原創角表單。
+2. 248外觀、3968格的原人物圖與分角metadata，以及HUD、48模式圖、原12區怪物資產封裝到Worker public。只複製原圖，不改圖、不提高素材approved旗標；舊入口與功能留在classic.html。包裝工具不讀寫正式服務。
+3. 發布前檢查包裝SHA、別名與根原碼一致、所有人物方向，以及新schema定義。正式發布入口加檢查真正的createActorReleaseResolver；缺出手資料會明確失敗，不用半段動畫或主角中心猜出手點。
+4. 三個遊戲功能旗標只允許指定的plain_text改動；原秘密、DB/DO namespace、其他bindings與cron仍須完全保持。賽季維護旗標仍關閉。
+5. 新版背包與工坊使用原gearIconSrc契約提供的裝備圖，補回刺客與星征裝備；原art ID與裝備數值不改。82刺客設計與原圖路徑均核對。
+6. 明確固定檔案換行，避免Windows/Linux Git checkout改變素材與別名的SHA。
+
+已完成的實證
+- 基底131be4：Worker4138、BOT205，共4343全過。這是基底gate，不是本次新提交結果。
+- 包裝版46個功能路由，四尺寸共470項UI檢查；無舊大理石／厚素材框、溢出、字型不一致或JS/HTTP錯誤。
+- 真Worker HMAC＋合成Telegram資料的首次創角成功。開發標頭、篡改簽章、跨帳角色不能登入／讀取；body不能改變簽章身分。不是實體Telegram手機驗收。
+- 以正式schema定義重建的獨立SQLite，80合成角色／960裝備，逐一執行0035..0045後，所有原欄位與+0..+11完全一致、外鍵與完整性通過。不是正式庫升級，也不是Cloudflare遠端壓測。
+- 真正場景戰鬥已重現adv4_sword_A111_m的missing-release-origin；覺醒與既有反擊特效可播放。
+
+發布阻擋與人物接手
+完整缺項：docs/release-integration-20261110/character-combat-gaps.json。
+對248外觀的四方向攻擊，目標型技能目前625/992可由真resolver解析，367缺少出手點／時間或對應已審核profile：劍士238、弓手96、法師0、刺客33。
+其中212格連不需要投射起點的施放也缺少出手時間。這是整合契約結果，不等於367個人物缺圖。
+需由人物來源提供實際releaseFrame/hitFrame（或有效releaseAtMs）與對應影格座標releaseAnchorPx。座標必須配合frame.anchor/bodyHeight、mirror與實際出手姿勢；不能憑空補。也可提供逐圖審核且綁metadata/image SHA的profile，由既有resolver嚴格驗證。不覆寫角色美術／不提高審核旗標。
+取得新交接後：以新catalog/renderer SHA重新包裝、重新跑combat readiness及場景戰鬥，再做最終全套gate。
+
+正式資料與發布順序
+正式資料本次僅SELECT；現有72表，最後登記0034，新0035..0045共33新表尚未執行。0026..0028的舊Fate物件實際存在但ledger未登記，不可直接apply全pending list。
+先確認正式版本／備援還原點、舊Fate定義、排程與必要維護窗口；用已演練的增補路線升級，再驗345個新／變更schema物件。不得重建或重置玩家表，不可覆寫遠端Secrets／DB。
+本機既有D1讀權限可用，但Workers發布API拒絕存取；補授權請求已通知使用者，先前一次OAuth等待已逾時。需確認真正新授權後繼續，不因D1可讀就假設可部署。
+人物契約與其餘驗收通過後，依AGENTS：PR、必要Worker and BOT tests、合入main；從乾淨且等於origin/main的checkout執行根deploy腳本。只有線上驗證和deployment-records收據push都成功才能回報正式/GitHub同步。未知結果先唯讀check，禁止盲目重發。
+
+證據位置
+D:/StarJournal/handoff/non-character/release-final-check-20261110/
+STATUS.json / WORKING_HANDOFF.md記錄當前工作樹及程序；完整gate以新candidate子目錄的實際exit、HEAD及前後source hash為準。
+原9593／9642、其他owner工作樹與原人物來源均保留。

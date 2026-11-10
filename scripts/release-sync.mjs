@@ -10,6 +10,7 @@ import {assertKnownRelease} from './release-lock.mjs';
 import {isStaticAsset} from './static-assets.mjs';
 import {retryRead} from './read-only-network.mjs';
 import {readDeploymentRecords,appendDeploymentReceipt} from './deployment-records.mjs';
+import {sceneReleaseRequirements,assertSceneSchema,expectedSceneBindings} from './scene-release-readiness.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const REPO='https://github.com/micisachen63-gif/--MiniApp';
@@ -76,12 +77,21 @@ async function assets(service,commit){
  if(previous?.sourceCommit){for(const file of git('diff','--name-only',previous.sourceCommit,commit,'--',prefix).split(/\r?\n/).filter(Boolean))if(all.includes(file))chosen.add(file)}
  const queue=[...chosen],verified=[];await Promise.all(Array.from({length:4},async()=>{for(;;){const file=queue.shift();if(!file)return;const actual=sha(await publicRead(`https://${service.name}.micisachen.workers.dev/${file.slice(prefix.length)}?sync=${commit}`));assert.equal(actual,await digest(path.join(ROOT,file)),'Live asset differs: '+file);verified.push(file)}}));return {scope:'Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.',verifiedCount:verified.length,files:verified.sort()};
 }
-async function verify(service,commit,built,before){const token=await credentials(),live=await state(service,token);assert.equal(live.versions.length,1);assert.equal(live.versions[0].percentage,100);if(before){assert.deepEqual(live.bindings,before.bindings,'Production bindings changed');assert.deepEqual(live.crons,before.crons,'Production schedules changed')}
+async function verify(service,commit,built,before,scene){const token=await credentials(),live=await state(service,token);assert.equal(live.versions.length,1);assert.equal(live.versions[0].percentage,100);if(before){assert.deepEqual(live.bindings,expectedSceneBindings(before.bindings,scene?.enabled),'Production bindings changed');assert.deepEqual(live.crons,before.crons,'Production schedules changed')}
  const runtime=await modules(service,token);assert.deepEqual(runtime,built,'Live runtime differs from GitHub build; inspect the newer release, never overwrite it to make a check pass');const verifiedAssets=await assets(service,commit);const health=JSON.parse((await publicRead(`https://${service.name}.micisachen.workers.dev/health`)).toString());assert.equal(health.ok,true);assert.deepEqual((await state(service,token)).versions,live.versions,'Concurrent publication during verification');assert.equal(git('rev-parse','HEAD'),commit);assert.equal(git('status','--porcelain'),'','Source changed during verification');
  const report={status:'VERIFIED',repository:REPO,sourceCommit:commit,service:service.name,productionVersion:live.versions[0].version_id,activePercentage:100,verifiedAt:new Date().toISOString(),runtimeSHA256:runtime,source:await source(service),assets:verifiedAssets,protectedState:live,noPlayerMutations:true};assert.equal(ready(),commit,'GitHub advanced during verification');await save(path.join(WORK,service.name,'verified.json'),report);console.log(`${service.name}: VERIFIED ${report.productionVersion} @100, GitHub ${commit.slice(0,12)}, ${verifiedAssets.verifiedCount} public files`);return report;
 }
 async function main(){const [mode='check',target='all']=process.argv.slice(2);assert(['check','deploy','record'].includes(mode),'Use check, deploy or record');assert(['all','worker','bot'].includes(target),'Use worker, bot, or all');assert(mode==='check'||target!=='all','Publish or record one service at a time');const commit=ready();deploymentRecords=readDeploymentRecords(ROOT);
- for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials());if(mode==='deploy')assertKnownRelease(deploymentRecords.receipts[service.name],before);const built=await build(service);assert.equal(ready(),commit);
+ for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials());if(mode==='deploy')assertKnownRelease(deploymentRecords.receipts[service.name],before);const scene=key==='worker'?await sceneReleaseRequirements(ROOT):null;
+  if(scene){
+   const token=await credentials(),database=before.bindings.find(b=>b.name==='DB').id;
+   const result=await retryRead(()=>new Promise((resolve,reject)=>{
+    // This POST is a fixed metadata-only SELECT, never a player mutation.
+    const body=JSON.stringify({sql:'SELECT type,name,sql FROM sqlite_master WHERE sql IS NOT NULL ORDER BY type,name',params:[]});
+    const req=https.request(`https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/d1/database/${database}/query`,{method:'POST',agent,family:4,headers:{Authorization:'Bearer '+token,'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}},res=>{const chunks=[];res.on('data',b=>chunks.push(b));res.on('error',reject);res.on('end',()=>{try{assert.equal(res.statusCode,200,'D1 schema read failed');const value=JSON.parse(Buffer.concat(chunks));assert(value.success&&value.result?.[0]?.success,'D1 schema read failed');assert.equal(value.result[0].meta?.rows_written||0,0);resolve(value.result[0].results);}catch(e){reject(e);}});});req.on('error',reject);req.setTimeout(90000,()=>req.destroy(Object.assign(Error('Schema read timeout'),{code:'ETIMEDOUT'})));req.end(body);
+   }));assertSceneSchema(scene,result);
+  }
+  const built=await build(service);assert.equal(ready(),commit);
   if(mode==='deploy'){
    const npm=process.env.npm_execpath;assert(npm,'Use npm run deploy:worker or npm run deploy:bot');console.log(run(process.execPath,[npm,'run',service.test]));assert.equal(ready(),commit);assert.deepEqual(await state(service,await credentials()),before,'Concurrent production change');
    await save(path.join(WORK,service.name,'pending.json'),{sourceCommit:commit,before,built,startedAt:new Date().toISOString()});
@@ -89,7 +99,7 @@ async function main(){const [mode='check',target='all']=process.argv.slice(2);as
    // never retry an uncertain publication automatically.
    const result=spawnSync(process.execPath,[cli,'deploy','--config','wrangler.toml','--tag','git-'+commit.slice(0,12),'--message',REPO+'/commit/'+commit],{cwd:path.join(ROOT,service.dir),windowsHide:true,encoding:'utf8',maxBuffer:32e6}),output=(result.stdout||'')+'\n'+(result.stderr||'');await fs.writeFile(path.join(WORK,service.name,'deploy.log'),output);assert.equal(result.status,0,'Deployment failed/uncertain: inspect live state and deploy.log; do not blindly retry');assert(output.includes('Current Version ID:'),'No version receipt: inspect live state');
   }
-  const report=await verify(service,commit,built,mode==='deploy'||mode==='record'?before:null);
+  const report=await verify(service,commit,built,mode==='deploy'||mode==='record'?before:null,scene);
   if(mode==='deploy'||mode==='record'){const receipt=appendDeploymentReceipt(ROOT,service.name,report,deploymentRecords);assert.equal(ready(),commit);console.log(`Verified receipt: ${receipt.url}`);console.log(mode==='deploy'?'PUBLISHED_AND_GITHUB_SYNCED':'RECEIPT_RECORDED_AND_GITHUB_SYNCED')}
  }
 }

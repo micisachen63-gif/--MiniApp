@@ -268,6 +268,8 @@ test('mounted equipment resolves existing art IDs and metadata paths like invent
     {name:'explicit path metadata',extra:{art:{path:'/art/v2/wpn_sword.webp'}},path:'/art/v2/wpn_sword.webp'},
     {name:'star-ring art',extra:{art:'boots_plate',source:'star_ring'},path:null},
     {name:'thief art',extra:{art:'boots_leather',classReq:'thief'},path:null},
+    {name:'canonical thief icon',extra:{art:'gear_wpn_laurel_dagger',classReq:'thief',iconSrc:'/art/thief-gear-20261015/gear_wpn_laurel_dagger.webp'},path:'/art/thief-gear-20261015/gear_wpn_laurel_dagger.webp'},
+    {name:'canonical star-ring icon',extra:{art:'star_ring_dawn_sword',source:'star_ring',iconSrc:'/art/star-ring-20261021/dawn-sword.webp'},path:'/art/star-ring-20261021/dawn-sword.webp'},
     {name:'non-ID art',extra:{art:'../boots_plate'},path:null},
     {name:'missing art',extra:{art:null},path:null},
     {name:'malformed metadata',extra:{art:{src:42}},path:null}
