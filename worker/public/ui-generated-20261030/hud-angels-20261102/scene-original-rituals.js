@@ -26,7 +26,7 @@
     h.setCommitting(true);const start=Date.now(),result=await commit();if(!h.current()||!current())return h.close(true);
     await new Promise(r=>setTimeout(r,Math.max(0,850-(Date.now()-start))));if(!h.current())return;
     if(result?.action==='enhance'&&result.result)api.reveal(h.ov,result.result.result==='success'?'success':result.result.result==='break'?'break':'nothing',result.result.to);
-    else if(result?.action==='reroll'&&result.result)api.reveal(h.ov,'reroll');
+    else if(result?.action==='reroll'&&result.result){api.reveal(h.ov,'reroll');const title=h.ov.querySelector('.fr-name'),r=result.result;if(title)title.textContent=(r.itemName||item.name)+' · 品質 '+(r.before?.quality||'未鑑定')+' → '+(r.after?.quality||'結果待核對');}
     else {h.ov.classList.remove('charging');const label=h.ov.querySelector('.fr-instruction');if(label)label.textContent=result?.job?'背景作業已啟動，返回查看真實進度':'結果尚待核對，請返回確認原紀錄';}
     h.setCommitting(false);const footer=document.createElement('div');footer.className='fg-b';const close=document.createElement('button');close.type='button';close.className='btn gold';close.textContent='返回工坊';close.onclick=()=>h.close();footer.append(close);h.ov.querySelector('.fg-box').append(footer);close.focus({preventScroll:true});
    }catch(error){h.setCommitting(false);h.ov.innerHTML='<p role="alert">'+esc(error.message)+'</p><button type="button">返回工坊</button>';h.ov.querySelector('button').onclick=()=>h.close();}

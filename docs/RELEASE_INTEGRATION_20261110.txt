@@ -8,7 +8,8 @@
 3. 發布前檢查包裝SHA、別名與根原碼一致、所有人物方向，以及新schema定義。正式發布入口加檢查真正的createActorReleaseResolver；缺出手資料會明確失敗，不用半段動畫或主角中心猜出手點。
 4. 三個遊戲功能旗標只允許指定的plain_text改動；原秘密、DB/DO namespace、其他bindings與cron仍須完全保持。賽季維護旗標仍關閉。
 5. 新版背包與工坊使用原gearIconSrc契約提供的裝備圖，補回刺客與星征裝備；原art ID與裝備數值不改。82刺客設計與原圖路徑均核對。
-6. 明確固定檔案換行，避免Windows/Linux Git checkout改變素材與別名的SHA。
+6. 新版營地保留Game Producer／ミカサ署名；洗屬性原動畫標題改讀本次提交結果，顯示品質前後變化。
+7. 明確固定檔案換行，避免Windows/Linux Git checkout改變素材與別名的SHA。
 
 已完成的實證
 - 基底131be4：Worker4138、BOT205，共4343全過。這是基底gate，不是本次新提交結果。
@@ -27,6 +28,8 @@
 正式資料與發布順序
 正式資料本次僅SELECT；現有72表，最後登記0034，新0035..0045共33新表尚未執行。0026..0028的舊Fate物件實際存在但ledger未登記，不可直接apply全pending list。
 先確認正式版本／備援還原點、舊Fate定義、排程與必要維護窗口；用已演練的增補路線升級，再驗345個新／變更schema物件。不得重建或重置玩家表，不可覆寫遠端Secrets／DB。
+首輪新候選ce6ded5完整Worker4150中兩項舊入口靜態檢查失敗，前後source hash相同；原結果保留於candidate-gate。修補將舊版專用檢查對準仍保留的classic入口，並驗證新版營地署名；未跳過測試或放寬規則。修補後需另跑精確新HEAD的完整gate。
+
 本機既有D1讀權限可用，但Workers發布API拒絕存取；補授權請求已通知使用者，先前一次OAuth等待已逾時。需確認真正新授權後繼續，不因D1可讀就假設可部署。
 人物契約與其餘驗收通過後，依AGENTS：PR、必要Worker and BOT tests、合入main；從乾淨且等於origin/main的checkout執行根deploy腳本。只有線上驗證和deployment-records收據push都成功才能回報正式/GitHub同步。未知結果先唯讀check，禁止盲目重發。
 

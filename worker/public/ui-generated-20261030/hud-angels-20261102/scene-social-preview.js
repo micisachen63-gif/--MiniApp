@@ -234,7 +234,9 @@
    tab.onclick=choose;tab.onkeydown=event=>{const index=tabs.findIndex(t=>t[0]===id),next=event.key==='ArrowRight'?(index+1)%tabs.length:event.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:event.key==='Home'?0:event.key==='End'?tabs.length-1:null;if(next===null)return;event.preventDefault();body.querySelector('[data-hub-tab="'+tabs[next][0]+'"]')?.click();};tablist.append(tab);
   }
   for(const [target,title,description,params]of entries.filter(e=>current[2].includes(e[0]))){const button=document.createElement('button');button.type='button';button.className='scene-hub-tile';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small'),icon=document.createElement('img');strong.textContent=title;small.textContent=description;icon.className='scene-hub-icon';icon.src=imageFor(target);icon.alt='';icon.loading='lazy';icon.decoding='async';icon.draggable=false;button.append(strong,small,icon);button.onclick=()=>host.navigate(target,params);grid.append(button);}
-  body.append(tablist,context,grid);return {dispose(){}};
+  body.append(tablist,context,grid);
+  if(route==='camp'){const credit=document.createElement('footer');credit.className='scene-producer-credit';credit.innerHTML='<span>Game Producer</span><span aria-hidden="true">·</span><strong>ミカサ</strong>';body.append(credit);}
+  return {dispose(){}};
  }
  async function mountUnified(entry,body,api){
   if(entry.route==='characters'){const module=await loadSceneModule('scene-character-admin','RpgSceneCharacterAdmin');if(api.current())return module.mount(body,unifiedHost(api,entry));return;}
