@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "9f58c5fa8208c0915aadabd96c5d2539ece05691",
+  "sourceCommit": "ae0e4145569a70ea6bc3b2926310ce5fa52a6651",
   "service": "elf-rpg-api",
-  "productionVersion": "fdd4075f-9c17-4e48-a474-41af11c6cae5",
+  "productionVersion": "5381eab5-51f9-4eb0-922b-8728093705ae",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-10T08:48:27.398Z",
+  "verifiedAt": "2026-11-10T09:30:28.147Z",
   "runtimeSHA256": {
-    "index.js": "82178ca26531085356e67f7c574eaba9928906caa2cfc969b3bf2a7c19cfd597"
+    "index.js": "444fa7628eacd6292be3a9e15ee2b188e85537bdf1d580780bdb55627f286c64"
   },
   "source": {
-    "fileCount": 14577,
-    "sha256": "9e8c4c4293e4e4ba53f08e1628d67e4de96929969329bae334999fa409d84ce8",
+    "fileCount": 14578,
+    "sha256": "2b7b26af98712f7b08b8c5828ff556c1fd7992084a4d1663dcc99ee5f4f4d5ac",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2960,6 +2960,10 @@
       {
         "file": "worker/migrations/0045_season_stream_checkpoints.sql",
         "sha256": "78e7babcf239a616a3d73ae18c516d96495c8fe158af3565991b5630b1433cd9"
+      },
+      {
+        "file": "worker/migrations/0046_atlas_allow_character_switch.sql",
+        "sha256": "8e735f51ae2c6c2ba07b8abd25aec06131b1b777beda79bbf351fe7baf3ebb25"
       },
       {
         "file": "worker/package.json",
@@ -43003,7 +43007,7 @@
       },
       {
         "file": "worker/public/scene-character-admin.js",
-        "sha256": "9cb8b114332ca2d9b7a3e6feaa3240598bbe5a0c4f23c5e22e3d7915534905a2"
+        "sha256": "9b3f87dab767d411f93cf0b87443cb132c6e7a76274a8bd3e5de28657bd36cd3"
       },
       {
         "file": "worker/public/scene-chat-ui.css",
@@ -43147,7 +43151,7 @@
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "b2596b33dcc420017ac542db160e9735d1e89828e29907b8d4ee09dfd4aab406"
+        "sha256": "fae2278d2cd6c20e641666b85ce624412e7e7f2c87e42b8a940f9823896b3282"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -56047,7 +56051,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-character-admin.js",
-        "sha256": "9cb8b114332ca2d9b7a3e6feaa3240598bbe5a0c4f23c5e22e3d7915534905a2"
+        "sha256": "9b3f87dab767d411f93cf0b87443cb132c6e7a76274a8bd3e5de28657bd36cd3"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-chat-ui.css",
@@ -58031,7 +58035,7 @@
       },
       {
         "file": "worker/src/services/atlas.js",
-        "sha256": "00b2a98ff0cd557f7ee9a90bed8f45ffbb16f2161c34b6e1f82e17004a754cab"
+        "sha256": "e675bb6f08f7801a9049943208151f984da6aa669df9b2251793a66867146468"
       },
       {
         "file": "worker/src/services/auto-enhance.js",
@@ -58325,7 +58329,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 255,
+    "verifiedCount": 232,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -58557,37 +58561,14 @@
       "worker/public/thief-fx.js",
       "worker/public/thief-gear-art.js",
       "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A122_m-death-right-arms-v2-private-644fe43b3fcac6f6.png",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/entry-gate.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-chat-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-direct-trade-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-exchange-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-inventory-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-library-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.css",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-supply-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-workshop-ui.js",
-      "worker/public/ui-refined.css",
-      "worker/public/ui/button-materials/buttons-3d-20261110/pill-normal.png",
-      "worker/public/ui/button-materials/buttons-3d-20261110/pill-normal.webp",
-      "worker/public/ui/button-materials/buttons-3d-20261110/pill-selected.png",
-      "worker/public/ui/button-materials/buttons-3d-20261110/pill-selected.webp",
-      "worker/public/ui/button-materials/buttons-3d-20261110/tab-normal.png",
-      "worker/public/ui/button-materials/buttons-3d-20261110/tab-normal.webp",
-      "worker/public/ui/button-materials/buttons-3d-20261110/tab-selected.png",
-      "worker/public/ui/button-materials/buttons-3d-20261110/tab-selected.webp"
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-character-admin.js",
+      "worker/public/ui-refined.css"
     ]
   },
   "protectedState": {
     "versions": [
       {
-        "version_id": "fdd4075f-9c17-4e48-a474-41af11c6cae5",
+        "version_id": "5381eab5-51f9-4eb0-922b-8728093705ae",
         "percentage": 100
       }
     ],
