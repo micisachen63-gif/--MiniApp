@@ -75,6 +75,7 @@ export function bindLiveScene(source){
 }
 export function bindUi(source){
  let s=source;
+ if(s.includes('function tip(el,o){')&&!s.includes('function tip(el,o){if(window.__RpgScenePreviewConfig?.live===true)'))s=once(s,'function tip(el,o){','function tip(el,o){if(window.__RpgScenePreviewConfig?.live===true){hideTip();return;}');
  const old='for(var k=0;k<4;k++)pushChat();setInterval(pushChat,7000);';
  if(!s.includes('if(!window.RPG_LIVE_SOCIAL)'))s=once(s,old,`if(!window.RPG_LIVE_SOCIAL){${old}}`);
  if(!s.includes('/* live-preview-ui-guard */')){

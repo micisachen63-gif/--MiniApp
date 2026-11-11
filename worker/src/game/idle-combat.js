@@ -56,6 +56,8 @@ export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillNam
     round.eliteKills=1;
   }
   state.target=target;round.after=record?copy(state.enemies):null;
-  if(round.events.length>60){round.events=[];round.summarized=true;delete round.vfxEvents;}
+  // The hit log may be summarized, but its one explicit cast remains a bounded
+  // committed receipt. High kill counts must not erase the skill presentation.
+  if(round.events.length>60){round.events=[];round.summarized=true;}
   state.round=record?round:null;return round;
 }

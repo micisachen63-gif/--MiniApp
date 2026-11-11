@@ -16,6 +16,7 @@
       if(!!value?.run?.map?.progression!==!!snapshot?.run?.map?.progression){nextPollAt=0;nextAdvanceAt=0;}
       snapshot = value;
       scheduleActive();
+      scheduleIdle();
       for (const listener of listeners) { try { listener(value); } catch (error) { options.onListenerError?.(error); } }
       options.onSnapshot?.(value);
     }
@@ -190,17 +191,46 @@
         if (!disposed) await refresh({ force: true }).catch(() => {});
       }
     }
-    // Owner decisions (2026-11-10): no timed status polling, except while an Atlas
+    // Owner decisions (2026-11-10): no general timed status polling, except while an Atlas
     // run is ACTIVE and the page is visible, so the battle animation and progress
     // keep moving. Committed skill VFX older than 5 s are dropped by the actor
     // bridge (skill-vfx-actor-bridge.mjs maxAgeMs), so five-cycle runs sync every
     // 3 s (every event still lands inside that window); legacy runs every 10 s.
     // The timer stops as soon as the run ends or the page is hidden; becoming
     // visible again with a known active run resumes it. Otherwise reads follow a
-    // player action or the manual 同步 control (Atlas also advances server-side
+    // player action or the manual 同步 control. The ordinary-idle combat receipt
+    // fix (2026-11-11) below uses one existing settlement per visible minute,
+    // never background/away status polling (Atlas also advances server-side
     // every minute). options.autoSync === true restores the former cadence.
     const ACTIVE_PROGRESSION_MS = 3000, ACTIVE_LEGACY_MS = 10000;
-    let started = false, activeTimer = null;
+    let started = false, activeTimer = null, idleTimer = null;
+    // Ordinary idle resolves in whole minutes. One existing, scoped `me` action
+    // per visible combat minute obtains a committed receipt; no frame polling or
+    // client-side reward/cooldown simulation. Away characters never use it.
+    function idleActive(value) {
+      return !!value?.characterId && !value.run?.active && !value.live?.activeRunId
+        && !value.live?.partyId && ['fighting', 'no_mp'].includes(value.live?.idleState);
+    }
+    function stopIdle() {
+      if (idleTimer) (options.clearTimeout || globalThis.clearTimeout)(idleTimer);
+      idleTimer = null;
+    }
+    function scheduleIdle() {
+      if (!started || disposed || options.autoSync === true) return;
+      if (!idleActive(snapshot) || options.isHidden?.()) { stopIdle(); return; }
+      if (idleTimer) return;
+      idleTimer = (options.setTimeout || globalThis.setTimeout)(() => {
+        idleTimer = null;
+        if (disposed || selecting || options.isHidden?.() || !idleActive(snapshot)) return;
+        if (writes.size || flight || advanceFlight) { scheduleIdle(); return; }
+        const generation = epoch;
+        void request('me', { summary: true }).catch(error => {
+          if (generation === epoch && !['context_changed', 'stale_response'].includes(error.code)) {
+            lastError = error.message; options.onError?.(error);
+          }
+        }).finally(() => { if (generation === epoch) scheduleIdle(); });
+      }, 60000);
+    }
     function activeCadence(value) { return value?.run?.map?.progression ? ACTIVE_PROGRESSION_MS : ACTIVE_LEGACY_MS; }
     function runActive(value) {
       const run = value?.run;
@@ -224,8 +254,9 @@
     // visible resumes it (one immediate sync) only when the last snapshot shows an active run.
     function visibilityChanged() {
       if (!started || disposed || options.autoSync === true) return;
-      if (options.isHidden?.()) { stopActive(); return; }
+      if (options.isHidden?.()) { stopActive(); stopIdle(); return; }
       if (runActive(snapshot) && !activeTimer) void sync().catch(() => {}).finally(() => scheduleActive());
+      scheduleIdle();
     }
     function start() {
       if (started || disposed) return;
@@ -237,7 +268,7 @@
     function dispose() {
       if (disposed) return; disposed = true;
       if (timer) (options.clearInterval || globalThis.clearInterval)(timer);
-      timer = null; stopActive(); epoch++;
+      timer = null; stopActive(); stopIdle(); epoch++;
       for (const controller of controllers) controller.abort();
       controllers.clear(); writes.clear(); flight = null; advanceFlight = null; emit(null); listeners.clear(); traceListeners.clear();
     }
