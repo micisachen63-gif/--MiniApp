@@ -963,6 +963,48 @@ test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atla
 });
 
 function activeTimers(h) { return [...h.time.deadlines.entries()].filter(([, d]) => d.ms === 3000 || d.ms === 10000); }
+
+test('visible ordinary combat settles once per minute through the existing scoped action', async t => {
+  let hidden = false;
+  const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
+  const idle = scene({ runId: null }); idle.live.idleState = 'fighting';
+  h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
+  let timers = [...h.time.deadlines.entries()];
+  assert.equal(timers.length, 1); assert.equal(timers[0][1].ms, 60000);
+  const [id, timer] = timers[0]; h.time.deadlines.delete(id); h.time.advance(60000); timer.fn();
+  assert.equal(h.net.calls[1].action, 'me'); assert.equal(h.net.calls[1].body.selectedCharacterId, 'a');
+  assert.equal(h.net.calls[1].body.summary, true);
+  h.net.calls[1].reply({ ok: true }); await drain();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  const settled = plain(idle); settled.live.revision = 2; settled.serverNow += 60000;
+  h.net.calls[2].reply({ ok: true, scene: settled }); await drain(); await drain();
+  assert.equal([...h.time.deadlines.values()].filter(d => d.ms === 60000).length, 1);
+  hidden = true; h.client.visibilityChanged(); assert.equal(h.time.deadlines.size, 0);
+  const before = h.net.calls.length;
+  hidden = false; h.client.visibilityChanged(); assert.equal(h.net.calls.length, before, 'no settlement on tab return');
+  assert.equal([...h.time.deadlines.values()][0].ms, 60000);
+  h.client.setContext({ characterId: 'b' }); assert.equal(h.time.deadlines.size, 0, 'old-character work is cancelled');
+});
+
+test('away, gate, town and unstarted characters never start the idle combat timer', async t => {
+  for (const edit of [s => s.live.partyId = 'ring', s => s.live.activeRunId = 'atlas',
+    s => s.live.idleState = 'gate', s => s.live.idleState = 'town_no_red', s => s.live.idleState = undefined]) {
+    const h = harness(); t.after(() => h.client.dispose());
+    const idle = scene({ runId: null }); idle.live.idleState = 'fighting'; edit(idle);
+    h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
+    assert.equal(h.time.deadlines.size, 0); assert.equal(h.net.calls.length, 1);
+  }
+});
+
+test('an unknown idle settlement result is not retried inside the same minute', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  const idle = scene({ runId: null }); idle.live.idleState = 'no_mp';
+  h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
+  const [id, timer] = [...h.time.deadlines.entries()][0]; h.time.deadlines.delete(id); timer.fn();
+  h.net.calls[1].fail(); await drain(); await drain();
+  assert.equal(h.net.calls.length, 2); assert.equal(h.errors.length, 1);
+  assert.equal([...h.time.deadlines.values()][0].ms, 60000);
+});
 function progressionScene(extra = {}) { const value = scene(extra); if (value.run) value.run.map = { id: 'cycle_elite_01', progression: { mode: 'elite' } }; return value; }
 test('an ACTIVE five-cycle Atlas run syncs every 3 s while visible and stops when the run ends', async t => {
   const h = harness(); t.after(() => h.client.dispose());

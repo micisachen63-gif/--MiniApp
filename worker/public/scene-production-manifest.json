@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13626,
+  "publicFileCount": 13627,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -30964,8 +30964,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-      "bytes": 19109,
-      "sha256": "012219c405b948df76e3402e3b4b55fdc44b89ae38afa30f4ba41e7bed2ccaca",
+      "bytes": 20833,
+      "sha256": "e68a2b4d836bd09ce1ec31e52381b7e62716f18a1dcd93478d07c809a4bffb91",
       "kind": "alias",
       "source": "scene-live-session.js"
     },
@@ -30978,8 +30978,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "bytes": 91399,
-      "sha256": "4e7306d371a8b9b995bb20b0160cad9662d6df15ee2d01c0dc9659aa81218340",
+      "bytes": 98227,
+      "sha256": "dfa4e5f299d4d29f0aeaa17b20c1a779ba02c1e3d10dd6c5cf3532c9d584c4c5",
       "kind": "alias",
       "source": "scene-live-view.js"
     },
@@ -32084,8 +32084,8 @@
     },
     {
       "url": "/ui-generated-20261030/scene-bound-20261102/ui.js",
-      "bytes": 19500,
-      "sha256": "87524a7acf7ae8558403d8717b36bc3914108c8ae23a4a619aa233df80e9cebc",
+      "bytes": 19566,
+      "sha256": "47a6fec8d882da5136f0e5006fb69a03d98b245776ed0d9ed11e8febb1e37a3b",
       "kind": "composed",
       "source": "ui-proto/ui.js"
     },
@@ -33061,6 +33061,13 @@
       "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719",
       "kind": "original",
       "source": "ui-proto/ui.js"
+    },
+    {
+      "url": "/scene-idle-cast.mjs",
+      "bytes": 5928,
+      "sha256": "8958263f174d438378e42b179ba1390782c6e1eabad6516f3e9518c74d55d5c6",
+      "kind": "runtime-module",
+      "source": "scene-idle-cast.mjs"
     }
   ]
 }

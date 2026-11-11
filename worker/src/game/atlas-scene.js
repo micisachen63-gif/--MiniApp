@@ -2,6 +2,7 @@ import { computeStats } from './stats.js';
 import {progressionView} from './endgame.js';
 import { expToNext } from './formulas.js';
 import { idleMapView } from './idle-map.js';
+import { committedIdleRound } from './idle-scene.js';
 import { ATLAS_SUPPLY_RULES_VERSION, ATLAS_POTION_KEYS, atlasSupplyPolicyForCharacter, isVersionedAtlasSupplies } from './atlas-supplies.js';
 
 const CLASSES = new Set(['sword', 'archer', 'mage', 'thief']);
@@ -127,6 +128,7 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
       experience: { current: currentExperience, required: maxLevel ? null : requiredExperience,
         ratio: maxLevel ? 1 : Math.max(0, Math.min(1, currentExperience / requiredExperience)), maxLevel },
       activeRunId, partyId: char.party_id == null ? null : String(char.party_id),
+      idleState: char.idle_state, idleCombat: committedIdleRound(char, character.idleMap.mapId),
       supplies: { hp: availableItems.red_1, mp: availableItems.blue_1, totals: { hp: countSupplies('red'), mp: countSupplies('blue') }, items: availableItems,
         policy: atlasSupplyPolicyForCharacter(char), supplyRulesVersion: ATLAS_SUPPLY_RULES_VERSION },
     },

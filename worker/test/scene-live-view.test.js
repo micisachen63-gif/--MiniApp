@@ -323,14 +323,19 @@ test('idle camp shows the character current cycle map, matching server map names
   assert.doesNotMatch(idleCode, /setInterval|setTimeout|fetch\(|request\(|refresh\(/, 'idle combat is purely cosmetic: frame clock only');
   assert.match(viewSource, /'掛機中 · ' \+ idle\.map\.place/);
 });
-test('idle monsters stand in a stable side band at Atlas scale, clear of the overhead guardian', () => {
-  const start = viewSource.indexOf('function idleSlot('), code = viewSource.slice(start, viewSource.indexOf('function startIdle(', start));
-  assert.ok(start > 0);
-  assert.match(code, /hero\.x \+ side \* dx/, 'monsters flank the hero left/right');
-  assert.match(code, /y: hero\.y \+ height \* \(far \? \.1 : narrow \? \.06 : \.03\)/, 'never above the hero (guardian space)');
-  assert.match(viewSource, /return \{ entity, \.\.\.idleSlot\(entity, entity\.enemy\.slot\) \}/, 'slot is stable through death/respawn');
-  assert.match(viewSource, /let slot = 0; while \(used\.has\(slot\)\) slot\+\+;/);
-  assert.doesNotMatch(code, /setScale/, 'scale stays the shared Atlas minion scale');
+test('idle crowd surrounds the hero with a clear north gap at phone and desktop sizes', () => {
+  const api = viewApi();
+  for (const [w, h, count] of [[320, 640, 6], [390, 844, 8], [1280, 720, 12]]) {
+    assert.equal(api.idleCrowdCount(w), count);
+    const hero = { x: w / 2, y: h / 2 }, points = Array.from({ length: count }, (_, slot) => api.idleCrowdSlot(w, h, hero, slot));
+    assert.equal(new Set(points.map(p => p.x.toFixed(2) + ':' + p.y.toFixed(2))).size, count);
+    assert.ok(points.some(p => p.x < hero.x) && points.some(p => p.x > hero.x));
+    assert.ok(points.some(p => p.y < hero.y) && points.some(p => p.y > hero.y));
+    for (const p of points) {
+      assert.ok(Math.hypot(p.x - hero.x, p.y - hero.y) > h * .10);
+      assert.ok(p.x > 0 && p.x < w && p.y > hero.y - h * .09 && p.y < h);
+    }
+  }
 });
 
 test('idleMapFor prefers the server selected map, including a previous-round pin', () => {

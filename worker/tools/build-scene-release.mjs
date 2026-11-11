@@ -58,6 +58,7 @@ for(const dir of ['ui-proto','ui-generated-20261030/hud-v2','ui-generated-202610
 for(const name of ['preview.css','hud-v2.css','orb-frame-dark-v1.png','function-icons-sheet-dark-v1.png','dark-ui.css'])await copy('ui-generated-20261030/'+name);
 
 const social='/ui-generated-20261030/hud-angels-20261102/';
+await copy('scene-idle-cast.mjs','/scene-idle-cast.mjs',publicRoot,'runtime-module');
 // These are identical aliases of the committed UI modules, not separate clients.
 for(const e of await fs.readdir(publicRoot,{withFileTypes:true}))if(e.isFile()&&/\.(?:js|css)$/.test(e.name))await copy(e.name,social+e.name,publicRoot,'alias');
 for(const name of ['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png'])await copy('art/hud-angels-20261102/'+name,social+name,publicRoot,'alias');

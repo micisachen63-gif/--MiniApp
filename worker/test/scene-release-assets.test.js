@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { RELEASE_ASSET_FOLDERS, collectReleaseAssets } from '../tools/scene-release-assets.mjs';
 
-const publicRoot = new URL('../public', import.meta.url).pathname;
+const publicRoot = fileURLToPath(new URL('../public', import.meta.url));
 const manifest = JSON.parse(fs.readFileSync(new URL('../public/scene-production-manifest.json', import.meta.url), 'utf8'));
 const builder = fs.readFileSync(new URL('../tools/build-scene-release.mjs', import.meta.url), 'utf8');
 

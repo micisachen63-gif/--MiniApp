@@ -910,3 +910,5 @@ Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件�
 2026-11-09 浮窗頂欄微調：返回／關閉改為細金邊圓形SVG圖示，去除厚重方形材質；保留原生button、aria-label、原點擊事件與44px觸控區。只改scene-window-manager.js與scene-social-preview.css；本批11項窗口測試及四尺寸返回／關閉檢查通過，證據D:/StarJournal/handoff/non-character/header-controls-20261109/。本次未重跑全套4340，不以父提交結果冒充此HEAD完整gate；未部署／未push。
 
 2026-11-09 方格背包與玩家手冊：背包改為手機2欄／桌面3欄正方形格，保留原圖／勾選／搜尋／詳情／出售保護，格內直接顯示+N、攻防與元素；篩選收合且次級捷徑縮短。天使放大並用原divine-mist-atlas八格雲霧及原keyframes恢復「主角—雲—天使」，以角色不透明邊界避開頭臉；四職原模型與HUD矩形已實測無重疊。收藏需求卡片移除藍色大理石材質，改深色展示格。21章完整玩家說明含舊頁籤對照、功能路徑、操作與成本提醒：docs/PLAYER_UPDATE_GUIDE_20261109.txt及public/player-guide-20261109.html。預覽10203／API10202與舊預覽隔離；本批相關92項測試通過，不冒用父HEAD4340完整gate；未部署／未push，證據D:/StarJournal/handoff/non-character/inventory-guide-guardian-20261109/。
+
+2026-11-11 正式一般掛機修正：手機6/8、桌面12隻圍攻；以已提交的最後一分鐘施法收據接原角色動作與技能特效，切角／換圖／背景防重播。僅可見普通戰鬥每分鐘走既有 me 結算，遠征與背景停止，Atlas節奏不變；收益與戰鬥規則不改。移除正式介面舊示範技能提示並保全打包清單；見 docs/IDLE_HORDE_CAST_FIX_20261111.txt。發布結果以 deployment-records 最新收據為準。
