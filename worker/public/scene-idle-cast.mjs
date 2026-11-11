@@ -71,7 +71,7 @@ export function createIdleCastController(options) {
             : origin ? options.project({ x: hero.x + origin.x * options.bodyHeight(), y: hero.y + origin.y * options.bodyHeight() }) : geometry.from;
           if (from && Number.isFinite(from.x) && Number.isFinite(from.y)) {
             for (const command of plan.commands) void Promise.resolve(item.loaded.player.play({ ...command,
-              ...(item.raw.presentationMode === 'full' ? { from, presentationMode: impact ? 'impact' : 'full',
+              ...(command.presentationMode === 'full' ? { from, presentationMode: impact ? 'impact' : 'full',
                 startProgress: impact ? 0 : item.loaded.player.getRecipe(item.raw.skillId)?.phases?.find(p => p.id === 'release')?.from ?? command.startProgress } : {}),
               canStart: () => current(item) && item.generation === animator.generation }))
               .catch(error => { if (current(item)) reject(error.code || 'idle-vfx-unavailable'); });

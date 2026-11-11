@@ -56,7 +56,8 @@ function harness(extra = {}) {
   const player = { prepare: async () => {}, getRecipe: () => ({ phases: [{ id: 'release', from: .24 }] }),
     play(command) { calls.push(command); return Promise.resolve(true); } };
   const geometry = () => ({ actorId: 'A', from: { x: 100, y: 150 }, foot: { x: 100, y: 200 }, bodyHeight: 100,
-    targetWorld: { x: 100, y: 250 }, targets: [{ id: raw().targetIds[0], point: { x: 100, y: 250 } }] });
+    targetWorld: { x: 100, y: 250 }, targets: [{ id: raw().targetIds[0], point: { x: 100, y: 250 } },
+      { id: 'A', point: { x: 100, y: 150 }, bodyHeight: 100 }] });
   const controller = createIdleCastController({ animator, hero: { x: 100, y: 200 }, hidden: () => hidden,
     document: { addEventListener: (n, f) => listeners.set(n, f), removeEventListener: n => listeners.delete(n) },
     getScope: () => scope, load: async () => ({ player, catalog }), geometry,
@@ -99,6 +100,16 @@ test('all three configured archer specials use their exact catalog IDs and recip
     h.animator.elapsed = 401; h.controller.update();
   }
   assert.equal(h.calls.length, 3); assert.equal(h.controller.stats().accepted, 3);
+});
+test('an offensive cast preserves a separate support effect on the actual recipient', async t => {
+  const h = harness(); t.after(() => h.controller.destroy());
+  const receipt = round(); receipt.vfxEvents[0].recipientEffects = [{ kind: 'heal', targetIds: ['A'] }];
+  h.controller.enqueue(receipt, 'own-map', 61000); h.controller.update(); await drain();
+  h.animator.elapsed = 100; h.controller.update();
+  assert.equal(h.calls.length, 2);
+  assert.equal(h.calls[0].presentationMode, 'full'); assert.deepEqual(h.calls[0].from, { x: 120, y: 140 });
+  assert.equal(h.calls[1].presentationMode, 'support'); assert.equal(h.calls[1].recipientId, 'A');
+  assert.deepEqual(h.calls[1].from, { x: 100, y: 150 }); assert.deepEqual(h.calls[1].to, { x: 100, y: 150 });
 });
 test('hidden/context changes cancel a released command and a cast still preparing', async t => {
   const h = harness(); t.after(() => h.controller.destroy());
