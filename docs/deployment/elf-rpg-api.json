@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "6762e6278abdb37094a69f1aaa9121653c1f0737",
+  "sourceCommit": "50e3e72c24169a19f486b815b571c37d4ec0364c",
   "service": "elf-rpg-api",
-  "productionVersion": "29273f1b-066f-4107-9fce-d9c71d22eba1",
+  "productionVersion": "5f50ddd8-202f-4450-bc20-e6cc526ab407",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-12T03:51:54.045Z",
+  "verifiedAt": "2026-11-12T04:16:53.722Z",
   "runtimeSHA256": {
     "index.js": "7d6970ca518f2e23be8fe85b18028e10b2a9bbd23d02bb3697104c4ddecc7bcb"
   },
   "source": {
     "fileCount": 14706,
-    "sha256": "7e231370ceacb3b1453094bdf21478fccb07ef8c3abe6d77a70624621470ff3e",
+    "sha256": "245de2bce73d2748a453977a30bb49eabc1d2d000f8ee15158dbef8d40a0a6f9",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -43607,7 +43607,7 @@
       },
       {
         "file": "worker/public/scene-live-session.js",
-        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
+        "sha256": "1385023db4752e3459521a4bbd05947b3b95172b74025f393f7ceff3cd4720d2"
       },
       {
         "file": "worker/public/scene-live-view.css",
@@ -43643,7 +43643,7 @@
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "91dae1fa90e9e419ed1a2ce57f3089bb2b165f8662ca977e96ba92d4d60b0561"
+        "sha256": "d57962e7e6711cf67382c386a96ebf8f57ec47ae787cc74bcb56b30097e9cc72"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -56639,7 +56639,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
+        "sha256": "1385023db4752e3459521a4bbd05947b3b95172b74025f393f7ceff3cd4720d2"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
@@ -58841,7 +58841,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 220,
+    "verifiedCount": 209,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -59050,25 +59050,14 @@
       "worker/public/thief-fx.js",
       "worker/public/thief-gear-art.js",
       "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A121_f-directional-idle-b34d0f69700a9085.png",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-boss-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-fate-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-guardian-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-inventory-ui.js",
       "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-party-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-star-ring-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-tower-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-window-manager.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-workshop-ui.js",
       "worker/public/ui-refined.css"
     ]
   },
   "protectedState": {
     "versions": [
       {
-        "version_id": "29273f1b-066f-4107-9fce-d9c71d22eba1",
+        "version_id": "5f50ddd8-202f-4450-bc20-e6cc526ab407",
         "percentage": 100
       }
     ],
