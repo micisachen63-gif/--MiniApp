@@ -760,3 +760,29 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
 .scene-guide-build-card small,.scene-guide-build-stats{display:block;color:#c5d0de;font-size:12px;line-height:1.7}
 .scene-guide-build-card p{margin:4px 0 0;font-size:13px;color:#dbe3ec}
 button[data-guide-recommend]{margin:4px 0 10px}
+/* 冒險 banner rows: one full-width looping banner per feature, title on the dark left side. */
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-grid[data-banners]{grid-template-columns:1fr!important;gap:10px}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-grid[data-banners] button.scene-hub-tile.scene-hub-banner{
+  position:relative;display:flex!important;flex-direction:column;justify-content:center;align-items:flex-start;gap:4px;
+  width:100%;aspect-ratio:3/1;min-height:96px;max-height:260px;padding:0 42% 0 18px!important;overflow:hidden;isolation:isolate;
+  border:1px solid #bda26688!important;border-radius:10px!important;border-image:none!important;clip-path:none!important;
+  background:#0a1424 linear-gradient(120deg,#16233a,#0a1424)!important;box-shadow:0 6px 14px #0007,inset 0 0 0 1px #00000055!important;text-align:left}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner .scene-hub-media{position:absolute;inset:0;z-index:-2;display:block;pointer-events:none}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner .scene-hub-media :is(video,img){display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,#050b16e6 0%,#050b16b3 30%,#050b1633 58%,transparent 75%)}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner strong{grid-column:auto;grid-row:auto;font-size:19px;line-height:1.3;color:#ffe3a9;letter-spacing:.06em;text-shadow:0 2px 6px #000,0 0 2px #000}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner small{grid-column:auto;grid-row:auto;margin:0;font-size:12px;line-height:1.5;color:#e7ddc8;text-shadow:0 1px 4px #000,0 0 2px #000}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner:hover,#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner:focus-visible{border-color:#f0d27a!important;box-shadow:0 0 0 1px #f0d27a88,0 6px 16px #000a!important}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner:active{transform:translateY(1px)}
+@media(max-width:600px){
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-grid[data-banners] button.scene-hub-tile.scene-hub-banner{min-height:92px;padding:0 34% 0 12px!important}
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-banner strong{font-size:17px}
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-banner small{font-size:11px}
+}
+@media(max-width:360px){
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-grid[data-banners] button.scene-hub-tile.scene-hub-banner{aspect-ratio:auto;min-height:96px;padding:0 30% 0 10px!important}
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-banner strong{font-size:16px}
+  #ui.scene-unified-root .scene-unified-dialog .scene-hub-banner .scene-hub-media :is(video,img){object-position:70% center}
+}
+@media(prefers-reduced-motion:reduce){#ui.scene-unified-root .scene-unified-dialog .scene-hub-banner:active{transform:none}}
