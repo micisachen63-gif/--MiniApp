@@ -144,11 +144,11 @@ function embedHarness({ embed = 'battle', origin = 'https://elf.example', hud = 
   const session = { ctx: { characterId: 'a', realmId: 'permanent' }, set: [], syncs: 0, visibility: 0, visibilityChanged() { this.visibility++; }, getContext() { return this.ctx; }, setContext(n) { this.set.push(n); this.ctx = { ...this.ctx, ...n }; }, sync() { this.syncs++; return Promise.resolve(); } };
   const window = { __RpgSceneEmbed: embed, Phaser: { Game }, RpgSceneSession: session, addEventListener: (t, fn) => { listeners[t] = fn; } };
   const timers = fakeTimers();
-  const docListeners = {}, classes = new Set(), nodes = { chatLine: { textContent: '' }, ui: { classList: { add: c => classes.add('ui:' + c) } } }, q = { '#chat .ch': { textContent: '世界' }, '#quest .qn': { textContent: '◆ 泰坦的試煉' }, '#quest .qc': { textContent: '0/40' } };
-  const document = { createElement: () => ({}), head: { appendChild: n => head.push(n) }, readyState: 'complete', documentElement: { classList: { add: c => classes.add(c) } },
+  const docListeners = {}, classes = new Set(), props = {}, nodes = { chatLine: { textContent: '' }, ui: { classList: { add: c => classes.add('ui:' + c) } } }, q = { '#chat .ch': { textContent: '世界' }, '#quest .qn': { textContent: '◆ 泰坦的試煉' }, '#quest .qc': { textContent: '0/40' } };
+  const document = { createElement: () => ({}), head: { appendChild: n => head.push(n) }, readyState: 'complete', documentElement: { classList: { add: c => classes.add(c) }, style: { setProperty: (k, v) => { props[k] = v; } } },
     addEventListener: (t, fn, capture) => { (docListeners[t] ||= []).push({ fn, capture }); }, getElementById: id => nodes[id] || null, querySelector: sel => q[sel] || null };
   vm.runInNewContext(embedJs, { window, parent, location: { origin, search: hud ? '?embed=battle&hud=' + hud : '?embed=battle' }, document, URLSearchParams, ...timers });
-  return { window, parent, posted, listeners, head, loop, session, timers, Game, docListeners, classes, nodes, q };
+  return { window, parent, posted, listeners, head, loop, session, timers, Game, docListeners, classes, nodes, q, props };
 }
 
 test('embed=battle hides every scene UI layer except the target bar, registers no timers, and pauses Phaser', () => {
@@ -211,7 +211,7 @@ test('P7 home scene: one full-HUD scene frame, shown while a character is in pla
   h.listeners.message({ source: frame.contentWindow, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'ready', detail: { characterId: 'hero', realmId: 'permanent' } } });
   h.flush();
   assert.equal(h.classes.has('cn-scene-loading'), false); assert.equal(h.posted.filter(p => p.data.type === 'refresh').length, 0);
-  assert.equal(h.posted.at(-1).data.type, 'resume');
+  assert.ok(h.posted.some(p => p.data.type === 'resume'));
   // Classic renders release/attach the slot: the scene keeps running.
   h.api.release(); h.api.attach(h.el('div'), { characterId: 'hero' }); h.flush();
   assert.equal(h.posted.filter(p => p.data.type === 'pause').length, 0);
@@ -517,8 +517,9 @@ test('P7 embed hud=full: the whole scene HUD, every tap forwarded to the classic
   assert.equal(h.nodes.chatLine.textContent, '點此與旅人聊天'); assert.equal(h.q['#quest .qn'].textContent, '◆ 星圖任務・派遣');
   const css = h.head[0].textContent;
   assert.match(css, /html\.scene-embed-full #panelHost,html\.scene-embed-full #tip,html\.scene-embed-full #topR button,html\.scene-embed-full #scene-live-status,html\.scene-embed-full \.scene-live-status-toggle\{display:none!important\}/, 'no prototype panels / scene status panel');
-  assert.match(css, /#ui\.scene-unified-root #fn\{display:grid!important\}/, '背包/裝備/補給/技能/地圖/設定 bar shown');
-  assert.match(css, /html\.scene-embed-full #bottom,html\.scene-embed-full #fn\{pointer-events:auto;cursor:pointer\}/, 'HUD is tappable');
+  assert.match(css, /html\.scene-embed-full #fn\{display:none!important\}/, 'P8: the classic bottom bar of the parent replaces the scene function bar');
+  assert.match(css, /html\.scene-embed-full #ui\.scene-unified-root #bottom\{bottom:calc\(var\(--cn-bar,84px\) - 8px\)!important\}/, 'orbs/skills sit right above the classic bar');
+  assert.match(css, /html\.scene-embed-full #bottom\{pointer-events:auto;cursor:pointer\}/, 'HUD is tappable');
   // Capture-phase routing: tapped HUD element -> route posted to the parent; ui.js handlers never see it.
   const clicks = h.docListeners.click.filter(l => l.capture), downs = h.docListeners.pointerdown.filter(l => l.capture);
   assert.equal(clicks.length, 1); assert.equal(downs.length, 1);
@@ -529,14 +530,18 @@ test('P7 embed hud=full: the whole scene HUD, every tap forwarded to the classic
     clicks[0].fn({ type: 'click', target, stopPropagation() { stopped++; }, preventDefault() {} });
     return stopped;
   };
-  for (const [p] of [['inv'], ['eq'], ['sup'], ['sk'], ['map'], ['set']]) assert.equal(tap('#fn .fb', { dataset: { p } }), 2);
-  for (const sel of ['#topL', '#topR #zone', '#topR #mini', '#quest', '#chat']) tap(sel);
+  for (const sel of ['#topL', '#topR #zone', '#topR #mini', '#quest', '#chat']) assert.equal(tap(sel), 2);
   const before = h.posted.length; h.docListeners.click[0].fn({ type: 'click', target: { closest: () => null }, stopPropagation() { throw new Error('battlefield taps pass through'); }, preventDefault() {} });
   assert.equal(h.posted.length, before);
   // Live HUD potions/skills and 選擇角色 go through the scene navigation API -> parent.
   h.window.RpgSceneNavigation.navigate('supplies'); h.window.RpgSceneNavigation.navigate('skills'); h.window.RpgSceneNavigation.navigate('characters', {});
   h.docListeners.keydown[0].fn({ key: 'Escape' });
-  assert.deepEqual(plain(h.posted.map(p => p.data.detail.route)), ['inv', 'eq', 'sup', 'sk', 'map', 'set', 'hero', 'map', 'map', 'quest', 'chat', 'supplies', 'skills', 'characters', 'close']);
+  // The parent tells the scene how tall its bottom bar is (only from the parent, same origin).
+  h.listeners.message({ data: { source: 'rpg-classic-next', type: 'layout', detail: { bar: 85 } }, source: {}, origin: 'https://elf.example' });
+  assert.equal(h.props['--cn-bar'], undefined, 'only the parent');
+  h.listeners.message({ data: { source: 'rpg-classic-next', type: 'layout', detail: { bar: 85 } }, source: h.parent, origin: 'https://elf.example' });
+  assert.equal(h.props['--cn-bar'], '85px');
+  assert.deepEqual(plain(h.posted.map(p => p.data.detail.route)), ['hero', 'map', 'map', 'quest', 'chat', 'supplies', 'skills', 'characters', 'close']);
   assert.ok(h.posted.every(p => p.data.source === 'rpg-scene-battle' && p.data.type === 'open' && p.target === 'https://elf.example'));
   // Same tags the HUD code reads.
   for (const id of ['topL', 'pc', 'gold', 'topR', 'zone', 'mini', 'quest', 'chat', 'chatLine', 'bottom', 'bar', 'mid', 'fn', 'panelHost']) assert.match(sceneHtml, new RegExp('id="' + id + '"'), id);
@@ -551,10 +556,10 @@ test('P7 classic-next.html: the current home HUD installers on the scene frame, 
   // preview.js needs its hidden controls; they stay hidden and inert (no 'UI 素材候選・本機測試 / 人物／預覽設定' chip).
   assert.match(next, /<aside class="test-controls" hidden inert style="display:none">/);
   assert.doesNotMatch(next, /preview-controls\.js|characters-v1\/|本機測試|素材候選/);
-  assert.match(next, /classic-next-menu\.js\?v=20261112-next7/);
+  assert.match(next, /classic-next-menu\.js\?v=20261112-next8/);
   const css = read('classic-next.css');
   assert.match(css, /html\.cn-scene-home #demo\.cn-scene\{display:block;position:fixed;inset:0;/);
-  assert.match(css, /html\.cn-scene-home #hud,html\.cn-scene-home #nav,html\.cn-scene-home #app>\.game-credit,html\.cn-scene-home \.lc-battle-shell\{display:none!important\}/, 'no classic tab bar on the home');
+  assert.match(css, /html\.cn-scene-home #hud,html\.cn-scene-home #app>\.game-credit,html\.cn-scene-home \.lc-battle-shell\{display:none!important\}\nhtml\.cn-scene-home #nav\{z-index:650\}/, 'no classic top bar; the classic bottom bar stays over the scene');
   assert.match(css, /html\.cn-scene-home\.cn-window-open #app\{display:block;position:fixed;z-index:600;/, 'classic views open as a floating window');
   assert.match(css, /bottom:calc\(env\(safe-area-inset-bottom\) \+ var\(--cn-bar,64px\)\)/, 'the scene bar stays tappable under a window');
   assert.match(css, /html\.cn-scene-home #sheet\{z-index:1000\}/, 'item sheets (強化/洗鍊) above the window');
@@ -568,8 +573,15 @@ test('P7 every HUD button and menu entry opens a classic feature', () => {
   const special = ['close', 'menu', 'map', 'quest', 'chat', 'recovery', 'talents', 'build', 'progression', 'gearbook', 'atlas', 'fate', 'ledger', 'select', 'guardian'];
   for (const r of special.slice(0, 1)) assert.match(app, new RegExp("route === '" + r + "'"));
   const handled = r => { r = aliases[r] || r; return !!windows[r] || special.includes(r); };
-  // Scene HUD: 背包 裝備 補給 技能 地圖 設定, portrait, zone/minimap, quest, chat; live potions/skills; 選擇角色.
-  for (const r of ['inv', 'eq', 'sup', 'sk', 'map', 'set', 'hero', 'quest', 'chat', 'supplies', 'skills', 'characters']) assert.ok(handled(r), r);
+  // Scene HUD: portrait, zone/minimap, quest, chat; live potions/skills; 選擇角色.
+  for (const r of ['hero', 'map', 'quest', 'chat', 'supplies', 'skills', 'characters', 'close']) assert.ok(handled(r), r);
+  // P8 classic bottom bar (owner t711u): 營地 英雄 市集 神戰 旅團 設定 -> classic tab windows / 設定.
+  const bar = vm.runInNewContext('(' + app.match(/const NEXT_BAR = (\{[^\n]*\});/)[1] + ')');
+  assert.deepEqual(plain(bar), { home: ['營地', 'home'], bag: ['英雄', 'heroes'], shop: ['市集', 'shop'], boss: ['神戰', 'boss'], trade: ['旅團', 'trade'], class: ['設定', 'menu'] });
+  for (const [tab, [, route]] of Object.entries(bar)) if (route !== 'menu') { assert.equal(windows[route].tab, tab, route); assert.ok(!windows[route].panel || windows[route].top, route + ' opens the whole classic tab'); }
+  for (const tab of ['home', 'bag', 'shop', 'boss', 'trade', 'class']) assert.match(next, new RegExp('<button data-tab="' + tab + '"'), 'same classic nav buttons and art');
+  assert.match(app, /const navBar = document\.getElementById\('nav'\); if \(navBar && navBar\.parentElement !== document\.body\) document\.body\.appendChild\(navBar\);/);
+  assert.match(app, /b\.hidden = nextScene\(\); \/\/ 登出 lives in 設定/);
   assert.deepEqual(plain({ inv: windows.inv, eq: windows.eq, sup: windows.sup, sk: windows.sk }), {
     inv: { tab: 'bag', panel: 'items', title: '背包' }, eq: { tab: 'bag', panel: 'wardrobe', title: '裝備' },
     sup: { tab: 'home', panel: 'supply', title: '補給與策略' }, sk: { tab: 'class', panel: 'destiny', title: '職業・技能' } });
@@ -577,7 +589,7 @@ test('P7 every HUD button and menu entry opens a classic feature', () => {
   const window = {}; vm.runInNewContext(read('classic-next-menu.js'), { window });
   const ids = window.RpgClassicNextMenu.ids();
   for (const id of ids) assert.ok(handled(id), id);
-  for (const id of ['home', 'boss', 'shop', 'trade', 'lineage', 'sk', 'talents', 'atlas', 'chat', 'fate', 'ledger', 'recovery', 'guardian', 'inv', 'eq', 'vault', 'collection', 'sup', 'hero', 'select']) assert.ok(ids.includes(id), 'menu has ' + id);
+  assert.deepEqual(plain(ids), ['sk', 'lineage', 'talents', 'select'], 'P8 設定: only what the bar and HUD do not open');
   for (const tab of ['home', 'bag', 'shop', 'boss', 'trade', 'class']) assert.ok(Object.values(windows).some(w => w.tab === tab), 'classic tab ' + tab);
   assert.match(window.RpgClassicNextMenu.html(), /data-next-logout/);
   assert.doesNotMatch(read('classic-next-menu.js'), /setInterval|setTimeout|fetch\(/);

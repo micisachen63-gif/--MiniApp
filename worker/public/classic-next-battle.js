@@ -2,7 +2,7 @@
  * fills the screen — the same frame the current home page uses (iframe#demo, dressed by the
  * existing preview.js / hud-v2 / hud-angels installers: orbs, angel statues, potions and skills).
  * Every HUD tap is forwarded here and opens the CLASSIC feature as a floating window over the
- * scene (app.js owns the windows). No timers here besides the one-shot ready timeout, and no network
+ * scene (app.js owns the windows). The classic bottom bar (營地/英雄/市集/神戰/旅團/設定) sits over the scene. No timers here besides the one-shot ready timeout, and no network
  * calls of its own; the scene keeps its own Atlas-active sync and pauses while covered or hidden.
  * If the scene cannot load, the classic layout (tab bar + RpgBattle in #bslot) comes back. */
 (() => {
@@ -49,7 +49,7 @@
     if (!frame) return;
     root.classList.toggle('cn-scene-home', home);
     root.classList.toggle('cn-scene-loading', home && state !== 'ready');
-    if (home && state === 'ready') measureBar();
+    if (home) measureBar();
     const visible = home && !document.hidden;
     const shouldPause = !visible || covers.size > 0;
     if (paused !== shouldPause) { paused = shouldPause; post(shouldPause ? 'pause' : 'resume'); }
@@ -57,9 +57,16 @@
       sentCharacter = wantedCharacter; sentRealm = wantedRealm; post('refresh', { characterId: wantedCharacter, realmId: wantedRealm });
     }
   }
-  // Classic windows stop above the scene's 背包…設定 bar so it stays tappable (switches windows).
+  // The classic bottom bar (#nav, moved over the scene) stays visible: classic windows stop above it and
+  // the scene lifts its orbs/skill bar above it (layout message, same origin only).
+  let sentBar = 0;
   function measureBar() {
-    try { const doc = frame?.contentDocument, fn = doc?.getElementById('fn'); if (!fn || !fn.getClientRects().length) return; const h = Math.round(doc.defaultView.innerHeight - fn.getBoundingClientRect().top); if (h > 20 && h < 200) root.style.setProperty('--cn-bar', (h + 4) + 'px'); } catch (_) {}
+    const nav = document.getElementById('nav');
+    if (!nav || nav.hidden || !nav.getClientRects().length) return;
+    const h = Math.round(window.innerHeight - nav.getBoundingClientRect().top) + 14; // + the meander trim above the bar
+    if (h < 30 || h > 220) return;
+    root.style.setProperty('--cn-bar', h + 'px');
+    if (state === 'ready' && h !== sentBar) { sentBar = h; post('layout', { bar: h }); }
   }
   function schedule() { if (scheduled) return; scheduled = true; queueMicrotask(apply); }
   // Called from bindHome(): returns false when the classic battle should be used instead.

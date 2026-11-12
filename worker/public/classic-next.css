@@ -80,7 +80,8 @@
 html.cn-scene-home,html.cn-scene-home body{background:#050505;overflow:hidden;overscroll-behavior:none}
 html.cn-scene-home #demo.cn-scene{display:block;position:fixed;inset:0;width:100%;height:100%;border:0;z-index:0;background:#050505}
 html.cn-scene-home #app{display:none}
-html.cn-scene-home #hud,html.cn-scene-home #nav,html.cn-scene-home #app>.game-credit,html.cn-scene-home .lc-battle-shell{display:none!important}
+html.cn-scene-home #hud,html.cn-scene-home #app>.game-credit,html.cn-scene-home .lc-battle-shell{display:none!important}
+html.cn-scene-home #nav{z-index:650}
 html.cn-scene-home.cn-window-open #app{display:block;position:fixed;z-index:600;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));top:calc(env(safe-area-inset-top) + 48px);bottom:calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0!important;padding:0 10px 14px!important;max-width:none!important;min-height:0!important;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f5,#070b10f7)!important;box-shadow:0 0 0 1px #f0d99d22 inset,0 18px 50px #000d}
 html.cn-scene-home.cn-window-open #view{padding-top:6px;padding-bottom:0;min-height:0}
 .cn-winbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;margin:0 -10px 6px;padding:10px 12px;background:linear-gradient(#141e28,#0b1218);border-bottom:1px solid #4b3f2a}
@@ -90,7 +91,7 @@ html.cn-scene-home.cn-window-open #view{padding-top:6px;padding-bottom:0;min-hei
 .cn-menu{position:fixed;inset:0 0 calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));z-index:700}
 .cn-menu[hidden]{display:none}
 .cn-menu-backdrop{position:absolute;inset:0;background:#02050866}
-.cn-menu-card{position:absolute;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));top:calc(env(safe-area-inset-top) + 48px);bottom:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f7,#070b10f9);box-shadow:0 18px 50px #000d;padding:0 10px 12px;outline:none}
+.cn-menu-card{position:absolute;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));bottom:6px;max-height:calc(100% - 54px - env(safe-area-inset-top));overflow-y:auto;overscroll-behavior:contain;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f7,#070b10f9);box-shadow:0 18px 50px #000d;padding:0 10px 12px;outline:none}
 .cn-menu-card .cn-winbar{margin:0 -10px 4px}
 .cn-menu-group h3{margin:10px 2px 6px;font-size:12px;letter-spacing:.2em;color:#c9ad6e}
 .cn-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}

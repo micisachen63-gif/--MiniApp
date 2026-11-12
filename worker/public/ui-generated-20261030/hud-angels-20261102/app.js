@@ -858,19 +858,22 @@
     $('#charSwitch').onclick = openCharacterSelect;
     nav.querySelectorAll('button').forEach((b) => {
       if (b.hasAttribute('data-logout')) {
+        b.hidden = nextScene(); // 登出 lives in 設定 on the scene home
         b.classList.remove('on', 'dot');
         b.onclick = () => { haptic('light'); openCharacterSelect(); };
         return;
       }
-      const currentTab=S.tab==='guardian'?'home':S.tab;
+      const sceneBar = nextScene();
+      const currentTab=sceneBar?(document.getElementById('cn-menu')?.hidden===false?'class':S.nextWin?(S.tab==='guardian'?'bag':S.tab):''):S.tab==='guardian'?'home':S.tab;
       b.classList.toggle('on', b.dataset.tab === currentTab);
-      const titles = { home: '遠征', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承' };
+      const titles = sceneBar ? Object.fromEntries(Object.entries(NEXT_BAR).map(([k, v]) => [k, v[0]])) : { home: '遠征', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承' };
       const label = b.querySelector('small'); if (label && titles[b.dataset.tab]) label.textContent = titles[b.dataset.tab];
       if (b.dataset.tab === currentTab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
       b.classList.toggle('dot', (b.dataset.tab === 'boss' && !!(S.me.boss && S.me.boss.status === 'active')) || (b.dataset.tab === 'class' && advancementReady(S.me)) || (b.dataset.tab === 'home' && !S.me.daily.claimed));
       const bd = S.me.badges || {}; const n = b.dataset.tab === 'trade' ? (bd.requests || 0) + (bd.challenges || 0) + (bd.trades || 0) : 0;
       let cnt = b.querySelector('.nb'); if (n) { if (!cnt) { cnt = document.createElement('b'); cnt.className = 'nb'; b.appendChild(cnt); } cnt.textContent = n > 9 ? '9+' : String(n); } else if (cnt) cnt.remove();
       b.onclick = () => { if (S.tab === b.dataset.tab) return; S.tab = b.dataset.tab;if(S.tab==='trade'&&S.social==='hall'){S.hallClass='all';S.hallPage=1;} haptic('light'); render(); window.scrollTo({ top: 0, behavior: 'instant' }); load(S.tab); };
+      if (sceneBar) { const label = b.querySelector('small'); if (label) label.textContent = titles[b.dataset.tab]; b.setAttribute('aria-label', titles[b.dataset.tab]); b.onclick = () => { haptic('light'); const route = NEXT_BAR[b.dataset.tab][1]; if (route === 'menu' && document.getElementById('cn-menu')?.hidden === false) nextMenu(false); else if (route !== 'menu' && S.nextWin && NEXT_WINDOWS[S.nextWin.route]?.tab === b.dataset.tab && S.nextWin.route === route) nextClose(); else nextOpen(route); }; }
     });
   }
 
@@ -981,15 +984,18 @@
   // ---------- /classic-next P7: the scene (full HUD) is the home; classic features open as floating windows ----------
   // HUD/menu route → classic tab + inner panel (mythic-ui designState). Atlas / entry routes open their own panels.
   const NEXT_WINDOWS = {
-    hero: { tab: 'home', panel: 'chronicle', title: '角色・戰報與能力' }, home: { tab: 'home', panel: 'journey', title: '冒險入口', top: true },
+    hero: { tab: 'home', panel: 'chronicle', title: '角色・戰報與能力' }, home: { tab: 'home', panel: 'journey', title: '營地', top: true },
+    heroes: { tab: 'bag', title: '英雄' },
     sup: { tab: 'home', panel: 'supply', title: '補給與策略' },
     inv: { tab: 'bag', panel: 'items', title: '背包' }, eq: { tab: 'bag', panel: 'wardrobe', title: '裝備' },
     vault: { tab: 'bag', panel: 'vault', title: '神器庫' }, collection: { tab: 'bag', panel: 'collection', title: '圖鑑收集' },
     sk: { tab: 'class', panel: 'destiny', title: '職業・技能' }, lineage: { tab: 'class', panel: 'lineage', title: '完整成長樹' },
-    shop: { tab: 'shop', title: '市集' }, boss: { tab: 'boss', title: '神戰' }, trade: { tab: 'trade', title: '集會' },
+    shop: { tab: 'shop', title: '市集' }, boss: { tab: 'boss', title: '神戰' }, trade: { tab: 'trade', title: '旅團' },
   };
-  const NEXT_ALIASES = { supplies: 'sup', skills: 'sk', bag: 'inv', equipment: 'eq', class: 'lineage', characters: 'select', maps: 'map', quests: 'quest', set: 'menu', party: 'boss', 'star-ring': 'boss' };
-  const NEXT_TAB_TITLES = { home: '冒險', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承', guardian: '守護天使' };
+  const NEXT_ALIASES = { camp: 'home', supplies: 'sup', skills: 'sk', bag: 'inv', equipment: 'eq', class: 'lineage', characters: 'select', maps: 'map', quests: 'quest', set: 'menu', party: 'boss', 'star-ring': 'boss' };
+  const NEXT_TAB_TITLES = { home: '營地', bag: '英雄', shop: '市集', boss: '神戰', trade: '旅團', class: '傳承', guardian: '守護天使' };
+  // The classic bottom bar on the scene home (same buttons/art, owner t711u labels); its last button opens 設定.
+  const NEXT_BAR = { home: ['營地', 'home'], bag: ['英雄', 'heroes'], shop: ['市集', 'shop'], boss: ['神戰', 'boss'], trade: ['旅團', 'trade'], class: ['設定', 'menu'] };
   const nextScene = () => NEXT && window.RpgClassicNextBattle?.active?.() === true;
   function nextOpen(route, params) {
     if (!S.me || S.choosing || S.creating) return;
@@ -1018,15 +1024,15 @@
   function nextClose() {
     if (!S.nextWin) return;
     S.nextWin = null; closeSheet();
-    if (S.tab !== 'home') { S.tab = 'home'; render(); } else nextChrome();
+    if (S.tab !== 'home') { S.tab = 'home'; render(); } else { nextChrome(); renderHud(); }
   }
   // 設定: the full classic menu (every entry the classic home and tab bar had), as a floating window.
   function nextMenu(on) {
     let menu = document.getElementById('cn-menu');
-    if (!on) { if (menu && !menu.hidden) { menu.hidden = true; window.RpgClassicNextBattle?.cover?.('menu', false); } return; }
+    if (!on) { if (menu && !menu.hidden) { menu.hidden = true; window.RpgClassicNextBattle?.cover?.('menu', false); if (S.me && !S.choosing && !S.creating) renderHud(); } return; }
     if (!menu) {
-      menu = document.createElement('div'); menu.id = 'cn-menu'; menu.className = 'cn-window cn-menu'; menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', '選單');
-      menu.innerHTML = `<div class="cn-menu-backdrop" data-next-menu-close></div><div class="cn-menu-card" tabindex="-1"><header class="cn-winbar"><b>選單・全部功能</b><button type="button" class="cn-win-close" data-next-menu-close aria-label="關閉選單">✕</button></header><div class="cn-menu-body"></div></div>`;
+      menu = document.createElement('div'); menu.id = 'cn-menu'; menu.className = 'cn-window cn-menu'; menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', '設定');
+      menu.innerHTML = `<div class="cn-menu-backdrop" data-next-menu-close></div><div class="cn-menu-card" tabindex="-1"><header class="cn-winbar"><b>設定</b><button type="button" class="cn-win-close" data-next-menu-close aria-label="關閉設定">✕</button></header><div class="cn-menu-body"></div></div>`;
       document.body.appendChild(menu);
       menu.addEventListener('click', e => {
         if (e.target.closest('[data-next-menu-close]')) { nextMenu(false); return; }
@@ -1035,7 +1041,7 @@
       });
     }
     menu.querySelector('.cn-menu-body').innerHTML = window.RpgClassicNextMenu?.html({ hide: S.realmId === 'permanent' ? [] : [] }) || '';
-    menu.hidden = false; window.RpgClassicNextBattle?.cover?.('menu', true); menu.querySelector('.cn-menu-card')?.focus({ preventScroll: true });
+    menu.hidden = false; window.RpgClassicNextBattle?.cover?.('menu', true); menu.querySelector('.cn-menu-card')?.focus({ preventScroll: true }); if (S.me) renderHud();
   }
   // Window chrome over the classic app (#app becomes the floating window while one is open).
   function nextChrome() {
@@ -1049,7 +1055,7 @@
     let bar = document.getElementById('cn-winbar');
     if (!bar) {
       bar = document.createElement('header'); bar.id = 'cn-winbar'; bar.className = 'cn-winbar';
-      bar.innerHTML = '<b></b><button type="button" class="cn-win-menu" data-next-menu>選單</button><button type="button" class="cn-win-close" aria-label="關閉視窗">✕</button>';
+      bar.innerHTML = '<b></b><button type="button" class="cn-win-menu" data-next-menu>設定</button><button type="button" class="cn-win-close" aria-label="關閉視窗">✕</button>';
       bar.querySelector('[data-next-menu]').onclick = () => nextOpen('menu');
       bar.querySelector('.cn-win-close').onclick = nextClose;
       app.prepend(bar);
@@ -1058,6 +1064,8 @@
     if (open) { const win = NEXT_WINDOWS[S.nextWin.route]; bar.querySelector('b').textContent = win && win.tab === S.tab ? S.nextWin.title : (NEXT_TAB_TITLES[S.tab] || S.nextWin.title); }
   }
   if (NEXT) {
+    // The classic bottom bar must stay visible over the scene while #app is hidden or is the window.
+    const navBar = document.getElementById('nav'); if (navBar && navBar.parentElement !== document.body) document.body.appendChild(navBar);
     window.RpgClassicNextBattle?.onOpen?.((route, params) => nextOpen(route, params));
     // Scene failed: the classic layout (tab bar + classic RpgBattle) comes back.
     window.RpgClassicNextBattle?.onFail?.(() => { S.nextWin = null; nextMenu(false); if (S.me && !S.choosing && !S.creating) render(); });
