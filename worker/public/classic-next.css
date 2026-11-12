@@ -2,8 +2,6 @@
 .lc-battle-shell #bslot.cn-battle-slot{position:relative;height:clamp(370px,112vw,560px);min-height:370px;border:1px solid #dac17e;border-radius:2px;background:#050505 radial-gradient(circle at 50% 45%,#2a1a10 0,#050505 70%);box-shadow:inset 0 0 0 1px #17191a,0 2px 6px #0008}
 .lc-battle-shell #bslot.cn-battle-slot.cn-battle-loading::after{content:'戰場載入中…';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#e8d6a6;font-size:13px;letter-spacing:.08em;opacity:.8}
 .lc-battle-shell #bslot.cn-battle-slot>.bstage{position:absolute;inset:0;height:auto;min-height:0}
-.cn-battle-frame{position:absolute;left:0;top:0;z-index:4;border:0;display:block;background:#050505;pointer-events:none}
-.cn-battle-frame[hidden]{display:none}
 .next-atlas-entry{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit;border:1px solid #c4a261;background:linear-gradient(120deg,#13202a,#0b1218 60%,#2a2012);box-shadow:inset 0 0 0 1px #f0d99d33,0 6px 18px #0009;padding:12px 14px}
 .next-atlas-entry .next-atlas-mark{font-size:22px;color:#f0d99d;text-shadow:0 0 10px #f0d99d88}
 .next-atlas-entry .next-atlas-text{flex:1;display:flex;flex-direction:column;gap:2px}
@@ -76,6 +74,35 @@
 .cn-panel-head h2{margin:0;font-size:16px;color:#f3e2b3;letter-spacing:.06em}
 .cn-panel-close{border:1px solid #6b5a36;background:#121c24;color:#f0d99d;border-radius:3px;padding:5px 10px;font:inherit;font-size:12.5px}
 .cn-panel-body{overflow:auto;padding:10px 12px calc(14px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;color:#eadfc4}
-/* P6: the battle is the main home view (between the classic top bar and bottom nav) */
-.lc-battle-shell.cn-main-battle{margin:0 -2px 12px}
-.lc-battle-shell.cn-main-battle #bslot.cn-battle-slot{height:max(420px,calc(100svh - var(--cn-chrome,160px) - 44px));max-height:none;min-height:420px}
+/* P7: the scene with its full HUD is the home (iframe#demo, same as the current home page); the classic
+   tab bar and top bar give way, and each classic feature opens as a floating window over the scene. */
+#demo.cn-scene{display:none}
+html.cn-scene-home,html.cn-scene-home body{background:#050505;overflow:hidden;overscroll-behavior:none}
+html.cn-scene-home #demo.cn-scene{display:block;position:fixed;inset:0;width:100%;height:100%;border:0;z-index:0;background:#050505}
+html.cn-scene-home #app{display:none}
+html.cn-scene-home #hud,html.cn-scene-home #nav,html.cn-scene-home #app>.game-credit,html.cn-scene-home .lc-battle-shell{display:none!important}
+html.cn-scene-home.cn-window-open #app{display:block;position:fixed;z-index:600;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));top:calc(env(safe-area-inset-top) + 48px);bottom:calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0!important;padding:0 10px 14px!important;max-width:none!important;min-height:0!important;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f5,#070b10f7)!important;box-shadow:0 0 0 1px #f0d99d22 inset,0 18px 50px #000d}
+html.cn-scene-home.cn-window-open #view{padding-top:6px;padding-bottom:0;min-height:0}
+.cn-winbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;margin:0 -10px 6px;padding:10px 12px;background:linear-gradient(#141e28,#0b1218);border-bottom:1px solid #4b3f2a}
+.cn-winbar[hidden]{display:none}
+.cn-winbar b{flex:1;font-size:15.5px;color:#f3e2b3;letter-spacing:.08em}
+.cn-winbar button{border:1px solid #6b5a36;background:#121c24;color:#f0d99d;border-radius:4px;padding:6px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+.cn-menu{position:fixed;inset:0 0 calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));z-index:700}
+.cn-menu[hidden]{display:none}
+.cn-menu-backdrop{position:absolute;inset:0;background:#02050866}
+.cn-menu-card{position:absolute;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));top:calc(env(safe-area-inset-top) + 48px);bottom:0;overflow-y:auto;overscroll-behavior:contain;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f7,#070b10f9);box-shadow:0 18px 50px #000d;padding:0 10px 12px;outline:none}
+.cn-menu-card .cn-winbar{margin:0 -10px 4px}
+.cn-menu-group h3{margin:10px 2px 6px;font-size:12px;letter-spacing:.2em;color:#c9ad6e}
+.cn-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cn-menu-item{display:flex;align-items:center;gap:8px;min-height:52px;padding:6px 8px;text-align:left;font:inherit;color:#eadfc4;cursor:pointer;border:1px solid #4b3f2a;border-radius:6px;background:linear-gradient(120deg,#13202a,#0b1218 70%)}
+.cn-menu-item:active{border-color:#c4a261}
+.cn-menu-icon{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center}
+.cn-menu-icon img{width:34px;height:34px;object-fit:contain;border-radius:4px}
+.cn-menu-sheet{display:block;width:32px;height:32px;background-size:300% 200%;background-repeat:no-repeat;filter:brightness(1.3) drop-shadow(0 1px 2px #000)}
+.cn-menu-text{display:flex;flex-direction:column;min-width:0}
+.cn-menu-text b{font-size:13.5px;color:#f3e2b3;letter-spacing:.04em}
+.cn-menu-text small{font-size:11px;color:#b9ab8a;line-height:1.3}
+.cn-menu-logout{display:block;width:100%;margin-top:12px}
+@media (max-width:340px){.cn-menu-grid{grid-template-columns:1fr}.cn-menu-item{min-height:46px}}
+html.cn-scene-home #sheet{z-index:1000}html.cn-scene-home #toast{z-index:1600}
+html.cn-scene-home.cn-window-open .guardian-mode #guardian-root,html.cn-scene-home.cn-window-open body.guardian-mode #guardian-root{position:relative!important;top:auto!important;left:auto;transform:none;width:100%;max-width:none;z-index:auto}

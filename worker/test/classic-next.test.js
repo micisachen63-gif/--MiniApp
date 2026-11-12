@@ -137,22 +137,25 @@ test('scene.html?embed=battle skips the window manager, HUD rituals, chat, guide
   assert.match(sceneHtml, /telegram:true/);
 });
 
-function embedHarness({ embed = 'battle', origin = 'https://elf.example' } = {}) {
+function embedHarness({ embed = 'battle', origin = 'https://elf.example', hud = '' } = {}) {
   const posted = [], listeners = {}, head = [], loop = { running: true, sleep() { this.running = false; }, wake() { this.running = true; } };
   class Game { constructor(config) { this.config = config; this.loop = loop; } }
   const parent = { postMessage: (data, target) => posted.push({ data, target }) };
   const session = { ctx: { characterId: 'a', realmId: 'permanent' }, set: [], syncs: 0, visibility: 0, visibilityChanged() { this.visibility++; }, getContext() { return this.ctx; }, setContext(n) { this.set.push(n); this.ctx = { ...this.ctx, ...n }; }, sync() { this.syncs++; return Promise.resolve(); } };
   const window = { __RpgSceneEmbed: embed, Phaser: { Game }, RpgSceneSession: session, addEventListener: (t, fn) => { listeners[t] = fn; } };
   const timers = fakeTimers();
-  vm.runInNewContext(embedJs, { window, parent, location: { origin }, document: { createElement: () => ({}), head: { appendChild: n => head.push(n) } }, ...timers });
-  return { window, parent, posted, listeners, head, loop, session, timers, Game };
+  const docListeners = {}, classes = new Set(), nodes = { chatLine: { textContent: '' }, ui: { classList: { add: c => classes.add('ui:' + c) } } }, q = { '#chat .ch': { textContent: '世界' }, '#quest .qn': { textContent: '◆ 泰坦的試煉' }, '#quest .qc': { textContent: '0/40' } };
+  const document = { createElement: () => ({}), head: { appendChild: n => head.push(n) }, readyState: 'complete', documentElement: { classList: { add: c => classes.add(c) } },
+    addEventListener: (t, fn, capture) => { (docListeners[t] ||= []).push({ fn, capture }); }, getElementById: id => nodes[id] || null, querySelector: sel => q[sel] || null };
+  vm.runInNewContext(embedJs, { window, parent, location: { origin, search: hud ? '?embed=battle&hud=' + hud : '?embed=battle' }, document, URLSearchParams, ...timers });
+  return { window, parent, posted, listeners, head, loop, session, timers, Game, docListeners, classes, nodes, q };
 }
 
 test('embed=battle hides every scene UI layer except the target bar, registers no timers, and pauses Phaser', () => {
   const h = embedHarness();
   assert.equal(h.timers.intervals.length + h.timers.timeouts.length, 0);
   const css = h.head[0].textContent;
-  assert.match(css, /html\.scene-embed-battle:not\(\.scene-embed-hud\) #ui>\*:not\(#target\)\{display:none!important\}/);
+  assert.match(css, /html\.scene-embed-battle:not\(\.scene-embed-hud\):not\(\.scene-embed-full\) #ui>\*:not\(#target\)\{display:none!important\}/);
   assert.match(css, /\.scene-login-status/);
   const game = new h.window.Phaser.Game({ parent: 'game' });
   assert.equal(h.window.RpgSceneEmbed.game(), game);
@@ -180,38 +183,52 @@ function frameHarness() {
   const el = tag => { const node = { tag, style: {}, dataset: {}, classList: { set: new Set(), add(c) { this.set.add(c); }, toggle(c, on) { on ? this.set.add(c) : this.set.delete(c); } }, attrs: {}, hidden: false, isConnected: true,
     setAttribute(k, v) { this.attrs[k] = v; }, addEventListener(t, fn) { (this.on ||= {})[t] = fn; }, remove() { this.isConnected = false; },
     getBoundingClientRect: () => ({ left: 10, top: 300, width: 340, height: 400 }), getClientRects: () => [1] };
-    if (tag === 'iframe') node.contentWindow = { postMessage: (data, target) => posted.push({ data, target }), RpgSceneEmbed: {} };
+    if (tag === 'iframe') { node.contentWindow = { postMessage: (data, target) => posted.push({ data, target }), RpgSceneEmbed: {} }; node.getAttribute = k => (k === 'src' ? node.src ?? null : node.attrs[k] ?? null); }
     return node; };
   const timers = fakeTimers(), micro = [];
-  const document = { hidden: false, documentElement: { dataset: {} }, body: { appendChild: n => nodes.push(n) }, createElement: el, getElementById: () => null, addEventListener: (t, fn) => { docListeners[t] = fn; } };
+  const classes = new Set(), props = {};
+  const document = { hidden: false, documentElement: { dataset: {}, style: { setProperty: (k, v) => { props[k] = v; } }, classList: { set: classes, add: c => classes.add(c), remove: c => classes.delete(c), toggle: (c, on) => (on ? classes.add(c) : classes.delete(c)), contains: c => classes.has(c) } },
+    body: { appendChild: n => nodes.push(n), prepend: n => nodes.push(n) }, createElement: el, getElementById: () => null, addEventListener: (t, fn) => { docListeners[t] = fn; } };
   const window = { addEventListener: (t, fn) => { listeners[t] = fn; } };
   vm.runInNewContext(frameJs, { window, document, location: { origin: 'https://elf.example' }, queueMicrotask: fn => micro.push(fn), ...timers, ResizeObserver: undefined });
   const flush = () => { while (micro.length) micro.shift()(); };
-  return { api: window.RpgClassicNextBattle, nodes, listeners, posted, timers, flush, el, document };
+  return { api: window.RpgClassicNextBattle, nodes, listeners, posted, timers, flush, el, document, classes, props };
 }
 
-test('classic home frame: one scene iframe, battlefield only, pauses when the home tab is not shown', () => {
+test('P7 home scene: one full-HUD scene frame, shown while a character is in play, paused when covered or hidden', () => {
   const h = frameHarness(), slot = h.el('div');
-  assert.equal(h.api.attach(slot, { characterId: 'hero', realmId: 'permanent', fallback() {} }), true);
-  h.flush();
+  assert.equal(h.nodes.length, 0, 'nothing loads on character select');
+  assert.equal(h.api.home(false), false); h.flush(); assert.equal(h.nodes.length, 0);
+  h.api.home(true, { characterId: 'hero', realmId: 'permanent' }); h.flush();
   const frame = h.nodes[0];
-  assert.equal(h.nodes.length, 1); assert.equal(frame.tag, 'iframe');
-  assert.match(frame.src, /\/scene-bound-20261102\/scene\.html\?embed=battle&hud=1$/);
+  assert.equal(h.nodes.length, 1); assert.equal(frame.tag, 'iframe'); assert.equal(frame.id, 'demo', 'the same #demo frame the current home page dresses (preview.js / hud-angels.js)');
+  assert.match(frame.src, /\/scene-bound-20261102\/scene\.html\?embed=battle&hud=full$/);
+  assert.ok(h.classes.has('cn-scene-home') && h.classes.has('cn-scene-loading'));
   assert.equal(h.timers.intervals.length, 0, 'no polling of any kind');
   assert.deepEqual(h.timers.timeouts.map(t => t.ms), [20000], 'one load deadline only');
-  // Ready -> it does not re-sync the same character it already shows.
+  assert.equal(h.api.attach(slot, { characterId: 'hero', realmId: 'permanent', fallback() {} }), true); h.flush();
+  assert.equal(h.nodes.length, 1, 'classic home render reuses the one frame');
   h.listeners.message({ source: frame.contentWindow, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'ready', detail: { characterId: 'hero', realmId: 'permanent' } } });
   h.flush();
-  assert.equal(h.posted.filter(p => p.data.type === 'refresh').length, 0);
-  // Render cycle: release + attach in the same task keeps it running, a different tab pauses it.
+  assert.equal(h.classes.has('cn-scene-loading'), false); assert.equal(h.posted.filter(p => p.data.type === 'refresh').length, 0);
+  assert.equal(h.posted.at(-1).data.type, 'resume');
+  // Classic renders release/attach the slot: the scene keeps running.
   h.api.release(); h.api.attach(h.el('div'), { characterId: 'hero' }); h.flush();
   assert.equal(h.posted.filter(p => p.data.type === 'pause').length, 0);
-  h.api.release(); h.flush();
-  assert.equal(frame.hidden, true); assert.equal(h.posted.at(-1).data.type, 'pause');
-  h.api.attach(h.el('div'), { characterId: 'other' }); h.flush();
+  h.api.cover('window', true); h.flush(); assert.equal(h.posted.at(-1).data.type, 'pause', 'a classic window over the scene pauses it');
+  h.api.cover('window', false); h.flush(); assert.equal(h.posted.at(-1).data.type, 'resume');
+  h.api.home(false); h.flush();
+  assert.equal(h.classes.has('cn-scene-home'), false); assert.equal(h.posted.at(-1).data.type, 'pause', 'character select: paused');
+  h.api.home(true, { characterId: 'other', realmId: 'permanent' }); h.flush();
   assert.deepEqual(h.posted.slice(-2).map(p => p.data.type), ['resume', 'refresh']);
   assert.equal(h.posted.at(-1).data.detail.characterId, 'other', 'character switch is pushed to the scene');
   h.api.refresh(); assert.equal(h.posted.at(-1).data.type, 'refresh');
+  // HUD taps from the scene are handed to the classic app (only from this frame and origin).
+  const opened = []; h.api.onOpen((route, params) => opened.push([route, params]));
+  h.listeners.message({ source: frame.contentWindow, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'open', detail: { route: 'eq' } } });
+  h.listeners.message({ source: {}, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'open', detail: { route: 'inv' } } });
+  h.listeners.message({ source: frame.contentWindow, origin: 'https://evil.example', data: { source: 'rpg-scene-battle', type: 'open', detail: { route: 'inv' } } });
+  assert.deepEqual(plain(opened), [['eq', null]]);
   assert.ok(h.posted.every(p => p.target === 'https://elf.example'));
 });
 
@@ -225,7 +242,13 @@ test('classic home frame falls back to the classic RpgBattle when the scene cann
     else { delete frame.contentWindow.RpgSceneEmbed; frame.on.load(); }
     assert.equal(fallback, slot, failure); assert.equal(frame.isConnected, false); assert.equal(h.api.state(), 'failed');
     assert.equal(h.api.attach(h.el('div'), { characterId: 'hero' }), false, 'later renders use the classic battle directly');
+    assert.equal(h.api.home(true), false, 'the classic layout (tab bar) comes back'); h.flush(); assert.equal(h.classes.has('cn-scene-home'), false);
+    assert.match(h.document.documentElement.dataset.cnBattle, /^fallback:/);
   }
+  const failed = []; const h = frameHarness(); h.api.onFail(r => failed.push(r)); h.api.home(true, { characterId: 'hero' }); h.flush(); h.timers.timeouts[0].fn();
+  assert.deepEqual(failed, ['timeout'], 'the classic app re-renders with the classic RpgBattle');
+  assert.match(app, /window\.RpgClassicNextBattle\?\.onFail\?\.\(\(\) => \{ S\.nextWin = null; nextMenu\(false\); if \(S\.me && !S\.choosing && !S\.creating\) render\(\); \}\);/);
+  assert.match(app, /else if \(NEXT && window\.RpgClassicNextBattle\?\.attach\(\$\('#bslot', view\), \{ characterId: S\.me\.character\.tgId, realmId: S\.realmId, fallback: slot => BATTLE\?\.attach\(slot\) \}\)\) \{\}/);
 });
 
 // Atlas-active sync (owner t704u): the original atlas-ui 30 s refresh and visibility refresh, but on
@@ -350,7 +373,7 @@ test('fake timers: during a run the visible battle frame drives Atlas sync; the 
 
 test('battle frame pauses while a panel covers it and reports whether its own sync runs', () => {
   const h = frameHarness(), slot = h.el('div');
-  h.api.attach(slot, { characterId: 'hero', realmId: 'permanent', fallback() {} }); h.flush();
+  h.api.home(true, { characterId: 'hero', realmId: 'permanent' }); h.api.attach(slot, { characterId: 'hero', realmId: 'permanent', fallback() {} }); h.flush();
   const frame = h.nodes[0];
   assert.equal(h.api.syncing(), false, 'not before the scene is ready');
   h.listeners.message({ source: frame.contentWindow, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'ready', detail: { characterId: 'hero', realmId: 'permanent' } } });
@@ -448,7 +471,7 @@ test('P5 banners: the 13 adventure loops, poster first, video only on screen, no
   assert.equal(observed[0], el, 'video waits for the entry to be on screen');
   E.banner(el, 'status'); assert.equal(el.children.length, 1, 'idempotent');
   assert.match(entriesJs, /\['preload', 'none'\]/); assert.match(entriesJs, /prefers-reduced-motion: reduce/);
-  assert.match(app, /window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\);[^\n]*\} window\.RpgClassicNextEntries\?\.decorate\(view\); \}/);
+  assert.match(app, /window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\); window\.RpgClassicNextEntries\?\.decorate\(view\); nextChrome\(\); \}/);
   assert.match(app, /window\.RpgClassicNextEntries\?\.decorate\(c\);/, 'the 星圖 chooser sheet gets its loops');
 });
 
@@ -476,32 +499,91 @@ test('P5 home Lv badge: the profession line keeps a small pill', () => {
 });
 
 // ---------- P6: the battle is the main home view ----------
-test('P6 embed hud=1 keeps only the battle HUD (zone, minimap, target, orbs, exp, skills) and no timers', () => {
-  assert.match(embedJs, /hud = new URLSearchParams\(location\.search\)\.get\('hud'\) === '1'/);
-  assert.match(embedJs, /html\.scene-embed-hud #ui>\*:not\(#target\):not\(#topR\):not\(#bottom\)\{display:none!important\}/, 'portrait/gold, chat, function buttons, windows hidden');
-  assert.match(embedJs, /html\.scene-embed-hud #topR>#quest,html\.scene-embed-hud #bottom #buffs,html\.scene-embed-hud #topR button\{display:none!important\}/, 'no quest tracker or map button (classic owns them)');
-  assert.match(embedJs, /html\.scene-embed-battle #ui,html\.scene-embed-battle #stage\{pointer-events:none\}/, 'display only');
+test('P6 embed hud=1 (battle-only HUD mode) is unchanged and has no timers', () => {
+  assert.match(embedJs, /hud = q === '1'; full = q === 'full';/);
+  assert.match(embedJs, /html\.scene-embed-hud #ui>\*:not\(#target\):not\(#topR\):not\(#bottom\)\{display:none!important\}/);
   assert.doesNotMatch(embedJs, /setInterval|setTimeout/);
-  for (const id of ['topR', 'mini', 'minic', 'zone', 'bottom', 'bar', 'skills', 'xp', 'hpTxt', 'mpTxt', 'target']) assert.match(sceneHtml, new RegExp('id="' + id + '"'), id);
-  const h = embedHarness();
+  const h = embedHarness({ hud: '1' });
   assert.equal(h.timers.intervals.length + h.timers.timeouts.length, 0);
+  assert.ok(h.classes.has('scene-embed-hud')); assert.equal(h.window.RPG_LIVE_SOCIAL, undefined); assert.equal(h.window.RpgSceneNavigation, undefined);
 });
 
-test('P6 home: the battle shell moves to the top and fills the space between the top bar and nav', () => {
-  const h = frameHarness(), slot = h.el('div');
-  slot.matches = () => true;
-  const shell = { classList: { set: new Set(), add(c) { this.set.add(c); } }, querySelector: sel => (sel === '#bslot.cn-battle-slot' ? slot : null) };
-  const prepended = [], view = { querySelector: sel => (sel === '.lc-battle-shell' ? shell : null), prepend: n => prepended.push(n) };
-  const bars = { hud: 60, nav: 75 }, props = {};
-  h.document.getElementById = id => (bars[id] ? { getClientRects: () => [1], getBoundingClientRect: () => ({ height: bars[id] }) } : null);
-  h.document.documentElement.style = { setProperty: (k, v) => { props[k] = v; } };
-  h.api.attach(slot, { characterId: 'hero' }); h.flush();
-  assert.equal(h.api.promote(view), true);
-  assert.deepEqual(prepended, [shell]); assert.ok(shell.classList.set.has('cn-main-battle'));
-  assert.equal(props['--cn-chrome'], '135px');
-  assert.equal(h.api.promote({ querySelector: () => null }), false, 'expedition-away / no frame slot: classic layout');
-  assert.equal(h.timers.intervals.length, 0, 'still no timers');
-  h.timers.timeouts[0].fn(); assert.equal(h.api.promote(view), false, 'classic fallback battle keeps the classic layout');
-  assert.match(app, /if \(S\.tab === 'home'\) \{ window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\); window\.RpgClassicNextBattle\?\.promote\?\.\(view\); \}/);
-  assert.match(read('classic-next.css'), /\.lc-battle-shell\.cn-main-battle #bslot\.cn-battle-slot\{height:max\(420px,calc\(100svh - var\(--cn-chrome,160px\) - 44px\)\)/);
+test('P7 embed hud=full: the whole scene HUD, every tap forwarded to the classic parent, no scene windows, no timers', () => {
+  const h = embedHarness({ hud: 'full' });
+  assert.equal(h.timers.intervals.length + h.timers.timeouts.length, 0, 'no timers');
+  assert.ok(h.classes.has('scene-embed-full')); assert.equal(h.window.RpgSceneEmbed.mode, 'home');
+  assert.equal(h.window.RPG_LIVE_SOCIAL, true, 'ui.js mock chat (7 s interval) never starts');
+  assert.ok(h.classes.has('ui:scene-unified-root'), 'current home HUD dressing (scene-social-preview.css: laurel portrait bezel)');
+  assert.equal(h.nodes.chatLine.textContent, '點此與旅人聊天'); assert.equal(h.q['#quest .qn'].textContent, '◆ 星圖任務・派遣');
+  const css = h.head[0].textContent;
+  assert.match(css, /html\.scene-embed-full #panelHost,html\.scene-embed-full #tip,html\.scene-embed-full #topR button,html\.scene-embed-full #scene-live-status,html\.scene-embed-full \.scene-live-status-toggle\{display:none!important\}/, 'no prototype panels / scene status panel');
+  assert.match(css, /#ui\.scene-unified-root #fn\{display:grid!important\}/, '背包/裝備/補給/技能/地圖/設定 bar shown');
+  assert.match(css, /html\.scene-embed-full #bottom,html\.scene-embed-full #fn\{pointer-events:auto;cursor:pointer\}/, 'HUD is tappable');
+  // Capture-phase routing: tapped HUD element -> route posted to the parent; ui.js handlers never see it.
+  const clicks = h.docListeners.click.filter(l => l.capture), downs = h.docListeners.pointerdown.filter(l => l.capture);
+  assert.equal(clicks.length, 1); assert.equal(downs.length, 1);
+  const tap = (sel, extra = {}) => {
+    let stopped = 0; const el = { dataset: {}, ...extra };
+    const target = { closest: s => (s === sel ? el : null) };
+    downs[0].fn({ type: 'pointerdown', target, stopPropagation() { stopped++; }, preventDefault() {} });
+    clicks[0].fn({ type: 'click', target, stopPropagation() { stopped++; }, preventDefault() {} });
+    return stopped;
+  };
+  for (const [p] of [['inv'], ['eq'], ['sup'], ['sk'], ['map'], ['set']]) assert.equal(tap('#fn .fb', { dataset: { p } }), 2);
+  for (const sel of ['#topL', '#topR #zone', '#topR #mini', '#quest', '#chat']) tap(sel);
+  const before = h.posted.length; h.docListeners.click[0].fn({ type: 'click', target: { closest: () => null }, stopPropagation() { throw new Error('battlefield taps pass through'); }, preventDefault() {} });
+  assert.equal(h.posted.length, before);
+  // Live HUD potions/skills and 選擇角色 go through the scene navigation API -> parent.
+  h.window.RpgSceneNavigation.navigate('supplies'); h.window.RpgSceneNavigation.navigate('skills'); h.window.RpgSceneNavigation.navigate('characters', {});
+  h.docListeners.keydown[0].fn({ key: 'Escape' });
+  assert.deepEqual(plain(h.posted.map(p => p.data.detail.route)), ['inv', 'eq', 'sup', 'sk', 'map', 'set', 'hero', 'map', 'map', 'quest', 'chat', 'supplies', 'skills', 'characters', 'close']);
+  assert.ok(h.posted.every(p => p.data.source === 'rpg-scene-battle' && p.data.type === 'open' && p.target === 'https://elf.example'));
+  // Same tags the HUD code reads.
+  for (const id of ['topL', 'pc', 'gold', 'topR', 'zone', 'mini', 'quest', 'chat', 'chatLine', 'bottom', 'bar', 'mid', 'fn', 'panelHost']) assert.match(sceneHtml, new RegExp('id="' + id + '"'), id);
+  assert.match(read(SCENE + 'ui.js'), /var FN=\[\['背包','inv','belt'\],\['裝備','eq','helm'\],\['補給','sup','potion'\],\['技能','sk','spin'\],\['地圖','map','quake'\],\['設定','set','shield'\]\];/);
+  assert.match(read(SCENE + 'ui.js'), /if\(!window\.RPG_LIVE_SOCIAL\)\{for\(var k=0;k<4;k\+\+\)pushChat\(\);setInterval\(pushChat,7000\);\}/);
+});
+
+test('P7 classic-next.html: the current home HUD installers on the scene frame, no debug chip, classic chrome gives way', () => {
+  const frameAt = next.indexOf('<iframe id="demo" class="cn-scene"'), preview = next.indexOf('<script src="/ui-generated-20261030/preview.js"></script>'), angels = next.indexOf('hud-angels-20261102/hud-angels.js');
+  assert.ok(frameAt > 0 && frameAt < next.indexOf('<script src="app.js') && preview > next.indexOf('<script src="app.js') && angels > preview, 'frame first, then the same installers as index.html');
+  assert.match(read('index.html'), /<script src="\/ui-generated-20261030\/preview\.js"><\/script><script src="\/ui-generated-20261030\/hud-angels-20261102\/hud-angels\.js\?v=20261102-angels1"><\/script>/, 'reused, not copied');
+  // preview.js needs its hidden controls; they stay hidden and inert (no 'UI 素材候選・本機測試 / 人物／預覽設定' chip).
+  assert.match(next, /<aside class="test-controls" hidden inert style="display:none">/);
+  assert.doesNotMatch(next, /preview-controls\.js|characters-v1\/|本機測試|素材候選/);
+  assert.match(next, /classic-next-menu\.js\?v=20261112-next7/);
+  const css = read('classic-next.css');
+  assert.match(css, /html\.cn-scene-home #demo\.cn-scene\{display:block;position:fixed;inset:0;/);
+  assert.match(css, /html\.cn-scene-home #hud,html\.cn-scene-home #nav,html\.cn-scene-home #app>\.game-credit,html\.cn-scene-home \.lc-battle-shell\{display:none!important\}/, 'no classic tab bar on the home');
+  assert.match(css, /html\.cn-scene-home\.cn-window-open #app\{display:block;position:fixed;z-index:600;/, 'classic views open as a floating window');
+  assert.match(css, /bottom:calc\(env\(safe-area-inset-bottom\) \+ var\(--cn-bar,64px\)\)/, 'the scene bar stays tappable under a window');
+  assert.match(css, /html\.cn-scene-home #sheet\{z-index:1000\}/, 'item sheets (強化/洗鍊) above the window');
+  assert.doesNotMatch(frameJs, /setInterval/);
+});
+
+test('P7 every HUD button and menu entry opens a classic feature', () => {
+  const win = app.match(/const NEXT_WINDOWS = (\{[\s\S]*?\n  \});/)[1];
+  const windows = vm.runInNewContext('(' + win + ')');
+  const aliases = vm.runInNewContext('(' + app.match(/const NEXT_ALIASES = (\{[^\n]*\});/)[1] + ')');
+  const special = ['close', 'menu', 'map', 'quest', 'chat', 'recovery', 'talents', 'build', 'progression', 'gearbook', 'atlas', 'fate', 'ledger', 'select', 'guardian'];
+  for (const r of special.slice(0, 1)) assert.match(app, new RegExp("route === '" + r + "'"));
+  const handled = r => { r = aliases[r] || r; return !!windows[r] || special.includes(r); };
+  // Scene HUD: 背包 裝備 補給 技能 地圖 設定, portrait, zone/minimap, quest, chat; live potions/skills; 選擇角色.
+  for (const r of ['inv', 'eq', 'sup', 'sk', 'map', 'set', 'hero', 'quest', 'chat', 'supplies', 'skills', 'characters']) assert.ok(handled(r), r);
+  assert.deepEqual(plain({ inv: windows.inv, eq: windows.eq, sup: windows.sup, sk: windows.sk }), {
+    inv: { tab: 'bag', panel: 'items', title: '背包' }, eq: { tab: 'bag', panel: 'wardrobe', title: '裝備' },
+    sup: { tab: 'home', panel: 'supply', title: '補給與策略' }, sk: { tab: 'class', panel: 'destiny', title: '職業・技能' } });
+  // Menu: every classic tab and home entry stays reachable.
+  const window = {}; vm.runInNewContext(read('classic-next-menu.js'), { window });
+  const ids = window.RpgClassicNextMenu.ids();
+  for (const id of ids) assert.ok(handled(id), id);
+  for (const id of ['home', 'boss', 'shop', 'trade', 'lineage', 'sk', 'talents', 'atlas', 'chat', 'fate', 'ledger', 'recovery', 'guardian', 'inv', 'eq', 'vault', 'collection', 'sup', 'hero', 'select']) assert.ok(ids.includes(id), 'menu has ' + id);
+  for (const tab of ['home', 'bag', 'shop', 'boss', 'trade', 'class']) assert.ok(Object.values(windows).some(w => w.tab === tab), 'classic tab ' + tab);
+  assert.match(window.RpgClassicNextMenu.html(), /data-next-logout/);
+  assert.doesNotMatch(read('classic-next-menu.js'), /setInterval|setTimeout|fetch\(/);
+  // Every menu icon is existing repo art.
+  for (const m of read('classic-next-menu.js').matchAll(/art\('([^']+)'\)/g)) assert.ok(fs.existsSync(new URL('../public/' + m[1], import.meta.url)), m[1]);
+  assert.ok(fs.existsSync(new URL('../public/ui-generated-20261030/function-icons-sheet-dark-v1.png', import.meta.url)));
+  assert.match(app, /window\.RpgClassicNextBattle\?\.onOpen\?\.\(\(route, params\) => nextOpen\(route, params\)\);/);
+  assert.match(app, /window\.RpgClassicNextBattle\?\.cover\?\.\('window', open\);/);
 });
