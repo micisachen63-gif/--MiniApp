@@ -138,6 +138,8 @@
     let scrollLocked = false, previousOverflow = '', legacyFocusReturn = null;
     let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
     let gearbookView=null;
+    // /classic-next: only the floating Atlas panels; the classic shell keeps #view, no workspace, no timed refresh.
+    const overlayOnly=host.overlayOnly===true;
     let talentPreview=null,talentPreviewLoading=false,talentPreviewSeq=0,talentPreviewAbort=null;
     const app = document.getElementById('app'), view = document.getElementById('view');
     const root = document.createElement('section'); root.id = 'atlas-world'; root.setAttribute('aria-label','星穹旅誌星圖營地'); root.hidden = true;
@@ -146,10 +148,10 @@
       <div class="atlas-scene"><div class="atlas-location"><small>ATLAS OF THE STARS</small><h1>你的下一段旅程</h1><p data-atlas-location>選擇角色，展開星圖</p></div><div class="atlas-actor" data-atlas-actor></div><aside class="atlas-tracker" aria-label="目前探索進度"></aside></div>
       <div class="atlas-character-bar" data-atlas-stats></div><div class="atlas-shortcuts"><button type="button" data-atlas-open-talents>✧ 天賦星盤</button><button type="button" data-atlas-open-growth>✦ 冒險進程</button><button type="button" data-atlas-direct="guardian:summon">✦ 召喚天使</button><button type="button" data-atlas-direct="fate">◇ 命運旅章</button><span data-atlas-sync role="status"></span></div>
       <nav class="atlas-nav" aria-label="六大系統">${groups.map(group => `<button type="button" data-atlas-group="${group.id}">${icon(group.icon)}<span><strong>${group.name}</strong><small>${group.subtitle}</small></span></button>`).join('')}</nav><footer class="atlas-world-credit">Game Producer · ミカサ</footer>`;
-    app.prepend(root);
+    if(!overlayOnly)app.prepend(root);
     const legacy = document.createElement('section'); legacy.id = 'atlas-legacy'; legacy.hidden = true; legacy.setAttribute('aria-label','遊戲功能');legacy.setAttribute('role','dialog');legacy.setAttribute('aria-modal','true');
     legacy.innerHTML = `<header class="atlas-panel-header"><div><small>STAR JOURNAL</small><h2 data-atlas-legacy-title>冒險</h2></div><button type="button" class="atlas-close" data-atlas-legacy-close aria-label="返回營地">${icon('close')}</button></header>`;
-    view.before(legacy); legacy.append(view);
+    if(!overlayOnly){view.before(legacy); legacy.append(view);}
     const legacyBackdrop=document.createElement('div');legacyBackdrop.className='atlas-legacy-backdrop';legacyBackdrop.hidden=true;legacyBackdrop.setAttribute('aria-hidden','true');legacy.before(legacyBackdrop);
     const overlay = document.createElement('section'); overlay.id = 'atlas-panel'; overlay.hidden = true; overlay.setAttribute('role','dialog'); overlay.setAttribute('aria-modal','true');
     overlay.innerHTML = `<div class="atlas-panel-backdrop" data-atlas-close></div><div class="atlas-panel-card" tabindex="-1"><header class="atlas-panel-header"><div><small data-atlas-panel-eyebrow>星圖營地</small><h2 id="atlas-panel-title"></h2></div><button type="button" class="atlas-close" data-atlas-close aria-label="關閉並返回營地">${icon('close')}</button></header><div class="atlas-panel-body"></div></div>`;
@@ -183,7 +185,7 @@
     function open(name) {
       if (!groups.some(group => group.id === name) && !['talents','chat','progression','gearbook','recovery'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
       if (!validCharacter()) {host.chooseCharacter(); return;}
-      if (context.tab !== 'atlas') host.home();
+      if (!overlayOnly&&context.tab !== 'atlas') host.home();
       if(name!==panel||!['gearbook','recovery'].includes(name)){gearbookView?.dispose();gearbookView=null;}focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
       paint(); overlay.querySelector('.atlas-panel-card').focus({preventScroll:true});
       if(name==='chat')void chatClient?.refresh();else if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records','talents','progression'].includes(name)) void refreshAll();
@@ -380,10 +382,10 @@
     }
     function paint() {if(disposed)return;if(talentPreview&&talentPreview.baseRevision!==client.state.snapshot?.talents?.revision)talentPreview=null;paintScene();paintPanel();paintNav();chatLauncher.hidden=!validCharacter();const s=chatClient?.state,m=s?.messages.at(-1);chatLauncher.querySelector('span').textContent=s?.error?'聊天暫時離線 · 點此重新連線':m?`${m.channel==='party'?'隊伍':'世界'} · ${m.name}：${m.text}`:'世界與隊伍頻道 · 點此聊天';}
     function update(next) {
-      context=next;document.body.classList.add('atlas-enabled');root.hidden=!next.meta;
+      context=next;if(!overlayOnly)document.body.classList.add('atlas-enabled');root.hidden=overlayOnly||!next.meta;
       const selecting=next.choosing||next.creating||!next.me;
       const legacyWasOpen=!legacy.hidden;
-      legacy.hidden=!selecting&&next.tab==='atlas';legacyBackdrop.hidden=legacy.hidden;legacy.classList.toggle('atlas-selecting',selecting);
+      legacy.hidden=overlayOnly||!selecting&&next.tab==='atlas';legacyBackdrop.hidden=legacy.hidden;legacy.classList.toggle('atlas-selecting',selecting);
       if(!legacy.hidden&&!legacyWasOpen){legacyFocusReturn=document.activeElement;queueMicrotask(()=>{if(!disposed&&!legacy.hidden&&!document.getElementById('app').inert)legacy.querySelector('[data-atlas-legacy-close]:not([hidden])')?.focus({preventScroll:true});});}
       if(legacy.hidden&&legacyWasOpen){const target=legacyFocusReturn;legacyFocusReturn=null;queueMicrotask(()=>{if(!disposed&&legacy.hidden&&!root.inert&&target?.isConnected)target.focus({preventScroll:true});});}
       legacy.querySelector('[data-atlas-legacy-close]').hidden=selecting&&!next.me;
@@ -392,7 +394,7 @@
       chatClient?.setContext({realmId:next.realmId,characterId:next.me?.character?.tgId||'',epoch:next.contextEpoch||0});
       if(changed){close();draftRun={};draftCraft={};draftScope='';talentSelected=null;talentZoom=90;talentEffectsReviewed=false;talentPreviewSeq++;talentPreviewAbort?.abort();talentPreview=null;talentPreviewLoading=false;}
       if(selecting)close();syncWindowState();paint();
-      if(changed&&!selecting){void refreshAll();void chatClient?.refresh();}
+      if(changed&&!selecting&&!overlayOnly){void refreshAll();void chatClient?.refresh();}
     }
     root.querySelectorAll('[data-atlas-group]').forEach(button=>button.onclick=()=>open(button.dataset.atlasGroup));
     root.querySelectorAll('[data-atlas-direct]').forEach(button=>button.onclick=()=>route(button.dataset.atlasDirect));
@@ -415,9 +417,9 @@
     }
     document.addEventListener('keydown',keydown);
     const visibility=()=>{if(!document.hidden&&validCharacter()){void refreshAll();void chatClient?.refresh();}};
-    document.addEventListener('visibilitychange',visibility);
-    poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
-    const chatPoll=setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
+    if(!overlayOnly)document.addEventListener('visibilitychange',visibility);
+    if(!overlayOnly)poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
+    const chatPoll=overlayOnly?0:setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
     return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }
   function styleSceneFrame(frame) {

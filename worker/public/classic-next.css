@@ -1,0 +1,15 @@
+/* /classic-next only: the current battle scene in the classic home battle frame, and the home Atlas entry. */
+.lc-battle-shell #bslot.cn-battle-slot{position:relative;height:clamp(370px,112vw,560px);min-height:370px;border:1px solid #dac17e;border-radius:2px;background:#050505 radial-gradient(circle at 50% 45%,#2a1a10 0,#050505 70%);box-shadow:inset 0 0 0 1px #17191a,0 2px 6px #0008}
+.lc-battle-shell #bslot.cn-battle-slot.cn-battle-loading::after{content:'戰場載入中…';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#e8d6a6;font-size:13px;letter-spacing:.08em;opacity:.8}
+.lc-battle-shell #bslot.cn-battle-slot>.bstage{position:absolute;inset:0;height:auto;min-height:0}
+.cn-battle-frame{position:absolute;left:0;top:0;z-index:4;border:0;display:block;background:#050505;pointer-events:none}
+.cn-battle-frame[hidden]{display:none}
+.next-atlas-entry{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit;border:1px solid #c4a261;background:linear-gradient(120deg,#13202a,#0b1218 60%,#2a2012);box-shadow:inset 0 0 0 1px #f0d99d33,0 6px 18px #0009;padding:12px 14px}
+.next-atlas-entry .next-atlas-mark{font-size:22px;color:#f0d99d;text-shadow:0 0 10px #f0d99d88}
+.next-atlas-entry .next-atlas-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.next-atlas-entry b{font-size:15px;color:#f3e2b3;letter-spacing:.04em}
+.next-atlas-entry small{font-size:11.5px;color:#c9bb94}
+.next-atlas-entry .next-atlas-go{font-size:24px;color:#dac17e}
+.next-atlas-choices{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.next-atlas-choices .btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%}
+.next-atlas-choices .btn small{font-size:11.5px;opacity:.8;font-weight:400}

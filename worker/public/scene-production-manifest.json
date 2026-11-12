@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13748,
+  "publicFileCount": 13752,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -78,62 +78,6 @@
       "sha256": "1ef9873d3b06b4343903daef63cc7397f22b7c1a51892f1dfc423aed1cceb30d",
       "kind": "material-art",
       "source": "imagegen-20261110"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.png",
-      "bytes": 7964,
-      "sha256": "27c14612a0360299198855d310ba23a11b541ac01a255afc60b36d3c864aa61e",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.webp",
-      "bytes": 8142,
-      "sha256": "4ea47f3e8513c0f633dc8b4e91736a49aa299fe9456df0b5c1d7ee5e3e2c057d",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.png",
-      "bytes": 8376,
-      "sha256": "bcf7ee4dfafcbdc924ed23bd600df5194795dde1c080574243b619c51918e846",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.webp",
-      "bytes": 8476,
-      "sha256": "447f824a4121ca0f7c21ab4ffbbb73024ccdf4b84ac821463cefa98ea5a90930",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.png",
-      "bytes": 9506,
-      "sha256": "a897179b1837293bd31c33ba2b198c72df837b8eb1e73083f69029d7c0c114d6",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.webp",
-      "bytes": 9658,
-      "sha256": "2403886ae4894b34d7aade5078b70ac16523c874cd125af7fce13590ea44557c",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.png",
-      "bytes": 12543,
-      "sha256": "de5419f7a079649337df45f6ad06fca67d5d1c776dd8fb7e4ba5c9e46b39fb1f",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
-    },
-    {
-      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.webp",
-      "bytes": 13240,
-      "sha256": "942946adab5e68871258fc28147f5f629e7b29e4fb13753bde6bccd9bcbc6360",
-      "kind": "ui-art",
-      "source": "ui-buttons/buttons_3d_v1.png"
     },
     {
       "url": "/index.html",
@@ -8813,6 +8757,13 @@
       "sha256": "46f4d80b532cd715c5324e58d0c7da558075904f758808590b4f29845d0837e2",
       "kind": "original",
       "source": "map9/titan_vanguard_walk.webp"
+    },
+    {
+      "url": "/scene-idle-cast.mjs",
+      "bytes": 5927,
+      "sha256": "4a3f5c374b06e393dcf0a1090b20f6b554193f1c538890c45edda6729be12981",
+      "kind": "runtime-module",
+      "source": "scene-idle-cast.mjs"
     },
     {
       "url": "/scene-native-cast-profiles.json",
@@ -30047,8 +29998,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/app.js",
-      "bytes": 349542,
-      "sha256": "71296f708653db4b9ee859ad9abe07ca576437dbe1362c8a77a5b925a9cd7980",
+      "bytes": 351866,
+      "sha256": "b12b6ec8961ee4154b5b2cc17fed6a34a5bd79a7922e86ab69dae1f4940bccca",
       "kind": "alias",
       "source": "app.js"
     },
@@ -30096,8 +30047,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/atlas-ui.js",
-      "bytes": 70113,
-      "sha256": "ee96ff816f3f5f5f94bef1b871ed5dcdbd06e030c68de0d022dcd5a88be4d023",
+      "bytes": 70429,
+      "sha256": "f4d41d218fe53b2a748e4bea694318e2c4badba40e3b77d66d2d8f30a639181d",
       "kind": "alias",
       "source": "atlas-ui.js"
     },
@@ -31132,8 +31083,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/special-skill-widgets.js",
-      "bytes": 8941,
-      "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049",
+      "bytes": 9078,
+      "sha256": "122f6645a398af5a450daddb7d7192880d8724f29cbd9bb1e5d3deaafda07c33",
       "kind": "alias",
       "source": "special-skill-widgets.js"
     },
@@ -32069,9 +32020,16 @@
       "source": "ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js"
     },
     {
+      "url": "/ui-generated-20261030/scene-bound-20261102/embed-battle.js",
+      "bytes": 3329,
+      "sha256": "a50ae4bb77b969bcb72cc1211f78574ec5ec779dd8b1eae5cbc3277feb57db7c",
+      "kind": "composed",
+      "source": "ui-generated-20261030/scene-bound-20261102/embed-battle.js"
+    },
+    {
       "url": "/ui-generated-20261030/scene-bound-20261102/scene.html",
-      "bytes": 4786,
-      "sha256": "b0f3178bfbffd7911f9e18f21d39ba674830edfe23693eb52b802940e645d2cf",
+      "bytes": 5410,
+      "sha256": "05b4adf4f0f569112c4a5c046a5881090e8d5657aabacb5ed9167b1df6fb29c5",
       "kind": "composed",
       "source": "ui-generated-20261030/characters-v1/scene.html"
     },
@@ -33063,11 +33021,60 @@
       "source": "ui-proto/ui.js"
     },
     {
-      "url": "/scene-idle-cast.mjs",
-      "bytes": 5927,
-      "sha256": "4a3f5c374b06e393dcf0a1090b20f6b554193f1c538890c45edda6729be12981",
-      "kind": "runtime-module",
-      "source": "scene-idle-cast.mjs"
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.png",
+      "bytes": 7964,
+      "sha256": "27c14612a0360299198855d310ba23a11b541ac01a255afc60b36d3c864aa61e",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-normal.webp",
+      "bytes": 8142,
+      "sha256": "4ea47f3e8513c0f633dc8b4e91736a49aa299fe9456df0b5c1d7ee5e3e2c057d",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.png",
+      "bytes": 8376,
+      "sha256": "bcf7ee4dfafcbdc924ed23bd600df5194795dde1c080574243b619c51918e846",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/pill-selected.webp",
+      "bytes": 8476,
+      "sha256": "447f824a4121ca0f7c21ab4ffbbb73024ccdf4b84ac821463cefa98ea5a90930",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.png",
+      "bytes": 9506,
+      "sha256": "a897179b1837293bd31c33ba2b198c72df837b8eb1e73083f69029d7c0c114d6",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-normal.webp",
+      "bytes": 9658,
+      "sha256": "2403886ae4894b34d7aade5078b70ac16523c874cd125af7fce13590ea44557c",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.png",
+      "bytes": 12543,
+      "sha256": "de5419f7a079649337df45f6ad06fca67d5d1c776dd8fb7e4ba5c9e46b39fb1f",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
+    },
+    {
+      "url": "/ui/button-materials/buttons-3d-20261110/tab-selected.webp",
+      "bytes": 13240,
+      "sha256": "942946adab5e68871258fc28147f5f629e7b29e4fb13753bde6bccd9bcbc6360",
+      "kind": "ui-art",
+      "source": "ui-buttons/buttons_3d_v1.png"
     }
   ]
 }

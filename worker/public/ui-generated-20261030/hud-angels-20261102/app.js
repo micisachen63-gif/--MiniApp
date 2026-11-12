@@ -5,6 +5,8 @@
   'use strict';
   const tg = window.Telegram && window.Telegram.WebApp;
   const qs = new URLSearchParams(location.search);
+  // /classic-next (classic-next.html): classic shell, home first, current battle scene in the home frame, dark only, no timed main-screen sync.
+  const NEXT = window.RPG_CLASSIC_NEXT === true;
   const initData = (tg && tg.initData) || '';
   const devTg = !initData ? qs.get('devTg') : null;
   const A = window.RpgArt;
@@ -541,7 +543,7 @@
   const slotLabel = (slot, pos) => `${(S.meta && S.meta.slots[slot]) || slot}${MULTI[slot] ? pos : ''}`;
   const ELEM = { earth: '🌍地', water: '🌊水', fire: '🔥火', wind: '🌪️風', light: '☀️光', dark: '🌑暗' };
 
-  const S = { meta: null, me: null, characters: [], maxCharacters:4, realms:[], realmId:'permanent', contextEpoch:0, choosing: true, creating: false, pendingTab: 'atlas', shop: null, boss: null, ledger: null, tab: 'atlas', shopTab: 'weapon', skew: 0, lastReport: null,
+  const S = { meta: null, me: null, characters: [], maxCharacters:4, realms:[], realmId:'permanent', contextEpoch:0, choosing: true, creating: false, pendingTab: NEXT ? 'home' : 'atlas', shop: null, boss: null, ledger: null, tab: NEXT ? 'home' : 'atlas', shopTab: 'weapon', skew: 0, lastReport: null,
     session: { kills: 0, exp: 0, gold: 0, ticks: 0 }, create: { step: 0, name: '', cls: null, gender: null, slot: null }, busy: false, armorSlot: 'all', trades: null, trade: null, tradeTimer: 0 };
   let atlasWorkspace=null;
   let equipmentSync=window.RpgEquipmentLiveSync?.create();
@@ -564,7 +566,7 @@
 
   // ---------- Telegram theme ----------
   function applyTheme() {
-    const light = tg && tg.colorScheme === 'light';
+    const light = !NEXT && tg && tg.colorScheme === 'light';
     document.body.classList.toggle('light', !!light);
     const p = (tg && tg.themeParams) || {};
     const r = document.documentElement.style;
@@ -916,6 +918,7 @@
     <div class="lc-battle-shell"><div class="lc-battle-head"><span>${window.RpgExpeditionAway?.activity(me)?'✦ 旅途仍在繼續':'⚔ 狩獵戰場'}</span><span>${si.text}</span></div>
     ${window.RpgExpeditionAway?.activity(me) ? window.RpgExpeditionAway.markup(me) : BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
     </div></div>
+    ${NEXT ? atlasEntryHtml() : ''}
     ${me.pve?.idleVersion===2&&c.level>30&&!window.RpgExpeditionAway?.activity(me)?`<div class="banner"><span class="e">⚔️</span><div><b>中高等狩獵挑戰</b><br>請備足生命藥水；菁英重擊更有威脅，生命自動補水建議設為 50% 以上。</div></div>`:''}
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${ready ? '可以轉職了！' : g.have>=1&&c.partyId ? '組隊中，暫不能轉職' : '等待轉職材料'}</b><br>${esc(g.materialName)}：${g.have} / 1${ready ? '' : c.partyId ? ' · 請先結束組隊，再前往轉職' : ' · 請至傳承查看取得方式'}</div><button class="btn sm gold" data-go="class">查看轉職</button></div>` : ''}
@@ -948,11 +951,24 @@
       let note = l.note || ''; if (note.startsWith('{') || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(note)) note = '';
       return `<div><span class="muted">${d}</span> ${esc(l.type)} ${parts} <span class="muted">${esc(note)}</span></div>`; }).join('');
   }
+  // /classic-next: one home entry for 星圖派遣・構築・星圖任務 (the Atlas panels, without the Atlas workspace).
+  function atlasEntryHtml() {
+    if (!atlasWorkspace) return '';
+    return `<button type="button" class="card next-atlas-entry" data-next-atlas><span class="next-atlas-mark" aria-hidden="true">✦</span><span class="next-atlas-text"><b>星圖派遣・構築・任務</b><small>出征星圖、調整構築與天賦、領取星圖任務</small></span><span class="next-atlas-go" aria-hidden="true">›</span></button>`;
+  }
+  function openAtlasEntry() {
+    if (!atlasWorkspace || !S.me) return;
+    const quests = S.realmId === 'permanent';
+    const c = sheet(`<h2>星圖</h2><div class="next-atlas-choices"><button class="btn" data-next-atlas-open="expedition">🗺️ 星圖派遣<small>選圖出征、查看進度與戰報</small></button><button class="btn" data-next-atlas-open="build">✧ 星圖構築<small>技能流派、輔助與天賦星盤</small></button>${quests ? '<button class="btn" data-next-atlas-open="quests">📜 星圖任務<small>教學、每日、每週與長期委託</small></button>' : ''}</div><div class="row mt"><button class="btn ghost" data-next-atlas-close>關閉</button></div>`);
+    c.querySelector('[data-next-atlas-close]').onclick = closeSheet;
+    c.querySelectorAll('[data-next-atlas-open]').forEach(b => { b.onclick = () => { closeSheet(); atlasWorkspace.open(b.dataset.nextAtlasOpen); }; });
+  }
   function openGuardian(initialView='overview'){S.guardianInitialView=['overview','summon','inventory','fuse','guide'].includes(initialView)?initialView:'overview';S.tab='guardian';render();}
   function bindHome(view) {
     const guardianEntry=view.querySelector('[data-guardian-entry]');if(guardianEntry)guardianEntry.onclick=openGuardian;
     drawPortrait($('#pt', view), heroOpts({}));
     if(window.RpgExpeditionAway?.activity(S.me))awayCleanup=window.RpgExpeditionAway.mount(view,()=>Date.now()+(S.skew||0));
+    else if (NEXT && window.RpgClassicNextBattle?.attach($('#bslot', view), { characterId: S.me.character.tgId, realmId: S.realmId, fallback: slot => BATTLE?.attach(slot) })) {}
     else if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
     const supplyToggle=$('#refillGuardian',view);if(supplyToggle)supplyToggle.onchange=async()=>{const checked=supplyToggle.checked;supplyToggle.disabled=true;try{await api('guardian/assist',{mode:'supply',autoBuy:checked,requestId:window.RpgGuardianHost.requestId()});await refreshMe();window.dispatchEvent(new Event('elf-skills-refresh'));toast(checked?'已允許召喚石用完自動購買，每顆3,000金幣':'已關閉召喚石自動購買，背包石頭用完就停止召喚');}catch(e){supplyToggle.checked=!checked;toast(e.message);}finally{supplyToggle.disabled=false;}};
     view.querySelectorAll('[data-potion-kind]').forEach(select=>{select.onchange=async()=>{const field=select.dataset.potionKind==='red'?'autoRedPotion':'autoBluePotion',value=select.value;select.disabled=true;try{const j=await act('settings',{[field]:value},value==='auto'?'已改為最低階優先，喝完依序往上':'已設定自動飲用：'+itemName(value));if(!j){select.value=S.me.character[field]||'auto';select.disabled=false;}}catch{select.value=S.me.character[field]||'auto';select.disabled=false;}};});
@@ -961,6 +977,7 @@
     view.querySelectorAll('#blueSeg button').forEach(b=>{b.onclick=()=>act('settings',{autoBluePct:Number(b.dataset.v)},`魔力 ≤ ${b.dataset.v}% 自動喝藍水`);});
     $('#blueTog', view).onclick = () => act('settings', { autoBlue: !S.me.character.autoBlue }, (j) => (j.character.autoBlue ? '已開啟自動藍水' : '已關閉自動藍水（魔力 不足時改用普攻）'));
     view.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => { S.tab = b.dataset.go; render(); }; });
+    if (NEXT) { const atlasEntry = view.querySelector('[data-next-atlas]'); if (atlasEntry) atlasEntry.onclick = openAtlasEntry; }
     bindTodo(view);
   }
   // ---------- v0.5.1「現在可以做」: every visit shows what to spend gold / time on ----------
@@ -1098,7 +1115,7 @@
   }
   async function startAuto(e,blessed,target){const j=await api('auto-enhance/start',{itemId:e.id,blessed,target});S.autoEnhance=j.job;S.dismissAuto=null;await syncBackground().catch(()=>{});autoPanel();return j;}
   let autoPollBusy=false,autoPollAt=0;
-  setInterval(async()=>{const viewing=equipmentSync?.pending(S.me?.character?.tgId)||S.tab==='bag'||!!$('.sheet-card')?.dataset.equipmentId||!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||!((S.backgroundJobs||[]).some(x=>x.job.status==='running')||equipmentSync?.pending(S.me.character.tgId))||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))await refreshMe({silent:true,full:true});}catch(_){}finally{autoPollBusy=false;}},3000);
+  setInterval(async()=>{const viewing=equipmentSync?.pending(S.me?.character?.tgId)||S.tab==='bag'||!!$('.sheet-card')?.dataset.equipmentId||!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||NEXT&&!viewing||!((S.backgroundJobs||[]).some(x=>x.job.status==='running')||equipmentSync?.pending(S.me.character.tgId))||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))await refreshMe({silent:true,full:true});}catch(_){}finally{autoPollBusy=false;}},3000);
   function forgeFailure(e,message,onReturn){const ov=$('#forge');if(!ov)return;window.RpgForgeRitual?.dispose?.();ov.classList.remove('charging','dragging','waiting');ov.querySelector('.fr-instruction')?.replaceChildren(document.createTextNode('本次操作已停止'));const box=ov.querySelector('.fg-box');if(!box){ov.hidden=true;$('#app').inert=false;return;}let buttons=ov.querySelector('.fg-b');if(!buttons){buttons=document.createElement('div');buttons.className='fg-b';box.append(buttons);}const text=ov.querySelector('.fg-r');if(text)text.textContent=message||S.forgeError||'操作未完成，請確認裝備狀態後再試。';buttons.innerHTML='<button class="btn ghost" data-forge-exit>返回裝備</button>';buttons.querySelector('button').onclick=()=>{ov.hidden=true;$('#app').inert=false;refreshMe();if(S.me?.equipment.some(x=>x.id===e.id)){if(onReturn)onReturn();else itemSheet(e.id);}};ov.querySelector('.fr-auto')?.setAttribute('hidden','');}
   const guaranteedScrollKey=e=>e.slot==='weapon'||e.scroll==='scroll_w'?'guaranteed_scroll_w':'guaranteed_scroll_a';
   async function forge(e,kind,run,blessed=false,autoTarget=null,guaranteed=false){try{return await forgeRun(e,kind,run,blessed,autoTarget,guaranteed)}catch(err){forgeFailure(e,err.message);return null}}
@@ -2168,7 +2185,7 @@
   async function switchRealm(realmId) {
     if(S.busy||S.switchingRealm||atlasWorkspace?.client.state.busy||realmId===S.realmId)return;
     const realm=S.realms.find(item=>item.id===realmId&&item.available!==false);if(!realm)return;
-    S.realmId=realmId;S.characters=[];S.charactersError='';S.charactersLoading=true;S.switchingRealm=true;S.pendingTab='atlas';S.tab='atlas';resetRealmContext();
+    S.realmId=realmId;S.characters=[];S.charactersError='';S.charactersLoading=true;S.switchingRealm=true;S.pendingTab=NEXT?'home':'atlas';S.tab=S.pendingTab;resetRealmContext();
     try{const result=await api('characters');S.characters=result.characters||[];S.maxCharacters=result.maxCharacters||4;try{localStorage.setItem(realmStorageKey(),realmId);}catch{} }
     catch(error){if(error.code!=='context_changed'){S.charactersError=error.message;toast(error.message,true);}}
     finally{S.charactersLoading=false;S.switchingRealm=false;render();}
@@ -2205,7 +2222,7 @@
     catch (e) { toast(e.message, true); }
   }
   async function enterCharacter(charId){
-    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.maxCharacters=j.maxCharacters||S.maxCharacters;S.choosing=false;S.tab=S.pendingTab||'atlas';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
+    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.maxCharacters=j.maxCharacters||S.maxCharacters;S.choosing=false;S.tab=S.pendingTab||(NEXT?'home':'atlas');render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
   }
   function bindCharacterSelect(view) {
     const retry=$('#retryCharacters',view);if(retry)retry.onclick=openCharacterSelect;
@@ -2245,6 +2262,7 @@
     openTrade:async item=>{if(S.trade?.status==='open'){const [mine,other]=tradeSide(S.trade);if(mine.locked){toast('交易已鎖定，不能新增羽毛。',true);return;}if(!await confirmSheet('放入守護羽毛',`將這根羽毛放入與 ${esc(other.name)} 的交易視窗？`,'放入'))return;await tradeCall('add',{tradeId:S.trade.id,sigilId:item.id});}else{S.tab='trade';S.social='trade';render();loadTrades();toast('可由「分享至群組」開始交易；已有視窗時可放入守護羽毛。');}}
   };
   function render() {
+    window.RpgClassicNextBattle?.release(); // /classic-next only (undefined on /classic)
     atlasWorkspace?.update(S);
     renderBackground();
     const guardianVisible=S.tab==='guardian'&&!S.choosing&&!S.creating&&!!S.me;
@@ -2286,7 +2304,7 @@
     full=full||!!equipmentSync?.pending(S.me?.character?.tgId);
     if(refreshFlight)return refreshEpoch===(S.apiEpoch||0)&&(!full||refreshFull)?refreshFlight:refreshFlight.then(()=>refreshMe({silent,full}));
     const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0,equipmentTicket=equipmentSync?.begin(selected);refreshEpoch=epoch;refreshFull=full;
-    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();return j;}catch(e){if(!silent&&!['no_character','context_changed','request_cancelled'].includes(e.code))toast(e.message,true);return null;}finally{refreshFlight=null;}})();
+    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();if(NEXT)window.RpgClassicNextBattle?.refresh();return j;}catch(e){if(!silent&&!['no_character','context_changed','request_cancelled'].includes(e.code))toast(e.message,true);return null;}finally{refreshFlight=null;}})();
     return refreshFlight;
   }
   async function loadShop(force) {const actor=String(S.me?.character?.tgId||''),epoch=S.apiEpoch||0;if(S.shop&&!force&&shopForActor===actor)return;try{const result=await api('shop');if(String(S.me?.character?.tgId||'')!==actor||epoch!==(S.apiEpoch||0))return;absorb(result);shopForActor=actor;if(S.tab==='shop')render();}catch(e){if(String(S.me?.character?.tgId||'')===actor&&e.code!=='context_changed')toast(e.message,true);}}
@@ -2298,7 +2316,7 @@
     return bossFlight;
   }
   async function loadLedger() { try { S.ledger = (await api('ledger')).ledger; const el = $('#ledger'); if (el) el.innerHTML = ledgerHtml(); } catch (_) {} }
-  setInterval(()=>{if(!document.hidden&&S.tab==='trade'&&S.social==='hall')loadHeroes()},300000);
+  if(!NEXT)setInterval(()=>{if(!document.hidden&&S.tab==='trade'&&S.social==='hall')loadHeroes()},300000);
   function load(tab) { if(tab==='bag')refreshMe({silent:true,full:true});else if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (tab === 'trade') { if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
   // live polling: open trade window every 3 s (other side's items / 鎖定 / OK); request + duel lists every 12 s
   setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.social === 'pk' || !S.trade || S.trade.status !== 'open' || S.busy || !$('#sheet').hidden) return; loadTrade(S.trade.id); }, 3000);
@@ -2312,8 +2330,8 @@
   }, 1000);
   setInterval(()=>{if(!document.hidden&&S.me&&S.tab==='boss'&&!S.busy&&$('#sheet').hidden)loadBoss({silent:true});},8000);
   // live idle status: the server settles idle progress on every read; poll gently
-  setInterval(() => { if (document.hidden || !S.me || S.choosing || S.creating || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && !S.choosing && !S.creating) {refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
+  if (!NEXT) setInterval(() => { if (document.hidden || !S.me || S.choosing || S.creating || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && !S.choosing && !S.creating) {if(!NEXT)refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
 
   function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
   async function boot() {
@@ -2327,7 +2345,7 @@
     }
     const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
     const ringLink=/^ring_([0-9a-f]{32})$/.exec(spx);
-    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', fate:'home', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'atlas';
+    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', fate:'home', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || (NEXT ? 'home' : 'atlas');
     if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
@@ -2351,7 +2369,7 @@
     const owner=S.me.character.tgId,realm=S.realmId,epoch=S.contextEpoch,current=()=>owner===S.me?.character?.tgId&&realm===S.realmId&&epoch===S.contextEpoch,stop=window.RpgStarRingCosmetics.mount(dialog.querySelector('[data-cosmetic-root]'),{me:()=>S.me,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,api:(action,body)=>{if(!current())throw Error('角色或環境已切換，請重新開啟衣櫥');return api(action,body);},actorArt:characterPortrait,refresh:()=>current()?refreshMe():null,toast});
     const close=()=>{stop();window.removeEventListener('rpg-context-changed',close);dialog.close();dialog.remove();};dialog.querySelector('.sr-cosmetic-close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});window.addEventListener('rpg-context-changed',close);dialog.showModal();
   }
-  function atlasHome(){if(!S.me)return void openCharacterSelect();S.choosing=false;S.creating=false;S.tab='atlas';render();}
+  function atlasHome(){if(!S.me)return void openCharacterSelect();S.choosing=false;S.creating=false;S.tab=NEXT?'home':'atlas';render();}
   async function openAtlasRoute(route){
     if(!S.me||S.choosing||S.creating)return void openCharacterSelect();
     if(route.startsWith('guardian:'))return openGuardian(route.split(':')[1]);
@@ -2368,7 +2386,7 @@
   }
   window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,request:(action,body)=>api(action,body),refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe():null};
   window.RpgExpeditionHost={realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:options=>S.me&&!S.choosing&&!S.creating?refreshMe(options):Promise.resolve(null),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
-  atlasWorkspace=window.RpgAtlasUI?.mount({request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
+  atlasWorkspace=window.RpgAtlasUI?.mount({overlayOnly:NEXT,request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
     scene:c=>{const map=c&&(S.meta?.maps?.[c.mapId]||window.RpgMaps?.get(c.level));return {name:map?.name||'星圖營地',image:`/art/star-ring-20261018/map-${String(map?.id||1).padStart(2,'0')}.webp`};},
     chooseCharacter:()=>void openCharacterSelect(),home:atlasHome,switchRealm,openRoute:route=>{void openAtlasRoute(route).catch(error=>toast(error.message,true));},
     refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe({silent:true,full:true}):null});
