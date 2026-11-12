@@ -530,3 +530,18 @@ test('classic item stats: quality colour, compact stat line, 部位分頁 tabs a
   for(const [k,v] of [['裝備階','T1 · Lv.481'],['世界模式','地獄'],['強化','+3 → +4：成功 40% · 爆裝 10%'],['典藏','已典藏']])assert.ok(detail.includes('<dt>'+k+'</dt><dd>'+v+'</dd>'),k);
   assert.match(detail,/強化成功後 · \+3 → \+4：魔力 90 → <b>99<\/b>（\+9）/);
 });
+
+// 2026-11-12: Atlas/idle scene snapshots carry no inventory; they used to rebuild the
+// whole open bag (every button) on every idle minute and every 3 s Atlas chunk.
+test('scene snapshots without inventory never rebuild the open bag or equipment window',async()=>{
+  for(const mode of ['inventory','equipment']){
+    const h=harness({mode});await settle();
+    let writes=0;
+    Object.defineProperty(h.root,'innerHTML',{configurable:true,get(){return this.html;},set(value){writes++;this.html=value;this.controls=null;}});
+    for(let i=0;i<20;i++)h.module.update({schemaVersion:1,accountId:'a1',realmId:'permanent',characterId:'c1',live:{revision:2+i},character:{revision:2+i},run:null});
+    await settle();assert.equal(writes,0);
+    const next=h.getMe();next.character.revision=50;next.character.gold=999;
+    h.module.update({me:next});await settle();assert.equal(writes,1,'a genuine inventory projection still repaints once');
+    h.module.dispose?.();
+  }
+});

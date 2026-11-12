@@ -158,3 +158,27 @@ test('scene social layer polls chat only while the chat window is open and has n
  assert.doesNotMatch(social,/questPoll/);assert.match(social,/rpg:scene-manual-refresh/);
  assert.doesNotMatch(social,/['"]bestiary['"]/,'no bestiary route or hub tile');
 });
+
+// 2026-11-12 owner report: buttons kept refreshing and taps missed. A scene snapshot that
+// lands while a finger is down inside the window is held until the tap has completed.
+test('scene snapshots wait for an in-progress tap inside the window, then apply once with the newest value',async()=>{
+ const listeners=new Map();
+ const el=()=>{const cache=new Map();const node={children:[],dataset:{},style:{},classList:{toggle(){},add(){},remove(){}},textContent:'',isConnected:true,
+  setAttribute(){},removeAttribute(){},append(...items){node.children.push(...items);},replaceChildren(){node.children=[];},focus(){},remove(){},
+  contains:()=>true,querySelectorAll:()=>[],querySelector(selector){if(!cache.has(selector))cache.set(selector,el());return cache.get(selector);}};
+  Object.defineProperty(node,'innerHTML',{set(){},get(){return '';}});return node;};
+ const doc={activeElement:null,createElement:()=>el(),addEventListener:(type,fn)=>listeners.set(type,fn),removeEventListener(){},defaultView:null};
+ const root=el(),navigation=el();root.ownerDocument=doc;root.children=[navigation];navigation.parentNode=root;
+ const box={window:{},setTimeout,clearTimeout,Date,localStorage:{getItem:()=>null,setItem(){}}};vm.runInNewContext(source,box);
+ const applied=[],context={accountId:'a',realmId:'permanent',characterId:'a1',epoch:1};
+ const manager=box.RpgSceneWindows.create({root,navigation,routes:{skills:{title:'技能',group:'character'}},getContext:()=>context,mount:()=>({update:value=>applied.push(value)})});
+ manager.navigate('skills');await new Promise(r=>setImmediate(r));
+ manager.update(1);assert.deepEqual(applied,[1],'idle window applies at once');
+ listeners.get('pointerdown')({target:{}});
+ manager.update(2);manager.update(3);assert.deepEqual(applied,[1],'held while the finger is down');
+ listeners.get('pointerup')({});manager.update(4);assert.deepEqual(applied,[1],'held until the click has landed');
+ await new Promise(r=>setTimeout(r,420));
+ assert.deepEqual(applied,[1,4],'one repaint with the newest snapshot after the tap');
+ manager.update(5);assert.deepEqual(applied,[1,4,5]);
+ manager.dispose();
+});

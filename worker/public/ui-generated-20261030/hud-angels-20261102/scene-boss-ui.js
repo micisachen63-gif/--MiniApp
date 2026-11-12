@@ -81,9 +81,12 @@
       return revision;
     }
     const fingerprint=()=>JSON.stringify([state.revision,state.data?.readOnly,state.data?.boss?.id,state.data?.boss?.status,state.data?.boss?.hp,state.data?.boss?.me,state.data?.essence,state.data?.exchange]);
+    // A revision-only re-read keeps the current buttons until the answer arrives.
+    var backgroundRead=false;
     async function refresh(){
+      const quiet=backgroundRead;backgroundRead=false;
       if(!current()||state.busy||state.checking)return false;
-      const ticket=++generation,before=fingerprint();controller?.abort();controller=new AbortController();state.loading=true;state.error='';notify();
+      const ticket=++generation,before=fingerprint();controller?.abort();controller=new AbortController();state.loading=true;state.error='';if(!quiet)notify();
       try{
         const value=await host.request('boss/scene',{}, {signal:controller.signal});
         if(!current()||ticket!==generation)return false;
@@ -238,7 +241,7 @@
       for(const k of ['accountId','realmId','characterId'])if(scene?.[k]!=null&&String(scene[k])!==String(context[k]))return;
       const revision=scene?.live?.revision??scene?.character?.revision??scene?.actor?.revision??scene?.revision;if(!safeInt(revision))return;
       state.minRevision=Math.max(state.minRevision,revision);
-      if(revision>state.revision){state.stale=true;if(state.confirm){state.confirm=null;state.notice='角色狀態已更新，請重新確認。';}if(!state.busy&&!state.loading&&!state.checking)void refresh();else notify();}
+      if(revision>state.revision){state.stale=true;if(state.confirm){state.confirm=null;state.notice='角色狀態已更新，請重新確認。';}if(!state.busy&&!state.loading&&!state.checking){backgroundRead=true;void refresh();}else notify();}
     }
     return {state,context,current,now,pending,pendingList,markRevealed,readiness,recoveryReason,feedback,refresh,prepareAttack,prepareExchange,prepareRecovery,cancel,submit,checkPending,acknowledge,update,
       dispose(){if(disposed)return;disposed=true;generation++;receiptGeneration++;controller?.abort();receiptController?.abort();}};

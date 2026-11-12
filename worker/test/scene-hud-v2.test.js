@@ -24,6 +24,7 @@ class Element {
     }
   }
   matches(selector) {
+    if (/^[a-z]+$/.test(selector)) return this.tagName === selector.toUpperCase();
     if (selector.startsWith('#')) return this.id === selector.slice(1);
     if (selector.startsWith('.')) return this.className.split(' ').includes(selector.slice(1));
     const match = /^\[data-([a-z-]+)="([^"]+)"\]$/.exec(selector);
@@ -273,4 +274,29 @@ test('accepted skill revision floor survives a same-context offline reset', asyn
     assert.equal(h.api.inspectHUD().status, 'error', reset);
     assert.equal(h.skill(0).dataset.skillId, '', reset);
   }
+});
+
+// 2026-11-12 owner report: buttons kept refreshing so taps missed. Every idle minute
+// (d38b3381) and every Atlas chunk bumps live.revision; the HUD re-read used to blank
+// the three skill buttons (同步中, empty icon, dimmed) until skill-career answered.
+test('a revision-only snapshot keeps the committed skill buttons in place while the loadout is re-read', async () => {
+  const painted = snap => { const value = skills(snap, { loadout: ['skill_01_1', 'mage-flame'] }); value.skills.push({ id: 'skill_01_1', name: '重擊' }); return value; };
+  const a = snapshot({ revision: 7 }), h = harness(a); await tick();
+  h.requests[0].resolve(painted(a)); await tick();
+  const button = h.skill(0), icon = button.querySelector('.hud-v2-icon'), lastArt = () => icon.querySelectorAll('img').at(-1), art = lastArt();
+  assert.match(art.src, /skill_01_1\.webp/); assert.equal(button.dataset.authority, 'committed');
+  const before = icon.children.length;
+  for (const revision of [8, 9, 10]) {
+    const next = snapshot({ revision }); h.publish(next); await tick();
+    assert.equal(h.skill(0), button, 'the button element itself is never rebuilt');
+    assert.equal(button.querySelector('.hud-v2-name').textContent, '重擊', 'no 同步中 flash');
+    assert.notEqual(button.dataset.authority, 'unknown', 'no dimmed icon while re-reading');
+    assert.equal(lastArt(), art, 'the painted icon node is not replaced');
+    assert.equal(icon.children.length, before);
+    assert.equal(button.disabled, false);
+    h.requests.at(-1).resolve(painted(next)); await tick();
+    assert.equal(button.dataset.authority, 'committed'); assert.equal(lastArt(), art);
+  }
+  h.change({ characterId: 'B' });
+  assert.equal(h.skill(0).dataset.skillId, '', 'a different character still clears at once');
 });

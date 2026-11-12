@@ -154,9 +154,12 @@
       const timing = active?.timing, at = clockNow();
       return !!active && timing?.available === true && timing.completionDue !== true && timing.index === active.draft.answers.length && positive(timing.deadline) && at < timing.deadline && (at + 8*3600000) % 86400000 >= 6*3600000;
     }
+    // A revision-only re-read keeps the current buttons until the answer arrives.
+    var backgroundRead = false;
     async function refresh(nextQuery = query) {
+      const quiet = backgroundRead; backgroundRead = false;
       if (!current() || state.busy || state.checking) return false;
-      const ticket = ++sequence, guard = ++generation, before = fingerprint(); controller?.abort(); controller = new AbortController(); state.loading = true; state.error = ''; notify();
+      const ticket = ++sequence, guard = ++generation, before = fingerprint(); controller?.abort(); controller = new AbortController(); state.loading = true; state.error = ''; if (!quiet) notify();
       try {
         const next = validQuery(nextQuery), value = await host.request('fate/scene',{...next,readSequence:ticket},{signal:controller.signal});
         if (!current() || guard !== generation || ticket !== sequence) return false;
@@ -308,7 +311,7 @@
       for (const field of ['accountId','realmId','characterId']) if (scene?.[field] != null && String(scene[field]) !== String(context[field])) return;
       const revision = scene?.live?.revision ?? scene?.character?.revision ?? scene?.revision;
       if (!integer(revision)) return; state.minRevision = Math.max(state.minRevision,revision);
-      if (revision > state.revision) { state.stale = true; if (state.confirm) { state.confirm = null; state.notice = '角色狀態已更新，請重新確認。'; } if (!state.busy && !state.loading && !state.checking) void refresh(); else notify(); }
+      if (revision > state.revision) { state.stale = true; if (state.confirm) { state.confirm = null; state.notice = '角色狀態已更新，請重新確認。'; } if (!state.busy && !state.loading && !state.checking) { backgroundRead = true; void refresh(); } else notify(); }
     }
     return {state,context,current,pending,markRevealed,feedback,refresh,getQuery:() => clone(query),clockNow,choiceOpen,readiness,prepare,prepareStart,prepareChoice,prepareKeep,prepareClaim,prepareOpen,cancel,submit,checkPending,readHistoryReceipt,acknowledge,recoveryReason,prepareRecovery,update,
       dispose() { if (disposed) return; disposed = true; generation++; receiptGeneration++; controller?.abort(); receiptController?.abort(); }};

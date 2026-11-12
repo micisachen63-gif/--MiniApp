@@ -114,9 +114,23 @@
   },80);}
   doc.addEventListener('focusin',revealField);doc.defaultView?.addEventListener('resize',revealField);viewport?.addEventListener('resize',revealField);hostViewport?.addEventListener('resize',revealField);
   const telegramBack=()=>back();try{window.Telegram?.WebApp?.BackButton?.onClick(telegramBack);}catch{}
+  // Scene snapshots arrive every idle minute and every Atlas chunk. While a finger is
+  // down inside the window (and briefly after, until its click lands) hold the newest
+  // one, so a repaint can never replace the button being tapped; then apply it once.
+  let pressedAt=0,releaseTimer=null,heldUpdate=null,holding=false;
+  function applyUpdate(value){mounted?.update?.(value);if(dialog)dialog.querySelector('.scene-window-context').textContent=options.contextLabel?.()||'';}
+  function flushUpdate(){releaseTimer=null;if(!holding||pressedAt)return;const value=heldUpdate;holding=false;heldUpdate=null;if(!disposed)applyUpdate(value);}
+  function pressStart(event){if(dialog&&dialog.contains?.(event.target)){pressedAt=Date.now();clearTimeout(releaseTimer);releaseTimer=null;}}
+  function pressEnd(){if(!pressedAt)return;pressedAt=0;clearTimeout(releaseTimer);releaseTimer=setTimeout(flushUpdate,350);}
+  doc.addEventListener('pointerdown',pressStart,true);doc.addEventListener('pointerup',pressEnd,true);doc.addEventListener('pointercancel',pressEnd,true);
+  function update(value){
+   const busy=pressedAt&&Date.now()-pressedAt<4000||releaseTimer;
+   if(busy&&dialog){heldUpdate=value;holding=true;return;}
+   holding=false;heldUpdate=null;pressedAt=0;applyUpdate(value);
+  }
   return {navigate,back,close,syncContext,current:state.current,getDialog:()=>dialog,getDraft:state.draft,
-   update(value){mounted?.update?.(value);if(dialog)dialog.querySelector('.scene-window-context').textContent=options.contextLabel?.()||'';},
-   dispose(){if(disposed)return;close({restoreFocus:false});disposed=true;clearTimeout(focusTimer);doc.removeEventListener('keydown',keydown,true);doc.removeEventListener('focusin',revealField);doc.defaultView?.removeEventListener('resize',revealField);viewport?.removeEventListener('resize',revealField);hostViewport?.removeEventListener('resize',revealField);try{window.Telegram?.WebApp?.BackButton?.offClick(telegramBack);}catch{}}
+   update,
+   dispose(){if(disposed)return;close({restoreFocus:false});disposed=true;clearTimeout(focusTimer);clearTimeout(releaseTimer);holding=false;heldUpdate=null;doc.removeEventListener('pointerdown',pressStart,true);doc.removeEventListener('pointerup',pressEnd,true);doc.removeEventListener('pointercancel',pressEnd,true);doc.removeEventListener('keydown',keydown,true);doc.removeEventListener('focusin',revealField);doc.defaultView?.removeEventListener('resize',revealField);viewport?.removeEventListener('resize',revealField);hostViewport?.removeEventListener('resize',revealField);try{window.Telegram?.WebApp?.BackButton?.offClick(telegramBack);}catch{}}
   };
  }
  globalThis.RpgSceneWindows={createState,create,contextKey:scopeKey};
