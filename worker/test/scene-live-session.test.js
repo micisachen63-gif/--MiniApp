@@ -962,10 +962,7 @@ test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atla
   });
 });
 
-function fireScheduled(h) {
-  for (const [id, d] of [...h.time.deadlines.entries()]) { h.time.deadlines.delete(id); d.fn(); }
-  for (const { fn } of h.time.intervals.values()) fn();
-}
+function activeTimers(h) { return [...h.time.deadlines.entries()].filter(([, d]) => d.ms === 3000 || d.ms === 10000); }
 
 // Owner decision 2026-11-12: the 60 s ordinary-idle `me` settlement timer (d38b3381) is
 // removed; it refreshed main-screen buttons every minute. Without an ACTIVE Atlas run the
@@ -978,7 +975,7 @@ test('no Atlas run: the main screen never schedules or sends a timer-driven sync
     const idle = scene({ runId: null }); edit(idle);
     h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
     assert.equal(h.time.deadlines.size, 0, 'no timer without an active Atlas run');
-    h.time.advance(10 * 60000); fireScheduled(h); await drain();
+    h.time.advance(10 * 60000); await drain();
     hidden = true; h.client.visibilityChanged(); hidden = false; h.client.visibilityChanged(); await drain();
     assert.equal(h.time.deadlines.size, 0); assert.equal(h.net.calls.length, 1, 'only the initial read');
     assert.ok(!h.net.calls.some(call => call.action === 'me'), 'no timed me settlement');
@@ -988,34 +985,36 @@ test('no Atlas run: the main screen never schedules or sends a timer-driven sync
   }
 });
 function progressionScene(extra = {}) { const value = scene(extra); if (value.run) value.run.map = { id: 'cycle_elite_01', progression: { mode: 'elite' } }; return value; }
-// Owner decision 2026-11-12 (星圖派遣也不要自動同步，只手動): the 3 s / 10 s
-// Atlas-active timer from 37647b40 is removed. An ACTIVE run is discovered and
-// may settle one chunk on start, a manual 同步, or a player action; nothing is
-// scheduled or sent on a timer, including over 10 simulated minutes and on tab return.
-test('an ACTIVE Atlas run never schedules or sends a timer-driven sync over 10 minutes', async t => {
-  for (const make of [extra => progressionScene(extra), extra => scene(extra)]) {
-    let hidden = false;
-    const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
-    h.client.start();
-    h.net.calls[0].reply({ ok: true, scene: make() }); await drain();
-    assert.equal(h.net.calls[1].action, 'atlas/settle', 'the opening sync may still settle one chunk');
-    h.net.calls[1].reply({ ok: true, scene: make({ revision: 2, runRevision: 2, processedAt: 15000 }) }); await drain(); await drain();
-    const afterStart = h.net.calls.length;
-    assert.equal(h.time.deadlines.size, 0, 'no atlas auto-sync timer');
-    assert.equal(h.time.intervals.size, 0, 'no interval poller');
-    h.time.advance(10 * 60000); fireScheduled(h); await drain();
-    hidden = true; h.client.visibilityChanged();
-    hidden = false; h.client.visibilityChanged(); await drain();
-    assert.equal(h.time.deadlines.size, 0);
-    assert.equal(h.net.calls.length, afterStart, 'no requests over 10 simulated minutes, including tab return');
-    const manual = h.client.sync();
-    assert.equal(h.net.calls.at(-1).action, 'atlas/status', 'manual 同步 still reads');
-    h.net.calls.at(-1).reply({ ok: true, scene: make({ revision: 3, runRevision: 2, processedAt: 15000, serverNow: 15000 }) });
-    await manual; await drain();
-    assert.equal(h.client.getSnapshot().live.revision, 3);
-    assert.equal(h.time.deadlines.size, 0, 'manual 同步 still schedules no timer');
-    assert.equal(h.net.calls.filter(call => call.action === 'atlas/settle').length, 1, 'manual 同步 of a current run does not settle again');
-  }
+test('an ACTIVE five-cycle Atlas run syncs every 3 s while visible and stops when the run ends', async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: progressionScene() }); await drain();
+  assert.equal(h.net.calls[1].action, 'atlas/settle');
+  h.net.calls[1].reply({ ok: true, scene: progressionScene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  let timers = activeTimers(h); assert.equal(timers.length, 1); assert.equal(timers[0][1].ms, 3000);
+  assert.equal(h.time.intervals.size, 0, 'no interval poller');
+  h.time.advance(3000); h.time.deadlines.delete(timers[0][0]); timers[0][1].fn();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  h.net.calls[2].reply({ ok: true, scene: progressionScene({ revision: 3, runRevision: 2, serverNow: 63000 }) }); await drain();
+  assert.equal(h.net.calls[3].action, 'atlas/settle', 'the tick advances the run so new combat events arrive');
+  h.net.calls[3].reply({ ok: true, scene: scene({ revision: 4, runId: null }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 0, 'run ended: timer stopped');
+  const before = h.net.calls.length; h.time.advance(30000); await drain(); assert.equal(h.net.calls.length, before);
+});
+test('a legacy active run syncs every 10 s; hiding stops the timer at once and showing resumes it', async t => {
+  let hidden = false; const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
+  h.client.start();
+  h.net.calls[0].reply({ ok: true, scene: scene() }); await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h)[0][1].ms, 10000);
+  hidden = true; h.client.visibilityChanged();
+  assert.equal(activeTimers(h).length, 0, 'hidden: timer cleared immediately');
+  const before = h.net.calls.length;
+  hidden = false; h.client.visibilityChanged();
+  assert.equal(h.net.calls.length, before + 1, 'visible with an active run: one immediate sync');
+  h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 3, runRevision: 2 }) }); await drain(); await drain();
+  assert.equal(activeTimers(h).length, 1, 'timer resumed');
+  h.client.dispose(); assert.equal(activeTimers(h).length, 0);
 });
 test('becoming visible without an active run does not refresh', async t => {
   const h = harness(); t.after(() => h.client.dispose());
