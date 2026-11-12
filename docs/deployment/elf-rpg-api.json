@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "50e3e72c24169a19f486b815b571c37d4ec0364c",
+  "sourceCommit": "68daf033f878bd1656091f71b2300140e5bb25e9",
   "service": "elf-rpg-api",
-  "productionVersion": "5f50ddd8-202f-4450-bc20-e6cc526ab407",
+  "productionVersion": "3c8ef1ea-553d-4da9-8722-476a7a8cdad0",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-12T04:16:53.722Z",
+  "verifiedAt": "2026-11-12T04:48:24.951Z",
   "runtimeSHA256": {
     "index.js": "7d6970ca518f2e23be8fe85b18028e10b2a9bbd23d02bb3697104c4ddecc7bcb"
   },
   "source": {
     "fileCount": 14706,
-    "sha256": "245de2bce73d2748a453977a30bb49eabc1d2d000f8ee15158dbef8d40a0a6f9",
+    "sha256": "7e231370ceacb3b1453094bdf21478fccb07ef8c3abe6d77a70624621470ff3e",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -43607,7 +43607,7 @@
       },
       {
         "file": "worker/public/scene-live-session.js",
-        "sha256": "1385023db4752e3459521a4bbd05947b3b95172b74025f393f7ceff3cd4720d2"
+        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
       },
       {
         "file": "worker/public/scene-live-view.css",
@@ -43643,7 +43643,7 @@
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "d57962e7e6711cf67382c386a96ebf8f57ec47ae787cc74bcb56b30097e9cc72"
+        "sha256": "91dae1fa90e9e419ed1a2ce57f3089bb2b165f8662ca977e96ba92d4d60b0561"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -56639,7 +56639,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-        "sha256": "1385023db4752e3459521a4bbd05947b3b95172b74025f393f7ceff3cd4720d2"
+        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
@@ -59057,7 +59057,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "5f50ddd8-202f-4450-bc20-e6cc526ab407",
+        "version_id": "3c8ef1ea-553d-4da9-8722-476a7a8cdad0",
         "percentage": 100
       }
     ],
