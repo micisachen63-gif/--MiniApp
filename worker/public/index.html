@@ -1,5 +1,129 @@
 <!doctype html>
-<html lang="zh-Hant"><head><script src="https://telegram.org/js/telegram-web-app.js?57"></script><script>window.__RpgScenePreviewConfig={live:true,telegram:true,sceneOrigin:location.origin,endpoint:location.origin+"/app/api/"};</script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>星穹旅誌</title><link rel="stylesheet" href="/ui-generated-20261030/preview.css"><link rel="icon" href="data:,"></head>
-<body><iframe id="demo" title="星穹旅誌冒險" data-scene-src="/ui-generated-20261030/scene-bound-20261102/scene.html"></iframe><script src="/entry-gate.js?v=20261110-entry1" onerror="var f=document.getElementById('demo');if(f&&!f.getAttribute('src'))f.src=f.dataset.sceneSrc"></script>
-<aside class="test-controls" hidden inert><button id="show" hidden></button><div id="controls" hidden><input id="hp" value="0"><output id="hpValue"></output><input id="mp" value="0"><output id="mpValue"></output><button id="compare"></button></div></aside>
-<script src="/ui-generated-20261030/preview.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/hud-angels.js?v=20261102-angels1"></script></body></html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="/game-brand.css?v=20261109-huninn1">
+<link rel="icon" href="/expedition/assets/items/crystal.svg">
+<title>星穹旅誌</title>
+<script>window.RPG_CLASSIC_NEXT=true;window.__RpgScenePreviewConfig={live:true,telegram:true,sceneOrigin:location.origin,endpoint:location.origin+"/app/api/"};</script>
+<script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+<link rel="stylesheet" href="styles.css?v=20261020-scroll-badge1">
+<link rel="stylesheet" href="idle-exp.css?v=20261028-exp-progress1">
+<link rel="stylesheet" href="battle.css?v=20261015-thief-complete1">
+<link rel="stylesheet" href="lineage-ui.css?v=14">
+<link rel="stylesheet" href="ui-refined.css?v=20261011-1">
+<link rel="stylesheet" href="mythic-ui.css?v=20261011-2">
+<link rel="stylesheet" href="olympus-luxury.css?v=20261011-1">
+<link rel="stylesheet" href="olympus-suite.css?v=20261011-home-panels-1">
+<link rel="stylesheet" href="hero-display.css?v=20261011-3">
+<link rel="stylesheet" href="hero-fx.css?v=20261016-advanced-armory1">
+<link rel="stylesheet" href="expedition-entry.css?v=20261014-guardian-controls1">
+<link rel="stylesheet" href="olympus-unified.css?v=20261016-create-surfaces1">
+<link rel="stylesheet" href="forge-ritual.css?v=20261020-enhance-gain1">
+<link rel="stylesheet" href="bag-icons.css?v=20261020-scroll-badge1">
+<link rel="stylesheet" href="hero-hall-ui.css?v=20261015-level-rank1">
+<link rel="stylesheet" href="hero-size.css?v=20261028-visible-body1">
+<link rel="stylesheet" href="status-banner.css?v=20261013-contrast1">
+<link rel="stylesheet" href="advanced-specializations.css?v=20261016-lineage1">
+<link rel="stylesheet" href="/star-ring-cosmetics.css?v=20261026-perimeter1"><script src="/star-ring-cosmetics.js?v=20261101-realms1"></script><link rel="stylesheet" href="expedition/tower-progression.css?v=20261020-tower1"><link rel="stylesheet" href="character-delete.css?v=20261028-character-delete1">
+</head>
+<body class="mythic">
+<iframe id="demo" class="cn-scene" title="星穹旅誌冒險" data-scene-src="/ui-generated-20261030/scene-bound-20261102/scene.html?embed=battle&amp;hud=full"></iframe>
+<div id="app">
+  <header id="hud" hidden></header>
+  <main id="view"><div class="boot journey-loading" role="status" aria-live="polite"><div class="journey-star" aria-hidden="true">✦</div><small class="journey-eyebrow">A JOURNAL BEYOND THE STARS</small><h1>星穹旅誌</h1><p>與星同行，將遠方寫成故事</p><div class="journey-progress" aria-hidden="true"><span></span></div><span class="journey-status">正在展開旅程…</span><footer class="game-credit"><span class="credit-label">Game Producer</span><span class="credit-divider" aria-hidden="true">·</span><strong>ミカサ</strong></footer></div></main>
+  <footer class="game-credit"><span class="credit-label">Game Producer</span><span class="credit-divider" aria-hidden="true">·</span><strong>ミカサ</strong></footer>
+  <nav id="nav" hidden aria-label="遊戲主選單">
+    <button data-tab="home" aria-label="冒險"><span class="nav-icon"><img src="art/ui/nav-home-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>冒險</small></button>
+    <button data-tab="bag" aria-label="背包"><span class="nav-icon"><img src="art/ui/nav-bag-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>背包</small></button>
+    <button data-tab="shop" aria-label="商店"><span class="nav-icon"><img src="art/ui/command-shop-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>商店</small></button>
+    <button data-tab="boss" aria-label="首領"><span class="nav-icon"><img src="art/ui/nav-boss-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>首領</small></button>
+    <button data-tab="trade" aria-label="交易"><span class="nav-icon"><img src="art/ui/command-trade-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>交易</small></button>
+    <button data-tab="class" aria-label="職業"><span class="nav-icon"><img src="art/ui/nav-class-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>職業</small></button>
+    <button data-logout aria-label="登出並返回選角畫面"><span class="nav-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M21 8H11a3 3 0 0 0-3 3v26a3 3 0 0 0 3 3h10" fill="#bd8740" stroke="#392614" stroke-width="2.8" stroke-linejoin="round"/><path d="M22 24h18m-7-8 8 8-8 8" fill="none" stroke="#f5dfa0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14v20" stroke="#f5dfa0" stroke-width="2" opacity=".8"/></svg></span><small>登出</small></button>
+  </nav>
+</div>
+<div id="sheet" hidden><div class="sheet-bg"></div><div class="sheet-card"></div></div>
+<div id="toast" hidden role="status" aria-live="polite"></div>
+<script src="thief-class.js?v=20261015-thief1"></script>
+<script src="art.js?v=2"></script>
+<script src="maps.js?v=20261112-next2"></script>
+<script src="map-video.js?v=20261012-video-complete"></script>
+<link rel="stylesheet" href="boss-waiting.css?v=20261012-wait1">
+<script src="boss-waiting.js?v=20261012-wait1"></script>
+<script src="map-motion.js?v=20261012-video-complete"></script>
+<script src="thief-fx.js?v=20261015-thief-complete1"></script>
+<script src="skill-fx.js?v=20261013-mage4-names1"></script>
+<script src="elf-adv2-skill-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="cinematic-fx.js?v=20261012-connection-audit3s1"></script><script src="hero-lavish-fx.js?v=20261012-connection-audit3s1"></script>
+<script src="branch-elf4-fx.js?v=20261013-elf4-attack2"></script>
+<script src="sword-adv4-fx.js?v=20261013-sword4-magic1"></script>
+<script src="hero-art-registry.js?v=20261015-thief-complete1"></script>
+<script src="hero-art-registry-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="sword-branch-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="elf-low-tier-weapon-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="mage-actor-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="hero-art-actor-adapters.js?v=20261014-art-6125dca91d72"></script>
+<script src="battle.js?v=20261025-surround1"></script>
+<script src="gear-names.js?v=20261011-equipment-1"></script>
+<script src="armory-specializations.js?v=20261016-advanced-armory1"></script>
+<script src="hero-fx.js?v=20261016-advanced-armory1"></script>
+<script src="mythic-ui.js?v=20261016-sharegift2"></script>
+<script src="guardian-assist-widget.js?v=20261101-realms1"></script>
+<script src="special-skill-widgets.js?v=20261112-next1"></script>
+<script src="expedition-entry.js?v=20261102-floating1"></script>
+<script src="monster-catalog.js?v=20261011-monsters-1"></script>
+<script src="monster-expansion-catalog.js?v=20261015-monster-audit1"></script>
+<script src="monster-expansion.js?v=20261015-monster-audit1"></script>
+<script src="forge-ritual.js?v=20261020-enhance-gain1"></script>
+<link rel="stylesheet" href="market-sell.css?v=20261028-filter100-1">
+<script src="market-sell.js?v=20261028-filter100-1"></script>
+<link rel="stylesheet" href="market-exchange.css?v=20261015-enhance-badge1">
+<link rel="stylesheet" href="market-exchange-history.css?v=20261014-guardian-controls1">
+<script src="market-exchange-history.js?v=20261014-guardian-controls1"></script>
+<script src="market-exchange.js?v=20261101-realms1"></script>
+<link rel="stylesheet" href="collection-ui.css?v=20261014-blessings1">
+<script src="collection-ui.js?v=20261014-blessings2"></script>
+<link rel="stylesheet" href="guardian-sigil.css?v=20261015-angelvideo1">
+<link rel="stylesheet" href="guardian-ritual-ui.css?v=20261014-interaction2">
+<link rel="stylesheet" href="guardian-fusion-ui.css?v=20261014-guardian-controls1">
+<link rel="stylesheet" href="guardian-idle-fx.css?v=20261016-angel-visible2">
+<script src="guardian-idle-fx.js?v=20261016-angel-visible2"></script>
+<script src="guardian-sigil-contract.js?v=20261014-guardian-controls1"></script>
+<script src="guardian-fusion-batch.js?v=20261014-interaction2"></script>
+<script src="guardian-fusion-ui.js?v=20261014-interaction2"></script>
+<script src="guardian-haptics.js?v=20261014-guardian-result1"></script>
+<script src="guardian-pull.js?v=20261014-guardian-review1"></script>
+<script src="guardian-scene-media.js?v=20261014-guardian-result1"></script>
+<script src="guardian-worldtree.js?v=20261014-interaction2"></script>
+<script src="guardian-summon-gesture.js?v=20261014-interaction2"></script>
+<script src="guardian-presentation.js?v=20261014-guardian-controls1"></script>
+<script src="guardian-auto-ui.js?v=20261015-thief-foundation1"></script>
+<script src="guardian-ritual.js?v=20261014-interaction2"></script>
+<script src="guardian-sigil.js?v=20261101-realms1"></script>
+<link rel="stylesheet" href="background-workshop.css?v=20261014-workshop1">
+<script src="background-workshop.js?v=20261014-workshop1"></script>
+<script src="auto-reroll-ui.js?v=20261018-locks1"></script>
+<script src="operation-notices.js?v=20261101-realms1"></script>
+<link rel="stylesheet" href="guardian-shop.css?v=20261014-shop-notice1">
+<script src="guardian-shop.js?v=20261101-realms1"></script>
+<script src="hero-hall-ui.js?v=20261025-aura2"></script>
+<link rel="stylesheet" href="fate-entry.css?v=20261016-2">
+<link rel="stylesheet" href="/fate/fate-gift-ui.css?v=20261016-sharegift2">
+<script src="fate-entry.js?v=20261102-floating1"></script>
+<link rel="stylesheet" href="potion-choice.css?v=20261019-potions1">
+<script src="equipment-live-sync.js?v=20261019-inventory1"></script><script src="request-client.js?v=20261102-gearbook1"></script><link rel="stylesheet" href="expedition-away.css?v=20261020-away1"><script src="expedition-away.js?v=20261020-away1"></script><script src="atlas-talents-ui.js?v=20261102-growth1"></script><script src="scene-chat-ui.js?v=20261102-live1"></script><script src="atlas-progression-ui.js?v=20261102-growth1"></script><script src="equipment-collection-ui.js?v=20261102-gearbook1"></script><link rel="stylesheet" href="equipment-collection-ui.css?v=20261102-gearbook1"><script src="atlas-ui.js?v=20261112-next3"></script><link rel="stylesheet" href="classic-next.css?v=20261112-next8"><script src="classic-next-battle.js?v=20261112-next8"></script><script src="classic-next-growth.js?v=20261112-next3"></script><script src="classic-next-entries.js?v=20261112-next3"></script><script src="classic-next-menu.js?v=20261112-next8"></script><script src="app.js?v=20261112-next8"></script>
+<link rel="stylesheet" href="journal.css?v=20261013-journal1">
+<script src="journal.js?v=20261013-journal1"></script>
+<script src="coin-ui.js?v=20261012-all-coins1"></script>
+<script src="hero-size.js?v=20261028-visible-body1"></script>
+<link rel="stylesheet" href="hero-armory.css?v=20261016-angel-large1">
+<link rel="stylesheet" href="atlas-ui.css?v=20261101-realms1">
+<link rel="stylesheet" href="scene-windows.css?v=20261102-floating1"><link rel="stylesheet" href="scene-chat-ui.css?v=20261102-live1">
+<link rel="stylesheet" href="atlas-talents-ui.css?v=20261102-growth1">
+<aside class="test-controls" hidden inert style="display:none"><button id="show" hidden></button><div id="controls" hidden><input id="hp" value="0"><output id="hpValue"></output><input id="mp" value="0"><output id="mpValue"></output><button id="compare"></button></div></aside>
+<script src="/ui-generated-20261030/preview.js"></script><script src="/ui-generated-20261030/hud-angels-20261102/hud-angels.js?v=20261102-angels1"></script>
+</body>
+</html>

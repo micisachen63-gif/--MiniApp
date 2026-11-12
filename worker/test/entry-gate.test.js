@@ -135,8 +135,8 @@ test('older Telegram clients without vertical-swipe control still boot', () => {
   assert.deepEqual(plain(d.calls), ['ready', 'expand']);
 });
 
-test('the production entry is the packaged preview plus the gate, with a fallback if the gate script fails', () => {
-  const index = read('index.html'), preview = read('ui-generated-20261030/preview.html');
+test('the scene entry (/scene, the previous production home) is the packaged preview plus the gate, with a fallback if the gate script fails', () => {
+  const index = read('scene.html'), preview = read('ui-generated-20261030/preview.html');
   assert.equal(index, withEntryGate(preview));
   assert.equal(withEntryGate(index), index, 'idempotent');
   const frame = index.match(/<iframe id="demo"[^>]*>/)[0];
@@ -152,7 +152,7 @@ test('packaged manifest matches the entry, the gate and the scene aliases', () =
   const manifest = JSON.parse(read('scene-production-manifest.json'));
   const A = 'ui-generated-20261030/hud-angels-20261102/';
   for (const name of ['entry-gate.js', 'entry-gate.css', 'scene-live-auth.js', 'scene-live-view.js', 'scene-live-view.css']) assert.equal(read(A + name), read(name), 'alias is byte-identical: ' + name);
-  for (const path of ['index.html', A + 'entry-gate.js', A + 'entry-gate.css', A + 'scene-live-auth.js', A + 'scene-live-view.js', A + 'scene-live-view.css']) {
+  for (const path of ['index.html', 'scene.html', A + 'entry-gate.js', A + 'entry-gate.css', A + 'scene-live-auth.js', A + 'scene-live-view.js', A + 'scene-live-view.css']) {
     const data = fs.readFileSync(new URL(path, pub)), entry = manifest.entries.find(e => e.url === '/' + path);
     assert.ok(entry, path); assert.equal(entry.bytes, data.length, path); assert.equal(entry.sha256, crypto.createHash('sha256').update(data).digest('hex'), path);
   }

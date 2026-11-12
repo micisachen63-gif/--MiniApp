@@ -552,7 +552,7 @@ test('P7 embed hud=full: the whole scene HUD, every tap forwarded to the classic
 test('P7 classic-next.html: the current home HUD installers on the scene frame, no debug chip, classic chrome gives way', () => {
   const frameAt = next.indexOf('<iframe id="demo" class="cn-scene"'), preview = next.indexOf('<script src="/ui-generated-20261030/preview.js"></script>'), angels = next.indexOf('hud-angels-20261102/hud-angels.js');
   assert.ok(frameAt > 0 && frameAt < next.indexOf('<script src="app.js') && preview > next.indexOf('<script src="app.js') && angels > preview, 'frame first, then the same installers as index.html');
-  assert.match(read('index.html'), /<script src="\/ui-generated-20261030\/preview\.js"><\/script><script src="\/ui-generated-20261030\/hud-angels-20261102\/hud-angels\.js\?v=20261102-angels1"><\/script>/, 'reused, not copied');
+  assert.match(read('scene.html'), /<script src="\/ui-generated-20261030\/preview\.js"><\/script><script src="\/ui-generated-20261030\/hud-angels-20261102\/hud-angels\.js\?v=20261102-angels1"><\/script>/, 'reused, not copied');
   // preview.js needs its hidden controls; they stay hidden and inert (no 'UI 素材候選・本機測試 / 人物／預覽設定' chip).
   assert.match(next, /<aside class="test-controls" hidden inert style="display:none">/);
   assert.doesNotMatch(next, /preview-controls\.js|characters-v1\/|本機測試|素材候選/);
@@ -598,4 +598,12 @@ test('P7 every HUD button and menu entry opens a classic feature', () => {
   assert.ok(fs.existsSync(new URL('../public/ui-generated-20261030/function-icons-sheet-dark-v1.png', import.meta.url)));
   assert.match(app, /window\.RpgClassicNextBattle\?\.onOpen\?\.\(\(route, params\) => nextOpen\(route, params\)\);/);
   assert.match(app, /window\.RpgClassicNextBattle\?\.cover\?\.\('window', open\);/);
+});
+
+test('official entry: / serves the classic-next home, /scene keeps the previous scene home, /classic unchanged', () => {
+  assert.equal(read('index.html'), next, '/ is byte-identical to /classic-next');
+  assert.match(next, /window\.RPG_CLASSIC_NEXT=true;window\.__RpgScenePreviewConfig=\{live:true,telegram:true,/, 'live HUD installers (preview.js) and signed Telegram mode');
+  const scene = read('scene.html');
+  assert.match(scene, /<iframe id="demo"[^>]*data-scene-src="\/ui-generated-20261030\/scene-bound-20261102\/scene\.html"/); assert.match(scene, /\/entry-gate\.js/);
+  assert.doesNotMatch(classic, /RPG_CLASSIC_NEXT/);
 });

@@ -408,8 +408,11 @@
     const originalPortraitDraw=pc?.drawImage;
     const portraitDraw=originalPortraitDraw&&function(image,...args){
       if(args.length===8&&args[6]===112&&args[7]===112&&image?.naturalWidth){
+        // Centre the head in the round bezel: crop around the figure's opaque top (head), not the canvas
+        // centre — character art stands in the lower part of a square transparent canvas.
+        const box=portraitHead(image);
+        if(box)return originalPortraitDraw.call(this,image,box.x,box.y,box.size,box.size,0,0,112,112);
         const size=Math.min(image.naturalWidth,image.naturalHeight)*.70;
-        // Headroom and a wider crop keep off-centre faces inside the round bezel.
         return originalPortraitDraw.call(this,image,image.naturalWidth*.53-size/2,-image.naturalHeight*.08,size,size,0,0,112,112);
       }
       return originalPortraitDraw.call(this,image,...args);
@@ -1233,6 +1236,30 @@
   const EMPTY_SKILL_ICON = '/art/career-skill-icons-20261110/empty-slot.webp';
   function skillIconUrl(id) {
     return /^skill_(?:\d{2}_\d|thief_\d{2})$/.test(String(id || '')) ? SKILL_ICON_ROOT + id + '.webp' : null;
+  }
+  // Square crop for the HUD portrait: head + shoulders of the opaque figure (cached per image).
+  const headBoxes = new WeakMap();
+  function portraitHead(image) {
+    if (headBoxes.has(image)) return headBoxes.get(image);
+    let box = null;
+    try {
+      const w = image.naturalWidth, h = image.naturalHeight, scale = Math.min(1, 192 / Math.max(w, h));
+      const cw = Math.max(1, Math.round(w * scale)), ch = Math.max(1, Math.round(h * scale));
+      const probe = global.document.createElement('canvas'); probe.width = cw; probe.height = ch;
+      const pctx = probe.getContext('2d', { willReadFrequently: true }); pctx.drawImage(image, 0, 0, cw, ch);
+      const data = pctx.getImageData(0, 0, cw, ch).data, alpha = (x, y) => data[(y * cw + x) * 4 + 3] > 40;
+      let top = -1, bottom = -1;
+      for (let y = 0; y < ch && top < 0; y++) for (let x = 0; x < cw; x++) if (alpha(x, y)) { top = y; break; }
+      for (let y = ch - 1; y >= 0 && bottom < 0; y--) for (let x = 0; x < cw; x++) if (alpha(x, y)) { bottom = y; break; }
+      if (top >= 0 && bottom > top) {
+        const figure = bottom - top, band = Math.max(2, Math.round(figure * .16));
+        let sum = 0, count = 0;
+        for (let y = top; y < Math.min(ch, top + band); y++) for (let x = 0; x < cw; x++) if (alpha(x, y)) { sum += x; count++; }
+        const cx = count ? sum / count : cw / 2, size = figure * .46, cy = top + size * .46;
+        box = { x: (cx - size / 2) / scale, y: (cy - size / 2) / scale, size: size / scale };
+      }
+    } catch (_) { box = null; }
+    headBoxes.set(image, box); return box;
   }
   function setSkillIcon(node, url) {
     if (!node) return;

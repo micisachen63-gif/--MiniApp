@@ -7,7 +7,7 @@
   "sourceWritten": false,
   "sourcePixelsModified": false,
   "finalArtApprovalPromoted": false,
-  "publicFileCount": 13755,
+  "publicFileCount": 13756,
   "entries": [
     {
       "url": "/art/materials-20261110/atlas_core.png",
@@ -81,8 +81,8 @@
     },
     {
       "url": "/index.html",
-      "bytes": 1210,
-      "sha256": "be751f0193c9f73c18e84e1492b731520acdedfb710fbbde726cca8eec75aca7",
+      "bytes": 11744,
+      "sha256": "8cb7094cb017e808a5fef17dbe6c01361b9c76b105f25db8b14865bb4c3ea4c7",
       "kind": "entrypoint"
     },
     {
@@ -8771,6 +8771,12 @@
       "sha256": "25b413f548f6dd4e1f0a23bb4e13596f0d824f0fd00276c3cf24f5655078c94a",
       "kind": "choreography",
       "source": "packaged-character-clips"
+    },
+    {
+      "url": "/scene.html",
+      "bytes": 1210,
+      "sha256": "be751f0193c9f73c18e84e1492b731520acdedfb710fbbde726cca8eec75aca7",
+      "kind": "entrypoint"
     },
     {
       "url": "/ui-generated-20261030/characters-v1/advancement-review.js",
@@ -30929,8 +30935,8 @@
     },
     {
       "url": "/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "bytes": 98732,
-      "sha256": "80d2f0d11d1382ad08d82d1c910570ee4ce4090b72b60ea45915c86583f35ff4",
+      "bytes": 100610,
+      "sha256": "21f4166afa974ee8b93062cc22667236221f09abceb4e8fef648396ee2b69f20",
       "kind": "alias",
       "source": "scene-live-view.js"
     },
