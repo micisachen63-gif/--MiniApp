@@ -389,6 +389,7 @@ function mount(root,host,options={}) {
       '<p class="sw-muted">'+(running?'約每 3 秒執行一次，達標、資源不足或停止時結束。':'顯示這次作業保留的實際結果。')+'</p>'+
       (own?'<footer class="sw-actions"><button type="button" class="sw-secondary" data-sw-open-item="'+esc(job.itemId)+'" '+(!item||frozen?'disabled':'')+'>查看目前裝備</button>'+(running?'<button type="button" class="sw-primary sw-stop" data-sw-stop="'+esc(job.id)+'" '+(frozen?'disabled':'')+'>停止'+(kind==='enhance'?'強化':'洗鍊')+'</button>':'')+'</footer>':'<p class="sw-muted">這項作業屬於另一角色；切換到該角色後可操作。</p>')+'</section>';
   }
+  var paintedHtml=null,paintedNode=null;
   function paint() {
     if(disposed||!client.current())return;
     const state=client.state,me=state.me,scroll=restoreScroll??(firstPaint?Number(draft.scrollTop||0):root.scrollTop);restoreScroll=null;
@@ -418,9 +419,13 @@ function mount(root,host,options={}) {
       }
     }
     const gold=state.balance&&Number(state.balance.revision)>=Number(me?.character?.revision||0)?state.balance.gold:me?.character?.gold;
-    root.innerHTML='<section class="scene-workshop"><header class="sw-heading"><div><span class="sw-eyebrow">營地 · 主場工坊</span><h3>強化與洗鍊</h3><p>'+esc(me?.character?.name||host.getActor?.()?.name||'目前角色')+' · 金幣 '+(me?fmt(gold):'—')+'</p></div><button type="button" class="sw-link" data-sw-refresh '+(state.busy||state.loading?'disabled':'')+'>更新資料</button></header>'+
+    const html='<section class="scene-workshop"><header class="sw-heading"><div><span class="sw-eyebrow">營地 · 主場工坊</span><h3>強化與洗鍊</h3><p>'+esc(me?.character?.name||host.getActor?.()?.name||'目前角色')+' · 金幣 '+(me?fmt(gold):'—')+'</p></div><button type="button" class="sw-link" data-sw-refresh '+(state.busy||state.loading?'disabled':'')+'>更新資料</button></header>'+
       '<nav class="sw-tabs" aria-label="工坊項目">'+[['enhance','裝備強化'],['reroll','詞條洗鍊'],['jobs','背景作業']].map(([id,label])=>'<button type="button" data-sw-tab="'+id+'" aria-pressed="'+(draft.tab===id)+'" '+(state.busy||state.preview?'disabled':'')+'>'+label+'</button>').join('')+'</nav>'+alert+jobsError+content+
       '<nav class="sw-related" aria-label="其他裝備服務"><button type="button" class="sw-link" data-sw-nav="inventory" '+(state.busy?'disabled':'')+'>背包</button><button type="button" class="sw-link" data-sw-nav="recovery" '+(state.busy?'disabled':'')+'>典藏與精煉</button><button type="button" class="sw-link" data-sw-nav="gearbook" '+(state.busy?'disabled':'')+'>舊收藏</button></nav></section>';
+    // Identical markup (e.g. a scene snapshot that changed nothing here): keep the live
+    // buttons so a tap in progress is never re-targeted.
+    if(html===paintedHtml&&root.firstChild&&root.firstChild===paintedNode){root.scrollTop=scroll;firstPaint=false;schedule();loadCurrentOptions();return;}
+    root.innerHTML=html;paintedHtml=html;paintedNode=root.firstChild;
     bind();root.scrollTop=scroll;firstPaint=false;
     if(focusName){const input=[...root.querySelectorAll('[name]')].find(node=>node.name===focusName);input?.focus?.({preventScroll:true});if(caret!=null)input?.setSelectionRange?.(caret,caret);}
     schedule();loadCurrentOptions();

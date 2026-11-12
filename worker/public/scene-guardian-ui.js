@@ -203,9 +203,12 @@
       return value.revision;
     }
     const fingerprint = () => JSON.stringify([state.revision,query,state.data?.readOnly,state.data?.guardian]);
+    // A revision-only re-read keeps the current buttons until the answer arrives.
+    var backgroundRead = false;
     async function refresh(nextQuery = query) {
+      const quiet = backgroundRead; backgroundRead = false;
       if (!current() || state.busy || state.checking) return false;
-      const ticket = ++generation, before = fingerprint(); controller?.abort(); controller = new AbortController(); state.loading = true; state.error = ''; notify();
+      const ticket = ++generation, before = fingerprint(); controller?.abort(); controller = new AbortController(); state.loading = true; state.error = ''; if (!quiet) notify();
       try {
         const next = validQuery(nextQuery), value = await host.request('guardian/scene',clone(next),{signal:controller.signal});
         if (!current() || ticket !== generation) return false;
@@ -417,7 +420,7 @@
       if (!current()) return; for (const field of ['accountId','realmId','characterId']) if (scene?.[field] != null && String(scene[field]) !== String(context[field])) return;
       const revision = scene?.live?.revision ?? scene?.character?.revision ?? scene?.revision; if (!integer(revision)) return;
       state.minRevision = Math.max(state.minRevision,revision);
-      if (revision > state.revision) { state.stale = true; if (state.confirm) { state.confirm = null; state.notice = '角色狀態已更新，請重新確認。'; } if (!state.busy && !state.loading && !state.checking) void refresh(); else notify(); }
+      if (revision > state.revision) { state.stale = true; if (state.confirm) { state.confirm = null; state.notice = '角色狀態已更新，請重新確認。'; } if (!state.busy && !state.loading && !state.checking) { backgroundRead = true; void refresh(); } else notify(); }
     }
     return {state,context,current,pending,markRevealed,readiness,recoveryReason,feedback,refresh,getQuery:() => clone(query),getItem:item,getShopItem:shopItem,prepare,prepareWelcome,prepareSummon,prepareFuse,prepareActivate,prepareLock,prepareUnbind,prepareAssist,prepareSale,prepareAutoStart,prepareAutoStop,prepareAutoSeen,prepareRecovery,summonQuote,autoJob,cancel,submit,checkPending,readHistoryReceipt,acknowledge,update,
       dispose() { if (disposed) return; disposed = true; generation++; receiptGeneration++; controller?.abort(); receiptController?.abort(); }};

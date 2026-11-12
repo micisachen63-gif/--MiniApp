@@ -108,11 +108,14 @@
       for (const p of [data.active,data.party].filter(Boolean)) revisions.set(String(p.id),partyRevision(p));
       return rev;
     }
+    // A revision-only re-read keeps the current buttons until the answer arrives.
+    var backgroundRead = false;
     async function refresh(next) {
+      const quiet = backgroundRead;backgroundRead = false;
       if (!current() || state.busy) return false;
       if (next) query = {tab:next.tab === 'ended' ? 'ended' : 'active',page:Math.max(1,Math.trunc(Number(next.page) || 1)),...(next.partyId ? {partyId:String(next.partyId)} : {})};
       const ticket = ++generation, before = fingerprint();
-      controller?.abort();controller = new AbortController();state.loading = true;state.error = '';notify();
+      controller?.abort();controller = new AbortController();state.loading = true;state.error = '';if (!quiet) notify();
       try {
         const data = await host.request(readAction,{...query},{signal:controller.signal});
         if (!current() || ticket !== generation) return false;
@@ -180,7 +183,7 @@
       if (revision > state.revision && !state.busy && !state.loading) {
         state.stale = true;
         if (state.confirm) {state.confirm = null;state.notice = '角色狀態已更新，請重新確認。';}
-        void refresh();
+        backgroundRead = true;void refresh();
       }
     }
     return {state,context,kind,current,pending,now,readiness,refresh,prepare,cancel,submit,execute,acknowledge,feedback,update,

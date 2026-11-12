@@ -383,3 +383,32 @@ test('轉職 follows the classic steps: conditions with source, path cards with 
   assert.match(h.root.innerHTML, /轉職成功：聖騎士/); assert.match(h.root.innerHTML, /aria-current="step"><b>✓<\/b><span>轉職完成|sc-jc-result/);
   await h.root.click('job-ack'); assert.doesNotMatch(h.root.innerHTML, /轉職成功/);
 });
+
+// 2026-11-12: a revision-only scene snapshot (idle minute / Atlas chunk) re-reads quietly:
+// no 讀取中 / disabled-button paint, and an unchanged answer keeps the live nodes.
+test('revision-only snapshots re-read without flashing or rebuilding unchanged skill and 轉職 buttons',async()=>{
+  for(const tab of ['skills','career']){
+    const h=harness({tab});await settle();
+    const writes=[];let node=0;
+    Object.defineProperty(h.root,'innerHTML',{configurable:true,get(){return this.html;},set(value){writes.push(value);this.html=value;this.controls=null;this.firstChild={node:++node};}});
+    await h.root.click('refresh');await settle();
+    assert.ok(writes.some(w=>/讀取中/.test(w)),'the manual 重新整理 button keeps its visible loading state');
+    const first=h.root.firstChild;assert.ok(first);
+    const me=h.getMe();
+    for(let i=1;i<=3;i++){
+      const before=writes.length,read=h.calls.filter(c=>c.action==='skill-career').length;
+      h.setMe({...me,character:{...me.character,revision:me.character.revision+i}});
+      h.module.update({accountId:'a1',realmId:'permanent',characterId:'c1',character:{revision:me.character.revision+i}});
+      assert.equal(writes.length,before,'no 讀取中 paint while the quiet re-read is in flight');
+      await settle();
+      assert.equal(h.calls.filter(c=>c.action==='skill-career').length,read+1,'each newer revision still re-reads once');
+      assert.equal(writes.length,before,'identical answer keeps every button node');
+      assert.equal(h.root.firstChild,first);
+      assert.doesNotMatch(h.root.innerHTML,/讀取中/);
+    }
+    h.setMe({...me,character:{...me.character,revision:me.character.revision+10,name:'新名字'}});
+    h.module.update({accountId:'a1',realmId:'permanent',characterId:'c1',character:{revision:me.character.revision+10}});await settle();
+    assert.match(h.root.innerHTML,/新名字/,'a real change still repaints');
+    h.module.dispose?.();
+  }
+});

@@ -964,46 +964,25 @@ test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atla
 
 function activeTimers(h) { return [...h.time.deadlines.entries()].filter(([, d]) => d.ms === 3000 || d.ms === 10000); }
 
-test('visible ordinary combat settles once per minute through the existing scoped action', async t => {
-  let hidden = false;
-  const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
-  const idle = scene({ runId: null }); idle.live.idleState = 'fighting';
-  h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
-  let timers = [...h.time.deadlines.entries()];
-  assert.equal(timers.length, 1); assert.equal(timers[0][1].ms, 60000);
-  const [id, timer] = timers[0]; h.time.deadlines.delete(id); h.time.advance(60000); timer.fn();
-  assert.equal(h.net.calls[1].action, 'me'); assert.equal(h.net.calls[1].body.selectedCharacterId, 'a');
-  assert.equal(h.net.calls[1].body.summary, true);
-  h.net.calls[1].reply({ ok: true }); await drain();
-  assert.equal(h.net.calls[2].action, 'atlas/status');
-  const settled = plain(idle); settled.live.revision = 2; settled.serverNow += 60000;
-  h.net.calls[2].reply({ ok: true, scene: settled }); await drain(); await drain();
-  assert.equal([...h.time.deadlines.values()].filter(d => d.ms === 60000).length, 1);
-  hidden = true; h.client.visibilityChanged(); assert.equal(h.time.deadlines.size, 0);
-  const before = h.net.calls.length;
-  hidden = false; h.client.visibilityChanged(); assert.equal(h.net.calls.length, before, 'no settlement on tab return');
-  assert.equal([...h.time.deadlines.values()][0].ms, 60000);
-  h.client.setContext({ characterId: 'b' }); assert.equal(h.time.deadlines.size, 0, 'old-character work is cancelled');
-});
-
-test('away, gate, town and unstarted characters never start the idle combat timer', async t => {
-  for (const edit of [s => s.live.partyId = 'ring', s => s.live.activeRunId = 'atlas',
-    s => s.live.idleState = 'gate', s => s.live.idleState = 'town_no_red', s => s.live.idleState = undefined]) {
-    const h = harness(); t.after(() => h.client.dispose());
-    const idle = scene({ runId: null }); idle.live.idleState = 'fighting'; edit(idle);
+// Owner decision 2026-11-12: the 60 s ordinary-idle `me` settlement timer (d38b3381) is
+// removed; it refreshed main-screen buttons every minute. Without an ACTIVE Atlas run the
+// session schedules nothing and sends nothing on its own, visible or not.
+test('no Atlas run: the main screen never schedules or sends a timer-driven sync, idle combat included', async t => {
+  for (const edit of [s => s.live.idleState = 'fighting', s => s.live.idleState = 'no_mp', s => s.live.idleState = 'gate',
+    s => s.live.idleState = 'town_no_red', s => s.live.idleState = undefined, s => s.live.partyId = 'ring']) {
+    let hidden = false;
+    const h = harness({ isHidden: () => hidden }); t.after(() => h.client.dispose());
+    const idle = scene({ runId: null }); edit(idle);
     h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
-    assert.equal(h.time.deadlines.size, 0); assert.equal(h.net.calls.length, 1);
+    assert.equal(h.time.deadlines.size, 0, 'no timer without an active Atlas run');
+    h.time.advance(10 * 60000); await drain();
+    hidden = true; h.client.visibilityChanged(); hidden = false; h.client.visibilityChanged(); await drain();
+    assert.equal(h.time.deadlines.size, 0); assert.equal(h.net.calls.length, 1, 'only the initial read');
+    assert.ok(!h.net.calls.some(call => call.action === 'me'), 'no timed me settlement');
+    const manual = h.client.sync(); h.net.calls[1].reply({ ok: true, scene: idle }); await manual; await drain();
+    assert.equal(h.net.calls[1].action, 'atlas/status', 'manual 同步 still reads');
+    assert.equal(h.time.deadlines.size, 0, 'and still schedules nothing afterwards');
   }
-});
-
-test('an unknown idle settlement result is not retried inside the same minute', async t => {
-  const h = harness(); t.after(() => h.client.dispose());
-  const idle = scene({ runId: null }); idle.live.idleState = 'no_mp';
-  h.client.start(); h.net.calls[0].reply({ ok: true, scene: idle }); await drain(); await drain();
-  const [id, timer] = [...h.time.deadlines.entries()][0]; h.time.deadlines.delete(id); timer.fn();
-  h.net.calls[1].fail(); await drain(); await drain();
-  assert.equal(h.net.calls.length, 2); assert.equal(h.errors.length, 1);
-  assert.equal([...h.time.deadlines.values()][0].ms, 60000);
 });
 function progressionScene(extra = {}) { const value = scene(extra); if (value.run) value.run.map = { id: 'cycle_elite_01', progression: { mode: 'elite' } }; return value; }
 test('an ACTIVE five-cycle Atlas run syncs every 3 s while visible and stops when the run ends', async t => {

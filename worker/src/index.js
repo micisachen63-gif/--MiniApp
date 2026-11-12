@@ -70,6 +70,7 @@ import * as PK from './services/pk.js';
 import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS, SCOPED_GUARDIAN_ACTIONS, SCOPED_FATE_ACTIONS, SCOPED_EXCHANGE_READ_ACTIONS, SCOPED_EXCHANGE_ACTIONS, SCOPED_DIRECT_TRADE_READ_ACTIONS, SCOPED_DIRECT_TRADE_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
+import {serveRangeMedia} from './media-range.js';
 import {approveFromBot} from './admin/pairing.js';
 import * as ATLAS from './services/atlas.js';
 import * as ATLAS_BACKGROUND from './services/atlas-background.js';
@@ -541,7 +542,8 @@ function errorResponse(e, url) {
 }
 
 export default {
-  fetch: (request, env, ctx) => handle(request, {...env,realmWaitUntil:promise=>ctx?.waitUntil(promise)}),
+  // Video paths listed in wrangler.toml run_worker_first get byte ranges first (iOS <video>).
+  fetch: async (request, env, ctx) => (await serveRangeMedia(request, env)) || handle(request, {...env,realmWaitUntil:promise=>ctx?.waitUntil(promise)}),
   scheduled: (event, env, ctx) => ctx.waitUntil(scheduledRealms(event,env)),
 };
 void equipmentView;

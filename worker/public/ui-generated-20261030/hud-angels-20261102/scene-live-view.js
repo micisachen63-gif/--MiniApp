@@ -45,7 +45,7 @@
   let endgameArt=null;
   function loadEndgameArt(){if(!liveMode()||!global.fetch)return;void global.fetch('/endgame-map-art.json',{credentials:'same-origin'}).then(r=>{if(!r.ok)throw Error('map-art');return r.json();}).then(data=>{endgameArt=data;viewers.forEach(view=>view.apply(lastSnapshot));}).catch(()=>{});}
   let lastSnapshot = null, lastSyncError = '', nextViewId = 0, hudMounted = false, syncBusy = false;
-  const hudSkills = { scope: '', generation: 0, controller: null, status: 'unknown', requestedRevision: -1, revision: -1, slots: [] };
+  const hudSkills = { scope: '', generation: 0, controller: null, status: 'unknown', requestedRevision: -1, revision: -1, slots: [], shown: null };
   const number = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
   const pretty = value => number(value) === null ? '—' : new Intl.NumberFormat('zh-TW', { maximumFractionDigits: 0 }).format(value);
   const text = (node, value) => { if (node && node.textContent !== String(value)) node.textContent = String(value); };
@@ -1119,7 +1119,7 @@
   }
   function clearHudSkills(status = 'unknown', preserveScope = false) {
     hudSkills.controller?.abort(); hudSkills.controller = null; hudSkills.generation++;
-    hudSkills.status = status; hudSkills.slots = [];
+    hudSkills.status = status; hudSkills.slots = []; hudSkills.shown = null;
     if (!preserveScope) { hudSkills.scope = ''; hudSkills.requestedRevision = -1; hudSkills.revision = -1; }
   }
   function syncHudResources(model, ui = global.UI, syncError = '') {
@@ -1189,10 +1189,11 @@
       const floor = Math.max(scope.revision, priorRevision, hudScope(lastSnapshot)?.revision ?? -1);
       const projection = projectHudSkills(data, scope.context, floor);
       hudSkills.revision = projection.revision; hudSkills.slots = projection.slots; hudSkills.status = 'ready';
+      hudSkills.shown = { scope: scope.key, slots: projection.slots };
       syncHudActions(normalize(lastSnapshot));
     }).catch(() => {
       if (!current()) return;
-      hudSkills.status = 'error'; hudSkills.slots = []; syncHudActions(normalize(lastSnapshot));
+      hudSkills.status = 'error'; hudSkills.slots = []; hudSkills.shown = null; syncHudActions(normalize(lastSnapshot));
     }).finally(() => { if (generation === hudSkills.generation) hudSkills.controller = null; });
   }
   function syncHudActions(model) {
@@ -1211,13 +1212,17 @@
       button.title = description; button.setAttribute('aria-label', description);
     }
     const ready = !!scope && !lastSyncError && hudSkills.scope === scope.key && hudSkills.status === 'ready' && hudSkills.revision >= scope.revision;
+    // Every idle minute / Atlas chunk bumps the character revision and re-reads the
+    // loadout. Keep the last accepted slots on the same buttons while that read is in
+    // flight, so the bar never flashes 同步中 / an empty icon under the player's tap.
+    const retained = !ready && !!scope && !lastSyncError && hudSkills.status === 'loading' && hudSkills.shown?.scope === scope.key;
     for (let index = 0; index < 3; index++) {
       const button = row.querySelector('[data-live-skill="' + index + '"]'); if (!button) continue;
-      const skill = ready ? hudSkills.slots[index] : null;
-      const pending = hudSkills.status === 'loading', label = ready ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
+      const known = ready || retained, skill = ready ? hudSkills.slots[index] : retained ? hudSkills.shown.slots[index] : null;
+      const pending = hudSkills.status === 'loading', label = known ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
       text(button.querySelector('.hud-v2-name'), label);
-      setSkillIcon(button.querySelector('.hud-v2-icon'), ready && skill ? skillIconUrl(skill.id) : null);
-      button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : 'unknown'; button.disabled = !navigable;
+      setSkillIcon(button.querySelector('.hud-v2-icon'), known && skill ? skillIconUrl(skill.id) : null);
+      button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : retained ? 'refreshing' : 'unknown'; button.disabled = !navigable;
       const description = '第 ' + (index + 1) + ' 格：' + label + '，開啟技能配置；施放與冷卻請在技能視窗確認';
       button.title = description; button.setAttribute('aria-label', description);
     }

@@ -302,13 +302,17 @@
         (c.highValue ? '<label class="si-risk"><input type="checkbox" name="inventoryPreciousAck"' + (c.ack ? ' checked' : '') + '>我已核對珍貴裝備與強化／塔印／銘刻，確認永久出售。</label>' : '') +
         '<div class="si-actions">' + actionButton('confirm',state.busy ? '處理中…' : c.label,{disabled:locked() || !!(c.highValue && !c.ack),kind:c.sale ? 'si-danger' : 'si-primary'}) + actionButton('cancel','取消',{disabled:state.busy}) + '</div></section>';
     }
+    var paintedHtml = null, paintedNode = null;
     function render() {
       if (!live() || composing) return;
       const active = root.ownerDocument?.activeElement, focusName = root.contains?.(active) ? active?.name : null;
       const focusItemId = focusName ? active?.dataset?.itemId : undefined;
       const selection = focusName && typeof active.selectionStart === 'number' ? [active.selectionStart,active.selectionEnd] : null;
       const scroll = root.scrollTop || 0;
-      root.innerHTML = '<div class="si-panel" data-inv-mode="' + mode + '" aria-busy="' + (state.loading || state.busy) + '">' + header() + notices() + (state.loading && !state.me ? '<p class="si-empty" role="status">正在讀取持有物品…</p>' : state.me ? (state.confirm ? confirmView() : mode === 'item' ? detailView() : listView()) : '<p class="si-empty">無法取得背包資料，請重新整理。</p>') + '</div>';
+      const html = '<div class="si-panel" data-inv-mode="' + mode + '" aria-busy="' + (state.loading || state.busy) + '">' + header() + notices() + (state.loading && !state.me ? '<p class="si-empty" role="status">正在讀取持有物品…</p>' : state.me ? (state.confirm ? confirmView() : mode === 'item' ? detailView() : listView()) : '<p class="si-empty">無法取得背包資料，請重新整理。</p>') + '</div>';
+      // Identical markup: keep the live buttons, so a tap in progress is not re-targeted.
+      if (html === paintedHtml && root.firstChild && root.firstChild === paintedNode) return;
+      root.innerHTML = html;paintedHtml = html;paintedNode = root.firstChild;
       root.scrollTop = scroll;
       const filters=root.querySelector('[data-inv-filters]');if(filters)filters.ontoggle=()=>{draft.filtersOpen=filters.open;};
       if (focusName && !state.busy) {
@@ -537,11 +541,13 @@
     return {
       update(data) {
         if (!live() || state.busy) return;
+        // Atlas/idle scene snapshots (every idle minute, every Atlas chunk) carry no
+        // inventory: they must not rebuild the open bag under the player's finger.
         const value = data?.me || data;
-        if (value?.character && Array.isArray(value.equipment) && value.inventory) {
-          try { acceptMe(value); } catch { return; }
-        }
-        render();
+        if (!(value?.character && Array.isArray(value.equipment) && value.inventory)) return;
+        let accepted = false;
+        try { accepted = acceptMe(value); } catch { return; }
+        if (accepted) render();
       },
       handleBack() {
         if (!live()) return false;

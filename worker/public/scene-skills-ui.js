@@ -132,11 +132,13 @@
       if (!Number.isFinite(revision) || revision < Math.max(state.revision,state.minRevision)) throw new Error('收到較早的角色資料，請重新整理');
       return revision;
     }
-    async function refresh() {
+    // background: a revision-only re-read (idle minute / Atlas chunk). It keeps the
+    // current buttons in place and repaints once when the answer arrives.
+    async function refresh(options = {}) {
       if (!current() || state.busy || state.loading) return false;
       const ticket = ++generation;
       controller?.abort();controller = new AbortController();
-      state.loading = true;state.error = '';paint();
+      state.loading = true;state.error = '';if (options?.background !== true) paint();
       try {
         const result = await host.request('skill-career',{}, {signal:controller.signal});
         if (!current() || ticket !== generation) return false;
@@ -411,6 +413,7 @@
       return '<section class="sc-confirm' + (job ? ' sc-jc-confirm' : '') + '" data-sc-confirm role="region" aria-labelledby="sc-confirm-title">' + job + '<h3 id="sc-confirm-title">確認' + esc(p.label) + '</h3><p>' + esc(p.details) + '</p>' + (job ? '<p class="sc-muted">之後可用命運轉職書重選。</p>' : '') + '<div class="sc-actions">' +
         button('confirm','確認執行',{primary:true,disabled:lock()}) + button('cancel','取消') + '</div></section>';
     }
+    var paintedHtml = null, paintedNode = null;
     function paint() {
       if (!current()) return;
       if (composing) { deferredPaint = true;return; }
@@ -418,11 +421,14 @@
       const doc = root.ownerDocument, focus = doc?.activeElement, inside = focus && root.contains?.(focus);
       const focusState = inside && focus.name ? {name:focus.name,skillId:focus.dataset?.skillId,start:focus.selectionStart,end:focus.selectionEnd} : null;
       const top = root.scrollTop;
-      root.innerHTML = '<div class="sc-panel" data-sc-tab="' + tab + '" data-sc-ready="' + (!state.loading && !!data() && !state.stale ? '1' : '0') + '" aria-busy="' + (state.loading || state.busy) + '">' +
+      const html = '<div class="sc-panel" data-sc-tab="' + tab + '" data-sc-ready="' + (!state.loading && !!data() && !state.stale ? '1' : '0') + '" aria-busy="' + (state.loading || state.busy) + '">' +
         '<header class="sc-header"><div><h2>' + (tab === 'skills' ? '技能傳承' : '職業與轉職') + '</h2><p>' + esc(data()?.character?.name || host.getActor?.()?.name || '') + '</p></div>' +
         button('refresh',state.loading ? '讀取中…' : '重新整理',{disabled:state.loading || state.busy}) + '</header>' +
         '<nav class="sc-tabs" aria-label="技能與職業">' + button('navigate','技能',{route:'skills',disabled:tab === 'skills'}) + button('navigate','職業／轉職',{route:'career',disabled:tab === 'career'}) + '</nav>' +
         notices() + confirmation() + (!data() ? '<p class="sc-muted">正在讀取技能與職業…</p>' : tab === 'skills' ? skillsView() : careerView()) + '</div>';
+      // Identical markup: keep the live nodes, so a tap in progress is never re-targeted.
+      if (html === paintedHtml && root.firstChild && root.firstChild === paintedNode && !(state.confirm && state.focusConfirm)) return;
+      root.innerHTML = html;paintedHtml = html;paintedNode = root.firstChild;
       root.scrollTop = top;
       fitJobArt(root);
       if (state.confirm && state.focusConfirm) {
@@ -502,7 +508,7 @@
       const target = event.target?.closest?.('[data-sc-action]');
       if (!target || target.disabled || !root.contains?.(target) || !current()) return;
       const action = target.dataset.scAction;
-      if (action === 'refresh') return refresh();
+      if (action === 'refresh') return refresh({});
       if (action === 'cancel') { state.confirm = null;return paint(); }
       if (action === 'confirm') return submit();
       if (action === 'acknowledge') {
@@ -551,7 +557,7 @@
         const actor = scene?.actor || scene?.character, revision = Number(actor?.revision);
         if (!Number.isFinite(revision)) return;
         state.minRevision = Math.max(state.minRevision,revision);
-        if (!state.busy && !state.loading && !composing && revision > state.revision) void refresh();
+        if (!state.busy && !state.loading && !composing && revision > state.revision) void refresh({background:true});
       },
       handleBack() {
         if (!current()) return false;

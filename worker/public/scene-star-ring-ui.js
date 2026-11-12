@@ -106,9 +106,12 @@
     }
     const partyFingerprint=p=>p?[p.id,p.rev,p.status,p.readonly,p.recipientCharId,p.me,p.members.map(m=>[m.id,m.ready,m.left]),p.controls,p.tactic,p.nextTactic,p.completedStages,p.settlementPending]:null;
     const fingerprint=()=>JSON.stringify([state.revision,query,state.data?.readOnly,state.data?.daily,state.data?.presence,partyFingerprint(state.data?.party),state.data?.shop]);
+    // A revision-only re-read keeps the current buttons until the answer arrives.
+    var backgroundRead=false;
     async function refresh(nextQuery=query){
+      const quiet=backgroundRead;backgroundRead=false;
       if(!current()||state.busy||state.checking)return false;
-      const ticket=++generation,before=fingerprint();controller?.abort();controller=new AbortController();state.loading=true;state.error='';notify();
+      const ticket=++generation,before=fingerprint();controller?.abort();controller=new AbortController();state.loading=true;state.error='';if(!quiet)notify();
       try{
         const q=validQuery(nextQuery),value=await host.request('star-ring/scene',clone(q),{signal:controller.signal});
         if(!current()||ticket!==generation)return false;
@@ -242,7 +245,7 @@
       if(!current())return;for(const k of ['accountId','realmId','characterId'])if(scene?.[k]!=null&&String(scene[k])!==String(context[k]))return;
       const rev=scene?.live?.revision??scene?.character?.revision??scene?.revision;if(!integer(rev))return;
       state.minRevision=Math.max(state.minRevision,rev);
-      if(rev>state.revision){state.stale=true;if(state.confirm){state.confirm=null;state.notice='角色狀態已更新，請重新確認。';}if(!state.busy&&!state.loading&&!state.checking)void refresh();else notify();}
+      if(rev>state.revision){state.stale=true;if(state.confirm){state.confirm=null;state.notice='角色狀態已更新，請重新確認。';}if(!state.busy&&!state.loading&&!state.checking){backgroundRead=true;void refresh();}else notify();}
     }
     return {state,context,current,now,pending,markRevealed,readiness,recoveryReason,feedback,refresh,getQuery:()=>clone(query),prepareCreate,prepareAction,prepareShop,prepareCosmetic,prepareRecovery,cancel,submit,checkPending,acknowledge,update,
       dispose(){if(disposed)return;disposed=true;generation++;receiptGeneration++;controller?.abort();receiptController?.abort();}};
