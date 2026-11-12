@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "d5153fcf997f44433b6ee4f9323c274960d09fb1",
+  "sourceCommit": "6762e6278abdb37094a69f1aaa9121653c1f0737",
   "service": "elf-rpg-api",
-  "productionVersion": "32fba25b-674f-42ff-9771-0d2c996a67cb",
+  "productionVersion": "29273f1b-066f-4107-9fce-d9c71d22eba1",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-12T02:54:47.209Z",
+  "verifiedAt": "2026-11-12T03:51:54.045Z",
   "runtimeSHA256": {
-    "index.js": "3d9fe7e4c703c9431db7f89d7715ef8f950cac07ae0e8cecaa5785dddcd0031a"
+    "index.js": "7d6970ca518f2e23be8fe85b18028e10b2a9bbd23d02bb3697104c4ddecc7bcb"
   },
   "source": {
-    "fileCount": 14705,
-    "sha256": "ad6151b74a3f0489186b7f9bb1932aa6dda5a4806f6e40256d02859fd4a79495",
+    "fileCount": 14706,
+    "sha256": "7e231370ceacb3b1453094bdf21478fccb07ef8c3abe6d77a70624621470ff3e",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -43491,7 +43491,7 @@
       },
       {
         "file": "worker/public/scene-boss-ui.js",
-        "sha256": "5267fd32639f1a2013a6971581c95418ee3506a6fae890bb356a53dc37bb1f4f"
+        "sha256": "7451c61974d282760472a63b440d5dbb133e33367aeb4a258f742fa4d58fdced"
       },
       {
         "file": "worker/public/scene-character-admin.js",
@@ -43555,7 +43555,7 @@
       },
       {
         "file": "worker/public/scene-fate-ui.js",
-        "sha256": "f92ceefa6212eb900ae4daa9f251d7f25a12f38936923298fe77caed1d2f1ff8"
+        "sha256": "2e9cc820bda1ea5938c26ca0b8fa3959000ac92573316d9fb0e15d66b7468011"
       },
       {
         "file": "worker/public/scene-guardian-ui.css",
@@ -43563,7 +43563,7 @@
       },
       {
         "file": "worker/public/scene-guardian-ui.js",
-        "sha256": "aa2ac29b614872cb85c52569ebf022cfc4415098f5edc6c27f8513e209213a9d"
+        "sha256": "94fbe80961bba09e6251ca1f1a550d226e53fa201a52e5770672019a7ec44906"
       },
       {
         "file": "worker/public/scene-hero-readability.css",
@@ -43583,7 +43583,7 @@
       },
       {
         "file": "worker/public/scene-inventory-ui.js",
-        "sha256": "2f9beff78c7055193239edacc9ddb3a96f81b4856dd8cd3e77ca8e24b8a8eb10"
+        "sha256": "d24c2af4b45a636ebf714f918177e48c934213952e631d832d36213d5324528d"
       },
       {
         "file": "worker/public/scene-ledger-ui.css",
@@ -43607,7 +43607,7 @@
       },
       {
         "file": "worker/public/scene-live-session.js",
-        "sha256": "e68a2b4d836bd09ce1ec31e52381b7e62716f18a1dcd93478d07c809a4bffb91"
+        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
       },
       {
         "file": "worker/public/scene-live-view.css",
@@ -43615,7 +43615,7 @@
       },
       {
         "file": "worker/public/scene-live-view.js",
-        "sha256": "7d32c159d6bf4f639ae69cc2b9c1a7727fccdb2d41ae4771371ed44c30163115"
+        "sha256": "80d2f0d11d1382ad08d82d1c910570ee4ce4090b72b60ea45915c86583f35ff4"
       },
       {
         "file": "worker/public/scene-map-preview-controls.js",
@@ -43639,11 +43639,11 @@
       },
       {
         "file": "worker/public/scene-party-ui.js",
-        "sha256": "c89e1d07f32bf85c3c10fa3cebf159f95027d5f88a913a300dfccd2075a93592"
+        "sha256": "b7da2a135c77ba8a469d215b13118996e8ab2baa4b64fa3632c8ef980a72fec7"
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "5925d619cf3f7209b23fcfc895e7b45e0c0fb292220194249625e10e324e8fb9"
+        "sha256": "91dae1fa90e9e419ed1a2ce57f3089bb2b165f8662ca977e96ba92d4d60b0561"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -43651,7 +43651,7 @@
       },
       {
         "file": "worker/public/scene-skills-ui.js",
-        "sha256": "021e44db0d6a07772c8b15fc858d420cab83f5b0a94229fdac147ace2a53a247"
+        "sha256": "9c9eb1e3b3f57a5f6eb55033575e9ff3d953bfed351555852ca6c9a679114c11"
       },
       {
         "file": "worker/public/scene-social-preview.css",
@@ -43667,7 +43667,7 @@
       },
       {
         "file": "worker/public/scene-star-ring-ui.js",
-        "sha256": "b376f5dd8fe07d06e9b525a956ef54a8b5fb0097ca0502a0acdca072b1226af5"
+        "sha256": "4000b0be359cae59bae7694883383aaa11449d262f5201d3e78295e15aa6da88"
       },
       {
         "file": "worker/public/scene-supply-ui.css",
@@ -43683,7 +43683,7 @@
       },
       {
         "file": "worker/public/scene-tower-ui.js",
-        "sha256": "c175fb596f1503e2d11e478f3fef86e0ae34d4ddc82dff86e4be87ad83958b4c"
+        "sha256": "000bc172b99c4e8a656547c4506ba8575392182374d0c5de63cf97a41c77e620"
       },
       {
         "file": "worker/public/scene-window-frame.css",
@@ -43691,7 +43691,7 @@
       },
       {
         "file": "worker/public/scene-window-manager.js",
-        "sha256": "dfafaa686da8ad7eb8f3721d5a41eac7f709b835f68819cf5c96055faeae3f0b"
+        "sha256": "ee82d100d7f402bcbfa1a8a2ecb5867f743119707e126bdf8b4037fe9485bc56"
       },
       {
         "file": "worker/public/scene-windows.css",
@@ -43703,7 +43703,7 @@
       },
       {
         "file": "worker/public/scene-workshop-ui.js",
-        "sha256": "2356db4bcd95b44c6182bf05730a928bad3bd27d3872b60951a8386c7860944d"
+        "sha256": "bdd185b1bf3fc5dffc0e92c2a499236fc296983e7bb12e8d73c6844b851f7ec3"
       },
       {
         "file": "worker/public/skill-fx.js",
@@ -56531,7 +56531,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-boss-ui.js",
-        "sha256": "5267fd32639f1a2013a6971581c95418ee3506a6fae890bb356a53dc37bb1f4f"
+        "sha256": "7451c61974d282760472a63b440d5dbb133e33367aeb4a258f742fa4d58fdced"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-character-admin.js",
@@ -56595,7 +56595,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-fate-ui.js",
-        "sha256": "f92ceefa6212eb900ae4daa9f251d7f25a12f38936923298fe77caed1d2f1ff8"
+        "sha256": "2e9cc820bda1ea5938c26ca0b8fa3959000ac92573316d9fb0e15d66b7468011"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-guardian-ui.css",
@@ -56603,7 +56603,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-guardian-ui.js",
-        "sha256": "aa2ac29b614872cb85c52569ebf022cfc4415098f5edc6c27f8513e209213a9d"
+        "sha256": "94fbe80961bba09e6251ca1f1a550d226e53fa201a52e5770672019a7ec44906"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-hero-readability.css",
@@ -56619,7 +56619,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-inventory-ui.js",
-        "sha256": "2f9beff78c7055193239edacc9ddb3a96f81b4856dd8cd3e77ca8e24b8a8eb10"
+        "sha256": "d24c2af4b45a636ebf714f918177e48c934213952e631d832d36213d5324528d"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-ledger-ui.css",
@@ -56639,7 +56639,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
-        "sha256": "e68a2b4d836bd09ce1ec31e52381b7e62716f18a1dcd93478d07c809a4bffb91"
+        "sha256": "82511ee485dbcaf2d65e3b747cd5df43fbf12a554fb034f4cd7017b60b226167"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.css",
@@ -56647,7 +56647,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-        "sha256": "7d32c159d6bf4f639ae69cc2b9c1a7727fccdb2d41ae4771371ed44c30163115"
+        "sha256": "80d2f0d11d1382ad08d82d1c910570ee4ce4090b72b60ea45915c86583f35ff4"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-map-preview-controls.js",
@@ -56663,7 +56663,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-party-ui.js",
-        "sha256": "c89e1d07f32bf85c3c10fa3cebf159f95027d5f88a913a300dfccd2075a93592"
+        "sha256": "b7da2a135c77ba8a469d215b13118996e8ab2baa4b64fa3632c8ef980a72fec7"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.css",
@@ -56671,7 +56671,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.js",
-        "sha256": "021e44db0d6a07772c8b15fc858d420cab83f5b0a94229fdac147ace2a53a247"
+        "sha256": "9c9eb1e3b3f57a5f6eb55033575e9ff3d953bfed351555852ca6c9a679114c11"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
@@ -56687,7 +56687,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-star-ring-ui.js",
-        "sha256": "b376f5dd8fe07d06e9b525a956ef54a8b5fb0097ca0502a0acdca072b1226af5"
+        "sha256": "4000b0be359cae59bae7694883383aaa11449d262f5201d3e78295e15aa6da88"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-supply-ui.css",
@@ -56703,7 +56703,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-tower-ui.js",
-        "sha256": "c175fb596f1503e2d11e478f3fef86e0ae34d4ddc82dff86e4be87ad83958b4c"
+        "sha256": "000bc172b99c4e8a656547c4506ba8575392182374d0c5de63cf97a41c77e620"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-window-frame.css",
@@ -56711,7 +56711,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-window-manager.js",
-        "sha256": "dfafaa686da8ad7eb8f3721d5a41eac7f709b835f68819cf5c96055faeae3f0b"
+        "sha256": "ee82d100d7f402bcbfa1a8a2ecb5867f743119707e126bdf8b4037fe9485bc56"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-windows.css",
@@ -56723,7 +56723,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-workshop-ui.js",
-        "sha256": "2356db4bcd95b44c6182bf05730a928bad3bd27d3872b60951a8386c7860944d"
+        "sha256": "bdd185b1bf3fc5dffc0e92c2a499236fc296983e7bb12e8d73c6844b851f7ec3"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/skill-fx.js",
@@ -58479,11 +58479,15 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "05313f7d50c199e60c42be91a0e0dedf49c63a26b00de6e3783df20f427ecd9f"
+        "sha256": "f7796ed4a8aad88fca0b23877e80cd3d6de0f7d3246afd488d54e10f8058dcb2"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
         "sha256": "9b65e67c76d614d48df0acc2ea75f6ed6be049a1ec5f28fb5055b8eb33dd04ef"
+      },
+      {
+        "file": "worker/src/media-range.js",
+        "sha256": "195f183752a1c3864ac1c8bf2e0c48f4cfd9cb4b84b8abb0b2508d74da2084eb"
       },
       {
         "file": "worker/src/realm/asset-preservation.js",
@@ -58827,7 +58831,7 @@
       },
       {
         "file": "worker/wrangler.toml",
-        "sha256": "1a62500d70aabb0be373fe5de4ed926a3c9a570385f59225488d18fda0faf9cd"
+        "sha256": "3301c976884ed243ed57c14a6e9687739b39dfb36ee323189c732a2564e34766"
       },
       {
         "file": "worker/wrangler.toml.example",
@@ -58837,195 +58841,14 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 401,
+    "verifiedCount": 220,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
-      "worker/public/art/adventure-banners-20261112/explore-1-dispatch.mp4",
-      "worker/public/art/adventure-banners-20261112/explore-1-dispatch.webm",
       "worker/public/art/adventure-banners-20261112/explore-1-dispatch.webp",
-      "worker/public/art/adventure-banners-20261112/explore-2-status.mp4",
-      "worker/public/art/adventure-banners-20261112/explore-2-status.webm",
-      "worker/public/art/adventure-banners-20261112/explore-2-status.webp",
-      "worker/public/art/adventure-banners-20261112/explore-3-growth.mp4",
-      "worker/public/art/adventure-banners-20261112/explore-3-growth.webm",
-      "worker/public/art/adventure-banners-20261112/explore-3-growth.webp",
-      "worker/public/art/adventure-banners-20261112/explore-4-supply.mp4",
-      "worker/public/art/adventure-banners-20261112/explore-4-supply.webm",
-      "worker/public/art/adventure-banners-20261112/explore-4-supply.webp",
-      "worker/public/art/adventure-banners-20261112/explore-5-atlas.mp4",
-      "worker/public/art/adventure-banners-20261112/explore-5-atlas.webm",
-      "worker/public/art/adventure-banners-20261112/explore-5-atlas.webp",
-      "worker/public/art/adventure-banners-20261112/party-1-dungeon.mp4",
-      "worker/public/art/adventure-banners-20261112/party-1-dungeon.webm",
-      "worker/public/art/adventure-banners-20261112/party-1-dungeon.webp",
-      "worker/public/art/adventure-banners-20261112/party-2-tower.mp4",
-      "worker/public/art/adventure-banners-20261112/party-2-tower.webm",
-      "worker/public/art/adventure-banners-20261112/party-2-tower.webp",
-      "worker/public/art/adventure-banners-20261112/party-3-worldboss.mp4",
-      "worker/public/art/adventure-banners-20261112/party-3-worldboss.webm",
-      "worker/public/art/adventure-banners-20261112/party-3-worldboss.webp",
-      "worker/public/art/adventure-banners-20261112/party-4-ring.mp4",
-      "worker/public/art/adventure-banners-20261112/party-4-ring.webm",
-      "worker/public/art/adventure-banners-20261112/party-4-ring.webp",
-      "worker/public/art/adventure-banners-20261112/quest-1-quests.mp4",
-      "worker/public/art/adventure-banners-20261112/quest-1-quests.webm",
-      "worker/public/art/adventure-banners-20261112/quest-1-quests.webp",
-      "worker/public/art/adventure-banners-20261112/quest-2-fate.mp4",
-      "worker/public/art/adventure-banners-20261112/quest-2-fate.webm",
-      "worker/public/art/adventure-banners-20261112/quest-2-fate.webp",
-      "worker/public/art/adventure-banners-20261112/quest-3-daily.mp4",
-      "worker/public/art/adventure-banners-20261112/quest-3-daily.webm",
-      "worker/public/art/adventure-banners-20261112/quest-3-daily.webp",
-      "worker/public/art/adventure-banners-20261112/quest-4-log.mp4",
-      "worker/public/art/adventure-banners-20261112/quest-4-log.webm",
-      "worker/public/art/adventure-banners-20261112/quest-4-log.webp",
-      "worker/public/art/atlas-build-icons-20261110/archer_beast.webp",
-      "worker/public/art/atlas-build-icons-20261110/archer_pierce.webp",
-      "worker/public/art/atlas-build-icons-20261110/archer_trap.webp",
-      "worker/public/art/atlas-build-icons-20261110/mage_arcane.webp",
-      "worker/public/art/atlas-build-icons-20261110/mage_chain.webp",
-      "worker/public/art/atlas-build-icons-20261110/mage_frost.webp",
-      "worker/public/art/atlas-build-icons-20261110/sword_bleed.webp",
-      "worker/public/art/atlas-build-icons-20261110/sword_counter.webp",
-      "worker/public/art/atlas-build-icons-20261110/sword_whirlwind.webp",
-      "worker/public/art/atlas-build-icons-20261110/thief_combo.webp",
-      "worker/public/art/atlas-build-icons-20261110/thief_execute.webp",
-      "worker/public/art/atlas-build-icons-20261110/thief_poison.webp",
       "worker/public/art/cards/equipment-20261011/gear_wpn_poseidon_sword_shield_relic.jpg",
-      "worker/public/art/career-skill-icons-20261110/archer.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A1.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A11.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A111.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A112.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A12.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A121.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A122.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A2.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A21.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A211.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A212.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A22.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A221.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_A222.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B1.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B11.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B111.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B112.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B12.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B121.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B122.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B2.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B21.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B211.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B212.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B22.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B221.webp",
-      "worker/public/art/career-skill-icons-20261110/archer_B222.webp",
-      "worker/public/art/career-skill-icons-20261110/empty-slot.webp",
-      "worker/public/art/career-skill-icons-20261110/mage.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A1.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A11.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A111.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A112.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A12.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A121.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A122.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A2.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A21.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A211.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A212.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A22.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A221.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_A222.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B1.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B11.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B111.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B112.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B12.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B121.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B122.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B2.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B21.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B211.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B212.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B22.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B221.webp",
-      "worker/public/art/career-skill-icons-20261110/mage_B222.webp",
-      "worker/public/art/career-skill-icons-20261110/sword.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A1.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A11.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A111.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A112.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A12.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A121.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A122.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A2.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A21.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A211.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A212.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A22.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A221.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_A222.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B1.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B11.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B111.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B112.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B12.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B121.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B122.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B2.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B21.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B211.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B212.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B22.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B221.webp",
-      "worker/public/art/career-skill-icons-20261110/sword_B222.webp",
-      "worker/public/art/career-skill-icons-20261110/thief.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A1.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A11.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A111.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A112.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A12.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A121.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A122.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A2.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A21.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A211.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A212.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A22.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A221.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_A222.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B1.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B11.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B111.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B112.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B12.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B121.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B122.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B2.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B21.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B211.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B212.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B22.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B221.webp",
-      "worker/public/art/career-skill-icons-20261110/thief_B222.webp",
-      "worker/public/art/hall-podium-20261110/frame-bronze.svg",
-      "worker/public/art/hall-podium-20261110/frame-gold.svg",
-      "worker/public/art/hall-podium-20261110/frame-silver.svg",
-      "worker/public/art/hall-podium-20261110/medal-1.svg",
-      "worker/public/art/hall-podium-20261110/medal-2.svg",
-      "worker/public/art/hall-podium-20261110/medal-3.svg",
       "worker/public/art/thief-20261015/adv2_thief_A1_m/hero.png",
       "worker/public/atlas-progression-ui.js",
       "worker/public/atlas-talents-ui.css",
@@ -59227,25 +59050,25 @@
       "worker/public/thief-fx.js",
       "worker/public/thief-gear-art.js",
       "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A121_f-directional-idle-b34d0f69700a9085.png",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/hero-hall-ui.css",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/hero-hall-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-atlas-guide.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-library-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-boss-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-fate-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-guardian-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-inventory-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
       "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.css",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-party-ui.js",
       "worker/public/ui-generated-20261030/hud-angels-20261102/scene-skills-ui.js",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.css",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-social-preview.js",
-      "worker/public/ui-generated-20261030/preview.html",
-      "worker/public/ui-refined.css",
-      "worker/public/ui/button-materials/huninn/font.css",
-      "worker/public/ui/button-materials/huninn/jf-openhuninn-2.1.woff2"
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-star-ring-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-tower-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-window-manager.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-workshop-ui.js",
+      "worker/public/ui-refined.css"
     ]
   },
   "protectedState": {
     "versions": [
       {
-        "version_id": "32fba25b-674f-42ff-9771-0d2c996a67cb",
+        "version_id": "29273f1b-066f-4107-9fce-d9c71d22eba1",
         "percentage": 100
       }
     ],
@@ -59261,6 +59084,10 @@
         "id": "bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4",
         "name": "DB",
         "type": "d1"
+      },
+      {
+        "name": "ASSETS",
+        "type": "assets"
       },
       {
         "name": "ATLAS_ENABLED",
