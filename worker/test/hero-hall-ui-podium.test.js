@@ -29,9 +29,10 @@ test('hall podium uses gold/silver/bronze frames and medals on the top edge, nev
   assert.match(html, /第 4 名/);
   assert.match(html, /data-hall-class="all"/);
   assert.match(css, /\.hall-medal\s*\{[^}]*top:\s*0/);
-  assert.match(css, /hall-podium-stage[^}]*padding-top:\s*2[48]px/);
+  assert.match(css, /hall-podium-stage[^}]*padding-top:calc\(var\(--medal\) \* \.62\)/, 'frame starts below the medal so it sits on the top rail');
+  assert.match(css, /hall-podium \.hall-portrait[\s\S]*?top:13\.6%/, 'portrait window starts below the rail in every frame');
   assert.match(css, /hall-frame-ornament/);
-  assert.doesNotMatch(source, /setInterval|setTimeout|setInterval/);
+  assert.doesNotMatch(source, /setInterval|setTimeout/);
 });
 
 test('class filters stay wired and pagination still shows twenty heroes on the first page', () => {
@@ -44,4 +45,20 @@ test('class filters stay wired and pagination still shows twenty heroes on the f
   const onlyMages = (html.match(/data-hall-hero="/g) || []).length;
   assert.equal(onlyMages, 4);
   assert.doesNotMatch(html, /setInterval/);
+});
+
+test('hall frames are three distinct SVGs whose portrait window matches the CSS inset', () => {
+  const art = name => fs.readFileSync(new URL('../public/art/hall-podium-20261110/' + name, import.meta.url), 'utf8');
+  const frames = ['gold', 'silver', 'bronze'].map(k => art('frame-' + k + '.svg'));
+  assert.equal(new Set(frames).size, 3);
+  for (const svg of frames) assert.match(svg, /M22 34 H178 V222 H22 Z/);
+  assert.match(art('medal-1.svg'), /M20 22 L23 8/, 'first place medal carries a crown');
+  for (const n of [1, 2, 3]) assert.match(art('medal-' + n + '.svg'), new RegExp('>' + n + '</text>'));
+});
+
+test('hall window loads the ranking when opened and never polls', () => {
+  const library = fs.readFileSync(new URL('../public/scene-library-ui.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(library, /setInterval/);
+  assert.match(source, /開啟時讀取最新排行/);
+  assert.doesNotMatch(source, /每 5 分鐘更新/);
 });

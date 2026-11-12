@@ -43,7 +43,7 @@
   '</button>';
 
   const listRow = (h, rank) => '<button type="button" class="hall-hero hall-list-row" data-hall-hero="' + esc(h.id) + '" aria-label="' + esc(heroLabel(h, rank)) + '">' +
-   '<em class="hall-rank">第 ' + rank + ' 名</em>' +
+   '<em class="hall-rank" aria-hidden="true"><b>' + rank + '</b><small>名</small></em>' +
    portraitBox(h) +
    '<span class="hall-who">' + details(h) + '</span>' +
    '<strong class="hall-power-inline">戰力 ' + fmt(h.power) + '</strong>' +
@@ -64,10 +64,59 @@
   }
 
   const pager = listing && filtered.length ? '<div class="hall-pagination" aria-label="排行榜分頁"><button class="btn ghost" type="button" data-hall-page="' + (page - 1) + '" ' + (page === 1 ? 'disabled' : '') + '>上一頁</button><span aria-live="polite">' + page + ' / ' + pages + ' 頁<small>共 ' + filtered.length + ' 位英雄</small></span><button class="btn ghost" type="button" data-hall-page="' + (page + 1) + '" ' + (page === pages ? 'disabled' : '') + '>下一頁</button></div>' : '';
-  return '<section class="hero-hall card"><p class="hall-lead muted">等級由高到低 · 同級依戰力排序<br>每 5 分鐘更新 · 點頭像查看英雄武裝</p>' + tabs + body + pager + '</section>';
+  return '<section class="hero-hall card"><p class="hall-lead muted">等級由高到低 · 同級依戰力排序<br>開啟時讀取最新排行 · 點英雄查看武裝</p>' + tabs + body + pager + '</section>';
+ }
+
+ // Character sheets carry uneven transparent padding (some heroes stand small and low,
+ // others fill the tile). Measure the opaque silhouette once and place the image so the
+ // podium shows the whole hero standing on the frame floor and list avatars show the head.
+ const bounds = new WeakMap();
+ function silhouette(img) {
+  if (bounds.has(img)) return bounds.get(img);
+  let box = null;
+  try {
+   const w = 96, h = Math.max(1, Math.round(96 * img.naturalHeight / img.naturalWidth));
+   const c = document.createElement('canvas'); c.width = w; c.height = h;
+   const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0, w, h);
+   const d = g.getImageData(0, 0, w, h).data;
+   let x0 = w, y0 = h, x1 = -1, y1 = -1;
+   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+   if (x1 >= x0 && y1 >= y0) {
+    const band = y0 + Math.max(1, Math.round((y1 - y0) * 0.12));
+    let hx0 = w, hx1 = -1;
+    for (let y = y0; y <= band; y++) for (let x = x0; x <= x1; x++) if (d[(y * w + x) * 4 + 3] > 40) { if (x < hx0) hx0 = x; if (x > hx1) hx1 = x; }
+    box = { x: x0 / w, y: y0 / h, w: (x1 - x0 + 1) / w, h: (y1 - y0 + 1) / h, head: hx1 >= hx0 ? (hx0 + hx1 + 1) / 2 / w : (x0 + x1 + 1) / 2 / w };
+   }
+  } catch { box = null; }
+  bounds.set(img, box); return box;
+ }
+ function place(img) {
+  const holder = img.parentElement, box = img.isConnected && img.naturalWidth && silhouette(img);
+  if (!holder || !box) return;
+  const W = holder.clientWidth, H = holder.clientHeight; if (!W || !H) return;
+  const nw = img.naturalWidth, nh = img.naturalHeight, bw = box.w * nw, bh = box.h * nh;
+  let scale, left, top;
+  if (holder.closest('.hall-podium')) {
+   scale = Math.min(W * 0.94 / bw, H * 0.95 / bh);
+   left = W / 2 - (box.x * nw + bw / 2) * scale; top = H - H * 0.025 - (box.y * nh + bh) * scale;
+  } else {
+   const side = bh * 0.4; scale = Math.max(W, H) / side;
+   left = W / 2 - box.head * nw * scale; top = -(box.y * nh - bh * 0.03) * scale;
+  }
+  img.classList.add('hall-fit');
+  Object.assign(img.style, { width: (nw * scale).toFixed(1) + 'px', height: (nh * scale).toFixed(1) + 'px', left: left.toFixed(1) + 'px', top: top.toFixed(1) + 'px' });
+ }
+ function fitPortraits(root) {
+  const imgs = [...root.querySelectorAll('.hero-hall .hall-portrait img')];
+  for (const img of imgs) { if (img.complete && img.naturalWidth) place(img); else img.addEventListener('load', () => place(img), { once: true }); }
+  if (typeof ResizeObserver === 'function' && imgs.length) {
+   const ro = new ResizeObserver(() => { const live = imgs.filter(i => i.isConnected); if (!live.length) return ro.disconnect(); live.forEach(place); });
+   const hall = root.querySelector('.hero-hall'); if (hall) ro.observe(hall);
+  }
  }
 
  function bind(root, { onFilter, onPage, onInspect }) {
+  fitPortraits(root);
   root.querySelectorAll('[data-hall-class]').forEach(b => b.onclick = () => onFilter(b.dataset.hallClass));
   root.querySelectorAll('[data-hall-page]').forEach(b => b.onclick = () => { if (!b.disabled) onPage(Number(b.dataset.hallPage)); });
   root.querySelectorAll('[data-hall-hero]').forEach(b => b.onclick = () => onInspect(b.dataset.hallHero));
