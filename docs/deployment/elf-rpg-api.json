@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "68daf033f878bd1656091f71b2300140e5bb25e9",
+  "sourceCommit": "e968117d2513cff53a355c3443629a54ff322a1e",
   "service": "elf-rpg-api",
-  "productionVersion": "3c8ef1ea-553d-4da9-8722-476a7a8cdad0",
+  "productionVersion": "5ba5646a-84e9-420f-b2c3-61dbd17e6e49",
   "activePercentage": 100,
-  "verifiedAt": "2026-11-12T04:48:24.951Z",
+  "verifiedAt": "2026-11-12T07:35:08.525Z",
   "runtimeSHA256": {
     "index.js": "7d6970ca518f2e23be8fe85b18028e10b2a9bbd23d02bb3697104c4ddecc7bcb"
   },
   "source": {
-    "fileCount": 14706,
-    "sha256": "7e231370ceacb3b1453094bdf21478fccb07ef8c3abe6d77a70624621470ff3e",
+    "fileCount": 14714,
+    "sha256": "fae452c9f268a491122bb0f7937b2c0a7ecdd80e359265dd0128307013ed3468",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2999,7 +2999,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "71296f708653db4b9ee859ad9abe07ca576437dbe1362c8a77a5b925a9cd7980"
+        "sha256": "93c27c03650d2971fa6246c93838c2fc5770931c1dfa0276f3a7191de36850ca"
       },
       {
         "file": "worker/public/armory-specializations.js",
@@ -36815,7 +36815,7 @@
       },
       {
         "file": "worker/public/atlas-ui.js",
-        "sha256": "ee96ff816f3f5f5f94bef1b871ed5dcdbd06e030c68de0d022dcd5a88be4d023"
+        "sha256": "fce8c874d0a525b4acc9984eedb27c2c243aab51a559bd645f18cbe7d268b875"
       },
       {
         "file": "worker/public/auto-reroll-ui.js",
@@ -36892,6 +36892,30 @@
       {
         "file": "worker/public/cinematic-fx.js",
         "sha256": "dde0cfc59bc354670843cef49e9eb8d31b1f615481fed4a47c8679b129c2e9a8"
+      },
+      {
+        "file": "worker/public/classic-next-battle.js",
+        "sha256": "5d4ccb87b075a1b2c62fe50fd2dce4c80792644e4f3a5d01a415557f9a3d8b1d"
+      },
+      {
+        "file": "worker/public/classic-next-entries.js",
+        "sha256": "ffcb03bf313c31978453d8eaea4e434e8df9ad531873b9ff7381093ce1027002"
+      },
+      {
+        "file": "worker/public/classic-next-growth.js",
+        "sha256": "3bebcd31440181203be949b42093e8b22ca2f6008d8e6754ef49104342e6625f"
+      },
+      {
+        "file": "worker/public/classic-next-menu.js",
+        "sha256": "15c6edf545d39f374a1ddf308541b0de0187d2532fd279fa9503d3e414f5e638"
+      },
+      {
+        "file": "worker/public/classic-next.css",
+        "sha256": "7017b7580b4995c02446cd61c82fe0a2f3c4750aae7e4eeede5418c4acc343d5"
+      },
+      {
+        "file": "worker/public/classic-next.html",
+        "sha256": "8cb7094cb017e808a5fef17dbe6c01361b9c76b105f25db8b14865bb4c3ea4c7"
       },
       {
         "file": "worker/public/classic.html",
@@ -38375,7 +38399,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "be751f0193c9f73c18e84e1492b731520acdedfb710fbbde726cca8eec75aca7"
+        "sha256": "8cb7094cb017e808a5fef17dbe6c01361b9c76b105f25db8b14865bb4c3ea4c7"
       },
       {
         "file": "worker/public/journal.css",
@@ -43359,7 +43383,7 @@
       },
       {
         "file": "worker/public/maps.js",
-        "sha256": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945"
+        "sha256": "609a00af95a4b0a13e075cc316f1c898c0e013f6b627f1c2ad84fd173e00f4eb"
       },
       {
         "file": "worker/public/market-exchange-history.css",
@@ -43603,7 +43627,7 @@
       },
       {
         "file": "worker/public/scene-live-auth.js",
-        "sha256": "c824371b45284b709a58a12c6caedebeeb7d8c053fff2fc2d3cc8951ba3a5730"
+        "sha256": "bcf24416bdac356bc0aa0ed5dc77b41988e621cf07829b1606d857e647602f96"
       },
       {
         "file": "worker/public/scene-live-session.js",
@@ -43615,7 +43639,7 @@
       },
       {
         "file": "worker/public/scene-live-view.js",
-        "sha256": "80d2f0d11d1382ad08d82d1c910570ee4ce4090b72b60ea45915c86583f35ff4"
+        "sha256": "21f4166afa974ee8b93062cc22667236221f09abceb4e8fef648396ee2b69f20"
       },
       {
         "file": "worker/public/scene-map-preview-controls.js",
@@ -43643,7 +43667,7 @@
       },
       {
         "file": "worker/public/scene-production-manifest.json",
-        "sha256": "91dae1fa90e9e419ed1a2ce57f3089bb2b165f8662ca977e96ba92d4d60b0561"
+        "sha256": "d26b7eada30b2a4d8a465b763a3aa16741fb703634e972271225727a26e91dcf"
       },
       {
         "file": "worker/public/scene-skills-ui.css",
@@ -43706,6 +43730,10 @@
         "sha256": "bdd185b1bf3fc5dffc0e92c2a499236fc296983e7bb12e8d73c6844b851f7ec3"
       },
       {
+        "file": "worker/public/scene.html",
+        "sha256": "be751f0193c9f73c18e84e1492b731520acdedfb710fbbde726cca8eec75aca7"
+      },
+      {
         "file": "worker/public/skill-fx.js",
         "sha256": "f419f5a8696b9c46862ca280813389c5141b3ff9340b0c777a133488973e16f5"
       },
@@ -43759,7 +43787,7 @@
       },
       {
         "file": "worker/public/special-skill-widgets.js",
-        "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049"
+        "sha256": "122f6645a398af5a450daddb7d7192880d8724f29cbd9bb1e5d3deaafda07c33"
       },
       {
         "file": "worker/public/star-ring-cosmetics.css",
@@ -56115,7 +56143,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/app.js",
-        "sha256": "71296f708653db4b9ee859ad9abe07ca576437dbe1362c8a77a5b925a9cd7980"
+        "sha256": "93c27c03650d2971fa6246c93838c2fc5770931c1dfa0276f3a7191de36850ca"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/armory-specializations.js",
@@ -56143,7 +56171,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/atlas-ui.js",
-        "sha256": "ee96ff816f3f5f5f94bef1b871ed5dcdbd06e030c68de0d022dcd5a88be4d023"
+        "sha256": "fce8c874d0a525b4acc9984eedb27c2c243aab51a559bd645f18cbe7d268b875"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/auto-reroll-ui.js",
@@ -56451,7 +56479,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/maps.js",
-        "sha256": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945"
+        "sha256": "609a00af95a4b0a13e075cc316f1c898c0e013f6b627f1c2ad84fd173e00f4eb"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/market-exchange-history.css",
@@ -56635,7 +56663,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js",
-        "sha256": "c824371b45284b709a58a12c6caedebeeb7d8c053fff2fc2d3cc8951ba3a5730"
+        "sha256": "bcf24416bdac356bc0aa0ed5dc77b41988e621cf07829b1606d857e647602f96"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
@@ -56647,7 +56675,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
-        "sha256": "80d2f0d11d1382ad08d82d1c910570ee4ce4090b72b60ea45915c86583f35ff4"
+        "sha256": "21f4166afa974ee8b93062cc22667236221f09abceb4e8fef648396ee2b69f20"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/scene-map-preview-controls.js",
@@ -56735,7 +56763,7 @@
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/special-skill-widgets.js",
-        "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049"
+        "sha256": "122f6645a398af5a450daddb7d7192880d8724f29cbd9bb1e5d3deaafda07c33"
       },
       {
         "file": "worker/public/ui-generated-20261030/hud-angels-20261102/star-ring-cosmetics.css",
@@ -57270,8 +57298,12 @@
         "sha256": "e9b5c0ec859b8e7fab3a740d6b1a117d418034fba35899a784c783e84f04ac51"
       },
       {
+        "file": "worker/public/ui-generated-20261030/scene-bound-20261102/embed-battle.js",
+        "sha256": "9fd0da916e0b8b7c3be04e16bd954f004467014c8ad3770964c5cf1f41411ec8"
+      },
+      {
         "file": "worker/public/ui-generated-20261030/scene-bound-20261102/scene.html",
-        "sha256": "b0f3178bfbffd7911f9e18f21d39ba674830edfe23693eb52b802940e645d2cf"
+        "sha256": "05b4adf4f0f569112c4a5c046a5881090e8d5657aabacb5ed9167b1df6fb29c5"
       },
       {
         "file": "worker/public/ui-generated-20261030/scene-bound-20261102/scene.js",
@@ -58841,15 +58873,15 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 209,
+    "verifiedCount": 223,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/adventure-banners-20261112/explore-1-dispatch.webp",
-      "worker/public/art/cards/equipment-20261011/gear_wpn_poseidon_sword_shield_relic.jpg",
-      "worker/public/art/thief-20261015/adv2_thief_A1_m/hero.png",
+      "worker/public/art/cards/equipment-20261011/gear_wpn_poseidon_sword_supreme.jpg",
+      "worker/public/art/thief-20261015/adv2_thief_A2_f/hero.png",
       "worker/public/atlas-progression-ui.js",
       "worker/public/atlas-talents-ui.css",
       "worker/public/atlas-talents-ui.js",
@@ -58870,6 +58902,12 @@
       "worker/public/branch-elf4-fx.js",
       "worker/public/character-delete.css",
       "worker/public/cinematic-fx.js",
+      "worker/public/classic-next-battle.js",
+      "worker/public/classic-next-entries.js",
+      "worker/public/classic-next-growth.js",
+      "worker/public/classic-next-menu.js",
+      "worker/public/classic-next.css",
+      "worker/public/classic-next.html",
       "worker/public/classic.html",
       "worker/public/coin-ui.js",
       "worker/public/collection-ui.css",
@@ -59023,6 +59061,7 @@
       "worker/public/scene-windows.css",
       "worker/public/scene-workshop-ui.css",
       "worker/public/scene-workshop-ui.js",
+      "worker/public/scene.html",
       "worker/public/skill-fx.js",
       "worker/public/skill-vfx-actor-profiles.json",
       "worker/public/skill-vfx-catalog.json",
@@ -59049,15 +59088,22 @@
       "worker/public/thief-class.js",
       "worker/public/thief-fx.js",
       "worker/public/thief-gear-art.js",
-      "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A121_f-directional-idle-b34d0f69700a9085.png",
-      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-session.js",
+      "worker/public/ui-generated-20261030/characters-v1/assets/adv4_archer_A121_f-up8-pointclean-functional-dd393f13e02e5af5.png",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/app.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/atlas-ui.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/maps.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-auth.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js",
+      "worker/public/ui-generated-20261030/hud-angels-20261102/special-skill-widgets.js",
+      "worker/public/ui-generated-20261030/scene-bound-20261102/embed-battle.js",
+      "worker/public/ui-generated-20261030/scene-bound-20261102/scene.html",
       "worker/public/ui-refined.css"
     ]
   },
   "protectedState": {
     "versions": [
       {
-        "version_id": "3c8ef1ea-553d-4da9-8722-476a7a8cdad0",
+        "version_id": "5ba5646a-84e9-420f-b2c3-61dbd17e6e49",
         "percentage": 100
       }
     ],
