@@ -136,7 +136,7 @@
   function mount(host) {
     let context = null, panel = null, lastPanelKey = '', focusReturn = null, disposed = false;
     let scrollLocked = false, previousOverflow = '', legacyFocusReturn = null;
-    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
+    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,chatOpenPoll = 0,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
     let gearbookView=null;
     // /classic-next: only the floating Atlas panels; the classic shell keeps #view, no workspace, no timed refresh.
     const overlayOnly=host.overlayOnly===true;
@@ -175,6 +175,9 @@
       root.inert=visible;
       if(visible&&!scrollLocked){previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';scrollLocked=true;}
       else if(!visible&&scrollLocked){document.body.style.overflow=previousOverflow;scrollLocked=false;}
+      host.windowState?.(!overlay.hidden);
+      // /classic-next: chat is read every 5 s only while the chat panel is open (no idle chat timer).
+      if(overlayOnly){const want=!overlay.hidden&&panel==='chat';if(want&&!chatOpenPoll)chatOpenPoll=setInterval(()=>{if(!document.hidden&&validCharacter()&&panel==='chat')void chatClient?.refresh();},5000);else if(!want&&chatOpenPoll){clearInterval(chatOpenPoll);chatOpenPoll=0;}}
     }
 
     function close() {
@@ -419,12 +422,14 @@
     }
     document.addEventListener('keydown',keydown);
     // /classic-next keeps the original Atlas refresh (30 s and on return) only while a 星圖派遣 run is active (owner t704u).
-    const atlasLive=()=>!overlayOnly||running();
+    // /classic-next: during a run the visible battle frame's own Atlas sync drives updates; the page
+    // polls only when that frame is not syncing (other tab, paused, covered by a panel, or fallback).
+    const atlasLive=()=>!overlayOnly||running()&&host.frameSync?.()!==true;
     const visibility=()=>{if(!document.hidden&&validCharacter()&&atlasLive()){void refreshAll();if(!overlayOnly)void chatClient?.refresh();}};
     document.addEventListener('visibilitychange',visibility);
     poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy&&atlasLive())void refreshAll();},30000);
     const chatPoll=overlayOnly?0:setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
-    return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
+    return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);clearInterval(chatOpenPoll);chatOpenPoll=0;talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }
   function styleSceneFrame(frame) {
     if(!document.body.classList.contains('atlas-enabled'))return;

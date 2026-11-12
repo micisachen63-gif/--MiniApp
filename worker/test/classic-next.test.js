@@ -112,7 +112,7 @@ test('Atlas panels on /classic-next: overlay only, no workspace takeover; timed 
   assert.match(atlas, /if\(!overlayOnly\)app\.prepend\(root\);/);
   assert.match(atlas, /if\(!overlayOnly\)\{view\.before\(legacy\); legacy\.append\(view\);\}/);
   assert.match(atlas, /if\(!overlayOnly\)document\.body\.classList\.add\('atlas-enabled'\);root\.hidden=overlayOnly\|\|!next\.meta;/);
-  assert.match(atlas, /const atlasLive=\(\)=>!overlayOnly\|\|running\(\);/);
+  assert.match(atlas, /const atlasLive=\(\)=>!overlayOnly\|\|running\(\)&&host\.frameSync\?\.\(\)!==true;/);
   assert.match(atlas, /const chatPoll=overlayOnly\?0:setInterval\(/);
   assert.match(atlas, /if \(!overlayOnly&&context\.tab !== 'atlas'\) host\.home\(\);/);
   assert.match(atlas, /if\(changed&&!selecting\)\{if\(overlayOnly\)void client\.refresh\(\);else\{void refreshAll\(\);/);
@@ -230,13 +230,13 @@ test('classic home frame falls back to the classic RpgBattle when the scene cann
 
 // Atlas-active sync (owner t704u): the original atlas-ui 30 s refresh and visibility refresh, but on
 // /classic-next only while a 星圖派遣 run is running; idle home stays silent.
-function atlasTimers(overlayOnly, status) {
+function atlasTimers(overlayOnly, status, frameSync = () => false) {
   const start = atlas.indexOf('    const atlasLive='), end = atlas.indexOf('\n', atlas.indexOf('    poll=setInterval(', start));
   assert.ok(start > 0 && end > start);
   const timers = fakeTimers(), listeners = {}, calls = [];
   const document = { hidden: false, addEventListener: (t, fn) => { listeners[t] = fn; } };
   const client = { state: { busy: false, snapshot: { run: status ? { status } : null } } };
-  const context = vm.createContext({ ...timers, document, client, overlayOnly, validCharacter: () => true,
+  const context = vm.createContext({ ...timers, document, client, overlayOnly, host: { frameSync: () => frameSync() }, validCharacter: () => true,
     running: () => client.state.snapshot?.run?.status === 'running', refreshAll: () => { calls.push('refreshAll'); },
     chatClient: { refresh: () => { calls.push('chat'); } } });
   vm.runInContext('let poll;' + atlas.slice(start, end), context);
@@ -330,4 +330,147 @@ test('P3/P4 classic cards: round badge on home, talents + rounds in 職業, tale
   assert.match(app, /panelClosed:name=>\{if\(NEXT&&name==='talents'&&S\.tab==='class'\)void loadNextTalents\(\);\}/);
   assert.match(atlas, /if\(closing\)host\.panelClosed\?\.\(closing\);/);
   assert.doesNotMatch(app, /atlas\/talents\/action/, 'the classic card never changes talents itself');
+});
+
+// ---------- P5 (owner decisions 2026-11-12) ----------
+const entriesJs = read('classic-next-entries.js');
+
+test('fake timers: during a run the visible battle frame drives Atlas sync; the page polls only when the frame is not syncing', async () => {
+  let syncing = true;
+  const h = atlasTimers(true, 'running', () => syncing);
+  await h.timers.advance(5 * 60 * 1000); h.listeners.visibilitychange();
+  assert.deepEqual(h.calls, [], 'frame visible and syncing: no duplicate page poll');
+  syncing = false;
+  await h.timers.advance(60 * 1000);
+  assert.equal(h.calls.filter(c => c === 'refreshAll').length, 2, 'frame paused/other tab/panel open: the page keeps the original 30 s');
+  const classic = atlasTimers(false, 'running', () => true);
+  await classic.timers.advance(60 * 1000);
+  assert.equal(classic.calls.filter(c => c === 'refreshAll').length, 2, '/classic ignores the frame');
+});
+
+test('battle frame pauses while a panel covers it and reports whether its own sync runs', () => {
+  const h = frameHarness(), slot = h.el('div');
+  h.api.attach(slot, { characterId: 'hero', realmId: 'permanent', fallback() {} }); h.flush();
+  const frame = h.nodes[0];
+  assert.equal(h.api.syncing(), false, 'not before the scene is ready');
+  h.listeners.message({ source: frame.contentWindow, origin: 'https://elf.example', data: { source: 'rpg-scene-battle', type: 'ready', detail: { characterId: 'hero', realmId: 'permanent' } } });
+  h.flush(); assert.equal(h.api.syncing(), true);
+  h.api.cover('atlas', true); h.flush();
+  assert.equal(h.posted.at(-1).data.type, 'pause'); assert.equal(h.api.syncing(), false);
+  h.api.cover('panel', true); h.api.cover('atlas', false); h.flush();
+  assert.equal(h.posted.at(-1).data.type, 'pause', 'still covered by the other panel');
+  h.api.cover('panel', false); h.flush();
+  assert.equal(h.posted.at(-1).data.type, 'resume'); assert.equal(h.api.syncing(), true);
+  assert.equal(h.timers.intervals.length, 0);
+});
+
+function atlasWindowHarness(overlayOnly) {
+  const start = atlas.indexOf('    function syncWindowState() {'), end = atlas.indexOf('\n    }', start) + 6;
+  const timers = fakeTimers(), calls = [];
+  const context = vm.createContext({ ...timers, overlayOnly, overlay: { hidden: true }, legacy: { hidden: true }, root: {}, document: { hidden: false, body: { style: {} } },
+    host: { windowState: on => calls.push('cover:' + on) }, validCharacter: () => true, chatClient: { refresh: () => calls.push('chat') } });
+  vm.runInContext('let panel=null,chatOpenPoll=0,scrollLocked=false,previousOverflow="";' + atlas.slice(start, end) +
+    ';globalThis.show=(name)=>{panel=name;overlay.hidden=!name;syncWindowState();};globalThis.poll=()=>chatOpenPoll;', context);
+  return { timers, calls, show: context.show, poll: context.poll };
+}
+
+test('fake timers: chat is polled every 5 s only while the chat panel is open on /classic-next', async () => {
+  const h = atlasWindowHarness(true);
+  assert.equal(h.timers.intervals.length, 0, 'no chat timer before the panel opens');
+  h.show('recovery'); assert.equal(h.timers.intervals.length, 0, 'other panels add no chat timer');
+  h.show('chat'); assert.equal(h.timers.intervals.length, 1); assert.equal(h.timers.intervals[0].ms, 5000);
+  await h.timers.advance(15000); assert.equal(h.calls.filter(c => c === 'chat').length, 3);
+  h.show(null); assert.equal(h.poll(), 0, 'closing the panel stops it');
+  assert.deepEqual(h.calls.filter(c => c.startsWith('cover:')), ['cover:true', 'cover:true', 'cover:false'], 'panel state reaches the battle frame');
+  const classic = atlasWindowHarness(false); classic.show('chat');
+  assert.equal(classic.timers.intervals.length, 0, '/classic keeps its own original chat poll');
+  assert.match(atlas, /const chatPoll=overlayOnly\?0:setInterval\(/);
+  assert.match(atlas, /clearInterval\(chatOpenPoll\);chatOpenPoll=0;/, 'disposed with the workspace');
+});
+
+function entriesModule(extra = {}) {
+  const timers = fakeTimers(), observed = [];
+  class IO { constructor(fn) { this.fn = fn; } observe(el) { observed.push(el); } unobserve() {} }
+  const window = { matchMedia: () => ({ matches: false }), ...extra.window };
+  const document = { hidden: false, addEventListener() {}, createElement: tag => fakeNode(tag), ...extra.document };
+  vm.runInNewContext(entriesJs, { window, document, IntersectionObserver: IO, MutationObserver: undefined, ...timers, Promise, JSON, Object, Error, String, Set, Map });
+  return { E: window.RpgClassicNextEntries, timers, observed, IO };
+}
+function fakeNode(tag) {
+  const node = { tag, children: [], attrs: {}, dataset: {}, isConnected: true, paused: true, classList: { set: new Set(), add(c) { this.set.add(c); } },
+    setAttribute(k, v) { this.attrs[k] = v; }, append(...c) { this.children.push(...c); }, prepend(c) { this.children.unshift(c); },
+    querySelector(sel) { return sel === ':scope > .cn-banner' ? this.children.find(c => c.className === 'cn-banner') || null : null; }, querySelectorAll: () => [],
+    play() { this.paused = false; return Promise.resolve(); }, pause() { this.paused = true; } };
+  return node;
+}
+
+test('P5 entries: chat, 出生與旅箋, recovery and 戰報紀錄 open existing panels; chat/recovery reuse the Atlas panels', () => {
+  const { E, timers } = entriesModule();
+  const html = E.entriesHtml();
+  assert.deepEqual([...html.matchAll(/data-next-entry="([a-z]+)"/g)].map(m => m[1]), ['chat', 'fate', 'recovery', 'ledger']);
+  assert.equal(timers.intervals.length + timers.timeouts.length, 0, 'the module registers no timers');
+  assert.doesNotMatch(entriesJs, /setInterval|setTimeout/);
+  // Existing scene modules, unchanged: F2 private section and ledger history.
+  assert.match(entriesJs, /src: '\/scene-ledger-ui\.js\?v=ledger-20261106', name: 'RpgSceneLedger'/);
+  assert.match(entriesJs, /src: '\/scene-fate-ui\.js\?v=fate-f2-20261105', name: 'RpgSceneFate'.*m\.mount\(body, host, \{ section: 'private' \}\)/);
+  for (const f of ['scene-ledger-ui.js', 'scene-fate-ui.js', 'scene-fate-private-ui.js', 'scene-chat-ui.js', 'equipment-recovery-ui.js']) assert.ok(fs.existsSync(new URL('../public/' + f, import.meta.url)), f);
+  assert.match(entriesJs, /try \{ p\.view\?\.dispose\?\.\(\); \} catch/, 'closing disposes the panel (its own timers end with it)');
+  assert.match(entriesJs, /window\.addEventListener\('rpg-context-changed', close\)/, 'character/realm switch closes it');
+  assert.match(entriesJs, /host\.covered\?\.\(true\)/); assert.match(entriesJs, /p\.host\?\.covered\?\.\(false\)/);
+  // app.js wiring
+  assert.match(app, /\$\{NEXT \? atlasEntryHtml\(\) \+ \(window\.RpgClassicNextEntries\?\.entriesHtml\(\) \|\| ''\) : ''\}/);
+  assert.match(app, /if \(kind === 'chat' \|\| kind === 'recovery'\) atlasWorkspace\?\.open\(kind\);/);
+  assert.match(app, /else void window\.RpgClassicNextEntries\?\.open\(kind, nextHost\);/);
+  assert.match(app, /if \(NEXT\) view\.querySelectorAll\('\[data-next-entry\]'\)/);
+  assert.match(app, /request: \(action, body = \{\}, options = \{\}\) => api\(action, \{ \.\.\.body, realmId: S\.realmId \|\| 'permanent' \}, options\)/);
+  assert.match(app, /windowState:on=>window\.RpgClassicNextBattle\?\.cover\?\.\('atlas',on\),frameSync:\(\)=>window\.RpgClassicNextBattle\?\.syncing\?\.\(\)===true,/);
+  // Scene reads are classified as reads in the classic client (no mutation epoch bump).
+  for (const a of ['ledger/history', 'fate/scene', 'fate/receipt', 'fate/private/scene', 'fate/private/profile', 'fate/private/receipt', 'chat/state']) assert.match(app, new RegExp("const readActions=new Set\\(\\[[^\\]]*'" + a.replace('/', '\\/') + "'"));
+  assert.match(next, /src="classic-next-entries\.js[^"]*"/); assert.ok(next.indexOf('classic-next-entries.js') < next.indexOf('src="app.js'));
+  assert.doesNotMatch(classic, /classic-next-entries/);
+});
+
+test('P5 banners: the 13 adventure loops, poster first, video only on screen, no timers', () => {
+  const { E, observed } = entriesModule();
+  const stems = Object.values(E.BANNERS);
+  assert.equal(stems.length, 13); assert.equal(new Set(stems).size, 13);
+  for (const stem of stems) for (const ext of ['webp', 'webm', 'mp4']) assert.ok(fs.existsSync(new URL('../public/art/adventure-banners-20261112/' + stem + '.' + ext, import.meta.url)), stem + '.' + ext);
+  // Same set the scene uses for 冒險 (PR #62).
+  const scene = read('scene-social-preview.js').match(/banners=route==='adventure'\?(\{[^}]+\})/)[1];
+  assert.deepEqual([...scene.matchAll(/'?[a-z-]+'?:'([a-z0-9-]+)'/g)].map(m => m[1]).sort(), [...stems].sort());
+  assert.ok(new Set(E.PLACES.map(p => p[1])).size === 13, 'every loop has a classic entry');
+  const el = fakeNode('button');
+  E.banner(el, 'status');
+  const media = el.children[0];
+  assert.equal(media.className, 'cn-banner'); assert.equal(media.children.length, 1);
+  const img = media.children[0];
+  assert.equal(img.tag, 'img'); assert.equal(img.loading, 'lazy'); assert.equal(img.src, '/art/adventure-banners-20261112/explore-2-status.webp');
+  assert.equal(observed[0], el, 'video waits for the entry to be on screen');
+  E.banner(el, 'status'); assert.equal(el.children.length, 1, 'idempotent');
+  assert.match(entriesJs, /\['preload', 'none'\]/); assert.match(entriesJs, /prefers-reduced-motion: reduce/);
+  assert.match(app, /if \(NEXT\) \{ if \(S\.tab === 'home'\) window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\); window\.RpgClassicNextEntries\?\.decorate\(view\); \}/);
+  assert.match(app, /window\.RpgClassicNextEntries\?\.decorate\(c\);/, 'the 星圖 chooser sheet gets its loops');
+});
+
+test('P5 skill icons: classic skill lists use the career skill icons for the exact lineage path', () => {
+  const { E } = entriesModule();
+  assert.match(E.skillIcon('sword', 'A12'), /src="\/art\/career-skill-icons-20261110\/sword_A12\.webp"/);
+  assert.match(E.skillIcon('mage', ''), /mage\.webp/);
+  assert.equal(E.skillIcon('sword', '../x'), ''); assert.equal(E.skillIcon('dragon', 'A'), '');
+  for (const cls of ['sword', 'archer', 'mage', 'thief']) for (const path of ['', 'A', 'B2', 'A121', 'B222'])
+    assert.ok(fs.existsSync(new URL('../public/art/career-skill-icons-20261110/' + cls + (path ? '_' + path : '') + '.webp', import.meta.url)), cls + path);
+  assert.match(app, /<div class="sk"><div>\$\{globalThis\.RpgClassicNextEntries\?\.skillIcon\?\.\(cls, path\) \|\| ''\}<b>/);
+  assert.match(app, /skillIcon\?\.\(cls, node\.path, 'cn-skill-icon small'\)/);
+  assert.match(app, /skillIcon\?\.\(c\.baseClass, c\.classPath, 'cn-skill-icon small'\)/);
+});
+
+test('P5 home Lv badge: the profession line keeps a small pill', () => {
+  const growthSrc = read('classic-next-growth.js');
+  const made = [];
+  const document = { createElement: () => { const t = { content: { firstElementChild: null } }; Object.defineProperty(t, 'innerHTML', { set(v) { t.content.firstElementChild = { html: v, textContent: v.replace(/<[^>]+>/g, '') }; made.push(v); } }); return t; } };
+  const window = { RpgMaps: rpgMaps() };
+  vm.runInNewContext(growthSrc, { window, document, Object, Set, Math, Number, String });
+  const appended = [], line = { textContent: '血怒戰神第3輪・專家 Lv.7/120', classList: { add() {} }, querySelector: () => null, append: n => appended.push(n) };
+  assert.equal(window.RpgClassicNextGrowth.pill({ querySelector: () => line }, { level: 247 }), true);
+  assert.equal(line.textContent, '血怒戰神'); assert.match(appended[0].html, /class="next-round-badge mode-expert"/);
 });

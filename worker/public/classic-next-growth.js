@@ -52,5 +52,13 @@
       <div class="muted mt">天賦在星圖派遣中生效；配點、整條路線預覽與洗點都在天賦星盤完成，每一步都會先確認。</div>
       <div class="row mt"><button class="btn gold" data-next-talent-open>${t.availablePoints ? `配置天賦 · ${num(t.availablePoints)} 點` : '開啟天賦星盤'}</button><button class="btn ghost" data-next-talent-reload>重新讀取</button></div></div>`;
   }
-  window.RpgClassicNextGrowth = Object.freeze({ badge, mapLabel, roundCard, talentCard, progression });
+  // The classic home composer (mythic-ui) flattens the profession line to text; put the pill back.
+  function pill(view, c) {
+    const html = badge(c), line = view?.querySelector?.('.my-hero-profession');
+    if (!html || !line || line.querySelector('.next-round-badge')) return false;
+    const t = document.createElement('template'); t.innerHTML = html; const node = t.content.firstElementChild;
+    const text = node.textContent; line.textContent = line.textContent.replace(text, '').replace(/\s+$/, '');
+    line.append(node); line.classList.add('next-has-round'); return true;
+  }
+  window.RpgClassicNextGrowth = Object.freeze({ badge, mapLabel, roundCard, talentCard, progression, pill });
 })();

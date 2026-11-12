@@ -10,6 +10,8 @@
   const SOURCE = 'rpg-scene-battle', READY_TIMEOUT_MS = 20000;
   let frame = null, slot = null, fallback = null, state = 'idle', readyTimer = 0, scheduled = false;
   let wantedCharacter = '', wantedRealm = 'permanent', sentCharacter = '', sentRealm = '', paused = null, observer = null;
+  // Reasons the frame is covered (an Atlas panel, a classic floating panel): it pauses underneath.
+  const covers = new Set();
   const post = (type, detail) => { try { frame?.contentWindow?.postMessage({ source: 'rpg-classic-next', type, detail: detail || null }, location.origin); } catch (_) {} };
   function create() {
     frame = document.createElement('iframe');
@@ -53,7 +55,7 @@
     const visible = !!slot?.isConnected && !document.hidden && slot.getClientRects().length > 0;
     frame.hidden = !visible;
     if (visible) { place(); slot.classList.toggle('cn-battle-loading', state !== 'ready'); }
-    const shouldPause = !visible;
+    const shouldPause = !visible || covers.size > 0;
     if (paused !== shouldPause) { paused = shouldPause; post(shouldPause ? 'pause' : 'resume'); }
     if (state === 'ready' && wantedCharacter && (wantedCharacter !== sentCharacter || wantedRealm !== sentRealm)) {
       sentCharacter = wantedCharacter; sentRealm = wantedRealm; post('refresh', { characterId: wantedCharacter, realmId: wantedRealm });
@@ -75,5 +77,8 @@
   function release() { slot = null; schedule(); }
   // Called after the classic app's own refreshMe() succeeds (manual actions only).
   function refresh() { if (state === 'ready' && wantedCharacter) post('refresh', { characterId: wantedCharacter, realmId: wantedRealm }); }
-  window.RpgClassicNextBattle = { attach, release, refresh, state: () => state, frame: () => frame };
+  function cover(reason, on) { const had = covers.has(reason); if (on) covers.add(reason); else covers.delete(reason); if (had !== !!on) schedule(); }
+  // True while the scene in the frame is running (its own Atlas-active sync is live).
+  function syncing() { return state === 'ready' && paused === false && !!frame && !frame.hidden && !document.hidden; }
+  window.RpgClassicNextBattle = { attach, release, refresh, cover, syncing, state: () => state, frame: () => frame };
 })();
