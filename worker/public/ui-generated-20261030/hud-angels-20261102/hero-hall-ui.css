@@ -126,6 +126,12 @@
   .hero-hall .hall-list-row{grid-template-columns:40px 46px minmax(0,1fr) auto;gap:8px;padding:7px 8px}
   .hero-hall .hall-power-inline{font-size:12px}
 }
+@media(max-width:360px){
+  .hero-hall .hall-list-row{grid-template-columns:38px 46px minmax(0,1fr);grid-template-rows:auto auto;column-gap:8px;row-gap:2px}
+  .hero-hall .hall-list-row .hall-rank,.hero-hall .hall-list-row .hall-portrait{grid-row:1 / 3}
+  .hero-hall .hall-list-row .hall-who{grid-column:3;grid-row:1;min-width:0}
+  .hero-hall .hall-list-row .hall-power-inline{grid-column:3;grid-row:2;text-align:left;font-size:12px}
+}
 @media(max-width:340px){
   .hero-hall .hall-podium-hero{--medal:38px;--frame-w:96px;--frame-h:122px}
   .hero-hall .hall-podium-hero.first{--medal:46px;--frame-w:114px;--frame-h:146px}
