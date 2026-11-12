@@ -345,10 +345,41 @@ test('特殊技能配置 slot cards, the skill list and the detail show the pain
   const img={classList:{contains:c=>c==='sc-skill-art'},hidden:false};errorHandlers[0]({target:img});assert.equal(img.hidden,true);
 });
 
+test('career tab shows compact skill art and a description, never a text glyph as the icon',async()=>{
+  const h=harness({tab:'career'});await settle();
+  assert.match(h.root.innerHTML,/sc-skill-art" src="\/art\/career-skill-icons-20261110\/sword_A\.webp"/);
+  assert.match(h.root.innerHTML,/sc-skill-art" src="\/art\/career-skill-icons-20261110\/sword_A1\.webp"/);
+  assert.match(h.root.innerHTML,/<p class="sc-effect">/);
+  assert.doesNotMatch(h.root.innerHTML, /class="sc-skill-art">[＋+…\w]/);
+  const html=h.root.innerHTML;
+  const career=html.slice(html.indexOf('騎士'), html.indexOf('重選')>-1?html.indexOf('重選'):html.length);
+  assert.doesNotMatch(career, /<span class="sc-skill-art">/);
+});
+
 test('every server special skill has a painted icon file',async()=>{
   const {LEGACY_SPECIAL_SKILLS}=await import('../src/game/special-data.js'),{THIEF_SKILLS}=await import('../src/game/thief-skills.js');
   const ids=[...LEGACY_SPECIAL_SKILLS,...THIEF_SKILLS].map(s=>s.id);assert.ok(ids.length>=60);
   const missing=ids.filter(id=>!fs.existsSync(new URL('../public/expedition/assets/skills-painted-20261011/'+id+'.webp',import.meta.url)));
   assert.deepEqual(missing,[]);
   assert.ok(ids.every(id=>/^skill_(?:\d{2}_\d|thief_\d{2})$/.test(id)),'scene icon rule covers every id');
+});
+
+test('轉職 follows the classic steps: conditions with source, path cards with skill comparison, confirm, result', async () => {
+  const locked = player(); Object.assign(locked.career.next, { canAdvance: false, reason: { code: 'level', message: '需要 Lv60 才能轉職' } });
+  locked.character.level = 52; locked.career.next.material = { id: 'mat_2', name: '王者之證', required: 1, have: 0, source: '討伐腐朽樹王' };
+  const l = harness({ tab: 'career', me: locked }); await settle();
+  assert.match(l.root.innerHTML, /sc-jc-steps/); assert.match(l.root.innerHTML, /aria-current="step"><b>1<\/b><span>確認條件/);
+  assert.match(l.root.innerHTML, /Lv\.52 \/ 60/); assert.match(l.root.innerHTML, /取得：討伐腐朽樹王/);
+  assert.equal(l.root.button('advance', undefined, { branch: 'A' }).disabled, true);
+  assert.match(l.root.innerHTML, /需要 Lv\.60/);
+  const h = harness({ tab: 'career' }); await settle();
+  assert.match(h.root.innerHTML, /aria-current="step"><b>2<\/b><span>選擇路線/);
+  assert.match(h.root.innerHTML, /條件都達成了/); assert.match(h.root.innerHTML, /選擇「聖光斬」|選擇「聖騎士」/);
+  assert.match(h.root.innerHTML, /sc-jc-stats/); assert.match(h.root.innerHTML, /8 → <\/i>10/, 'path cards compare the new skill to the current one');
+  assert.match(h.root.innerHTML, /<details class="sc-section sc-jc-reselect"/, 'reselect is tucked below the main flow');
+  await h.root.click('advance', undefined, { branch: 'A', tier: 2 });
+  assert.match(h.root.innerHTML, /sc-jc-confirm/); assert.match(h.root.innerHTML, /aria-current="step"><b>3<\/b>/);
+  await confirm(h); await settle();
+  assert.match(h.root.innerHTML, /轉職成功：聖騎士/); assert.match(h.root.innerHTML, /aria-current="step"><b>✓<\/b><span>轉職完成|sc-jc-result/);
+  await h.root.click('job-ack'); assert.doesNotMatch(h.root.innerHTML, /轉職成功/);
 });

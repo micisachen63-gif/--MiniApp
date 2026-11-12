@@ -67,9 +67,8 @@
    each('[data-sl-hall-back]',b=>b.onclick=()=>{detail=null;paint();});each('[data-sl-challenge]',b=>b.onclick=()=>{const id=root.querySelector('[data-sl-opponent]').value,h=heroes.heroes.find(h=>h.id===id);if(!h)return;propose('pk/challenge',{target:{tgId:id},origin:'app'},'向 '+h.name+' 提出決鬥。輸方可能掉落穿戴裝備，請確認原規則。');});
    each('[data-sl-pk]',b=>b.onclick=async()=>{const action=b.dataset.pkAction,id=b.dataset.slPk;if(action!=='get')return propose('pk/'+action,{pkId:id},action==='accept'?'接受決鬥，輸方可能掉落一件穿戴裝備。':'拒絕或取消這場決鬥。');try{const r=await host.request('pk/get',{pkId:id});if(current()){detail=r.pk;paint();}}catch(e){message=e.message;paint();}});
   }
-  const timer=tab==='hall'?setInterval(()=>{if(current()&&!document.hidden&&!busy&&!plan)void refresh();},300000):null;
   for(const file of ['collection-ui.css','hero-hall-ui.css']){if(!document.querySelector('link[data-library-style="'+file+'"]')){const link=document.createElement('link');link.rel='stylesheet';link.dataset.libraryStyle=file;link.href='/'+file;document.head.append(link);}}
-  paint();void refresh();return {handleBack(){if(plan){plan=null;paint();return true;}if(detail){detail=null;paint();return true;}return false;},dispose(){disposed=true;generation++;clearInterval(timer);replay?.dispose();}};
+  paint();void refresh();return {handleBack(){if(plan){plan=null;paint();return true;}if(detail){detail=null;paint();return true;}return false;},dispose(){disposed=true;generation++;replay?.dispose();}};
  }
  window.RpgSceneLibrary={mount};
 })();

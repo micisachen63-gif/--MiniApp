@@ -1216,31 +1216,30 @@
       const skill = ready ? hudSkills.slots[index] : null;
       const pending = hudSkills.status === 'loading', label = ready ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
       text(button.querySelector('.hud-v2-name'), label);
-      setSkillIcon(button.querySelector('.hud-v2-icon'), ready && skill ? skillIconUrl(skill.id) : null, ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
+      setSkillIcon(button.querySelector('.hud-v2-icon'), ready && skill ? skillIconUrl(skill.id) : null);
       button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : 'unknown'; button.disabled = !navigable;
       const description = '第 ' + (index + 1) + ' 格：' + label + '，開啟技能配置；施放與冷卻請在技能視窗確認';
       button.title = description; button.setAttribute('aria-label', description);
     }
   }
   // Painted skill art, the same files classic used (special-skill-widgets.js / skill books).
-  // The first character of the name is only a last-resort fallback when the image fails.
+  // Empty or failed slots use a framed well, never a letter or "+" glyph.
   const SKILL_ICON_ROOT = '/expedition/assets/skills-painted-20261011/';
+  const EMPTY_SKILL_ICON = '/art/career-skill-icons-20261110/empty-slot.webp';
   function skillIconUrl(id) {
     return /^skill_(?:\d{2}_\d|thief_\d{2})$/.test(String(id || '')) ? SKILL_ICON_ROOT + id + '.webp' : null;
   }
-  function setSkillIcon(node, url, fallback) {
+  function setSkillIcon(node, url) {
     if (!node) return;
     const failed = !!url && node.dataset.iconUrl === 'failed:' + url;
+    const src = url && !failed ? url : EMPTY_SKILL_ICON;
+    if (node.dataset.iconUrl === src && node.querySelector?.('img')) return;
+    node.dataset.iconUrl = src; node.textContent = '';
+    const img = global.document.createElement('img'); img.className = 'hud-v2-skill-art'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
     if (url && !failed) {
-      if (node.dataset.iconUrl === url && node.querySelector?.('img')) return;
-      node.dataset.iconUrl = url; node.textContent = '';
-      const img = global.document.createElement('img'); img.className = 'hud-v2-skill-art'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
-      img.onerror = () => { img.remove(); node.dataset.iconUrl = 'failed:' + url; node.classList?.remove('has-art'); node.textContent = fallback; };
-      img.src = url; node.appendChild(img); node.classList?.add('has-art');
-      return;
+      img.onerror = () => { node.dataset.iconUrl = 'failed:' + url; setSkillIcon(node, null); };
     }
-    if (!failed) node.dataset.iconUrl = '';
-    node.classList?.remove('has-art'); text(node, fallback);
+    img.src = src; node.appendChild(img); node.classList?.add('has-art');
   }
   function navigateHud(route) {
     if (!liveMode() || !hudScope(lastSnapshot) || typeof global.RpgSceneNavigation?.navigate !== 'function') return;
@@ -1270,7 +1269,7 @@
         text(button.querySelector('.hud-v2-count'), '—'); button.onclick = () => navigateHud('supplies');
       } else {
         button.dataset.liveSkill = String(action.skill); button.dataset.skillId = '';
-        text(button.querySelector('.hud-v2-icon'), '…'); button.onclick = () => navigateHud('skills');
+        setSkillIcon(button.querySelector('.hud-v2-icon'), null); button.onclick = () => navigateHud('skills');
       }
       row.appendChild(button);
     }

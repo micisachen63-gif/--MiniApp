@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>技能圖示對照</title>
+<link rel="stylesheet" href="/ui/button-materials/huninn/font.css?v=20261109-1">
+<link rel="stylesheet" href="/scene-skills-ui.css?v=20261104">
+<link rel="stylesheet" href="/ui/hud-v2/hud-v2.css">
+<style>
+html,body{margin:0;background:#07111c;color:#f3ead9;font:15px/1.6 "Huninn","Microsoft JhengHei",sans-serif}
+.wrap{width:min(430px,100%);margin:0 auto;padding:16px}
+h1{font-size:16px;color:#f3d89d;margin:0 0 8px}
+.tag{display:inline-block;margin-bottom:12px;padding:3px 8px;border:1px dashed #e7c57a99;color:#ffe7b0;font-size:12px}
+.bar{display:flex;gap:8px;padding:10px;background:#0b1628;border:1px solid #c7a96966;border-radius:8px}
+.slot{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;background:#13233b;border:1px solid #b89b5e55;border-radius:8px;color:#f4e3c0}
+.slot .hud-v2-icon,.icon{width:48px;height:48px;display:grid;place-items:center;font-size:22px;color:#f3d89d;background:#0a1220;border-radius:10px;border:1px solid #d6b46a88}
+.slot img,.sc-skill-art{width:48px;height:48px;object-fit:cover;border-radius:10px;border:1px solid rgba(214,180,106,.55)}
+.slot .name{font-size:11px}
+.career{margin-top:16px;display:grid;gap:10px}
+.card{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:10px;border:1px solid #bfa46c55;border-radius:8px;background:#0d1c31c9}
+.card img{width:64px;height:64px;object-fit:cover;border-radius:12px}
+.card b{color:#ffe3a9}
+.card p{margin:4px 0 0;font-size:12px;color:#d3deeb}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>技能欄與職業技能</h1>
+  <div class="tag" id="tag"></div>
+  <div class="bar" id="bar"></div>
+  <section class="career" id="career"></section>
+</main>
+<script>
+const after = new URLSearchParams(location.search).get('state') !== 'before';
+document.getElementById('tag').textContent = after ? '修改後 · 真實技能圖示，不以文字充當圖示' : '修改前 · 技能欄以文字圖示後援，職業頁沒有技能圖';
+const empty = '/art/career-skill-icons-20261110/empty-slot.webp';
+const skills = [
+  {name:'裂甲擊', id:'skill_01_1'},
+  {name:'血性狂斬', id:'skill_01_2'},
+  {name:null}
+];
+document.getElementById('bar').innerHTML = skills.map(s => {
+  let icon;
+  if (!after) {
+    icon = s.name ? `<span class="icon">${s.name[0]}</span>` : `<span class="icon">+</span>`;
+  } else if (s.id) {
+    icon = `<img src="/expedition/assets/skills-painted-20261011/${s.id}.webp" alt="">`;
+  } else {
+    icon = `<img src="${empty}" alt="未配置">`;
+  }
+  return `<div class="slot">${icon}<span class="name">${s.name || (after ? '未配置' : '未配置')}</span></div>`;
+}).join('');
+const career = [
+  {name:'連鎖閃電', path:'mage_A', desc:'2.3× 攻擊 · 3 個目標 · 魔力 14。元素親和：相剋效果 +10%。'},
+  {name:'隕石術', path:'mage_A1', desc:'3.4× 攻擊 · 4 個目標 · 魔力 30。魔導：攻擊力 +10%。'}
+];
+document.getElementById('career').innerHTML = career.map(s => after
+  ? `<article class="card"><img src="/art/career-skill-icons-20261110/${s.path}.webp" alt=""><div><b>${s.name}</b><p>${s.desc}</p></div></article>`
+  : `<article class="card" style="grid-template-columns:1fr"><div><b>${s.name}</b><p>${s.desc}</p></div></article>`
+).join('');
+</script>
+</body>
+</html>

@@ -226,6 +226,7 @@
   if(route==='character')entries.push(['lineage','完整成長樹','全職業一至四轉原圖與路線'],['book-tools','技能書分享與交易','原技能書群組卡片與玩家交易']);
   if(route==='adventure')entries.push(['maps','地圖圖鑑','原版十二地圖、等級與出現怪物'],['daily','每日補給金','原版每日補給與首週加成'],['journal','旅團日誌','每日合作委託與卷軸獎勵']);
   if(route==='camp')entries.push(['collections','地圖收藏與祝福','十二地圖徽記、核心兌換與材料精煉']);
+  body.__hubBanners?.();body.__hubBanners=null;
   body.replaceChildren();
   const tablist=document.createElement('nav');tablist.className='scene-hub-tabs';tablist.setAttribute('role','tablist');tablist.setAttribute('aria-label','功能分類');
   const context=document.createElement('article');context.className='scene-hub-summary';context.dataset.hubRoute=route;context.dataset.hubTab=current[0];
@@ -237,10 +238,37 @@
    const choose=()=>{if(id===draft.hubTab)return;draft.hubTab=id;draft.__windowScroll=0;body.scrollTop=0;paintHub(body,route,host);body.querySelector('[data-hub-tab="'+id+'"]')?.focus({preventScroll:true});};
    tab.onclick=choose;tab.onkeydown=event=>{const index=tabs.findIndex(t=>t[0]===id),next=event.key==='ArrowRight'?(index+1)%tabs.length:event.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:event.key==='Home'?0:event.key==='End'?tabs.length-1:null;if(next===null)return;event.preventDefault();body.querySelector('[data-hub-tab="'+tabs[next][0]+'"]')?.click();};tablist.append(tab);
   }
-  for(const [target,title,description,params]of entries.filter(e=>current[2].includes(e[0]))){const button=document.createElement('button');button.type='button';button.className='scene-hub-tile';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small'),icon=document.createElement('img');strong.textContent=title;small.textContent=description;icon.className='scene-hub-icon';icon.src=imageFor(target);icon.alt='';icon.loading='lazy';icon.decoding='async';icon.draggable=false;button.append(strong,small,icon);button.onclick=()=>host.navigate(target,params);grid.append(button);}
+  // 冒險 rows carry a looping banner. Media is requested only when a row nears the viewport,
+  // pauses off-screen or while the app is hidden, and reduced-motion players get the still.
+  const bannerRoot='/art/adventure-banners-20261112/',banners=route==='adventure'?{expedition:'explore-1-dispatch','live-status':'explore-2-status',progression:'explore-3-growth',supplies:'explore-4-supply',maps:'explore-5-atlas',party:'party-1-dungeon',tower:'party-2-tower',boss:'party-3-worldboss','star-ring':'party-4-ring',quests:'quest-1-quests',fate:'quest-2-fate',daily:'quest-3-daily',journal:'quest-4-log'}:{};
+  const view=document.defaultView||(typeof window==='object'?window:null),stillOnly=!!view?.matchMedia?.('(prefers-reduced-motion: reduce)').matches,rows=[];
+  if(Object.keys(banners).length)grid.dataset.banners='adventure';
+  for(const [target,title,description,params]of entries.filter(e=>current[2].includes(e[0]))){const button=document.createElement('button');button.type='button';button.className='scene-hub-tile';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=description;
+   if(banners[target]){button.className='scene-hub-tile scene-hub-banner';const media=document.createElement('span'),stem=bannerRoot+banners[target];media.className='scene-hub-media';media.setAttribute('aria-hidden','true');button.append(strong,small,media);rows.push({button,media,stem,video:null,ready:false});}
+   else{const icon=document.createElement('img');icon.className='scene-hub-icon';icon.src=imageFor(target);icon.alt='';icon.loading='lazy';icon.decoding='async';icon.draggable=false;button.append(strong,small,icon);}
+   button.onclick=()=>host.navigate(target,params);grid.append(button);}
   body.append(tablist,context,grid);
+  if(rows.length){
+   const hidden=()=>!!view?.document?.hidden;
+   const start=row=>{if(row.ready)return;row.ready=true;
+    if(stillOnly||typeof document.createElement('video').play!=='function'){const img=document.createElement('img');img.src=row.stem+'.webp';img.alt='';img.decoding='async';img.draggable=false;row.media.append(img);return;}
+    const video=document.createElement('video');video.muted=true;video.loop=true;video.playsInline=true;video.autoplay=true;video.preload='none';video.disablePictureInPicture=true;
+    for(const [k,v]of [['muted',''],['loop',''],['playsinline',''],['autoplay',''],['preload','none'],['poster',row.stem+'.webp'],['disableremoteplayback','']])video.setAttribute(k,v);
+    for(const [ext,type]of [['webm','video/webm'],['mp4','video/mp4']]){const source=document.createElement('source');source.src=row.stem+'.'+ext;source.type=type;video.append(source);}
+    row.media.append(video);row.video=video;};
+   const play=row=>{if(row.video&&row.visible&&!hidden())row.video.play()?.catch?.(()=>{});};
+   const pause=row=>{if(row.video&&!row.video.paused)row.video.pause();};
+   let observer=null;
+   if(typeof view?.IntersectionObserver==='function'){
+    observer=new view.IntersectionObserver(items=>{for(const item of items){const row=rows.find(r=>r.button===item.target);if(!row)continue;row.visible=item.isIntersecting;if(row.visible){start(row);play(row);}else pause(row);}},{root:body,rootMargin:'160px 0px'});
+    for(const row of rows)observer.observe(row.button);
+   }else for(const row of rows.slice(0,2)){row.visible=true;start(row);}
+   const visibility=()=>{for(const row of rows)hidden()?pause(row):play(row);};
+   view?.document?.addEventListener?.('visibilitychange',visibility);
+   body.__hubBanners=()=>{observer?.disconnect();view?.document?.removeEventListener?.('visibilitychange',visibility);for(const row of rows){pause(row);row.video?.removeAttribute?.('src');}};
+  }
   if(route==='camp'){const credit=document.createElement('footer');credit.className='scene-producer-credit';credit.innerHTML='<span>Game Producer</span><span aria-hidden="true">·</span><strong>ミカサ</strong>';body.append(credit);}
-  return {dispose(){}};
+  return {dispose(){body.__hubBanners?.();body.__hubBanners=null;}};
  }
  async function mountUnified(entry,body,api){
   if(entry.route==='characters'){const module=await loadSceneModule('scene-character-admin','RpgSceneCharacterAdmin');if(api.current())return module.mount(body,unifiedHost(api,entry));return;}

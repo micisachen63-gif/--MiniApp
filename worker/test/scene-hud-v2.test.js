@@ -164,8 +164,11 @@ test('three slots preserve actual ordered class skills and empty positions, navi
   assert.equal(h.skill(0).dataset.skillId, 'archer-heal'); assert.equal(h.skill(0).querySelector('.hud-v2-name').textContent, '月光療癒');
   assert.equal(h.skill(1).dataset.skillId, ''); assert.equal(h.skill(1).querySelector('.hud-v2-name').textContent, '未配置');
   assert.equal(h.skill(2).dataset.skillId, 'thief-venom');
-  assert.equal(h.skill(0).querySelector('.hud-v2-icon').textContent, '月');
-  assert.equal(h.skill(2).querySelector('.hud-v2-icon').textContent, '淬');
+  assert.equal(h.skill(0).querySelector('.hud-v2-icon').textContent, '');
+  assert.match(h.skill(0).querySelector('.hud-v2-icon').querySelector('.hud-v2-skill-art').src, /empty-slot\.webp/);
+  assert.match(h.skill(1).querySelector('.hud-v2-icon').querySelector('.hud-v2-skill-art').src, /empty-slot\.webp/);
+  assert.equal(h.skill(2).querySelector('.hud-v2-icon').textContent, '');
+  assert.ok(h.skill(2).querySelector('.hud-v2-icon').querySelector('.hud-v2-skill-art'));
   for (const button of h.row().children) button.click();
   assert.deepEqual(h.navigation, ['supplies', 'supplies', 'skills', 'skills', 'skills']);
   assert.equal(h.requests.length, 1, 'clicking the row cannot submit a mutation');

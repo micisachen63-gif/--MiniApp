@@ -1,4 +1,5 @@
 import test from 'node:test';
+import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import { freshDb } from './d1-shim.js';
 import { T0 } from './helpers.js';
@@ -129,7 +130,10 @@ for (const baseClass of ['sword', 'archer', 'mage', 'thief']) {
       assert.equal(result.career.current.path, path);
       assert.equal(result.career.current.name, expected.name);
       assert.equal(result.career.current.passive, expected.passiveText);
-      assert.deepEqual(result.career.current.skill, expected.skill);
+      const { description, iconSrc, ...skillFields } = result.career.current.skill;
+      assert.deepEqual(skillFields, expected.skill);
+      assert.ok(description && !/^[＋+…·]$/.test(description), 'career skill keeps a real description');
+      assert.equal(iconSrc, '/art/career-skill-icons-20261110/' + (path ? baseClass + '_' + path : baseClass) + '.webp');
       assert.equal(result.career.current.weapon, choice.weapon);
     }
     assert.equal(result.career.maxTier, MAX_OPEN_CLASS_TIER);
@@ -312,4 +316,41 @@ test('real advancement and reselection during Atlas preserve the saved run and u
   assert.equal(nextState.content.classPath, 'B1');
   assert.equal(nextState.snapshot.atk, currentStats.atk);
   assert.equal(nextState.snapshot.maxHp, currentStats.maxHp);
+});
+
+test('every career path has a compact skill icon and a non-glyph description', async t => {
+  const { env, db, id } = await fixture(t, { baseClass: 'sword', level: 120, path: 'A11' });
+  const result = await view(env, id, T0);
+  assert.match(result.career.current.skill.iconSrc, /\/art\/career-skill-icons-20261110\/sword_A11\.webp$/);
+  assert.match(result.career.current.skill.description, /攻擊|目標|耗魔/);
+  const { branchChoices } = await import('../src/game/classes.js');
+  const { CLASSES } = await import('../src/game/constants.js');
+  for (const baseClass of Object.keys(CLASSES)) {
+    const paths = new Set(['']);
+    const queue = [''];
+    while (queue.length) {
+      const path = queue.shift();
+      if (path.length >= 4) continue;
+      for (const choice of branchChoices(baseClass, path.length + 1, path)) {
+        if (!paths.has(choice.path)) { paths.add(choice.path); queue.push(choice.path); }
+      }
+    }
+    for (const path of paths) {
+      const key = path ? baseClass + '_' + path : baseClass;
+      const file = new URL('../public/art/career-skill-icons-20261110/' + key + '.webp', import.meta.url);
+      assert.ok(fs.existsSync(file), key);
+    }
+  }
+  assert.ok(fs.existsSync(new URL('../public/art/career-skill-icons-20261110/empty-slot.webp', import.meta.url)));
+});
+
+test('career projection carries the classic 轉職 copy: material source and path 定位 from lineage', async () => {
+  const env = { DB: freshDb() };
+  await Player.createCharacter(env, { tgId: '7701', name: '轉職說明', baseClass: 'sword', gender: 'f' }, T0, () => .5);
+  await env.DB.prepare('UPDATE rpg_characters SET level=60, class_path=? WHERE tg_id=?').bind('A', '7701').run();
+  const career = (await view(env, '7701', T0)).career;
+  assert.equal(career.next.material.source, '討伐腐朽樹王');
+  assert.ok(career.current.blurb);
+  assert.ok(career.next.choices.every(c => typeof c.blurb === 'string' && c.blurb.length));
+  assert.ok(career.next.choices.every(c => c.inheritance === '包含二轉與一轉被動。'));
 });

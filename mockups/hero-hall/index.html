@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>英雄殿堂設計稿 · 示例資料</title>
+<link rel="stylesheet" href="/ui/button-materials/huninn/font.css?v=20261109-1">
+<style>
+:root{
+  --gold:#f3d89d;--ink:#f3ead9;--muted:#c5d0de;--line:#c7a96988;
+  --navy:#0b1628;--tab:/ui/button-materials/buttons-3d-20261110/tab-normal.webp;
+  --tab-on:/ui/button-materials/buttons-3d-20261110/tab-selected.webp;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#050b14;color:var(--ink);font:16px/1.5 "Huninn","jf-openhuninn-2.1","Microsoft JhengHei",sans-serif}
+body{
+  min-height:100dvh;
+  background:
+    linear-gradient(180deg,#050b14f2 0%,#050b14cc 18%,#071221a8 52%,#050b14f0 100%),
+    url("/art/ui/hero-hall-v1.webp") center 30%/cover no-repeat fixed;
+}
+.page{width:min(1180px,100%);margin:0 auto;padding:18px 16px 48px}
+.banner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin:0 0 16px;padding:10px 14px;border:1px dashed #e7c57a99;border-radius:8px;
+  background:#1a1408e8;color:#ffe7b0;letter-spacing:.08em;font-size:13px;
+}
+.banner strong{color:#fff3c8;font-size:14px}
+.card{
+  border:1px solid #d1b77c;border-radius:14px;overflow:hidden;
+  background:linear-gradient(160deg,#0c1726e8,#101b2bdd);
+  box-shadow:0 16px 40px #0008,inset 0 1px #f3dfba14;
+}
+.card>header{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;min-height:56px;
+  background:linear-gradient(90deg,#17263f,#0c1628e8);border-bottom:1px solid #bfa06277;
+}
+.card>header h1{flex:1;min-width:0;margin:0;font-size:18px;letter-spacing:.12em;color:var(--gold);text-shadow:0 2px 2px #000}
+.ghost{
+  flex:0 0 44px;width:44px;height:44px;border:0;border-radius:50%;background:none;color:#f3d89d;font-size:22px;cursor:default;
+}
+.filters{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:14px 12px 6px;
+}
+.filter{
+  min-width:88px;min-height:52px;padding:8px 14px 12px;border:0;color:#f4e3c0;
+  background:url("/ui/button-materials/buttons-3d-20261110/tab-normal.webp") center/100% 100% no-repeat;
+  font:inherit;letter-spacing:.06em;cursor:default;text-shadow:0 1px 2px #000;
+}
+.filter small{display:block;font-size:10px;opacity:.8}
+.filter[aria-pressed=true]{
+  background-image:url("/ui/button-materials/buttons-3d-20261110/tab-selected.webp");
+  color:#fff6d2;
+}
+.lead{text-align:center;margin:4px 16px 10px;color:#d7c7a4;font-size:13px}
+.podium{
+  position:relative;display:grid;grid-template-columns:1fr 1.18fr 1fr;align-items:end;gap:10px;
+  padding:18px 16px 8px;min-height:340px;
+  background:
+    radial-gradient(ellipse at 50% 18%,#ffe7a433,transparent 46%),
+    radial-gradient(ellipse at 18% 70%,#cfd8e218,transparent 40%),
+    radial-gradient(ellipse at 82% 70%,#c08a4a22,transparent 40%);
+}
+.podium::before{
+  content:"";position:absolute;inset:auto 8% 42px;height:70px;
+  background:radial-gradient(ellipse at 50% 100%,#f6de9a55,transparent 70%);
+  pointer-events:none;filter:blur(2px);
+}
+.hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;z-index:1}
+.frame{
+  position:relative;display:grid;place-items:center;overflow:hidden;
+  border-radius:14px 14px 8px 8px;
+  background:#0a1220;
+}
+.frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 12%;filter:drop-shadow(0 8px 16px #000a) brightness(1.12) contrast(1.06)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 3px var(--rim),inset 0 0 18px #0004}
+.hero.first .frame{width:min(100%,240px);height:250px;--rim:#f6e2a6;background:linear-gradient(180deg,#3a2c12,#1a1408);box-shadow:0 0 24px #f0d27a66,0 12px 20px #0008}
+.hero.second .frame{width:min(100%,180px);height:196px;--rim:#e8eef6;background:linear-gradient(180deg,#2a3340,#12161c);box-shadow:0 0 16px #d5e3f455,0 10px 16px #0008}
+.hero.second .frame img{object-position:48% 8%;filter:drop-shadow(0 8px 16px #000a) brightness(1.18) contrast(1.08)}
+.hero.third .frame{width:min(100%,170px);height:186px;--rim:#e0b07a;background:linear-gradient(180deg,#3a2414,#1a1008);box-shadow:0 0 16px #c8893a55,0 10px 16px #0008}
+.hero.third .frame img{object-position:center 8%;filter:drop-shadow(0 8px 16px #0008) brightness(1.55) contrast(1.12) saturate(1.1)}
+.hero.first{order:2;padding-bottom:18px}
+.hero.second{order:1;padding-bottom:0}
+.hero.third{order:3;padding-bottom:0}
+.glow{position:absolute;top:-18px;width:70%;height:70px;background:radial-gradient(ellipse at 50% 40%,var(--beam),transparent 70%);filter:blur(6px);pointer-events:none}
+.hero.first .glow{--beam:#ffe9a988}
+.hero.second .glow{--beam:#eef4ff66}
+.hero.third .glow{--beam:#f0c48a66}
+.badge{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:2;
+  min-width:52px;padding:3px 10px;border-radius:999px;font-size:11px;letter-spacing:.12em;
+  color:#1a1408;background:var(--medal);box-shadow:0 2px 8px #0008;
+}
+.hero.first .badge{--medal:linear-gradient(#fff4c4,#d7a84a)}
+.hero.second .badge{--medal:linear-gradient(#f7fbff,#9aa7b8)}
+.hero.third .badge{--medal:linear-gradient(#f8e0bd,#b46a32)}
+.stand{
+  width:86%;height:22px;margin-top:-4px;border-radius:0 0 10px 10px;
+  background:linear-gradient(#2a2418,#16110c);box-shadow:0 8px 10px #0007,inset 0 1px #f7e7bb33;
+  border:1px solid var(--rim);
+}
+.hero.first .stand{height:34px}
+.meta{margin-top:8px}
+.meta b{display:block;color:#fff1c8;font-size:16px}
+.meta small{display:block;color:#d7c7a4;font-size:12px}
+.meta em{display:block;margin-top:2px;font-style:normal;color:#f3d38a;font-size:13px}
+.list{padding:8px 12px 16px;display:grid;gap:8px}
+.row{
+  display:grid;grid-template-columns:46px 54px minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:8px 10px;border:1px solid #bda26655;border-radius:8px;
+  background:linear-gradient(90deg,#1f2d42d9,#0c1728ed);
+}
+.rank{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;margin:auto;
+  border:1px solid #d8c08a88;color:#f4e2b4;font-size:13px;background:#15233a}
+.row img{width:48px;height:48px;object-fit:cover;object-position:center top;border-radius:8px;border:1px solid #d8c08a66;background:#0a1220}
+.who b{display:block;color:#ffe3a9;font-size:14px}
+.who small{display:block;color:#bdcbdc;font-size:12px}
+.who span{display:block;color:#d7c7a4;font-size:11px}
+.power{color:#f3d38a;font-size:14px;white-space:nowrap;text-align:right}
+.note{padding:0 16px 18px;color:#9eb0c4;font-size:12px;text-align:center}
+@media(max-width:700px){
+  .podium{grid-template-columns:1fr 1.12fr 1fr;gap:6px;padding:10px 8px 4px;min-height:280px}
+  .hero.first .frame{height:200px}
+  .hero.second .frame{height:158px}
+  .hero.third .frame{height:150px}
+  .meta b{font-size:14px}
+  .filter{min-width:64px;padding:6px 8px 10px;font-size:13px}
+  .row{grid-template-columns:36px 46px minmax(0,1fr) auto;gap:7px;padding:7px}
+}
+@media(max-width:420px){
+  .page{padding:10px 8px 28px}
+  .card>header h1{font-size:16px;letter-spacing:.06em}
+  .hero.first .frame{height:176px}
+  .power{font-size:12px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="banner" role="note"><strong>設計稿 · 示例資料</strong><span>非正式排行，尚未接入正式英雄殿堂。金牌／銀牌／銅牌頒獎台 + 第 4 名起橫向列表。</span></div>
+  <section class="card" aria-labelledby="hall-title">
+    <header>
+      <button class="ghost" type="button" aria-label="返回" tabindex="-1">←</button>
+      <h1 id="hall-title">英雄殿堂</h1>
+      <button class="ghost" type="button" aria-label="關閉" tabindex="-1">×</button>
+    </header>
+    <div class="filters" role="tablist" aria-label="職業篩選（示例）">
+      <button class="filter" type="button" role="tab" aria-pressed="true">全部<small>示例 8</small></button>
+      <button class="filter" type="button" role="tab" aria-pressed="false">劍士<small>2</small></button>
+      <button class="filter" type="button" role="tab" aria-pressed="false">妖精<small>2</small></button>
+      <button class="filter" type="button" role="tab" aria-pressed="false">法師<small>2</small></button>
+      <button class="filter" type="button" role="tab" aria-pressed="false">盜賊<small>2</small></button>
+    </div>
+    <p class="lead">等級由高到低，同級依戰力排序。以下為設計示例，不是實際玩家資料。</p>
+    <div class="podium">
+      <article class="hero second">
+        <i class="glow" aria-hidden="true"></i>
+        <span class="badge">亞軍</span>
+        <div class="frame"><img src="/art/elf-adv3-magic-20261013/hero_adv3_archer_A11_f.webp" alt="示例角色：銀羽巡守"></div>
+        <div class="stand" aria-hidden="true"></div>
+        <div class="meta"><b>銀羽巡守</b><small>星風聖射 · 示例稱號「朔風」</small><em>Lv.90 · 妖精</em><em>戰力 388,420</em></div>
+      </article>
+      <article class="hero first">
+        <i class="glow" aria-hidden="true"></i>
+        <span class="badge">冠軍</span>
+        <div class="frame"><img src="/art/hero-art-unified-20261014/mage/adv4_mage_A111_f/portrait.png" alt="示例角色：嵐曦·示例"></div>
+        <div class="stand" aria-hidden="true"></div>
+        <div class="meta"><b>嵐曦·示例</b><small>太陽神炎使 · 示例稱號「日冕」</small><em>Lv.92 · 法師</em><em>戰力 412,880</em></div>
+      </article>
+      <article class="hero third">
+        <i class="glow" aria-hidden="true"></i>
+        <span class="badge">季軍</span>
+        <div class="frame"><img src="/art/thief-20261015/adv4_thief_A111_m/portrait.png" alt="示例角色：暮刃無名"></div>
+        <div class="stand" aria-hidden="true"></div>
+        <div class="meta"><b>暮刃無名</b><small>冥夜裁決者 · 示例稱號「永夜」</small><em>Lv.88 · 盜賊</em><em>戰力 361,205</em></div>
+      </article>
+    </div>
+    <div class="list" aria-label="第 4 名起示例列表">
+      <article class="row">
+        <div class="rank">4</div>
+        <img src="/art/sword-adv2-hd-20261012/hero_adv2_sword_B1_m_portrait.png" alt="">
+        <div class="who"><b>衛城之盾</b><small>示例稱號「壁壘」</small><span>聖騎士 · Lv.86</span></div>
+        <div class="power">戰力 329,640</div>
+      </article>
+      <article class="row">
+        <div class="rank">5</div>
+        <img src="/art/hero-art-unified-20261014/mage-art-time-third/adv3_mage_B11_f/portrait.png" alt="">
+        <div class="who"><b>時砂詠者</b><small>示例稱號「時序」</small><span>時序預言者 · Lv.85</span></div>
+        <div class="power">戰力 318,075</div>
+      </article>
+      <article class="row">
+        <div class="rank">6</div>
+        <img src="/art/elf-adv3-magic-20261013/hero_adv3_archer_B21_f.webp" alt="">
+        <div class="who"><b>月渚</b><small>示例稱號「新月」</small><span>皎月巡狩 · Lv.84</span></div>
+        <div class="power">戰力 301,990</div>
+      </article>
+      <article class="row">
+        <div class="rank">7</div>
+        <img src="/art/thief-20261015/adv2_thief_B2_m/portrait.png" alt="">
+        <div class="who"><b>鏡中客</b><small>示例稱號「幻影」</small><span>幻刃使 · Lv.82</span></div>
+        <div class="power">戰力 274,410</div>
+      </article>
+      <article class="row">
+        <div class="rank">8</div>
+        <img src="/art/elf-adv2-magic-20261013/hero_adv2_archer_A1_m_portrait.png" alt="">
+        <div class="who"><b>青羽</b><small>無稱號（示例）</small><span>逐風神射 · Lv.80</span></div>
+        <div class="power">戰力 251,160</div>
+      </article>
+    </div>
+    <p class="note">職業篩選按鈕使用現有金框海軍藍立體按鈕素材。本頁僅供視覺確認，不會寫入正式排行。</p>
+  </section>
+</main>
+</body>
+</html>

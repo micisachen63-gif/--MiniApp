@@ -283,7 +283,7 @@ test('the away view styles keep the full-screen video under the HUD (stylesheet 
   assert.match(tail, /^\.scene-away-layer \{ position: absolute; inset: 0;/); assert.doesNotMatch(tail.split('}')[0], /z-index/);
   assert.match(css, /\.scene-away-layer \.expedition-away \{ position: absolute; inset: 0; aspect-ratio: auto; min-height: 0; \}/);
 });
-test('HUD skill buttons resolve painted skill icons for every server skill id and keep text only as a fallback', async () => {
+test('HUD skill buttons resolve painted skill icons for every server skill id and use empty-slot art instead of text glyphs', async () => {
   const api = viewApi();
   assert.equal(api.skillIconUrl('skill_01_1'), '/expedition/assets/skills-painted-20261011/skill_01_1.webp');
   assert.equal(api.skillIconUrl('skill_thief_03'), '/expedition/assets/skills-painted-20261011/skill_thief_03.webp');
@@ -291,7 +291,12 @@ test('HUD skill buttons resolve painted skill icons for every server skill id an
   const { LEGACY_SPECIAL_SKILLS } = await import('../src/game/special-data.js'), { THIEF_SKILLS } = await import('../src/game/thief-skills.js');
   for (const { id } of [...LEGACY_SPECIAL_SKILLS, ...THIEF_SKILLS]) assert.ok(fs.existsSync(new URL('../public' + api.skillIconUrl(id), import.meta.url)), id);
   const css = fs.readFileSync(new URL('../public/scene-live-view.css', import.meta.url), 'utf8');
-  assert.match(css, /\.hud-v2-skill-art \{[^}]*object-fit: cover/);
+  assert.match(css, /\.hud-v2-skill-art {[^}]*object-fit: cover/);
+  assert.ok(fs.existsSync(new URL('../public/art/career-skill-icons-20261110/empty-slot.webp', import.meta.url)));
+  assert.match(viewSource, /EMPTY_SKILL_ICON = '\/art\/career-skill-icons-20261110\/empty-slot\.webp'/);
+  const setIcon = viewSource.slice(viewSource.indexOf('function setSkillIcon('), viewSource.indexOf('function navigateHud('));
+  assert.match(setIcon, /src = url && !failed \? url : EMPTY_SKILL_ICON/);
+  assert.doesNotMatch(setIcon, /charAt\(0\)|slice\(0,\s*1\)|textContent\s*=\s*skill/);
 });
 test('the away view offers a manual 重新整理狀態 tap instead of polling', async () => {
   const h = awayHarness(), layer = await h.api.syncAway(h.api.normalize(awaySnapshot('p-9')));
