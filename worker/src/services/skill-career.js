@@ -3,6 +3,7 @@ import { loadPlayer } from '../db.js';
 import { stateView } from './special.js';
 import { advance, branchChoices, GameError, reselect } from '../game/classes.js';
 import { nodeFor } from '../game/stats.js';
+import { lineageNodes } from '../game/lineage.js';
 import { researchCost } from '../game/skill-mastery.js';
 import { CLASSES, GENERAL_WEAPON, ITEMS, MAX_OPEN_CLASS_TIER, RESELECT_COOLDOWN_MS, WEAPON_KINDS } from '../game/constants.js';
 
@@ -27,7 +28,18 @@ function nodeView(baseClass, path) {
     skill: { ...node.skill, description: node.skill?.description || skillDescription(node.skill), iconSrc: careerIconSrc(baseClass, node.path) },
     passive: node.passiveText || '',
     weapon: WEAPON_KINDS[node.weapon || GENERAL_WEAPON[baseClass]]?.type || null,
+    ...lineageInfo(baseClass, node.path),
   };
+}
+// Classic 轉職 screen copy (定位、專精、傳承規則、材料取得) from the same read-only lineage nodes.
+const lineageCache = new Map();
+function lineageNode(baseClass, path) {
+  if (!lineageCache.has(baseClass)) lineageCache.set(baseClass, new Map(lineageNodes(baseClass).map(n => [n.path, n])));
+  return lineageCache.get(baseClass).get(String(path || '')) || null;
+}
+function lineageInfo(baseClass, path) {
+  const n = lineageNode(baseClass, path);
+  return { blurb: n?.blurb || null, role: n?.role || null, effect: n?.effect || null, inheritance: n?.inheritance || null };
 }
 
 function itemRequirement(inv, id) {
@@ -60,7 +72,7 @@ function careerView(player, now, readOnlyReason) {
     const reason = reasonFor(() => advance({ ...char }, { ...inv }, choices[0]?.branch), advanceBlock);
     next = {
       tier: nextTier, requiredLevel: nextTier * 30,
-      material: itemRequirement(inv, (nextTier >= 3 ? 'trial_' : 'mat_') + nextTier),
+      material: { ...itemRequirement(inv, (nextTier >= 3 ? 'trial_' : 'mat_') + nextTier), source: lineageNode(baseClass, choices[0]?.path)?.materialSource || null },
       canAdvance: reason === null, reason, choices,
     };
   }

@@ -34,9 +34,44 @@
     if (!doc?.createElement || !doc.head || sheets.has(doc)) return;
     const link = doc.createElement('link');
     link.rel = 'stylesheet';
-    link.href = scriptUrl ? new URL('scene-skills-ui.css?v=20261104',scriptUrl).href : 'scene-skills-ui.css?v=20261104';
+    link.href = scriptUrl ? new URL('scene-skills-ui.css?v=20261112',scriptUrl).href : 'scene-skills-ui.css?v=20261112';
     link.onerror = () => { sheets.delete(doc);link.remove?.(); };
     doc.head.appendChild(link);sheets.set(doc,link);
+  }
+  // Character portrait catalog (already loaded by the scene for sprites); read-only, fetched once.
+  let portraitIndex = null, portraitLoad = null;
+  function portraitCatalog(onReady) {
+    if (portraitIndex) return portraitIndex;
+    const sprites = globalThis.CharacterSprites;
+    if (!portraitLoad && typeof sprites?.catalog === 'function') {
+      portraitLoad = Promise.resolve(sprites.catalog()).then(d => { portraitIndex = new Map((d?.actors || []).map(a => [a.id,a.portrait])); }).catch(() => { portraitLoad = null; });
+    }
+    if (portraitLoad && onReady && !portraitLoad.waiting) { portraitLoad.waiting = true;portraitLoad.then(() => onReady()); }
+    return null;
+  }
+  // Hero sheets keep uneven transparent padding; fit the opaque silhouette to the art box.
+  const silhouettes = new WeakMap();
+  function fitOne(img) {
+    const box = img.parentElement;if (!box || !img.naturalWidth) return;
+    let b = silhouettes.get(img);
+    if (b === undefined) {
+      b = null;
+      try {
+        const w = 80, h = Math.max(1, Math.round(80 * img.naturalHeight / img.naturalWidth)), c = img.ownerDocument.createElement('canvas');c.width = w;c.height = h;
+        const g = c.getContext('2d', {willReadFrequently:true});g.drawImage(img,0,0,w,h);const d = g.getImageData(0,0,w,h).data;
+        let x0 = w, y0 = h, x1 = -1, y1 = -1;
+        for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 40) { if (x < x0) x0 = x;if (x > x1) x1 = x;if (y < y0) y0 = y;if (y > y1) y1 = y; }
+        if (x1 >= x0) b = {x:x0 / w,y:y0 / h,w:(x1 - x0 + 1) / w,h:(y1 - y0 + 1) / h};
+      } catch { b = null; }
+      silhouettes.set(img,b);
+    }
+    const W = box.clientWidth, H = box.clientHeight;if (!b || !W || !H) return;
+    const nw = img.naturalWidth, nh = img.naturalHeight, s = Math.min(W * .92 / (b.w * nw), H * .94 / (b.h * nh));
+    img.classList.add('sc-fit');
+    Object.assign(img.style,{width:(nw * s).toFixed(1) + 'px',height:(nh * s).toFixed(1) + 'px',left:(W / 2 - (b.x + b.w / 2) * nw * s).toFixed(1) + 'px',top:(H * .97 - (b.y + b.h) * nh * s).toFixed(1) + 'px'});
+  }
+  function fitJobArt(root) {
+    root.querySelectorAll?.('img[data-sc-fit]').forEach(img => { if (img.complete && img.naturalWidth) fitOne(img);else img.addEventListener('load',() => fitOne(img),{once:true}); });
   }
   function mount(root, host, options = {}) {
     ensureStyle(root);
@@ -128,7 +163,7 @@
     }
     function prepare(action, body, label, details) {
       const reason = readiness();if (reason) return feedback(reason,true);
-      state.error = '';state.confirm = {action,body:clone(body),label,details,fingerprint:fingerprint()};state.focusConfirm = true;paint();
+      state.error = '';state.confirm = {action,body:clone(body),label,details,fingerprint:fingerprint(),...(action === 'advance' && state.jobPick ? {job:state.jobPick} : {})};state.jobPick = null;state.focusConfirm = true;paint();
     }
     function describeWrite(action, body) {
       const s = skill(body.skillId), m = s?.mastery;
@@ -154,6 +189,7 @@
         if (body.op === 'loadout') for (const key of Object.keys(draft)) { if (key.startsWith('auto:') && !body.loadout.includes(key.slice(5))) delete draft[key]; }
         if (body.op === 'auto') delete draft['auto:' + body.skillId];
         if (body.op === 'settings') { delete draft.skillMode;delete draft.skillBudget; }
+        if (preview.action === 'advance' && preview.job) draft.jobResult = preview.job;
         state.notice = describeWrite(preview.action,body);state.stale = true;
         if (Number.isFinite(Number(result.character?.revision))) state.minRevision = Math.max(state.minRevision,Number(result.character.revision));
         try { host.onChanged?.(result); } catch {}
@@ -281,32 +317,81 @@
       if (!url) return '';
       return '<img class="sc-skill-art" src="' + url + '" alt="" loading="lazy" decoding="async" draggable="false">';
     }
-    function careerSkill(s, path) {
+    function careerSkill(s, path, compact = false) {
       if (!s) return '';
       const text = s.description || ('倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標 · 魔力 ' + fmt(s.cost));
-      return '<div class="sc-skill-head">' + careerArt(s, path) + '<div><strong>' + esc(s.name || '') + '</strong><small>魔力 ' + fmt(s.cost) + ' · 倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標</small></div></div><p class="sc-effect">' + esc(text) + '</p>';
+      return '<div class="sc-skill-head">' + careerArt(s, path) + '<div><strong>' + esc(s.name || '') + '</strong><small>' + (compact === 'name' ? '新路線原生技能' : '魔力 ' + fmt(s.cost) + ' · 倍率 ' + fmt(s.mult) + '× · ' + fmt(s.targets || 1) + ' 個目標') + '</small></div></div>' + (compact ? '' : '<p class="sc-effect">' + esc(text) + '</p>');
+    }
+    // Classic 轉職 flow restored inside the scene: ① 條件 → ② 選路線 → ③ 確認 → ④ 完成.
+    // Same server data (skill-career) and the same advance/reselect writes; no timers.
+    function portraitKey(path) {
+      const ch = data()?.character || {}, cls = String(ch.baseClass || ''), g = ch.gender === 'm' ? 'm' : 'f', p = String(path || '');
+      return p ? 'adv' + p.length + '_' + cls + '_' + p + '_' + g : cls + (g === 'm' ? '_m' : '');
+    }
+    function jobArt(path, name, extra = '') {
+      const index = portraitCatalog(() => { if (current()) paint(); });
+      const src = index?.get(portraitKey(path));
+      return '<span class="sc-jc-art' + extra + '">' + (src ? '<img src="' + esc(src) + '" alt="' + esc(name) + '外觀" loading="lazy" decoding="async" draggable="false" data-sc-fit>' : '') + '</span>';
+    }
+    function skillStats(s, compare) {
+      if (!s) return '';
+      const delta = (a, b, unit = '') => compare && Number.isFinite(Number(a)) && Number.isFinite(Number(b)) && Number(a) !== Number(b) ? '<i class="' + (Number(b) > Number(a) ? 'sc-up' : 'sc-down') + '">' + fmt(a) + unit + ' → </i>' : '';
+      return '<dl class="sc-jc-stats"><div><dt>耗魔</dt><dd>' + delta(compare?.cost, s.cost) + fmt(s.cost) + '</dd></div>' +
+        '<div><dt>倍率</dt><dd>' + delta(compare?.mult, s.mult, '×') + fmt(s.mult) + '×</dd></div>' +
+        '<div><dt>目標</dt><dd>' + delta(compare?.targets || 1, s.targets || 1) + fmt(s.targets || 1) + ' 體</dd></div></dl>';
+    }
+    function stepper(active, done) {
+      const names = ['確認條件','選擇路線','確認轉職','轉職完成'];
+      return '<ol class="sc-jc-steps" aria-label="轉職步驟">' + names.map((n, i) => '<li class="' + (i + 1 < active || done ? 'sc-done' : i + 1 === active ? 'sc-now' : '') + '"' + (i + 1 === active ? ' aria-current="step"' : '') + '><b>' + (i + 1 < active || done ? '✓' : i + 1) + '</b><span>' + n + '</span></li>').join('') + '</ol>';
+    }
+    function requirementRow(ok, label, value, note = '') {
+      return '<li class="' + (ok ? 'sc-ok' : 'sc-miss') + '"><b aria-hidden="true">' + (ok ? '✓' : '✗') + '</b><span>' + esc(label) + '<strong>' + value + '</strong>' + (note ? '<small>' + note + '</small>' : '') + '</span></li>';
     }
     function careerView() {
       const c = data()?.career;
       if (!c) return '<p class="sc-muted">轉職資料尚未提供，請重新整理。</p>';
-      const info = c.current, next = c.next, tiers = c.reselect?.tiers || [];
-      return '<section class="sc-section"><h3>' + esc(info.name) + '</h3><p>Lv.' + fmt(data().character.level) + ' · 第 ' + fmt(info.tier) + ' 階 · 路線 ' + esc(info.path || '初始') + '</p>' +
-        careerSkill(info.skill, info.path) + '<p class="sc-effect">' + esc(info.passive || '') + '</p>' +
-        (info.weapon ? '<p class="sc-muted">職業武器：' + esc(info.weapon) + '</p>' : '') +
-        (c.activity?.atlasRunId ? '<p class="sc-muted">星圖正在進行；這次改職會影響下次出發，本趟戰鬥快照維持出發時配置。</p>' : '') + '</section>' +
-        '<section class="sc-section"><h3>下一階轉職</h3>' + (!next ? '<p>已完成所有可用轉職階段。</p>' :
-          '<p>第 ' + fmt(next.tier) + ' 階 · 需要 Lv.' + fmt(next.requiredLevel) + '</p><p>材料：' + esc(next.material.name) + ' ' + fmt(next.material.have) + '／' + fmt(next.material.required) + '</p>' +
-          (next.reason ? '<p class="sc-muted" data-sc-advance-reason>' + esc(next.reason.message) + '</p>' : '') +
-          '<div class="sc-career-grid">' + next.choices.map(choice => '<article class="sc-card"><h4>' + esc(choice.name) + '</h4><small>路線 ' + esc(choice.path) + '</small>' + careerSkill(choice.skill, choice.path) + '<p>' + esc(choice.passive || '') + '</p>' +
-            button('advance','轉職為 ' + choice.name,{branch:choice.branch,tier:choice.tier,primary:true,disabled:lock() || !next.canAdvance}) + '</article>').join('') + '</div>') + '</section>' +
-        '<section class="sc-section"><h3>重選職業路線</h3><p class="sc-muted">重選會保留後續分支，並依新路線重新計算最終職業。不符合路線的專屬裝備會自動卸下。</p>' +
+      const info = c.current, next = c.next, tiers = c.reselect?.tiers || [], ch = data().character || {}, level = Number(ch.level) || 0;
+      const done = draft.jobResult && draft.jobResult.path === info.path ? draft.jobResult : null;
+      const confirming = state.confirm?.action === 'advance';
+      const active = done ? 4 : confirming ? 3 : next?.canAdvance ? 2 : 1;
+      let html = '<section class="sc-jc-hero">' + jobArt(info.path, info.name, ' sc-jc-art-hero') + '<div><small>' + esc(info.baseClassName || '') + '系 · 第 ' + fmt(info.tier) + ' 階' + (info.path ? ' · 路線 ' + esc(info.path) : '') + '</small><h3>' + esc(info.name) + '</h3><p>Lv.' + fmt(level) + (info.weapon ? ' · ' + esc(info.weapon) : '') + '</p>' +
+        (info.blurb ? '<p class="sc-muted">' + esc(info.blurb) + '</p>' : '') + careerSkill(info.skill, info.path, true) + (info.passive ? '<p class="sc-effect">路線被動：' + esc(info.passive) + '</p>' : '') + '</div></section>' +
+        (c.activity?.atlasRunId ? '<p class="sc-muted">星圖正在進行；這次改職會影響下次出發，本趟戰鬥快照維持出發時配置。</p>' : '');
+      if (done) {
+        html += stepper(4, true) + '<section class="sc-jc-result" role="status"><h3>🎉 轉職成功：' + esc(done.name) + '</h3><p>路線 ' + esc(done.from || '初始') + ' → ' + esc(done.path) + '，新技能與被動已生效。</p><p class="sc-muted">技能、配置與天賦請到「技能」頁確認；之後可用命運轉職書重選路線。</p><div class="sc-actions">' +
+          button('navigate','前往技能',{route:'skills'}) + button('job-ack','繼續查看轉職',{primary:true}) + '</div></section>';
+      } else if (!next) {
+        html += '<section class="sc-section"><h3>轉職進度</h3><p>已完成所有可用轉職階段。</p></section>';
+      } else {
+        const lvOk = level >= next.requiredLevel, m = next.material || {}, matOk = (m.have || 0) >= (m.required || 1);
+        const pct = Math.max(0, Math.min(100, Math.round(level / Math.max(1, next.requiredLevel) * 100)));
+        const other = next.reason && !['level','material'].includes(next.reason.code) ? next.reason.message : '';
+        html += stepper(active, false) +
+          '<section class="sc-jc-step" data-sc-step="1"><h3><b>1</b>第 ' + fmt(next.tier) + ' 次轉職條件</h3><ul class="sc-jc-req">' +
+          requirementRow(lvOk,'等級','Lv.' + fmt(level) + ' / ' + fmt(next.requiredLevel),'<i class="sc-jc-bar"><i style="width:' + pct + '%"></i></i>') +
+          requirementRow(matOk,'材料','「' + esc(m.name) + '」' + fmt(m.have) + ' / ' + fmt(m.required), m.source ? '取得：' + esc(m.source) : '') +
+          (other ? requirementRow(false,'狀態',esc(other)) : '') + '</ul>' +
+          (next.canAdvance ? '<p class="sc-jc-ready">✨ 條件都達成了，從下面選一條路線轉職！</p>' : next.reason ? '<p class="sc-muted" data-sc-advance-reason>' + esc(next.reason.message) + '</p>' : '') + '</section>' +
+          '<section class="sc-jc-step" data-sc-step="2"><h3><b>2</b>選擇路線</h3><p class="sc-muted">兩條路線擇一；轉職後仍可用命運轉職書重選。</p><div class="sc-career-grid sc-jc-choices">' +
+          next.choices.map(choice => '<article class="sc-card sc-jc-choice">' + jobArt(choice.path, choice.name) + '<h4>' + esc(choice.name) + ' <small>路線 ' + esc(choice.path) + '</small></h4>' +
+            (choice.blurb ? '<p class="sc-jc-blurb">定位：' + esc(choice.blurb) + (choice.role ? ' · ' + esc(choice.role) : '') + '</p>' : '') +
+            careerSkill(choice.skill, choice.path, 'name') + skillStats(choice.skill, info.skill) + (choice.skill?.description ? '<p class="sc-effect">' + esc(choice.skill.description) + '</p>' : '') +
+            (choice.passive ? '<p>路線被動：' + esc(choice.passive) + '</p>' : '') + (choice.weapon ? '<p class="sc-muted">職業武器：' + esc(choice.weapon) + '</p>' : '') +
+            (choice.effect ? '<p class="sc-muted">效果：' + esc(choice.effect) + '</p>' : '') + (choice.inheritance ? '<p class="sc-muted">' + esc(choice.inheritance) + '</p>' : '') +
+            button('advance', next.canAdvance ? '選擇「' + choice.name + '」' : !lvOk ? '需要 Lv.' + next.requiredLevel : !matOk ? '缺「' + m.name + '」' : '暫不能轉職',{branch:choice.branch,tier:choice.tier,primary:true,disabled:lock() || !next.canAdvance}) + '</article>').join('') + '</div></section>';
+      }
+      const books = tiers.reduce((n, t) => n + (Number(t.book?.have) || 0), 0);
+      html += '<details class="sc-section sc-jc-reselect"' + (draft.reselectOpen ? ' open' : '') + '><summary><b>📖 命運轉職書 · 重選已完成的路線</b><small>' + (tiers.length ? '持有 ' + fmt(books) + ' 本' : '完成轉職後開放') + '</small></summary>' +
+        '<h3 class="sc-visually-hidden">重選職業路線</h3><p class="sc-muted">重選會保留後續分支，並依新路線重新計算最終職業。不符合路線的專屬裝備會自動卸下。</p>' +
         ((c.reselect?.cooldownRemainingMs || 0) > 0 ? '<p class="sc-muted">共用冷卻剩餘約 ' + Math.ceil(c.reselect.cooldownRemainingMs / 60000) + ' 分鐘。到期後重新整理可用狀態。</p>' : '') +
         tiers.map(t => !t.book?.id ? '<div class="sc-reselect-tier" data-sc-reselect-tier="' + t.tier + '"><h4>第 ' + fmt(t.tier) + ' 階重選</h4><p class="sc-muted">' + esc(t.choices?.find(choice => choice.reason)?.reason?.message || t.book?.name || '此階尚未開放重選') + '</p></div>' : '<div class="sc-reselect-tier" data-sc-reselect-tier="' + t.tier + '"><h4>第 ' + fmt(t.tier) + ' 階重選</h4><p>' + esc(t.book.name) + ' ' + fmt(t.book.have) + '／' + fmt(t.book.required) + '</p><div class="sc-career-grid">' +
           t.choices.map(choice => '<article class="sc-card' + (choice.selected ? ' sc-selected' : '') + '"><h4>' + esc(choice.branchName || choice.name) + (choice.selected ? ' · 目前分支' : '') + '</h4><p>最終職業：' + esc(choice.name) + ' · ' + esc(choice.path) + '</p>' + careerSkill(choice.skill, choice.path) +
             '<p>' + esc(choice.passive || '') + '</p>' + (choice.unequipped?.length ? '<p class="sc-muted">會卸下：' + choice.unequipped.map(item => esc(item.name)).join('、') + '</p>' : '') +
             (choice.reason && !choice.selected ? '<p class="sc-muted">' + esc(choice.reason.message) + '</p>' : '') +
             button('reselect',choice.selected ? '目前路線' : '重選為 ' + (choice.branchName || choice.name),{branch:choice.branch,tier:t.tier,disabled:lock() || !choice.canReselect || choice.selected}) + '</article>').join('') +
-          '</div></div>').join('') + (!tiers.length ? '<p class="sc-muted">完成轉職後，可在這裡查看重選路線。</p>' : '') + '</section>';
+          '</div></div>').join('') + (!tiers.length ? '<p class="sc-muted">完成轉職後，可在這裡查看重選路線。</p>' : '') + '</details>' +
+        '<div class="sc-actions sc-jc-links">' + button('navigate','查看完整成長樹',{route:'lineage'}) + '</div>';
+      return html;
     }
     function notices() {
       let html = '';
@@ -322,7 +407,8 @@
     }
     function confirmation() {
       const p = state.confirm;if (!p) return '';
-      return '<section class="sc-confirm" data-sc-confirm role="region" aria-labelledby="sc-confirm-title"><h3 id="sc-confirm-title">確認' + esc(p.label) + '</h3><p>' + esc(p.details) + '</p><div class="sc-actions">' +
+      const job = p.action === 'advance' && p.job && tab === 'career' ? '<div class="sc-jc-confirm-art" aria-hidden="true">' + jobArt(data()?.career?.current?.path, data()?.career?.current?.name || '') + '<b>→</b>' + jobArt(p.job.path, p.job.name) + '</div><p class="sc-jc-step-tag"><b>3</b>確認轉職</p>' : '';
+      return '<section class="sc-confirm' + (job ? ' sc-jc-confirm' : '') + '" data-sc-confirm role="region" aria-labelledby="sc-confirm-title">' + job + '<h3 id="sc-confirm-title">確認' + esc(p.label) + '</h3><p>' + esc(p.details) + '</p>' + (job ? '<p class="sc-muted">之後可用命運轉職書重選。</p>' : '') + '<div class="sc-actions">' +
         button('confirm','確認執行',{primary:true,disabled:lock()}) + button('cancel','取消') + '</div></section>';
     }
     function paint() {
@@ -338,6 +424,7 @@
         '<nav class="sc-tabs" aria-label="技能與職業">' + button('navigate','技能',{route:'skills',disabled:tab === 'skills'}) + button('navigate','職業／轉職',{route:'career',disabled:tab === 'career'}) + '</nav>' +
         notices() + confirmation() + (!data() ? '<p class="sc-muted">正在讀取技能與職業…</p>' : tab === 'skills' ? skillsView() : careerView()) + '</div>';
       root.scrollTop = top;
+      fitJobArt(root);
       if (state.confirm && state.focusConfirm) {
         state.focusConfirm = false;root.scrollTop = 0;
         root.querySelector?.('[data-sc-confirm]')?.scrollIntoView?.({block:'nearest'});
@@ -403,6 +490,7 @@
       if (action === 'advance') {
         const choice = c.next?.choices?.find(v => v.branch === branch);
         if (!choice || Number(choice.tier) !== tier || !c.next.canAdvance) return feedback(c.next?.reason?.message || '目前尚不符合轉職條件。',true);
+        state.jobPick = {name:choice.name,path:choice.path,from:c.current.path || '',skill:choice.skill};
         return prepare('advance',{branch},'轉職為 ' + choice.name,'消耗 ' + c.next.material.required + ' 個「' + c.next.material.name + '」，路線 ' + (c.current.path || '初始') + ' → ' + choice.path + '。');
       }
       const row = c.reselect?.tiers?.find(v => Number(v.tier) === tier), choice = row?.choices?.find(v => v.branch === branch);
@@ -420,7 +508,8 @@
       if (action === 'acknowledge') {
         const p = pending();if (p && !state.busy && !state.loading && !state.stale && state.checkedPending === p.id) {clearPending(p.id);state.notice = '已結束這筆待確認狀態。';state.error = '';paint();}return;
       }
-      if (action === 'navigate') { if (!state.busy && ['skills','career','build','talents','supplies','book-tools'].includes(target.dataset.route)) host.navigate?.(target.dataset.route,{});return; }
+      if (action === 'navigate') { if (!state.busy && ['skills','career','build','talents','supplies','book-tools','lineage'].includes(target.dataset.route)) host.navigate?.(target.dataset.route,{});return; }
+      if (action === 'job-ack') { delete draft.jobResult;state.notice = '';return paint(); }
       if (action === 'detail') { draft.selected = target.dataset.skillId || '';state.confirm = null;state.error = '';return paint(); }
       if (action === 'list') { draft.selected = '';state.confirm = null;return paint(); }
       if (readiness()) return feedback(readiness(),true);
@@ -446,6 +535,8 @@
     }
     const compositionStart = event => { if (root.contains?.(event.target)) composing = true; };
     const compositionEnd = event => { if (!current()) return;composing = false;if (event.target?.name === 'skillSearch') draft.search = event.target.value;if (deferredPaint || event.target?.name === 'skillSearch') paint(); };
+    const toggle = event => { if (event.target?.classList?.contains?.('sc-jc-reselect')) draft.reselectOpen = event.target.open; };
+    root.addEventListener('toggle',toggle,true);
     root.addEventListener('click',click);root.addEventListener('input',input);root.addEventListener('change',change);
     const artError = event => { if (event.target?.classList?.contains('sc-skill-art')) event.target.hidden = true; };
     root.addEventListener('error',artError,true);
@@ -471,7 +562,7 @@
       dispose() {
         if (disposed) return;
         disposed = true;generation++;controller?.abort();
-        root.removeEventListener('click',click);root.removeEventListener('error',artError,true);root.removeEventListener('input',input);root.removeEventListener('change',change);
+        root.removeEventListener('click',click);root.removeEventListener('toggle',toggle,true);root.removeEventListener('error',artError,true);root.removeEventListener('input',input);root.removeEventListener('change',change);
         root.removeEventListener('compositionstart',compositionStart);root.removeEventListener('compositionend',compositionEnd);
       }
     };

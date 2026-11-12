@@ -343,3 +343,14 @@ test('every career path has a compact skill icon and a non-glyph description', a
   }
   assert.ok(fs.existsSync(new URL('../public/art/career-skill-icons-20261110/empty-slot.webp', import.meta.url)));
 });
+
+test('career projection carries the classic 轉職 copy: material source and path 定位 from lineage', async () => {
+  const env = { DB: freshDb() };
+  await Player.createCharacter(env, { tgId: '7701', name: '轉職說明', baseClass: 'sword', gender: 'f' }, T0, () => .5);
+  await env.DB.prepare('UPDATE rpg_characters SET level=60, class_path=? WHERE tg_id=?').bind('A', '7701').run();
+  const career = (await view(env, '7701', T0)).career;
+  assert.equal(career.next.material.source, '討伐腐朽樹王');
+  assert.ok(career.current.blurb);
+  assert.ok(career.next.choices.every(c => typeof c.blurb === 'string' && c.blurb.length));
+  assert.ok(career.next.choices.every(c => c.inheritance === '包含二轉與一轉被動。'));
+});
