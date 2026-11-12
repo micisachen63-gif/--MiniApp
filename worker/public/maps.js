@@ -15,6 +15,23 @@
     { id: 11, min: 101, max: 110, name: '至福樂土', emoji: '✨', mood: '英雄安息之境' },
     { id: 12, min: 111, max: 120, name: '奧林帕斯星穹聖殿', emoji: '🌌', mood: '眾神星殿' },
   ]);
-  const get = (level) => scenes[Math.max(0, Math.min(scenes.length - 1, Math.ceil(Math.max(1, Number(level) || 1) / 10) - 1))];
-  window.RpgMaps = Object.freeze({ scenes, get, key: (level) => `myth${String(get(level).id).padStart(2, '0')}` });
+  // Lv.600 endgame (server endgame.js, endgame-v1): five world modes of 120 levels each. Every round
+  // replays the same twelve scenes, so Lv.121 is scene 1 of round 2 (菁英) and Lv.600 is scene 12 of 地獄.
+  const CYCLE_LEVELS = 120, MAX_LEVEL = 600;
+  const modes = Object.freeze([['normal', '普通'], ['elite', '菁英'], ['expert', '專家'], ['nightmare', '惡夢'], ['hell', '地獄']]
+    .map(([id, name], index) => Object.freeze({ id, name, index, round: index + 1, minLevel: index * CYCLE_LEVELS + 1, maxLevel: (index + 1) * CYCLE_LEVELS })));
+  const clampLevel = (level) => Math.max(1, Math.min(MAX_LEVEL, Math.floor(Number(level) || 1)));
+  const localLevel = (level) => (clampLevel(level) - 1) % CYCLE_LEVELS + 1;
+  const mode = (level) => modes[Math.floor((clampLevel(level) - 1) / CYCLE_LEVELS)];
+  const get = (level) => scenes[Math.ceil(localLevel(level) / 10) - 1];
+  // Class awakenings unlock with each new round (server awakening.js AWAKENINGS; names and levels only).
+  const awakeningRows = Object.freeze([
+    ['sword', 'elite', '戰神破勢'], ['sword', 'expert', '壁壘回響'], ['sword', 'nightmare', '血誓狂潮'], ['sword', 'hell', '諸神斷罪'],
+    ['archer', 'elite', '逐星連矢'], ['archer', 'expert', '群靈共獵'], ['archer', 'nightmare', '月蝕獵印'], ['archer', 'hell', '蒼穹裁決'],
+    ['mage', 'elite', '星雷共鳴'], ['mage', 'expert', '霜鏡回流'], ['mage', 'nightmare', '元素裂解'], ['mage', 'hell', '太初星爆'],
+    ['thief', 'elite', '影襲連鎖'], ['thief', 'expert', '淬毒散華'], ['thief', 'nightmare', '暗月處決'], ['thief', 'hell', '永夜分身'],
+  ].map(([baseClass, modeId, name]) => Object.freeze({ id: `awakening:${baseClass}:${modeId}`, baseClass, mode: modeId, name, unlockLevel: modes.find((m) => m.id === modeId).minLevel })));
+  const awakenings = (baseClass, level) => awakeningRows.filter((a) => a.baseClass === baseClass).map((a) => ({ ...a, unlocked: clampLevel(level) >= a.unlockLevel }));
+  const progression = (level) => { const m = mode(level); return { level: clampLevel(level), localLevel: localLevel(level), maxLevel: MAX_LEVEL, cycleLevels: CYCLE_LEVELS, mode: m, round: m.round, rounds: modes.length, scene: get(level), next: modes[m.index + 1] || null }; };
+  window.RpgMaps = Object.freeze({ scenes, get, key: (level) => `myth${String(get(level).id).padStart(2, '0')}`, modes, mode, localLevel, progression, awakenings, CYCLE_LEVELS, MAX_LEVEL });
 })();

@@ -12,7 +12,8 @@
  setInterval(()=>document.querySelectorAll('.skill-widget [data-widget-cd]').forEach(b=>{if(b.closest('.skill-widget').busy)return;const n=Math.max(0,Math.ceil((Number(b.dataset.widgetCd)-Date.now()-(b.closest('.skill-widget').clockSkew||0))/1000));if(n){b.textContent='冷卻 '+n+'s';b.disabled=true;}else if(b.dataset.widgetBlocked==='0'){b.disabled=false;b.textContent=['skill_17_2','skill_24_2'].includes(b.dataset.skillCast)?'組隊施放':'手動施放';}}),1000);
  window.addEventListener('elf-skills-refresh',()=>document.querySelectorAll('.skill-widget').forEach(n=>{n.rendered=null;n.refresh?.();}));
  document.addEventListener('click',e=>{if(e.target.closest('[data-panel]'))document.querySelectorAll('.skill-widget').forEach(n=>{if(!n.lastLoaded||Date.now()-n.lastLoaded>=30000)n.refresh?.();});});
- setInterval(()=>{if(!document.hidden)document.querySelectorAll('.skill-widget').forEach(n=>n.refresh?.());},30000);
+ // /classic-next: no timed main-screen refresh; the widget reads on mount and after its own actions.
+ if(window.RPG_CLASSIC_NEXT!==true)setInterval(()=>{if(!document.hidden)document.querySelectorAll('.skill-widget').forEach(n=>n.refresh?.());},30000);
 })();
 
 

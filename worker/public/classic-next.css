@@ -1,0 +1,109 @@
+/* /classic-next only: the current battle scene in the classic home battle frame, and the home Atlas entry. */
+.lc-battle-shell #bslot.cn-battle-slot{position:relative;height:clamp(370px,112vw,560px);min-height:370px;border:1px solid #dac17e;border-radius:2px;background:#050505 radial-gradient(circle at 50% 45%,#2a1a10 0,#050505 70%);box-shadow:inset 0 0 0 1px #17191a,0 2px 6px #0008}
+.lc-battle-shell #bslot.cn-battle-slot.cn-battle-loading::after{content:'戰場載入中…';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#e8d6a6;font-size:13px;letter-spacing:.08em;opacity:.8}
+.lc-battle-shell #bslot.cn-battle-slot>.bstage{position:absolute;inset:0;height:auto;min-height:0}
+.next-atlas-entry{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit;border:1px solid #c4a261;background:linear-gradient(120deg,#13202a,#0b1218 60%,#2a2012);box-shadow:inset 0 0 0 1px #f0d99d33,0 6px 18px #0009;padding:12px 14px}
+.next-atlas-entry .next-atlas-mark{font-size:22px;color:#f0d99d;text-shadow:0 0 10px #f0d99d88}
+.next-atlas-entry .next-atlas-text{flex:1;display:flex;flex-direction:column;gap:2px}
+.next-atlas-entry b{font-size:15px;color:#f3e2b3;letter-spacing:.04em}
+.next-atlas-entry small{font-size:11.5px;color:#c9bb94}
+.next-atlas-entry .next-atlas-go{font-size:24px;color:#dac17e}
+.next-atlas-choices{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.next-atlas-choices .btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%}
+.next-atlas-choices .btn small{font-size:11.5px;opacity:.8;font-weight:400}
+/* P3 rounds (Lv.600) and P4 talents */
+.next-round-badge{display:inline-flex;align-items:baseline;gap:3px;margin-left:6px;padding:1px 7px;border:1px solid #c4a261;border-radius:999px;background:#1a140b;color:#f0d99d;font-size:11px;font-weight:700;letter-spacing:.02em;vertical-align:1px;white-space:nowrap}
+.next-round-badge b{font-size:12px;color:#fff3cf}
+.next-round-badge.mode-elite{border-color:#6fb0e8;color:#bfe1ff;background:#0d1a26}
+.next-round-badge.mode-expert{border-color:#b98ce8;color:#e3ccff;background:#1a1026}
+.next-round-badge.mode-nightmare{border-color:#e07a5f;color:#ffc9b8;background:#26100c}
+.next-round-badge.mode-hell{border-color:#ff4d4d;color:#ffd0d0;background:#2a0808}
+.next-round-list{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:5px}
+.next-round-row{display:grid;grid-template-columns:auto auto 1fr auto;align-items:center;gap:8px;padding:6px 8px;border:1px solid #4b3f2a;border-radius:3px;background:#0d1418;font-size:12.5px}
+.next-round-row.now{border-color:#dac17e;background:linear-gradient(90deg,#2a2012,#0d1418);box-shadow:inset 0 0 0 1px #f0d99d33}
+.next-round-row.locked{opacity:.55}
+.next-round-row .next-round-no{color:#c9bb94;font-size:11px}
+.next-round-row .next-round-state{font-size:11.5px;color:#e8d6a6;text-align:right}
+.next-round-row.done .next-round-state{color:#9fd39b}
+.next-awakening-list{list-style:none;margin:6px 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.next-awakening-list li{display:flex;flex-direction:column;padding:6px 8px;border:1px solid #4b3f2a;border-radius:3px;background:#0d1418;font-size:12.5px}
+.next-awakening-list li span{float:left;margin-right:4px}
+.next-awakening-list li.on{border-color:#dac17e;color:#f3e2b3}
+.next-awakening-list li.off{opacity:.6}
+.next-awakening-list li small{font-size:11px;color:#c9bb94}
+.next-talent-points{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
+.next-talent-points>div{display:flex;flex-direction:column;align-items:center;padding:6px 4px;border:1px solid #4b3f2a;border-radius:3px;background:#0d1418}
+.next-talent-points b{font-size:18px;color:#f3e2b3}
+.next-talent-points span{font-size:11px;color:#c9bb94}
+.next-talent-branches{display:flex;flex-direction:column;gap:8px}
+.next-talent-branch-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px}
+.next-talent-branch .bar b{font-size:11px}
+.next-talent-keys{margin:0;padding-left:18px;font-size:12.5px}
+.next-talent-keys li span{display:block;font-size:11.5px}
+/* P5: round pill on the home profile line */
+.my-hero-profession.next-has-round{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0}
+.my-hero-profession .next-round-badge{font-size:10.5px;padding:0 6px;line-height:16px;margin-left:6px}
+.my-hero-profession .next-round-badge b{font-size:11px}
+/* P5: tool entries */
+.cn-entries{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.cn-entry{display:flex;align-items:center;gap:8px;min-height:54px;padding:8px 10px;text-align:left;cursor:pointer;color:inherit;font:inherit;border:1px solid #6b5a36;border-radius:3px;background:linear-gradient(135deg,#121c24,#0b1218 70%,#1f180d);box-shadow:inset 0 0 0 1px #f0d99d1f}
+.cn-entry:active{transform:translateY(1px)}
+.cn-entry .cn-entry-icon{font-size:20px;width:26px;text-align:center;flex:none}
+.cn-entry .cn-entry-text{display:flex;flex-direction:column;min-width:0}
+.cn-entry b{font-size:13.5px;color:#f3e2b3;letter-spacing:.03em}
+.cn-entry small{font-size:10.5px;color:#c9bb94;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* P5: 冒險 banner loops behind classic entries (poster first) */
+.cn-banner-host{position:relative;overflow:hidden;isolation:isolate}
+.cn-banner{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit}
+.cn-banner img,.cn-banner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.cn-banner video{opacity:.62}
+.cn-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#070c11e6 0%,#070c11a6 55%,#070c1155 100%)}
+.card.cn-banner-host .cn-banner img,.card.cn-banner-host .cn-banner video{opacity:.28}
+.card.cn-banner-host .cn-banner::after{background:linear-gradient(180deg,#070c11cc,#070c11ee)}
+.next-atlas-entry.cn-banner-host{min-height:72px}
+.godwar-entry .expedition-choice.cn-banner-host{min-height:58px}
+@media (prefers-reduced-motion: reduce){.cn-banner video{display:none}}
+/* P5: career skill icons in classic skill lists */
+.cn-skill-icon{width:30px;height:30px;border-radius:6px;border:1px solid #c4a26199;vertical-align:middle;margin-right:6px;object-fit:cover;background:#0b1218;float:left}
+.cn-skill-icon.small{width:22px;height:22px;border-radius:5px;margin-right:5px;float:none;vertical-align:-6px}
+.branch .sk>div:first-child{display:flow-root}
+/* P5: classic floating panel for scene windows */
+.cn-panel{position:fixed;inset:0;z-index:1200;display:flex;align-items:flex-end;justify-content:center;background:#02050899;backdrop-filter:blur(2px)}
+.cn-panel-card{width:min(560px,100%);max-height:min(88vh,100%);display:flex;flex-direction:column;border:1px solid #c4a261;border-bottom:0;border-radius:10px 10px 0 0;background:#0b1218;box-shadow:0 -10px 40px #000c}
+.cn-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-bottom:1px solid #4b3f2a}
+.cn-panel-head h2{margin:0;font-size:16px;color:#f3e2b3;letter-spacing:.06em}
+.cn-panel-close{border:1px solid #6b5a36;background:#121c24;color:#f0d99d;border-radius:3px;padding:5px 10px;font:inherit;font-size:12.5px}
+.cn-panel-body{overflow:auto;padding:10px 12px calc(14px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;color:#eadfc4}
+/* P7: the scene with its full HUD is the home (iframe#demo, same as the current home page); the classic
+   tab bar and top bar give way, and each classic feature opens as a floating window over the scene. */
+#demo.cn-scene{display:none}
+html.cn-scene-home,html.cn-scene-home body{background:#050505;overflow:hidden;overscroll-behavior:none}
+html.cn-scene-home #demo.cn-scene{display:block;position:fixed;inset:0;width:100%;height:100%;border:0;z-index:0;background:#050505}
+html.cn-scene-home #app{display:none}
+html.cn-scene-home #hud,html.cn-scene-home #app>.game-credit,html.cn-scene-home .lc-battle-shell{display:none!important}
+html.cn-scene-home #nav{z-index:650}
+html.cn-scene-home.cn-window-open #app{display:block;position:fixed;z-index:600;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));top:calc(env(safe-area-inset-top) + 48px);bottom:calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0!important;padding:0 10px 14px!important;max-width:none!important;min-height:0!important;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f5,#070b10f7)!important;box-shadow:0 0 0 1px #f0d99d22 inset,0 18px 50px #000d}
+html.cn-scene-home.cn-window-open #view{padding-top:6px;padding-bottom:0;min-height:0}
+.cn-winbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:8px;margin:0 -10px 6px;padding:10px 12px;background:linear-gradient(#141e28,#0b1218);border-bottom:1px solid #4b3f2a}
+.cn-winbar[hidden]{display:none}
+.cn-winbar b{flex:1;font-size:15.5px;color:#f3e2b3;letter-spacing:.08em}
+.cn-winbar button{border:1px solid #6b5a36;background:#121c24;color:#f0d99d;border-radius:4px;padding:6px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+.cn-menu{position:fixed;inset:0 0 calc(env(safe-area-inset-bottom) + var(--cn-bar,64px));z-index:700}
+.cn-menu[hidden]{display:none}
+.cn-menu-backdrop{position:absolute;inset:0;background:#02050866}
+.cn-menu-card{position:absolute;left:max(8px,calc(50% - 300px));right:max(8px,calc(50% - 300px));bottom:6px;max-height:calc(100% - 54px - env(safe-area-inset-top));overflow-y:auto;overscroll-behavior:contain;border:1px solid #c4a261;border-radius:12px;background:linear-gradient(#0b1218f7,#070b10f9);box-shadow:0 18px 50px #000d;padding:0 10px 12px;outline:none}
+.cn-menu-card .cn-winbar{margin:0 -10px 4px}
+.cn-menu-group h3{margin:10px 2px 6px;font-size:12px;letter-spacing:.2em;color:#c9ad6e}
+.cn-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.cn-menu-item{display:flex;align-items:center;gap:8px;min-height:52px;padding:6px 8px;text-align:left;font:inherit;color:#eadfc4;cursor:pointer;border:1px solid #4b3f2a;border-radius:6px;background:linear-gradient(120deg,#13202a,#0b1218 70%)}
+.cn-menu-item:active{border-color:#c4a261}
+.cn-menu-icon{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center}
+.cn-menu-icon img{width:34px;height:34px;object-fit:contain;border-radius:4px}
+.cn-menu-sheet{display:block;width:32px;height:32px;background-size:300% 200%;background-repeat:no-repeat;filter:brightness(1.3) drop-shadow(0 1px 2px #000)}
+.cn-menu-text{display:flex;flex-direction:column;min-width:0}
+.cn-menu-text b{font-size:13.5px;color:#f3e2b3;letter-spacing:.04em}
+.cn-menu-text small{font-size:11px;color:#b9ab8a;line-height:1.3}
+.cn-menu-logout{display:block;width:100%;margin-top:12px}
+@media (max-width:340px){.cn-menu-grid{grid-template-columns:1fr}.cn-menu-item{min-height:46px}}
+html.cn-scene-home #sheet{z-index:1000}html.cn-scene-home #toast{z-index:1600}
+html.cn-scene-home.cn-window-open .guardian-mode #guardian-root,html.cn-scene-home.cn-window-open body.guardian-mode #guardian-root{position:relative!important;top:auto!important;left:auto;transform:none;width:100%;max-width:none;z-index:auto}

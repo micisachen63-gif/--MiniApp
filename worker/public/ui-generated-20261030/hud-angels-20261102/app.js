@@ -5,6 +5,8 @@
   'use strict';
   const tg = window.Telegram && window.Telegram.WebApp;
   const qs = new URLSearchParams(location.search);
+  // /classic-next (classic-next.html): classic shell, home first, current battle scene in the home frame, dark only, no timed main-screen sync.
+  const NEXT = window.RPG_CLASSIC_NEXT === true;
   const initData = (tg && tg.initData) || '';
   const devTg = !initData ? qs.get('devTg') : null;
   const A = window.RpgArt;
@@ -541,7 +543,7 @@
   const slotLabel = (slot, pos) => `${(S.meta && S.meta.slots[slot]) || slot}${MULTI[slot] ? pos : ''}`;
   const ELEM = { earth: '🌍地', water: '🌊水', fire: '🔥火', wind: '🌪️風', light: '☀️光', dark: '🌑暗' };
 
-  const S = { meta: null, me: null, characters: [], maxCharacters:4, realms:[], realmId:'permanent', contextEpoch:0, choosing: true, creating: false, pendingTab: 'atlas', shop: null, boss: null, ledger: null, tab: 'atlas', shopTab: 'weapon', skew: 0, lastReport: null,
+  const S = { meta: null, me: null, characters: [], maxCharacters:4, realms:[], realmId:'permanent', contextEpoch:0, choosing: true, creating: false, pendingTab: NEXT ? 'home' : 'atlas', shop: null, boss: null, ledger: null, tab: NEXT ? 'home' : 'atlas', shopTab: 'weapon', skew: 0, lastReport: null,
     session: { kills: 0, exp: 0, gold: 0, ticks: 0 }, create: { step: 0, name: '', cls: null, gender: null, slot: null }, busy: false, armorSlot: 'all', trades: null, trade: null, tradeTimer: 0 };
   let atlasWorkspace=null;
   let equipmentSync=window.RpgEquipmentLiveSync?.create();
@@ -564,7 +566,7 @@
 
   // ---------- Telegram theme ----------
   function applyTheme() {
-    const light = tg && tg.colorScheme === 'light';
+    const light = !NEXT && tg && tg.colorScheme === 'light';
     document.body.classList.toggle('light', !!light);
     const p = (tg && tg.themeParams) || {};
     const r = document.documentElement.style;
@@ -583,7 +585,7 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['realms','atlas/catalog','atlas/status','atlas/quests','atlas/talents','character/delete-preview','character/delete-status','fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['ledger/history','fate/scene','fate/receipt','fate/private/scene','fate/private/profile','fate/private/receipt','chat/state','realms','atlas/catalog','atlas/status','atlas/quests','atlas/talents','character/delete-preview','character/delete-status','fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
     if(action==='select')resetRealmContext();
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
@@ -856,19 +858,22 @@
     $('#charSwitch').onclick = openCharacterSelect;
     nav.querySelectorAll('button').forEach((b) => {
       if (b.hasAttribute('data-logout')) {
+        b.hidden = nextScene(); // 登出 lives in 設定 on the scene home
         b.classList.remove('on', 'dot');
         b.onclick = () => { haptic('light'); openCharacterSelect(); };
         return;
       }
-      const currentTab=S.tab==='guardian'?'home':S.tab;
+      const sceneBar = nextScene();
+      const currentTab=sceneBar?(document.getElementById('cn-menu')?.hidden===false?'class':S.nextWin?(S.tab==='guardian'?'bag':S.tab):''):S.tab==='guardian'?'home':S.tab;
       b.classList.toggle('on', b.dataset.tab === currentTab);
-      const titles = { home: '遠征', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承' };
+      const titles = sceneBar ? Object.fromEntries(Object.entries(NEXT_BAR).map(([k, v]) => [k, v[0]])) : { home: '遠征', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承' };
       const label = b.querySelector('small'); if (label && titles[b.dataset.tab]) label.textContent = titles[b.dataset.tab];
       if (b.dataset.tab === currentTab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
       b.classList.toggle('dot', (b.dataset.tab === 'boss' && !!(S.me.boss && S.me.boss.status === 'active')) || (b.dataset.tab === 'class' && advancementReady(S.me)) || (b.dataset.tab === 'home' && !S.me.daily.claimed));
       const bd = S.me.badges || {}; const n = b.dataset.tab === 'trade' ? (bd.requests || 0) + (bd.challenges || 0) + (bd.trades || 0) : 0;
       let cnt = b.querySelector('.nb'); if (n) { if (!cnt) { cnt = document.createElement('b'); cnt.className = 'nb'; b.appendChild(cnt); } cnt.textContent = n > 9 ? '9+' : String(n); } else if (cnt) cnt.remove();
       b.onclick = () => { if (S.tab === b.dataset.tab) return; S.tab = b.dataset.tab;if(S.tab==='trade'&&S.social==='hall'){S.hallClass='all';S.hallPage=1;} haptic('light'); render(); window.scrollTo({ top: 0, behavior: 'instant' }); load(S.tab); };
+      if (sceneBar) { const label = b.querySelector('small'); if (label) label.textContent = titles[b.dataset.tab]; b.setAttribute('aria-label', titles[b.dataset.tab]); b.onclick = () => { haptic('light'); const route = NEXT_BAR[b.dataset.tab][1]; if (route === 'menu' && document.getElementById('cn-menu')?.hidden === false) nextMenu(false); else if (route !== 'menu' && S.nextWin && NEXT_WINDOWS[S.nextWin.route]?.tab === b.dataset.tab && S.nextWin.route === route) nextClose(); else nextOpen(route); }; }
     });
   }
 
@@ -895,7 +900,7 @@
   function homeView() {
     const me = S.me, c = me.character, st = me.stats, si = stateInfo(me);
     const scene = window.RpgMaps && window.RpgMaps.get(c.level);
-    const mapLabel = scene ? `${scene.emoji} ${scene.name}` : c.mapName;
+    const mapLabel = NEXT && window.RpgClassicNextGrowth ? window.RpgClassicNextGrowth.mapLabel(c) : scene ? `${scene.emoji} ${scene.name}` : c.mapName;
     const red = sumKind('red'), blue = sumKind('blue');
     const sp = me.supply || {}; const redKey = sp.redKey || 'red_1', blueKey = sp.blueKey || 'blue_1';
     const redName = (S.meta.items[redKey] || {}).name || '紅水', blueName = (S.meta.items[blueKey] || {}).name || '藍水';
@@ -907,7 +912,7 @@
     return `
     <div class="lc-adventure"><div class="lc-topline"><span>✦ ADVENTURE ✦</span><span>${esc(mapLabel)}</span></div>
     <div class="card lc-profile"><div class="hero">${portraitHtml('pt')}<div class="info">
-      <div class="cls">${esc(c.className)}${c.title?` <span class="tower-title-chip">${esc(c.title.name)}</span>`:''} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span></div>
+      <div class="cls">${esc(c.className)}${c.title?` <span class="tower-title-chip">${esc(c.title.name)}</span>`:''} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span>${NEXT ? window.RpgClassicNextGrowth?.badge(c) || '' : ''}</div>
       ${bar('hp', c.hp, c.maxHp, `生命值 ${fmt(c.hp)} / ${fmt(c.maxHp)}`)}
       ${bar('mp', c.mp, c.maxMp, `魔力 ${fmt(c.mp)} / ${fmt(c.maxMp)}`)}
       ${bar('exp', c.expPct, 100, c.expNeed ? `經驗值 ${fmt(c.exp)} / ${fmt(c.expNeed)}<span class="idle-exp-percent">（${c.expPct}%）</span>` : `經驗值 ${fmt(c.exp)} · 等級已滿`)}
@@ -916,6 +921,7 @@
     <div class="lc-battle-shell"><div class="lc-battle-head"><span>${window.RpgExpeditionAway?.activity(me)?'✦ 旅途仍在繼續':'⚔ 狩獵戰場'}</span><span>${si.text}</span></div>
     ${window.RpgExpeditionAway?.activity(me) ? window.RpgExpeditionAway.markup(me) : BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
     </div></div>
+    ${NEXT ? atlasEntryHtml() + (window.RpgClassicNextEntries?.entriesHtml() || '') : ''}
     ${me.pve?.idleVersion===2&&c.level>30&&!window.RpgExpeditionAway?.activity(me)?`<div class="banner"><span class="e">⚔️</span><div><b>中高等狩獵挑戰</b><br>請備足生命藥水；菁英重擊更有威脅，生命自動補水建議設為 50% 以上。</div></div>`:''}
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${ready ? '可以轉職了！' : g.have>=1&&c.partyId ? '組隊中，暫不能轉職' : '等待轉職材料'}</b><br>${esc(g.materialName)}：${g.have} / 1${ready ? '' : c.partyId ? ' · 請先結束組隊，再前往轉職' : ' · 請至傳承查看取得方式'}</div><button class="btn sm gold" data-go="class">查看轉職</button></div>` : ''}
@@ -948,11 +954,129 @@
       let note = l.note || ''; if (note.startsWith('{') || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(note)) note = '';
       return `<div><span class="muted">${d}</span> ${esc(l.type)} ${parts} <span class="muted">${esc(note)}</span></div>`; }).join('');
   }
+  // /classic-next: one home entry for 星圖派遣・構築・星圖任務 (the Atlas panels, without the Atlas workspace).
+  function atlasEntryHtml() {
+    if (!atlasWorkspace) return '';
+    return `<button type="button" class="card next-atlas-entry" data-next-atlas><span class="next-atlas-mark" aria-hidden="true">✦</span><span class="next-atlas-text"><b>星圖派遣・構築・任務</b><small>出征星圖、調整構築與天賦、領取星圖任務</small></span><span class="next-atlas-go" aria-hidden="true">›</span></button>`;
+  }
+  function openAtlasEntry() {
+    if (!atlasWorkspace || !S.me) return;
+    const quests = S.realmId === 'permanent';
+    const c = sheet(`<h2>星圖</h2><div class="next-atlas-choices"><button class="btn" data-next-atlas-open="expedition">🗺️ 星圖派遣<small>選圖出征、查看進度與戰報</small></button><button class="btn" data-next-atlas-open="build">✧ 星圖構築<small>技能流派、輔助與天賦星盤</small></button>${quests ? '<button class="btn" data-next-atlas-open="quests">📜 星圖任務<small>教學、每日、每週與長期委託</small></button>' : ''}</div><div class="row mt"><button class="btn ghost" data-next-atlas-close>關閉</button></div>`);
+    c.querySelector('[data-next-atlas-close]').onclick = closeSheet;
+    c.querySelectorAll('[data-next-atlas-open]').forEach(b => { b.onclick = () => { closeSheet(); atlasWorkspace.open(b.dataset.nextAtlasOpen); }; });
+    window.RpgClassicNextEntries?.decorate(c);
+  }
   function openGuardian(initialView='overview'){S.guardianInitialView=['overview','summon','inventory','fuse','guide'].includes(initialView)?initialView:'overview';S.tab='guardian';render();}
+  // /classic-next home entries: existing Atlas panels (chat, recovery) or the shared floating panel.
+  const nextHost = {
+    context: () => ({ accountId: String(tg?.initDataUnsafe?.user?.id || devTg || ''), realmId: S.realmId || 'permanent', characterId: S.me ? String(S.me.character.tgId) : '', epoch: S.contextEpoch || 0 }),
+    request: (action, body = {}, options = {}) => api(action, { ...body, realmId: S.realmId || 'permanent' }, options),
+    actor: () => (S.me ? { tgId: String(S.me.character.tgId), name: S.me.character.name, baseClass: S.me.character.baseClass, level: S.me.character.level } : null),
+    covered: on => window.RpgClassicNextBattle?.cover?.('panel', on),
+    refresh: () => refreshMe({ silent: true }),
+  };
+  function openNextEntry(kind) {
+    if (!S.me) return;
+    if (kind === 'chat' || kind === 'recovery') atlasWorkspace?.open(kind);
+    else void window.RpgClassicNextEntries?.open(kind, nextHost);
+  }
+  // ---------- /classic-next P7: the scene (full HUD) is the home; classic features open as floating windows ----------
+  // HUD/menu route → classic tab + inner panel (mythic-ui designState). Atlas / entry routes open their own panels.
+  const NEXT_WINDOWS = {
+    hero: { tab: 'home', panel: 'chronicle', title: '角色・戰報與能力' }, home: { tab: 'home', panel: 'journey', title: '營地', top: true },
+    heroes: { tab: 'bag', title: '英雄' },
+    sup: { tab: 'home', panel: 'supply', title: '補給與策略' },
+    inv: { tab: 'bag', panel: 'items', title: '背包' }, eq: { tab: 'bag', panel: 'wardrobe', title: '裝備' },
+    vault: { tab: 'bag', panel: 'vault', title: '神器庫' }, collection: { tab: 'bag', panel: 'collection', title: '圖鑑收集' },
+    sk: { tab: 'class', panel: 'destiny', title: '職業・技能' }, lineage: { tab: 'class', panel: 'lineage', title: '完整成長樹' },
+    shop: { tab: 'shop', title: '市集' }, boss: { tab: 'boss', title: '神戰' }, trade: { tab: 'trade', title: '旅團' },
+  };
+  const NEXT_ALIASES = { camp: 'home', supplies: 'sup', skills: 'sk', bag: 'inv', equipment: 'eq', class: 'lineage', characters: 'select', maps: 'map', quests: 'quest', set: 'menu', party: 'boss', 'star-ring': 'boss' };
+  const NEXT_TAB_TITLES = { home: '營地', bag: '英雄', shop: '市集', boss: '神戰', trade: '旅團', class: '傳承', guardian: '守護天使' };
+  // The classic bottom bar on the scene home (same buttons/art, owner t711u labels); its last button opens 設定.
+  const NEXT_BAR = { home: ['營地', 'home'], bag: ['英雄', 'heroes'], shop: ['市集', 'shop'], boss: ['神戰', 'boss'], trade: ['旅團', 'trade'], class: ['設定', 'menu'] };
+  const nextScene = () => NEXT && window.RpgClassicNextBattle?.active?.() === true;
+  function nextOpen(route, params) {
+    if (!S.me || S.choosing || S.creating) return;
+    route = NEXT_ALIASES[route] || route; haptic('light');
+    if (route === 'close') { const menu = document.getElementById('cn-menu'); if (menu && !menu.hidden) nextMenu(false); else nextClose(); return; }
+    if (route === 'menu') { nextMenu(true); return; }
+    nextMenu(false);
+    // A HUD tap replaces the open classic window (Atlas panels and entry panels open on their own).
+    if (S.nextWin && !NEXT_WINDOWS[route] && route !== 'guardian') nextClose();
+    if (route === 'map') { atlasWorkspace?.open('expedition'); return; }
+    if (route === 'quest') { atlasWorkspace?.open(S.realmId === 'permanent' ? 'quests' : 'expedition'); return; }
+    if (['chat', 'recovery', 'talents', 'build', 'progression', 'gearbook'].includes(route)) { atlasWorkspace?.open(route); return; }
+    if (route === 'atlas') { openAtlasEntry(); return; }
+    if (route === 'fate' || route === 'ledger') { openNextEntry(route); return; }
+    if (route === 'select') { void openCharacterSelect(); return; }
+    if (route === 'guardian') { S.nextWin = { route, title: '守護天使' }; openGuardian(params?.view || 'overview'); return; }
+    const win = NEXT_WINDOWS[route]; if (!win) return;
+    if (win.panel) (S.designState || (S.designState = {}))[win.tab] = win.panel;
+    const changed = S.tab !== win.tab; S.tab = win.tab; S.nextWin = { route, title: win.title };
+    if (S.tab === 'trade' && S.social === 'hall') { S.hallClass = 'all'; S.hallPage = 1; }
+    render(); const app = $('#app');
+    // Land on the chosen inner panel (skip the chapter / hall header above the panel tabs).
+    if (app) { app.scrollTop = 0; const tabs = win.panel && !win.top && $('#view .my-tabs'); if (tabs) app.scrollTop = Math.max(0, tabs.getBoundingClientRect().top - app.getBoundingClientRect().top - ($('#cn-winbar')?.offsetHeight || 0) - 6); }
+    if (changed || win.tab !== 'home') load(S.tab); else loadLedger();
+  }
+  function nextClose() {
+    if (!S.nextWin) return;
+    S.nextWin = null; closeSheet();
+    if (S.tab !== 'home') { S.tab = 'home'; render(); } else { nextChrome(); renderHud(); }
+  }
+  // 設定: the full classic menu (every entry the classic home and tab bar had), as a floating window.
+  function nextMenu(on) {
+    let menu = document.getElementById('cn-menu');
+    if (!on) { if (menu && !menu.hidden) { menu.hidden = true; window.RpgClassicNextBattle?.cover?.('menu', false); if (S.me && !S.choosing && !S.creating) renderHud(); } return; }
+    if (!menu) {
+      menu = document.createElement('div'); menu.id = 'cn-menu'; menu.className = 'cn-window cn-menu'; menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-label', '設定');
+      menu.innerHTML = `<div class="cn-menu-backdrop" data-next-menu-close></div><div class="cn-menu-card" tabindex="-1"><header class="cn-winbar"><b>設定</b><button type="button" class="cn-win-close" data-next-menu-close aria-label="關閉設定">✕</button></header><div class="cn-menu-body"></div></div>`;
+      document.body.appendChild(menu);
+      menu.addEventListener('click', e => {
+        if (e.target.closest('[data-next-menu-close]')) { nextMenu(false); return; }
+        const open = e.target.closest('[data-next-open]'); if (open) { nextOpen(open.dataset.nextOpen); return; }
+        if (e.target.closest('[data-next-logout]')) { nextMenu(false); void openCharacterSelect(); }
+      });
+    }
+    menu.querySelector('.cn-menu-body').innerHTML = window.RpgClassicNextMenu?.html({ hide: S.realmId === 'permanent' ? [] : [] }) || '';
+    menu.hidden = false; window.RpgClassicNextBattle?.cover?.('menu', true); menu.querySelector('.cn-menu-card')?.focus({ preventScroll: true }); if (S.me) renderHud();
+  }
+  // Window chrome over the classic app (#app becomes the floating window while one is open).
+  function nextChrome() {
+    if (!NEXT) return;
+    const scene = nextScene() && !!S.me && !S.choosing && !S.creating;
+    if (!scene) { S.nextWin = null; nextMenu(false); }
+    const open = scene && !!S.nextWin;
+    document.documentElement.classList.toggle('cn-window-open', open);
+    window.RpgClassicNextBattle?.cover?.('window', open);
+    const app = $('#app'); if (!app) return;
+    let bar = document.getElementById('cn-winbar');
+    if (!bar) {
+      bar = document.createElement('header'); bar.id = 'cn-winbar'; bar.className = 'cn-winbar';
+      bar.innerHTML = '<b></b><button type="button" class="cn-win-menu" data-next-menu>設定</button><button type="button" class="cn-win-close" aria-label="關閉視窗">✕</button>';
+      bar.querySelector('[data-next-menu]').onclick = () => nextOpen('menu');
+      bar.querySelector('.cn-win-close').onclick = nextClose;
+      app.prepend(bar);
+    }
+    bar.hidden = !open;
+    if (open) { const win = NEXT_WINDOWS[S.nextWin.route]; bar.querySelector('b').textContent = win && win.tab === S.tab ? S.nextWin.title : (NEXT_TAB_TITLES[S.tab] || S.nextWin.title); }
+  }
+  if (NEXT) {
+    // The classic bottom bar must stay visible over the scene while #app is hidden or is the window.
+    const navBar = document.getElementById('nav'); if (navBar && navBar.parentElement !== document.body) document.body.appendChild(navBar);
+    window.RpgClassicNextBattle?.onOpen?.((route, params) => nextOpen(route, params));
+    // Scene failed: the classic layout (tab bar + classic RpgBattle) comes back.
+    window.RpgClassicNextBattle?.onFail?.(() => { S.nextWin = null; nextMenu(false); if (S.me && !S.choosing && !S.creating) render(); });
+    document.addEventListener('keydown', e => { if (e.key !== 'Escape' || !$('#sheet').hidden) return; const menu = document.getElementById('cn-menu'); if (menu && !menu.hidden) nextMenu(false); else if (S.nextWin) nextClose(); });
+  }
   function bindHome(view) {
+    if (NEXT) view.querySelectorAll('[data-next-entry]').forEach(b => { b.onclick = () => openNextEntry(b.dataset.nextEntry); });
     const guardianEntry=view.querySelector('[data-guardian-entry]');if(guardianEntry)guardianEntry.onclick=openGuardian;
     drawPortrait($('#pt', view), heroOpts({}));
     if(window.RpgExpeditionAway?.activity(S.me))awayCleanup=window.RpgExpeditionAway.mount(view,()=>Date.now()+(S.skew||0));
+    else if (NEXT && window.RpgClassicNextBattle?.attach($('#bslot', view), { characterId: S.me.character.tgId, realmId: S.realmId, fallback: slot => BATTLE?.attach(slot) })) {}
     else if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
     const supplyToggle=$('#refillGuardian',view);if(supplyToggle)supplyToggle.onchange=async()=>{const checked=supplyToggle.checked;supplyToggle.disabled=true;try{await api('guardian/assist',{mode:'supply',autoBuy:checked,requestId:window.RpgGuardianHost.requestId()});await refreshMe();window.dispatchEvent(new Event('elf-skills-refresh'));toast(checked?'已允許召喚石用完自動購買，每顆3,000金幣':'已關閉召喚石自動購買，背包石頭用完就停止召喚');}catch(e){supplyToggle.checked=!checked;toast(e.message);}finally{supplyToggle.disabled=false;}};
     view.querySelectorAll('[data-potion-kind]').forEach(select=>{select.onchange=async()=>{const field=select.dataset.potionKind==='red'?'autoRedPotion':'autoBluePotion',value=select.value;select.disabled=true;try{const j=await act('settings',{[field]:value},value==='auto'?'已改為最低階優先，喝完依序往上':'已設定自動飲用：'+itemName(value));if(!j){select.value=S.me.character[field]||'auto';select.disabled=false;}}catch{select.value=S.me.character[field]||'auto';select.disabled=false;}};});
@@ -961,6 +1085,7 @@
     view.querySelectorAll('#blueSeg button').forEach(b=>{b.onclick=()=>act('settings',{autoBluePct:Number(b.dataset.v)},`魔力 ≤ ${b.dataset.v}% 自動喝藍水`);});
     $('#blueTog', view).onclick = () => act('settings', { autoBlue: !S.me.character.autoBlue }, (j) => (j.character.autoBlue ? '已開啟自動藍水' : '已關閉自動藍水（魔力 不足時改用普攻）'));
     view.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => { S.tab = b.dataset.go; render(); }; });
+    if (NEXT) { const atlasEntry = view.querySelector('[data-next-atlas]'); if (atlasEntry) atlasEntry.onclick = openAtlasEntry; }
     bindTodo(view);
   }
   // ---------- v0.5.1「現在可以做」: every visit shows what to spend gold / time on ----------
@@ -1098,7 +1223,7 @@
   }
   async function startAuto(e,blessed,target){const j=await api('auto-enhance/start',{itemId:e.id,blessed,target});S.autoEnhance=j.job;S.dismissAuto=null;await syncBackground().catch(()=>{});autoPanel();return j;}
   let autoPollBusy=false,autoPollAt=0;
-  setInterval(async()=>{const viewing=equipmentSync?.pending(S.me?.character?.tgId)||S.tab==='bag'||!!$('.sheet-card')?.dataset.equipmentId||!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||!((S.backgroundJobs||[]).some(x=>x.job.status==='running')||equipmentSync?.pending(S.me.character.tgId))||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))await refreshMe({silent:true,full:true});}catch(_){}finally{autoPollBusy=false;}},3000);
+  setInterval(async()=>{const viewing=equipmentSync?.pending(S.me?.character?.tgId)||S.tab==='bag'||!!$('.sheet-card')?.dataset.equipmentId||!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||NEXT&&!viewing||!((S.backgroundJobs||[]).some(x=>x.job.status==='running')||equipmentSync?.pending(S.me.character.tgId))||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))await refreshMe({silent:true,full:true});}catch(_){}finally{autoPollBusy=false;}},3000);
   function forgeFailure(e,message,onReturn){const ov=$('#forge');if(!ov)return;window.RpgForgeRitual?.dispose?.();ov.classList.remove('charging','dragging','waiting');ov.querySelector('.fr-instruction')?.replaceChildren(document.createTextNode('本次操作已停止'));const box=ov.querySelector('.fg-box');if(!box){ov.hidden=true;$('#app').inert=false;return;}let buttons=ov.querySelector('.fg-b');if(!buttons){buttons=document.createElement('div');buttons.className='fg-b';box.append(buttons);}const text=ov.querySelector('.fg-r');if(text)text.textContent=message||S.forgeError||'操作未完成，請確認裝備狀態後再試。';buttons.innerHTML='<button class="btn ghost" data-forge-exit>返回裝備</button>';buttons.querySelector('button').onclick=()=>{ov.hidden=true;$('#app').inert=false;refreshMe();if(S.me?.equipment.some(x=>x.id===e.id)){if(onReturn)onReturn();else itemSheet(e.id);}};ov.querySelector('.fr-auto')?.setAttribute('hidden','');}
   const guaranteedScrollKey=e=>e.slot==='weapon'||e.scroll==='scroll_w'?'guaranteed_scroll_w':'guaranteed_scroll_a';
   async function forge(e,kind,run,blessed=false,autoTarget=null,guaranteed=false){try{return await forgeRun(e,kind,run,blessed,autoTarget,guaranteed)}catch(err){forgeFailure(e,err.message);return null}}
@@ -1450,7 +1575,7 @@
     b={...b,...(live?{blurb:live.blurb,passive:live.passive.text,weapon:live.weapon}: {})};
     const sk = b.skill || {}, key=path?`adv${path.length}_${cls}_${path}_${S.me.character.gender}`:`${cls}_${S.me.character.gender}`, portrait=lineagePortrait(key);
     return `<div class="branch ${opts.current ? 'pick' : ''}"><div class="top">${portrait?`<img class="lineage-portrait" data-lineage-key="${esc(key)}" src="${esc(portrait)}" alt="${esc(b.name)}">`:`<span class="hero-fit-frame" data-slot="lineage" role="img" aria-label="${esc(b.name)}外觀製作中">🗡️</span>`}<div style="flex:1"><div class="cls">${esc(b.name)} ${opts.current ? `<span class="chip">${path===S.me.character.classPath?'目前':'已傳承'}</span>` : ''}</div><div class="muted">${esc(b.line || '')}${b.weapon ? ` · 武器：${esc(b.weapon)}` : ''}</div><div style="font-size:13px;margin-top:4px">${esc(b.blurb || '')}</div></div></div>
-      <div class="sk"><div><b>${esc(sk.name)}</b>技能</div><div><b>${sk.cost} 魔力</b>消耗</div><div><b>×${lineageNumber(sk.mult)} · ${sk.targets || 1}體</b>倍率</div></div>
+      <div class="sk"><div>${globalThis.RpgClassicNextEntries?.skillIcon?.(cls, path) || ''}<b>${esc(sk.name)}</b>技能</div><div><b>${sk.cost} 魔力</b>消耗</div><div><b>×${lineageNumber(sk.mult)} · ${sk.targets || 1}體</b>倍率</div></div>
       <div class="muted mt">路線被動：${esc(b.passive)}</div>${live?.effect ? `<div class="muted mt">效果：${esc(live.effect)}</div>` : ''}${live?.inheritance ? `<div class="muted mt">${esc(live.inheritance)}</div>` : ''}${opts.button || ''}</div>`;
   }
   const ELF_STAGES = [{"tier":0,"title":"初始・森林妖精","preview":false,"entries":[{"path":"","name":"森林妖精","theme":"葉芽與自然弓","skill":null,"passive":null}]},{"tier":1,"title":"一轉・精靈誓約","preview":false,"entries":[{"path":"A","name":"風語妖精","theme":"青空風紋、輕弓、羽翼披風","skill":null,"passive":null},{"path":"B","name":"靈獸妖精","theme":"森綠獸紋、靈獸圖騰、木靈護肩","skill":null,"passive":null}]},{"tier":2,"title":"二轉・雙重專精","preview":false,"entries":[{"path":"A1","name":"逐風神射","theme":"銀羽長弓、鷹眼金紋","skill":null,"passive":null},{"path":"A2","name":"蒼穹風舞","theme":"嵐風長披、風刃與羽衣","skill":null,"passive":null},{"path":"B1","name":"森靈馭獸","theme":"狼鷹雙靈、鹿角護肩","skill":null,"passive":null},{"path":"B2","name":"月影獵使","theme":"銀月陷阱、影葉符咒","skill":null,"passive":null}]},{"tier":3,"title":"三轉・精靈王傳承（規劃中）","preview":true,"entries":[{"path":"A11","name":"星風聖射","theme":"星風聖弓、白金羽甲與風翼","skill":{"name":"星風聖射・秘技","cost":26,"mult":3.6,"targets":3},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"A12","name":"蒼穹裁決者","theme":"蒼穹裁決、冰晶長弓與銀藍神羽","skill":{"name":"蒼穹裁決者・秘技","cost":29,"mult":3.85,"targets":3},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"A21","name":"暴風先知","theme":"暴風先知、嵐潮披風與風雷符紋","skill":{"name":"暴風先知・秘技","cost":26,"mult":3.6,"targets":3},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"A22","name":"天羽御風者","theme":"天羽御風、白金風羽與神聖弓矢","skill":{"name":"天羽御風者・秘技","cost":29,"mult":3.85,"targets":3},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"B11","name":"萬獸祭司","theme":"月桂、森林靈獸與自然魔法","skill":{"name":"萬獸祭司・秘技","cost":26,"mult":3.6,"targets":4},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"B12","name":"古森召靈師","theme":"古森召靈、月青古樹靈與白金藤甲","skill":{"name":"古森召靈師・秘技","cost":29,"mult":3.85,"targets":4},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"B21","name":"皎月巡狩","theme":"皎月巡狩、月銀羽甲與新月箭矢","skill":{"name":"皎月巡狩・秘技","cost":26,"mult":3.6,"targets":4},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"B22","name":"荊棘影衛","theme":"荊棘影衛、暗藤甲冑與赤棘獵弓","skill":{"name":"荊棘影衛・秘技","cost":29,"mult":3.85,"targets":4},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}}]},{"tier":4,"title":"四轉・神樹覺醒（規劃中）","preview":true,"entries":[{"path":"A111","name":"永恆風冠","theme":"永恆風冠・象牙白金冠冕與天青風翼","skill":{"name":"永恆風冠・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A112","name":"群星神弓","theme":"群星神弓・星夜靛藍披風與星座弓矢","skill":{"name":"群星神弓・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A121","name":"蒼穹神判","theme":"蒼穹神判・銀藍雷紋神弓與天穹符印","skill":{"name":"蒼穹神判・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A122","name":"聖光獵星","theme":"聖光獵星・日耀白金甲與聖光星矢","skill":{"name":"聖光獵星・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A211","name":"太初風皇","theme":"太初風皇・翡翠青金風暴羽甲","skill":{"name":"太初風皇・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A212","name":"九霄御風","theme":"九霄御風・雲白天藍羽翼與九霄長弓","skill":{"name":"九霄御風・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A221","name":"天羽聖主","theme":"天羽聖主・白金神羽冠與天界弓","skill":{"name":"天羽聖主・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A222","name":"嵐靈神使","theme":"嵐靈神使・青碧風靈緞帶與靈弓","skill":{"name":"嵐靈神使・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B111","name":"太古森皇","theme":"太古森皇・古木翠甲與森林靈冠","skill":{"name":"太古森皇・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B112","name":"萬獸神尊","theme":"萬獸神尊・獸靈金紋與森綠神弓","skill":{"name":"萬獸神尊・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B121","name":"世界樹祭主","theme":"世界樹祭主・世界樹翡翠符文與根脈披風","skill":{"name":"世界樹祭主・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B122","name":"精靈祖靈","theme":"精靈祖靈・月白祖靈長袍與古老靈紋","skill":{"name":"精靈祖靈・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B211","name":"永夜月神","theme":"永夜月神・深靛月銀甲與新月神弓","skill":{"name":"永夜月神・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B212","name":"銀月聖獵","theme":"銀月聖獵・銀白月紋獵裝與冷光弓矢","skill":{"name":"銀月聖獵・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B221","name":"荊棘聖王","theme":"荊棘聖王・暗翡翠棘甲與赤金荊棘弓","skill":{"name":"荊棘聖王・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B222","name":"幽林守護","theme":"幽林守護・幽綠古木甲與林影符文","skill":{"name":"幽林守護・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}}]}];
@@ -1461,9 +1586,9 @@
     return stage.entries.map(v=>live[v.path]?{...v,...live[v.path]}:{...v,skill:null,passive:{text:'請更新遊戲以載入實際專精數值。'}});
   }
   function lineageNumber(value) { return Number.isFinite(Number(value)) ? String(Number(Number(value).toFixed(4))) : '—'; }
-  function lineageDetails(node) {
+  function lineageDetails(node, cls) {
     const sk=node.skill;
-    return `${node.blurb ? `<small class="lineage-description">定位：${esc(node.blurb)}${node.role ? ` · ${esc(node.role)}` : ''}</small>` : ''}${node.weapon ? `<small>武器：${esc(node.weapon)}</small>` : ''}${sk ? `<small class="lineage-skill">原生技能：${esc(sk.name)} · 基礎 魔力 ${lineageNumber(sk.cost)} · ×${lineageNumber(sk.mult)} · 最多 ${lineageNumber(sk.targets)} 體</small>` : ''}${node.passive ? `<small class="lineage-passive">路線被動：${esc(node.passive.text || node.passive)}</small>` : ''}${node.effect ? `<small class="lineage-effect">效果：${esc(node.effect)}</small>` : ''}${node.inheritance ? `<small>${esc(node.inheritance)}</small>` : ''}`;
+    return `${node.blurb ? `<small class="lineage-description">定位：${esc(node.blurb)}${node.role ? ` · ${esc(node.role)}` : ''}</small>` : ''}${node.weapon ? `<small>武器：${esc(node.weapon)}</small>` : ''}${sk ? `<small class="lineage-skill">${globalThis.RpgClassicNextEntries?.skillIcon?.(cls, node.path, 'cn-skill-icon small') || ''}原生技能：${esc(sk.name)} · 基礎 魔力 ${lineageNumber(sk.cost)} · ×${lineageNumber(sk.mult)} · 最多 ${lineageNumber(sk.targets)} 體</small>` : ''}${node.passive ? `<small class="lineage-passive">路線被動：${esc(node.passive.text || node.passive)}</small>` : ''}${node.effect ? `<small class="lineage-effect">效果：${esc(node.effect)}</small>` : ''}${node.inheritance ? `<small>${esc(node.inheritance)}</small>` : ''}`;
   }
   function classPathPreview(c) {
     const cls=c.baseClass, nodes=S.meta.classes[cls]?.lineageNodes;
@@ -1477,7 +1602,7 @@
         const path=node.path, key=path?`adv${tier}_${cls}_${path}_${gender}`:`${cls}_${gender}`, portrait=lineagePortrait(key);
         const selected=path===current, ancestor=path!==current&&current.startsWith(path);
         const theme=themes.find(s=>s.tier===tier)?.entries.find(n=>n.path===path)?.theme;
-        return `<div class="elf-node ${tier>c.classTier?'locked':'available'} ${selected?'chosen':ancestor?'ancestor':''}" data-lineage-path="${esc(path)}"${selected?' aria-current="step"':''}><span class="elf-rune">${portrait?`<img class="elf-preview-art" data-lineage-key="${esc(key)}" src="${esc(portrait)}" alt="${esc(node.name)}" loading="lazy">`:`<span aria-label="${esc(S.meta.classes[cls].name)}外觀製作中">${S.meta.classes[cls].emoji||'✧'}</span>`}</span><strong>${esc(node.name)}${selected?' · 目前':ancestor?' · 已傳承':''}</strong>${tier?`<small class="lineage-parent">承接：${esc(node.parentName)}（${esc(node.parentPath||'零轉')} → ${esc(path)}）${ancestor||selected?'':' · '+(tier>c.classTier?'尚未轉職':'其他路線')}</small>`:''}${theme?`<small>外觀：${esc(theme)}</small>`:''}${lineageDetails(node)}</div>`;
+        return `<div class="elf-node ${tier>c.classTier?'locked':'available'} ${selected?'chosen':ancestor?'ancestor':''}" data-lineage-path="${esc(path)}"${selected?' aria-current="step"':''}><span class="elf-rune">${portrait?`<img class="elf-preview-art" data-lineage-key="${esc(key)}" src="${esc(portrait)}" alt="${esc(node.name)}" loading="lazy">`:`<span aria-label="${esc(S.meta.classes[cls].name)}外觀製作中">${S.meta.classes[cls].emoji||'✧'}</span>`}</span><strong>${esc(node.name)}${selected?' · 目前':ancestor?' · 已傳承':''}</strong>${tier?`<small class="lineage-parent">承接：${esc(node.parentName)}（${esc(node.parentPath||'零轉')} → ${esc(path)}）${ancestor||selected?'':' · '+(tier>c.classTier?'尚未轉職':'其他路線')}</small>`:''}${theme?`<small>外觀：${esc(theme)}</small>`:''}${lineageDetails(node, cls)}</div>`;
       }).join('')}</div></div>`;
     }).join('')}</div></section>`;
   }
@@ -1488,7 +1613,7 @@
     const me = S.me, c = me.character, g = me.gate; const base = S.meta.classes[c.baseClass];
     const currentNode=base.lineageNodes?.find(node=>node.path===String(c.classPath||''));
     let html = `<div class="lc-class-title"><span>✥ CHARACTER / STATUS</span><strong>${esc(c.name)} · Lv.${c.level}</strong></div><div class="card"><h3>✨ 職業 <small>${esc(base.name)}系</small></h3><div class="hero">${portraitHtml('cpt')}<div class="info"><div class="cls">${esc(c.className)}</div><div class="muted">Lv.${c.level} · 轉職階段 ${c.classTier}</div>
-      <div class="mt" style="font-size:13px">${currentNode?.blurb?`${esc(currentNode.blurb)}<br>`:''}目前技能「${esc(me.stats.skill.name)}」實際 魔力 ${me.stats.skill.cost} · ×${lineageNumber(me.stats.skill.mult)} · 最多 ${me.stats.skill.targets} 體<br>被動：${esc(me.stats.passive)}${currentNode?.effect?`<br>效果：${esc(currentNode.effect)}`:''}${currentNode?.inheritance?`<br>${esc(currentNode.inheritance)}`:''}${c.baseClass==='thief'?`<br><span class="thief-combat-traits">${esc(window.RpgThiefClass.traits(base))}</span>`:''}</div></div></div></div>`;
+      <div class="mt" style="font-size:13px">${currentNode?.blurb?`${esc(currentNode.blurb)}<br>`:''}${globalThis.RpgClassicNextEntries?.skillIcon?.(c.baseClass, c.classPath, 'cn-skill-icon small') || ''}目前技能「${esc(me.stats.skill.name)}」實際 魔力 ${me.stats.skill.cost} · ×${lineageNumber(me.stats.skill.mult)} · 最多 ${me.stats.skill.targets} 體<br>被動：${esc(me.stats.passive)}${currentNode?.effect?`<br>效果：${esc(currentNode.effect)}`:''}${currentNode?.inheritance?`<br>${esc(currentNode.inheritance)}`:''}${c.baseClass==='thief'?`<br><span class="thief-combat-traits">${esc(window.RpgThiefClass.traits(base))}</span>`:''}</div></div></div></div>`;
     if (g.canAdvance) {
       html += `<div class="banner gate"><span class="e">🎉</span><div>${c.classTier ? `第 ${c.classTier+1} 次轉職！` : ''}已達 Lv.${(c.classTier + 1) * 30}，用「${esc(g.materialName)}」（${g.have}/1）選一條路線轉職！${currentNode?`<br>材料取得：${esc(base.lineageNodes.find(n=>n.tier===c.classTier+1)?.materialSource||'')}`:''}</div></div>`;
       html += me.branches.map((b) => branchCard(c.baseClass, b, { path: b.path, button: `<button class="btn mt" data-adv="${esc(b.branch)}" ${g.have&&!c.partyId ? '' : 'disabled'}>${c.partyId ? '組隊中暫不能轉職' : g.have ? `選擇「${esc(b.name)}」` : `缺「${esc(g.materialName)}」`}</button>` })).join('');
@@ -1506,9 +1631,21 @@
         <div class="mt muted">需要「${esc(g.materialName)}」（${g.have}/1）— 打倒地圖首領取得。到達 Lv.${g.gateLevel} 後會停在門檻等轉職。</div></div>`;
       html += Object.entries(base.branches).map(([k, b]) => branchCard(c.baseClass, { ...b, branch: k }, { path: k })).join('');
     }
+    if (window.RPG_CLASSIC_NEXT === true && window.RpgClassicNextGrowth) html += window.RpgClassicNextGrowth.talentCard(S.nextTalents, c.level) + window.RpgClassicNextGrowth.roundCard(c);
     return `<div class="lc-class-screen">${html}${classPathPreview(c)}</div>`;
   }
+  // /classic-next 職業 tab: talents read once when the tab opens (and after the talent panel closes).
+  async function loadNextTalents() {
+    if (!NEXT || !S.me) return;
+    const who = () => `${S.realmId || 'permanent'}:${S.me?.character?.id || S.me?.character?.tgId || ''}`, actor = who(), epoch = S.contextEpoch || 0;
+    S.nextTalents = { status: 'loading', actor, data: S.nextTalents?.actor === actor ? S.nextTalents.data : null };
+    if (S.tab === 'class') render();
+    try { const j = await api('atlas/talents'); if (who() !== actor || epoch !== (S.contextEpoch || 0)) return; S.nextTalents = { status: 'ready', actor, data: j.talents || null }; }
+    catch (e) { if (who() !== actor || e.code === 'context_changed') return; S.nextTalents = { status: 'error', actor, error: e.message }; }
+    if (S.tab === 'class') render();
+  }
   function bindClass(view) {
+    if (NEXT) { view.querySelector('[data-next-talent-open]')?.addEventListener('click', () => atlasWorkspace?.open('talents')); view.querySelector('[data-next-talent-reload]')?.addEventListener('click', loadNextTalents); }
     drawPortrait($('#cpt', view), heroOpts({}));
     view.querySelectorAll('canvas[data-br]').forEach((cv) => { const src = V2 && artSrc('hero', heroKey(cv.dataset.cls, S.me.character.gender, cv.dataset.path)); if (src) cv.replaceWith(Object.assign(document.createElement('img'), { src, className: 'brimg' })); else drawPortrait(cv, { cls: cv.dataset.cls, gender: S.me.character.gender, path: cv.dataset.br }); });
     view.querySelectorAll('[data-adv]').forEach((b) => { b.onclick = async () => { const br = S.me.branches.find((x) => x.branch === b.dataset.adv);
@@ -2168,7 +2305,7 @@
   async function switchRealm(realmId) {
     if(S.busy||S.switchingRealm||atlasWorkspace?.client.state.busy||realmId===S.realmId)return;
     const realm=S.realms.find(item=>item.id===realmId&&item.available!==false);if(!realm)return;
-    S.realmId=realmId;S.characters=[];S.charactersError='';S.charactersLoading=true;S.switchingRealm=true;S.pendingTab='atlas';S.tab='atlas';resetRealmContext();
+    S.realmId=realmId;S.characters=[];S.charactersError='';S.charactersLoading=true;S.switchingRealm=true;S.pendingTab=NEXT?'home':'atlas';S.tab=S.pendingTab;resetRealmContext();
     try{const result=await api('characters');S.characters=result.characters||[];S.maxCharacters=result.maxCharacters||4;try{localStorage.setItem(realmStorageKey(),realmId);}catch{} }
     catch(error){if(error.code!=='context_changed'){S.charactersError=error.message;toast(error.message,true);}}
     finally{S.charactersLoading=false;S.switchingRealm=false;render();}
@@ -2205,7 +2342,7 @@
     catch (e) { toast(e.message, true); }
   }
   async function enterCharacter(charId){
-    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.maxCharacters=j.maxCharacters||S.maxCharacters;S.choosing=false;S.tab=S.pendingTab||'atlas';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
+    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.maxCharacters=j.maxCharacters||S.maxCharacters;S.choosing=false;S.tab=S.pendingTab||(NEXT?'home':'atlas');render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
   }
   function bindCharacterSelect(view) {
     const retry=$('#retryCharacters',view);if(retry)retry.onclick=openCharacterSelect;
@@ -2221,7 +2358,7 @@
   }
 
   // ---------- render / load ----------
-  function guardianFrameSize(){const root=document.getElementById('guardian-root');if(!root)return;const panel=document.getElementById('atlas-legacy');if(panel&&!panel.hidden){root.style.setProperty('--guardian-frame-height',Math.max(320,panel.clientHeight-(panel.querySelector('.atlas-panel-header')?.offsetHeight||0)-28)+'px');return;}const viewport=window.visualViewport?.height||innerHeight,nav=document.getElementById('nav'),bottom=nav&&!nav.hidden?nav.getBoundingClientRect().top:viewport;root.style.setProperty('--guardian-frame-height',Math.max(320,bottom-22)+'px');}
+  function guardianFrameSize(){const root=document.getElementById('guardian-root');if(!root)return;if(NEXT&&document.documentElement.classList.contains('cn-window-open')){const app=$('#app');root.style.setProperty('--guardian-frame-height',Math.max(320,(app?.clientHeight||innerHeight)-($('#cn-winbar')?.offsetHeight||0)-20)+'px');return;}const panel=document.getElementById('atlas-legacy');if(panel&&!panel.hidden){root.style.setProperty('--guardian-frame-height',Math.max(320,panel.clientHeight-(panel.querySelector('.atlas-panel-header')?.offsetHeight||0)-28)+'px');return;}const viewport=window.visualViewport?.height||innerHeight,nav=document.getElementById('nav'),bottom=nav&&!nav.hidden?nav.getBoundingClientRect().top:viewport;root.style.setProperty('--guardian-frame-height',Math.max(320,bottom-22)+'px');}
   window.addEventListener('resize',guardianFrameSize);window.visualViewport?.addEventListener('resize',guardianFrameSize);
   function guardianStorage(kind){const realm=S.realmId||'permanent';return `elfRpgGuardian:${realm==='permanent'?'':realm+':'}${kind}:${S.me?.character?.tgId||''}`;}
   function guardianRead(kind,session=false){try{return JSON.parse((session?sessionStorage:localStorage).getItem(guardianStorage(kind))||'null');}catch{return null;}}
@@ -2245,6 +2382,12 @@
     openTrade:async item=>{if(S.trade?.status==='open'){const [mine,other]=tradeSide(S.trade);if(mine.locked){toast('交易已鎖定，不能新增羽毛。',true);return;}if(!await confirmSheet('放入守護羽毛',`將這根羽毛放入與 ${esc(other.name)} 的交易視窗？`,'放入'))return;await tradeCall('add',{tradeId:S.trade.id,sigilId:item.id});}else{S.tab='trade';S.social='trade';render();loadTrades();toast('可由「分享至群組」開始交易；已有視窗時可放入守護羽毛。');}}
   };
   function render() {
+    window.RpgClassicNextBattle?.release(); // /classic-next only (undefined on /classic)
+    if (globalThis.RPG_CLASSIC_NEXT === true) {
+      if (S.tab === 'atlas') { S.tab = 'home'; S.nextWin = null; }
+      window.RpgClassicNextBattle?.home?.(!!S.me && !S.choosing && !S.creating, { characterId: S.me?.character?.tgId, realmId: S.realmId });
+      nextChrome();
+    }
     atlasWorkspace?.update(S);
     renderBackground();
     const guardianVisible=S.tab==='guardian'&&!S.choosing&&!S.creating&&!!S.me;
@@ -2277,6 +2420,7 @@
     else if (S.tab === 'class') { view.innerHTML = classView(); bindClass(view); }
     else if (S.tab === 'boss') { view.innerHTML = bossView(); bindBoss(view); }
     window.RpgInterface?.compose(view, { tab: S.tab, state: designState, me: S.me, revealInventory, openGuardian });
+    if (NEXT) { if (S.tab === 'home') window.RpgClassicNextGrowth?.pill?.(view, S.me.character); window.RpgClassicNextEntries?.decorate(view); nextChrome(); }
     if(S.tab==='shop'){window.RpgMarketExchange.decorate(view);mountMarket(view);}
     window.scrollTo(0, scrollKeep);
   }
@@ -2286,7 +2430,7 @@
     full=full||!!equipmentSync?.pending(S.me?.character?.tgId);
     if(refreshFlight)return refreshEpoch===(S.apiEpoch||0)&&(!full||refreshFull)?refreshFlight:refreshFlight.then(()=>refreshMe({silent,full}));
     const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0,equipmentTicket=equipmentSync?.begin(selected);refreshEpoch=epoch;refreshFull=full;
-    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();return j;}catch(e){if(!silent&&!['no_character','context_changed','request_cancelled'].includes(e.code))toast(e.message,true);return null;}finally{refreshFlight=null;}})();
+    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();if(NEXT)window.RpgClassicNextBattle?.refresh();return j;}catch(e){if(!silent&&!['no_character','context_changed','request_cancelled'].includes(e.code))toast(e.message,true);return null;}finally{refreshFlight=null;}})();
     return refreshFlight;
   }
   async function loadShop(force) {const actor=String(S.me?.character?.tgId||''),epoch=S.apiEpoch||0;if(S.shop&&!force&&shopForActor===actor)return;try{const result=await api('shop');if(String(S.me?.character?.tgId||'')!==actor||epoch!==(S.apiEpoch||0))return;absorb(result);shopForActor=actor;if(S.tab==='shop')render();}catch(e){if(String(S.me?.character?.tgId||'')===actor&&e.code!=='context_changed')toast(e.message,true);}}
@@ -2298,8 +2442,8 @@
     return bossFlight;
   }
   async function loadLedger() { try { S.ledger = (await api('ledger')).ledger; const el = $('#ledger'); if (el) el.innerHTML = ledgerHtml(); } catch (_) {} }
-  setInterval(()=>{if(!document.hidden&&S.tab==='trade'&&S.social==='hall')loadHeroes()},300000);
-  function load(tab) { if(tab==='bag')refreshMe({silent:true,full:true});else if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (tab === 'trade') { if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
+  if(!NEXT)setInterval(()=>{if(!document.hidden&&S.tab==='trade'&&S.social==='hall')loadHeroes()},300000);
+  function load(tab) { if(tab==='bag')refreshMe({silent:true,full:true});else if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (NEXT && tab === 'class') loadNextTalents(); else if (tab === 'trade') { if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
   // live polling: open trade window every 3 s (other side's items / 鎖定 / OK); request + duel lists every 12 s
   setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.social === 'pk' || !S.trade || S.trade.status !== 'open' || S.busy || !$('#sheet').hidden) return; loadTrade(S.trade.id); }, 3000);
   setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.busy || !$('#sheet').hidden) return; if(S.social==='hall')return;if (S.social === 'pk') loadPks(); else if (!S.trade) loadTrades(); }, 12000);
@@ -2312,8 +2456,8 @@
   }, 1000);
   setInterval(()=>{if(!document.hidden&&S.me&&S.tab==='boss'&&!S.busy&&$('#sheet').hidden)loadBoss({silent:true});},8000);
   // live idle status: the server settles idle progress on every read; poll gently
-  setInterval(() => { if (document.hidden || !S.me || S.choosing || S.creating || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && !S.choosing && !S.creating) {refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
+  if (!NEXT) setInterval(() => { if (document.hidden || !S.me || S.choosing || S.creating || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && !S.choosing && !S.creating) {if(!NEXT)refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
 
   function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
   async function boot() {
@@ -2327,7 +2471,7 @@
     }
     const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
     const ringLink=/^ring_([0-9a-f]{32})$/.exec(spx);
-    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', fate:'home', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'atlas';
+    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', fate:'home', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || (NEXT ? 'home' : 'atlas');
     if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
@@ -2351,7 +2495,7 @@
     const owner=S.me.character.tgId,realm=S.realmId,epoch=S.contextEpoch,current=()=>owner===S.me?.character?.tgId&&realm===S.realmId&&epoch===S.contextEpoch,stop=window.RpgStarRingCosmetics.mount(dialog.querySelector('[data-cosmetic-root]'),{me:()=>S.me,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,api:(action,body)=>{if(!current())throw Error('角色或環境已切換，請重新開啟衣櫥');return api(action,body);},actorArt:characterPortrait,refresh:()=>current()?refreshMe():null,toast});
     const close=()=>{stop();window.removeEventListener('rpg-context-changed',close);dialog.close();dialog.remove();};dialog.querySelector('.sr-cosmetic-close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});window.addEventListener('rpg-context-changed',close);dialog.showModal();
   }
-  function atlasHome(){if(!S.me)return void openCharacterSelect();S.choosing=false;S.creating=false;S.tab='atlas';render();}
+  function atlasHome(){if(!S.me)return void openCharacterSelect();S.choosing=false;S.creating=false;S.tab=NEXT?'home':'atlas';render();}
   async function openAtlasRoute(route){
     if(!S.me||S.choosing||S.creating)return void openCharacterSelect();
     if(route.startsWith('guardian:'))return openGuardian(route.split(':')[1]);
@@ -2368,7 +2512,7 @@
   }
   window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,request:(action,body)=>api(action,body),refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe():null};
   window.RpgExpeditionHost={realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:options=>S.me&&!S.choosing&&!S.creating?refreshMe(options):Promise.resolve(null),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
-  atlasWorkspace=window.RpgAtlasUI?.mount({request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
+  atlasWorkspace=window.RpgAtlasUI?.mount({overlayOnly:NEXT,panelClosed:name=>{if(NEXT&&name==='talents'&&S.tab==='class')void loadNextTalents();},windowState:on=>window.RpgClassicNextBattle?.cover?.('atlas',on),frameSync:()=>window.RpgClassicNextBattle?.syncing?.()===true,request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
     scene:c=>{const map=c&&(S.meta?.maps?.[c.mapId]||window.RpgMaps?.get(c.level));return {name:map?.name||'星圖營地',image:`/art/star-ring-20261018/map-${String(map?.id||1).padStart(2,'0')}.webp`};},
     chooseCharacter:()=>void openCharacterSelect(),home:atlasHome,switchRealm,openRoute:route=>{void openAtlasRoute(route).catch(error=>toast(error.message,true));},
     refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe({silent:true,full:true}):null});
