@@ -897,7 +897,7 @@
   function homeView() {
     const me = S.me, c = me.character, st = me.stats, si = stateInfo(me);
     const scene = window.RpgMaps && window.RpgMaps.get(c.level);
-    const mapLabel = scene ? `${scene.emoji} ${scene.name}` : c.mapName;
+    const mapLabel = NEXT && window.RpgClassicNextGrowth ? window.RpgClassicNextGrowth.mapLabel(c) : scene ? `${scene.emoji} ${scene.name}` : c.mapName;
     const red = sumKind('red'), blue = sumKind('blue');
     const sp = me.supply || {}; const redKey = sp.redKey || 'red_1', blueKey = sp.blueKey || 'blue_1';
     const redName = (S.meta.items[redKey] || {}).name || '紅水', blueName = (S.meta.items[blueKey] || {}).name || '藍水';
@@ -909,7 +909,7 @@
     return `
     <div class="lc-adventure"><div class="lc-topline"><span>✦ ADVENTURE ✦</span><span>${esc(mapLabel)}</span></div>
     <div class="card lc-profile"><div class="hero">${portraitHtml('pt')}<div class="info">
-      <div class="cls">${esc(c.className)}${c.title?` <span class="tower-title-chip">${esc(c.title.name)}</span>`:''} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span></div>
+      <div class="cls">${esc(c.className)}${c.title?` <span class="tower-title-chip">${esc(c.title.name)}</span>`:''} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span>${NEXT ? window.RpgClassicNextGrowth?.badge(c) || '' : ''}</div>
       ${bar('hp', c.hp, c.maxHp, `生命值 ${fmt(c.hp)} / ${fmt(c.maxHp)}`)}
       ${bar('mp', c.mp, c.maxMp, `魔力 ${fmt(c.mp)} / ${fmt(c.maxMp)}`)}
       ${bar('exp', c.expPct, 100, c.expNeed ? `經驗值 ${fmt(c.exp)} / ${fmt(c.expNeed)}<span class="idle-exp-percent">（${c.expPct}%）</span>` : `經驗值 ${fmt(c.exp)} · 等級已滿`)}
@@ -1523,9 +1523,21 @@
         <div class="mt muted">需要「${esc(g.materialName)}」（${g.have}/1）— 打倒地圖首領取得。到達 Lv.${g.gateLevel} 後會停在門檻等轉職。</div></div>`;
       html += Object.entries(base.branches).map(([k, b]) => branchCard(c.baseClass, { ...b, branch: k }, { path: k })).join('');
     }
+    if (window.RPG_CLASSIC_NEXT === true && window.RpgClassicNextGrowth) html += window.RpgClassicNextGrowth.talentCard(S.nextTalents, c.level) + window.RpgClassicNextGrowth.roundCard(c);
     return `<div class="lc-class-screen">${html}${classPathPreview(c)}</div>`;
   }
+  // /classic-next 職業 tab: talents read once when the tab opens (and after the talent panel closes).
+  async function loadNextTalents() {
+    if (!NEXT || !S.me) return;
+    const who = () => `${S.realmId || 'permanent'}:${S.me?.character?.id || S.me?.character?.tgId || ''}`, actor = who(), epoch = S.contextEpoch || 0;
+    S.nextTalents = { status: 'loading', actor, data: S.nextTalents?.actor === actor ? S.nextTalents.data : null };
+    if (S.tab === 'class') render();
+    try { const j = await api('atlas/talents'); if (who() !== actor || epoch !== (S.contextEpoch || 0)) return; S.nextTalents = { status: 'ready', actor, data: j.talents || null }; }
+    catch (e) { if (who() !== actor || e.code === 'context_changed') return; S.nextTalents = { status: 'error', actor, error: e.message }; }
+    if (S.tab === 'class') render();
+  }
   function bindClass(view) {
+    if (NEXT) { view.querySelector('[data-next-talent-open]')?.addEventListener('click', () => atlasWorkspace?.open('talents')); view.querySelector('[data-next-talent-reload]')?.addEventListener('click', loadNextTalents); }
     drawPortrait($('#cpt', view), heroOpts({}));
     view.querySelectorAll('canvas[data-br]').forEach((cv) => { const src = V2 && artSrc('hero', heroKey(cv.dataset.cls, S.me.character.gender, cv.dataset.path)); if (src) cv.replaceWith(Object.assign(document.createElement('img'), { src, className: 'brimg' })); else drawPortrait(cv, { cls: cv.dataset.cls, gender: S.me.character.gender, path: cv.dataset.br }); });
     view.querySelectorAll('[data-adv]').forEach((b) => { b.onclick = async () => { const br = S.me.branches.find((x) => x.branch === b.dataset.adv);
@@ -2317,7 +2329,7 @@
   }
   async function loadLedger() { try { S.ledger = (await api('ledger')).ledger; const el = $('#ledger'); if (el) el.innerHTML = ledgerHtml(); } catch (_) {} }
   if(!NEXT)setInterval(()=>{if(!document.hidden&&S.tab==='trade'&&S.social==='hall')loadHeroes()},300000);
-  function load(tab) { if(tab==='bag')refreshMe({silent:true,full:true});else if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (tab === 'trade') { if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
+  function load(tab) { if(tab==='bag')refreshMe({silent:true,full:true});else if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (NEXT && tab === 'class') loadNextTalents(); else if (tab === 'trade') { if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
   // live polling: open trade window every 3 s (other side's items / 鎖定 / OK); request + duel lists every 12 s
   setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.social === 'pk' || !S.trade || S.trade.status !== 'open' || S.busy || !$('#sheet').hidden) return; loadTrade(S.trade.id); }, 3000);
   setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.busy || !$('#sheet').hidden) return; if(S.social==='hall')return;if (S.social === 'pk') loadPks(); else if (!S.trade) loadTrades(); }, 12000);
@@ -2386,7 +2398,7 @@
   }
   window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,request:(action,body)=>api(action,body),refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe():null};
   window.RpgExpeditionHost={realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:options=>S.me&&!S.choosing&&!S.creating?refreshMe(options):Promise.resolve(null),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
-  atlasWorkspace=window.RpgAtlasUI?.mount({overlayOnly:NEXT,request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
+  atlasWorkspace=window.RpgAtlasUI?.mount({overlayOnly:NEXT,panelClosed:name=>{if(NEXT&&name==='talents'&&S.tab==='class')void loadNextTalents();},request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
     scene:c=>{const map=c&&(S.meta?.maps?.[c.mapId]||window.RpgMaps?.get(c.level));return {name:map?.name||'星圖營地',image:`/art/star-ring-20261018/map-${String(map?.id||1).padStart(2,'0')}.webp`};},
     chooseCharacter:()=>void openCharacterSelect(),home:atlasHome,switchRealm,openRoute:route=>{void openAtlasRoute(route).catch(error=>toast(error.message,true));},
     refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe({silent:true,full:true}):null});

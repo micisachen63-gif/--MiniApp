@@ -11,7 +11,11 @@
   style.textContent = 'html.scene-embed-battle,html.scene-embed-battle body{background:#050505;overflow:hidden}' +
     'html.scene-embed-battle #ui>*:not(#target){display:none!important}' +
     'html.scene-embed-battle .scene-login-status,html.scene-embed-battle #vig{display:none!important}' +
-    'html.scene-embed-battle #ui,html.scene-embed-battle #stage{pointer-events:none}';
+    'html.scene-embed-battle #ui,html.scene-embed-battle #stage{pointer-events:none}' +
+    // Framing: every scene size is relative to the stage height and the camera centres on the hero's
+    // feet with the crowd above them, which left the lower third of the classic frame empty. A taller
+    // stage (cropped by the frame) enlarges the fight and moves it down so it fills the frame.
+    'html.scene-embed-battle #stage{height:132%!important;max-width:none}';
   document.head.appendChild(style);
   // Keep a handle on the one Phaser game so a hidden frame can stop drawing entirely.
   if (window.Phaser && typeof window.Phaser.Game === 'function') {
@@ -20,6 +24,7 @@
     Embedded.prototype = Original.prototype;
     window.Phaser.Game = Embedded;
   }
+  function visibility() { try { var session = window.RpgSceneSession; if (session && typeof session.visibilityChanged === 'function') session.visibilityChanged(); } catch (e) {} }
   function sleep() { try { if (game && game.loop && game.loop.running) game.loop.sleep(); } catch (e) {} }
   function wake() { try { if (game && game.loop && !game.loop.running) game.loop.wake(); } catch (e) {} }
   window.addEventListener('rpg:scene-state', function (event) { if (event.detail && !ready) { ready = true; post('ready', { characterId: String(event.detail.characterId || ''), realmId: String(event.detail.realmId || 'permanent') }); } });
@@ -27,8 +32,9 @@
   window.addEventListener('message', function (event) {
     var data = event.data;
     if (event.source !== parent || event.origin !== origin || !data || data.source !== 'rpg-classic-next') return;
-    if (data.type === 'pause') { sleeping = true; sleep(); }
-    else if (data.type === 'resume') { sleeping = false; wake(); }
+    // The session's Atlas-active timer (isHidden) stops while paused and resumes on return.
+    if (data.type === 'pause') { sleeping = true; sleep(); visibility(); }
+    else if (data.type === 'resume') { sleeping = false; wake(); visibility(); }
     else if (data.type === 'refresh') {
       var session = window.RpgSceneSession, detail = data.detail || {};
       if (!session || typeof session.sync !== 'function') return;

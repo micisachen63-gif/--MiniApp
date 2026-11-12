@@ -178,7 +178,8 @@
     }
 
     function close() {
-      gearbookView?.dispose();gearbookView=null;panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
+      const closing=panel;gearbookView?.dispose();gearbookView=null;panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
+      if(closing)host.panelClosed?.(closing);
       if (focusReturn?.isConnected) focusReturn.focus({preventScroll:true}); focusReturn = null;
       paintNav();
     }
@@ -394,7 +395,8 @@
       chatClient?.setContext({realmId:next.realmId,characterId:next.me?.character?.tgId||'',epoch:next.contextEpoch||0});
       if(changed){close();draftRun={};draftCraft={};draftScope='';talentSelected=null;talentZoom=90;talentEffectsReviewed=false;talentPreviewSeq++;talentPreviewAbort?.abort();talentPreview=null;talentPreviewLoading=false;}
       if(selecting)close();syncWindowState();paint();
-      if(changed&&!selecting&&!overlayOnly){void refreshAll();void chatClient?.refresh();}
+      // /classic-next reads the Atlas status once per character so an active 星圖派遣 run is known (no quests/chat).
+      if(changed&&!selecting){if(overlayOnly)void client.refresh();else{void refreshAll();void chatClient?.refresh();}}
     }
     root.querySelectorAll('[data-atlas-group]').forEach(button=>button.onclick=()=>open(button.dataset.atlasGroup));
     root.querySelectorAll('[data-atlas-direct]').forEach(button=>button.onclick=()=>route(button.dataset.atlasDirect));
@@ -416,9 +418,11 @@
       if(event.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
     }
     document.addEventListener('keydown',keydown);
-    const visibility=()=>{if(!document.hidden&&validCharacter()){void refreshAll();void chatClient?.refresh();}};
-    if(!overlayOnly)document.addEventListener('visibilitychange',visibility);
-    if(!overlayOnly)poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
+    // /classic-next keeps the original Atlas refresh (30 s and on return) only while a 星圖派遣 run is active (owner t704u).
+    const atlasLive=()=>!overlayOnly||running();
+    const visibility=()=>{if(!document.hidden&&validCharacter()&&atlasLive()){void refreshAll();if(!overlayOnly)void chatClient?.refresh();}};
+    document.addEventListener('visibilitychange',visibility);
+    poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy&&atlasLive())void refreshAll();},30000);
     const chatPoll=overlayOnly?0:setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
     return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }

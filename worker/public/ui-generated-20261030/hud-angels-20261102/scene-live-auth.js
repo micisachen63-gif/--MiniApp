@@ -57,7 +57,8 @@
     } catch {}
   }
   const session = api.create({endpoint:config.endpoint,accountId,realmId:'permanent',telegramInitData:initData,
-    isHidden:()=>document.hidden,
+    // A paused classic-next battle frame (embed=battle) counts as hidden for the Atlas-active timer.
+    isHidden:()=>document.hidden||window.RpgSceneEmbed?.sleeping?.()===true,
     onSnapshot:value=>{ if (value && panel) panel.hidden=true; window.dispatchEvent(new CustomEvent('rpg:scene-state',{detail:value})); if (value && pendingEntry) openEntry(); },
     onCombatTrace:(trace,scene)=>window.dispatchEvent(new CustomEvent('rpg:combat-trace',{detail:{trace,scene}})),
     onError:error=>{ window.dispatchEvent(new CustomEvent('rpg:scene-error',{detail:{message:error.message,code:error.code}})); void onError(error); },
