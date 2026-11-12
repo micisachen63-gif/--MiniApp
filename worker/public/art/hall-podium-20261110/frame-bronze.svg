@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="200" height="250" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="bronzerim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8e0bd"/>
+      <stop offset="35%" stop-color="#8a4a1c"/>
+      <stop offset="65%" stop-color="#f8e0bd"/>
+      <stop offset="100%" stop-color="#4a240c"/>
+    </linearGradient>
+    <linearGradient id="bronzeinner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8e0bd"/>
+      <stop offset="100%" stop-color="#8a4a1c"/>
+    </linearGradient>
+  </defs>
+  <!-- outer plate, hole for portrait -->
+  <path fill="url(#bronzerim)" d="M8 18 H192 V236 H8 Z M22 36 H178 V220 H22 Z" fill-rule="evenodd"/>
+  <rect x="8" y="18" width="184" height="218" fill="none" stroke="#f8e0bd" stroke-opacity=".7" stroke-width="1.4"/>
+  <rect x="13" y="23" width="174" height="208" fill="none" stroke="#4a240c" stroke-opacity=".55" stroke-width="1"/>
+  <rect x="22" y="36" width="156" height="184" fill="none" stroke="url(#bronzeinner)" stroke-width="2.2"/>
+  <rect x="26" y="40" width="148" height="176" fill="none" stroke="#f8e0bd" stroke-opacity=".35" stroke-width="0.8"/>
+  <!-- corner flourishes -->
+  <path d="M8 42 C8 22 22 18 36 18 L28 18 C14 18 8 28 8 42Z" fill="#f8e0bd" opacity=".9"/>
+  <path d="M192 42 C192 22 178 18 164 18 L172 18 C186 18 192 28 192 42Z" fill="#f8e0bd" opacity=".9"/>
+  <path d="M8 212 C8 232 22 236 36 236 L28 236 C14 236 8 226 8 212Z" fill="#d3924a"/>
+  <path d="M192 212 C192 232 178 236 164 236 L172 236 C186 236 192 226 192 212Z" fill="#d3924a"/>
+  <!-- side jewels -->
+  <circle cx="8" cy="125" r="4.2" fill="#d3924a" stroke="#4a240c" stroke-width="1"/>
+  <circle cx="192" cy="125" r="4.2" fill="#d3924a" stroke="#4a240c" stroke-width="1"/>
+  <circle cx="100" cy="18" r="3.4" fill="#f8e0bd" stroke="#4a240c" stroke-width="0.9"/>
+  <circle cx="100" cy="236" r="3.4" fill="#d3924a" stroke="#4a240c" stroke-width="0.9"/>
+  <!-- top rail for the medal to sit on -->
+  <rect x="60" y="14" width="80" height="10" rx="3" fill="url(#bronzeinner)" stroke="#4a240c" stroke-width="0.8"/>
+</svg>
