@@ -152,7 +152,7 @@ test('embed=battle hides every scene UI layer except the target bar, registers n
   const h = embedHarness();
   assert.equal(h.timers.intervals.length + h.timers.timeouts.length, 0);
   const css = h.head[0].textContent;
-  assert.match(css, /#ui>\*:not\(#target\)\{display:none!important\}/);
+  assert.match(css, /html\.scene-embed-battle:not\(\.scene-embed-hud\) #ui>\*:not\(#target\)\{display:none!important\}/);
   assert.match(css, /\.scene-login-status/);
   const game = new h.window.Phaser.Game({ parent: 'game' });
   assert.equal(h.window.RpgSceneEmbed.game(), game);
@@ -196,7 +196,7 @@ test('classic home frame: one scene iframe, battlefield only, pauses when the ho
   h.flush();
   const frame = h.nodes[0];
   assert.equal(h.nodes.length, 1); assert.equal(frame.tag, 'iframe');
-  assert.match(frame.src, /\/scene-bound-20261102\/scene\.html\?embed=battle$/);
+  assert.match(frame.src, /\/scene-bound-20261102\/scene\.html\?embed=battle&hud=1$/);
   assert.equal(h.timers.intervals.length, 0, 'no polling of any kind');
   assert.deepEqual(h.timers.timeouts.map(t => t.ms), [20000], 'one load deadline only');
   // Ready -> it does not re-sync the same character it already shows.
@@ -448,7 +448,7 @@ test('P5 banners: the 13 adventure loops, poster first, video only on screen, no
   assert.equal(observed[0], el, 'video waits for the entry to be on screen');
   E.banner(el, 'status'); assert.equal(el.children.length, 1, 'idempotent');
   assert.match(entriesJs, /\['preload', 'none'\]/); assert.match(entriesJs, /prefers-reduced-motion: reduce/);
-  assert.match(app, /if \(NEXT\) \{ if \(S\.tab === 'home'\) window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\); window\.RpgClassicNextEntries\?\.decorate\(view\); \}/);
+  assert.match(app, /window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\);[^\n]*\} window\.RpgClassicNextEntries\?\.decorate\(view\); \}/);
   assert.match(app, /window\.RpgClassicNextEntries\?\.decorate\(c\);/, 'the 星圖 chooser sheet gets its loops');
 });
 
@@ -473,4 +473,35 @@ test('P5 home Lv badge: the profession line keeps a small pill', () => {
   const appended = [], line = { textContent: '血怒戰神第3輪・專家 Lv.7/120', classList: { add() {} }, querySelector: () => null, append: n => appended.push(n) };
   assert.equal(window.RpgClassicNextGrowth.pill({ querySelector: () => line }, { level: 247 }), true);
   assert.equal(line.textContent, '血怒戰神'); assert.match(appended[0].html, /class="next-round-badge mode-expert"/);
+});
+
+// ---------- P6: the battle is the main home view ----------
+test('P6 embed hud=1 keeps only the battle HUD (zone, minimap, target, orbs, exp, skills) and no timers', () => {
+  assert.match(embedJs, /hud = new URLSearchParams\(location\.search\)\.get\('hud'\) === '1'/);
+  assert.match(embedJs, /html\.scene-embed-hud #ui>\*:not\(#target\):not\(#topR\):not\(#bottom\)\{display:none!important\}/, 'portrait/gold, chat, function buttons, windows hidden');
+  assert.match(embedJs, /html\.scene-embed-hud #topR>#quest,html\.scene-embed-hud #bottom #buffs,html\.scene-embed-hud #topR button\{display:none!important\}/, 'no quest tracker or map button (classic owns them)');
+  assert.match(embedJs, /html\.scene-embed-battle #ui,html\.scene-embed-battle #stage\{pointer-events:none\}/, 'display only');
+  assert.doesNotMatch(embedJs, /setInterval|setTimeout/);
+  for (const id of ['topR', 'mini', 'minic', 'zone', 'bottom', 'bar', 'skills', 'xp', 'hpTxt', 'mpTxt', 'target']) assert.match(sceneHtml, new RegExp('id="' + id + '"'), id);
+  const h = embedHarness();
+  assert.equal(h.timers.intervals.length + h.timers.timeouts.length, 0);
+});
+
+test('P6 home: the battle shell moves to the top and fills the space between the top bar and nav', () => {
+  const h = frameHarness(), slot = h.el('div');
+  slot.matches = () => true;
+  const shell = { classList: { set: new Set(), add(c) { this.set.add(c); } }, querySelector: sel => (sel === '#bslot.cn-battle-slot' ? slot : null) };
+  const prepended = [], view = { querySelector: sel => (sel === '.lc-battle-shell' ? shell : null), prepend: n => prepended.push(n) };
+  const bars = { hud: 60, nav: 75 }, props = {};
+  h.document.getElementById = id => (bars[id] ? { getClientRects: () => [1], getBoundingClientRect: () => ({ height: bars[id] }) } : null);
+  h.document.documentElement.style = { setProperty: (k, v) => { props[k] = v; } };
+  h.api.attach(slot, { characterId: 'hero' }); h.flush();
+  assert.equal(h.api.promote(view), true);
+  assert.deepEqual(prepended, [shell]); assert.ok(shell.classList.set.has('cn-main-battle'));
+  assert.equal(props['--cn-chrome'], '135px');
+  assert.equal(h.api.promote({ querySelector: () => null }), false, 'expedition-away / no frame slot: classic layout');
+  assert.equal(h.timers.intervals.length, 0, 'still no timers');
+  h.timers.timeouts[0].fn(); assert.equal(h.api.promote(view), false, 'classic fallback battle keeps the classic layout');
+  assert.match(app, /if \(S\.tab === 'home'\) \{ window\.RpgClassicNextGrowth\?\.pill\?\.\(view, S\.me\.character\); window\.RpgClassicNextBattle\?\.promote\?\.\(view\); \}/);
+  assert.match(read('classic-next.css'), /\.lc-battle-shell\.cn-main-battle #bslot\.cn-battle-slot\{height:max\(420px,calc\(100svh - var\(--cn-chrome,160px\) - 44px\)\)/);
 });

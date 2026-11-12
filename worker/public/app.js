@@ -2322,7 +2322,7 @@
     else if (S.tab === 'class') { view.innerHTML = classView(); bindClass(view); }
     else if (S.tab === 'boss') { view.innerHTML = bossView(); bindBoss(view); }
     window.RpgInterface?.compose(view, { tab: S.tab, state: designState, me: S.me, revealInventory, openGuardian });
-    if (NEXT) { if (S.tab === 'home') window.RpgClassicNextGrowth?.pill?.(view, S.me.character); window.RpgClassicNextEntries?.decorate(view); }
+    if (NEXT) { if (S.tab === 'home') { window.RpgClassicNextGrowth?.pill?.(view, S.me.character); window.RpgClassicNextBattle?.promote?.(view); } window.RpgClassicNextEntries?.decorate(view); }
     if(S.tab==='shop'){window.RpgMarketExchange.decorate(view);mountMarket(view);}
     window.scrollTo(0, scrollKeep);
   }

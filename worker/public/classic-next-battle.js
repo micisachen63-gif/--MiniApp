@@ -6,7 +6,7 @@
  * it), positioned over the slot. If the scene cannot load, the classic RpgBattle takes the slot. */
 (() => {
   'use strict';
-  const SRC = '/ui-generated-20261030/scene-bound-20261102/scene.html?embed=battle';
+  const SRC = '/ui-generated-20261030/scene-bound-20261102/scene.html?embed=battle&hud=1';
   const SOURCE = 'rpg-scene-battle', READY_TIMEOUT_MS = 20000;
   let frame = null, slot = null, fallback = null, state = 'idle', readyTimer = 0, scheduled = false;
   let wantedCharacter = '', wantedRealm = 'permanent', sentCharacter = '', sentRealm = '', paused = null, observer = null;
@@ -77,8 +77,22 @@
   function release() { slot = null; schedule(); }
   // Called after the classic app's own refreshMe() succeeds (manual actions only).
   function refresh() { if (state === 'ready' && wantedCharacter) post('refresh', { characterId: wantedCharacter, realmId: wantedRealm }); }
+  // P6: the battle is the main home view — the battle shell moves to the top of the home screen and
+  // fills the viewport between the classic top bar and bottom nav (the rest of home follows below).
+  function chrome() {
+    const hud = document.getElementById('hud'), nav = document.getElementById('nav');
+    const h = (el) => (el && el.getClientRects().length ? el.getBoundingClientRect().height : 0);
+    document.documentElement.style.setProperty('--cn-chrome', Math.round(h(hud) + h(nav)) + 'px');
+  }
+  function promote(view) {
+    const shell = view?.querySelector?.('.lc-battle-shell');
+    if (state === 'failed' || !shell || !shell.querySelector('#bslot.cn-battle-slot')) return false;
+    shell.classList.add('cn-main-battle'); view.prepend(shell); chrome();
+    if (!promote.bound) { promote.bound = true; window.addEventListener('resize', chrome); }
+    schedule(); return true;
+  }
   function cover(reason, on) { const had = covers.has(reason); if (on) covers.add(reason); else covers.delete(reason); if (had !== !!on) schedule(); }
   // True while the scene in the frame is running (its own Atlas-active sync is live).
   function syncing() { return state === 'ready' && paused === false && !!frame && !frame.hidden && !document.hidden; }
-  window.RpgClassicNextBattle = { attach, release, refresh, cover, syncing, state: () => state, frame: () => frame };
+  window.RpgClassicNextBattle = { attach, release, refresh, cover, syncing, promote, state: () => state, frame: () => frame };
 })();

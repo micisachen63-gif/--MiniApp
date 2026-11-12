@@ -6,16 +6,26 @@
   if (window.__RpgSceneEmbed !== 'battle') return;
   var origin = location.origin, game = null, sleeping = false, ready = false;
   function post(type, detail) { try { if (parent !== window) parent.postMessage({ source: 'rpg-scene-battle', type: type, detail: detail || null }, origin); } catch (e) {} }
+  // hud=1 (the /classic-next main home battle): keep the battle HUD pieces that classic does not
+  // already show — zone + minimap, target, hp/mp orbs, exp line and skill bar (display only).
+  // Portrait/gold, quest tracker, chat, function buttons and windows stay hidden (classic owns them).
+  var hud = false; try { hud = new URLSearchParams(location.search).get('hud') === '1'; } catch (e) {}
+  if (hud) document.documentElement.classList.add('scene-embed-hud');
   var style = document.createElement('style');
   style.id = 'scene-embed-battle-style';
   style.textContent = 'html.scene-embed-battle,html.scene-embed-battle body{background:#050505;overflow:hidden}' +
-    'html.scene-embed-battle #ui>*:not(#target){display:none!important}' +
+    'html.scene-embed-battle:not(.scene-embed-hud) #ui>*:not(#target){display:none!important}' +
+    'html.scene-embed-hud #ui>*:not(#target):not(#topR):not(#bottom){display:none!important}' +
     'html.scene-embed-battle .scene-login-status,html.scene-embed-battle #vig{display:none!important}' +
     'html.scene-embed-battle #ui,html.scene-embed-battle #stage{pointer-events:none}' +
     // Framing: every scene size is relative to the stage height and the camera centres on the hero's
     // feet with the crowd above them, which left the lower third of the classic frame empty. A taller
     // stage (cropped by the frame) enlarges the fight and moves it down so it fills the frame.
-    'html.scene-embed-battle #stage{height:132%!important;max-width:none}';
+    'html.scene-embed-battle #stage{height:132%!important;max-width:none}' +
+    'html.scene-embed-hud #topR>#quest,html.scene-embed-hud #bottom #buffs,html.scene-embed-hud #topR button{display:none!important}' +
+    '@media (max-width:340px){html.scene-embed-hud #bottom{transform:scale(.84);transform-origin:50% 100%}html.scene-embed-hud #topR{transform:scale(.88);transform-origin:100% 0}}' +
+    // A tall main battle frame shows the whole stage: no crop is needed there.
+    'html.scene-embed-hud #stage{height:100%!important}';
   document.head.appendChild(style);
   // Keep a handle on the one Phaser game so a hidden frame can stop drawing entirely.
   if (window.Phaser && typeof window.Phaser.Game === 'function') {

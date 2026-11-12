@@ -76,3 +76,6 @@
 .cn-panel-head h2{margin:0;font-size:16px;color:#f3e2b3;letter-spacing:.06em}
 .cn-panel-close{border:1px solid #6b5a36;background:#121c24;color:#f0d99d;border-radius:3px;padding:5px 10px;font:inherit;font-size:12.5px}
 .cn-panel-body{overflow:auto;padding:10px 12px calc(14px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;color:#eadfc4}
+/* P6: the battle is the main home view (between the classic top bar and bottom nav) */
+.lc-battle-shell.cn-main-battle{margin:0 -2px 12px}
+.lc-battle-shell.cn-main-battle #bslot.cn-battle-slot{height:max(420px,calc(100svh - var(--cn-chrome,160px) - 44px));max-height:none;min-height:420px}
