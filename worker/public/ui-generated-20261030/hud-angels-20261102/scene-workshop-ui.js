@@ -271,6 +271,7 @@ function linesHtml(lines,locks=[],types=[]) {
 }
 function previewHtml(plan,acknowledged=false,busy=false) {
   const stop=plan.kind==='stop';
+  const autoEnhance=plan.kind==='enhance'&&plan.background;
   let details='';
   if(stop) details='<p>已完成 '+fmt(plan.job.attempts)+' 次；已用 '+fmt(plan.job.spentScrolls)+' 張卷軸、'+fmt(plan.job.spentGold)+' 金幣。停止後保留目前結果，已使用的材料不會退還。</p>';
   else if(plan.kind==='enhance') details='<p><strong>+'+fmt(plan.from)+' → +'+fmt(plan.target)+'</strong> · '+esc({normal:'普通卷',blessed:'祝福卷',guaranteed:'必成卷'}[plan.mode])+'</p>'+
@@ -284,8 +285,8 @@ function previewHtml(plan,acknowledged=false,busy=false) {
     (plan.background?'<p>'+esc(plan.rule)+'</p><p>累計金幣上限：'+(plan.maxGold===null?'不設上限':fmt(plan.maxGold))+'。約每 3 秒重洗一次，離開遊戲仍會繼續。</p>':'')+
     (plan.reached?'<p class="sw-success">目前已符合目標。這次會記錄達標結果，不消耗材料。</p>':'');
   return '<section class="sw-confirm sw-card" data-sw-confirmation aria-label="確認工坊操作"><span class="sw-eyebrow">送出前確認</span><h3>'+esc(stop?'停止背景作業':plan.background?'開始背景'+(plan.kind==='enhance'?'強化':'洗鍊'):'本次'+(plan.kind==='enhance'?'強化':'洗鍊'))+'</h3><p class="sw-item-name">'+esc(plan.itemName)+'</p>'+details+
-    '<label class="sw-ack"><input type="checkbox" name="workshopAcknowledge" data-sw-ack '+(acknowledged?'checked ':'')+(busy?'disabled':'')+'><span>我已確認本次設定、消耗與結果規則</span></label>'+
-    '<footer class="sw-actions"><button type="button" class="sw-secondary" data-sw-cancel '+(busy?'disabled':'')+'>返回調整</button><button type="button" class="sw-primary" data-sw-confirm '+(!acknowledged||busy?'disabled':'')+'>'+(busy?'正在處理…':stop?'確認停止':plan.background?'確認開工':'確認執行一次')+'</button></footer></section>';
+    (autoEnhance?'':'<label class="sw-ack"><input type="checkbox" name="workshopAcknowledge" data-sw-ack '+(acknowledged?'checked ':'')+(busy?'disabled':'')+'><span>我已確認本次設定、消耗與結果規則</span></label>')+
+    '<footer class="sw-actions"><button type="button" class="sw-secondary" data-sw-cancel '+(busy?'disabled':'')+'>返回調整</button><button type="button" class="sw-primary" data-sw-confirm '+((!autoEnhance&&!acknowledged)||busy?'disabled':'')+'>'+(busy?'正在處理…':stop?'確認停止':plan.background?'確認開工':'確認執行一次')+'</button></footer></section>';
 }
 function resultHtml(result) {
   if(!result)return '';
@@ -454,8 +455,8 @@ function mount(root,host,options={}) {
     const cancel=root.querySelector('[data-sw-cancel]');if(cancel)cancel.onclick=()=>cancelPreview();
     const ack=root.querySelector('[data-sw-ack]');if(ack)ack.onchange=()=>{acknowledged=ack.checked;const button=root.querySelector('[data-sw-confirm]');if(button)button.disabled=!acknowledged||client.state.busy;};
     const confirm=root.querySelector('[data-sw-confirm]');if(confirm)confirm.onclick=()=>{
-      if(!acknowledged||ritual)return;const plan=client.state.preview,item=client.state.me?.equipment.find(e=>e.id===plan?.itemId);
-      if(!globalThis.RpgSceneRituals||!item||!['enhance','reroll'].includes(plan?.kind))return client.confirm(acknowledged);
+      const plan=client.state.preview;if((!acknowledged&&!(plan?.kind==='enhance'&&plan.background))||ritual)return;const item=client.state.me?.equipment.find(e=>e.id===plan?.itemId);
+      if(!globalThis.RpgSceneRituals||!item||!['enhance','reroll'].includes(plan?.kind))return client.confirm(acknowledged||(plan?.kind==='enhance'&&plan.background));
       const previous=client.state.result;ritual=globalThis.RpgSceneRituals.forge(root,{item,plan,icon:art(item),current:()=>!disposed&&client.current(),commit:async()=>{await client.confirm(true);return client.state.result!==previous?client.state.result:null;}});
       ritual.done.then(()=>{ritual=null;if(!disposed)paint();});
     };
