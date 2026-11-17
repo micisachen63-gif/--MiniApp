@@ -25,6 +25,8 @@
     if(!await ready){h.close(true);return;}if(!h.current()||!current())return h.close(true);
     h.setCommitting(true);const start=Date.now(),result=await commit();if(!h.current()||!current())return h.close(true);
     await new Promise(r=>setTimeout(r,Math.max(0,850-(Date.now()-start))));if(!h.current())return;
+    // After the original automatic scroll animation, show the live job panel.
+    if(plan.background&&plan.kind==='enhance'&&result?.job){h.setCommitting(false);h.close();return;}
     if(result?.action==='enhance'&&result.result)api.reveal(h.ov,result.result.result==='success'?'success':result.result.result==='break'?'break':'nothing',result.result.to);
     else if(result?.action==='reroll'&&result.result){api.reveal(h.ov,'reroll');const title=h.ov.querySelector('.fr-name'),r=result.result;if(title)title.textContent=(r.itemName||item.name)+' · 品質 '+(r.before?.quality||'未鑑定')+' → '+(r.after?.quality||'結果待核對');}
     else {h.ov.classList.remove('charging');const label=h.ov.querySelector('.fr-instruction');if(label)label.textContent=result?.job?'背景作業已啟動，返回查看真實進度':'結果尚待核對，請返回確認原紀錄';}

@@ -277,7 +277,7 @@ function previewHtml(plan,acknowledged=false,busy=false) {
     '<div class="sw-odds"><span>下一次成功 <b>'+pct(plan.odds?.success)+'</b></span><span>無變化 <b>'+pct(plan.odds?.nothing)+'</b></span><span class="'+(plan.odds?.break?'sw-danger':'')+'">爆裝 <b>'+pct(plan.odds?.break)+'</b></span></div>'+
     gainHtml(plan.gain,plan.background?'若達成目標':'本次成功後')+costHtml(plan)+
     (plan.mode==='guaranteed'?'<p>只消耗一張必成卷，完成這一次強化。</p>':(plan.odds?.break||plan.background)?'<p class="sw-risk">進入危險強化範圍後，裝備可能破碎並永久消失。祝福卷提高成功率，並不降低爆裝率。</p>':'')+
-    (plan.background?'<p>約每 3 秒強化一次；離開畫面或關閉遊戲也會繼續。'+(plan.mode==='normal'?'普通卷不足時持續用金幣補購。':'祝福卷耗盡後停止，不補購。')+'達成目標、裝備破碎、資源不足或手動停止時結束。</p>':'');
+    (plan.background?'<p class="sw-risk">自動強化未達指定強化值前會持續進行；裝備破碎、資源不足或手動停止時才會提前結束。</p><p>約每 3 秒強化一次；離開畫面或關閉遊戲也會繼續。'+(plan.mode==='normal'?'普通卷不足時持續用金幣補購。':'祝福卷耗盡後停止，不補購。')+'達成目標、裝備破碎、資源不足或手動停止時結束。</p>':'');
   else details='<p>完整保留 '+plan.locks.length+' 條'+(plan.typeLocks.length?'；保留能力、重洗品質 '+plan.typeLocks.length+' 條':'')+'。</p>'+
     linesHtml(plan.lines,plan.locks,plan.typeLocks)+costHtml(plan)+
     '<p>未完整鎖定的數值可升可降；品階、元素、強化與遺物能力保留。</p>'+
