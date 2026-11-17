@@ -271,21 +271,22 @@ function linesHtml(lines,locks=[],types=[]) {
 }
 function previewHtml(plan,acknowledged=false,busy=false) {
   const stop=plan.kind==='stop';
+  const autoEnhance=plan.kind==='enhance'&&plan.background;
   let details='';
   if(stop) details='<p>已完成 '+fmt(plan.job.attempts)+' 次；已用 '+fmt(plan.job.spentScrolls)+' 張卷軸、'+fmt(plan.job.spentGold)+' 金幣。停止後保留目前結果，已使用的材料不會退還。</p>';
   else if(plan.kind==='enhance') details='<p><strong>+'+fmt(plan.from)+' → +'+fmt(plan.target)+'</strong> · '+esc({normal:'普通卷',blessed:'祝福卷',guaranteed:'必成卷'}[plan.mode])+'</p>'+
     '<div class="sw-odds"><span>下一次成功 <b>'+pct(plan.odds?.success)+'</b></span><span>無變化 <b>'+pct(plan.odds?.nothing)+'</b></span><span class="'+(plan.odds?.break?'sw-danger':'')+'">爆裝 <b>'+pct(plan.odds?.break)+'</b></span></div>'+
     gainHtml(plan.gain,plan.background?'若達成目標':'本次成功後')+costHtml(plan)+
     (plan.mode==='guaranteed'?'<p>只消耗一張必成卷，完成這一次強化。</p>':(plan.odds?.break||plan.background)?'<p class="sw-risk">進入危險強化範圍後，裝備可能破碎並永久消失。祝福卷提高成功率，並不降低爆裝率。</p>':'')+
-    (plan.background?'<p>約每 3 秒強化一次；離開畫面或關閉遊戲也會繼續。'+(plan.mode==='normal'?'普通卷不足時持續用金幣補購。':'祝福卷耗盡後停止，不補購。')+'達成目標、裝備破碎、資源不足或手動停止時結束。</p>':'');
+    (plan.background?'<p class="sw-risk">自動強化未達指定強化值前會持續進行；裝備破碎、資源不足或手動停止時才會提前結束。</p><p>約每 3 秒強化一次；離開畫面或關閉遊戲也會繼續。'+(plan.mode==='normal'?'普通卷不足時持續用金幣補購。':'祝福卷耗盡後停止，不補購。')+'達成目標、裝備破碎、資源不足或手動停止時結束。</p>':'');
   else details='<p>完整保留 '+plan.locks.length+' 條'+(plan.typeLocks.length?'；保留能力、重洗品質 '+plan.typeLocks.length+' 條':'')+'。</p>'+
     linesHtml(plan.lines,plan.locks,plan.typeLocks)+costHtml(plan)+
     '<p>未完整鎖定的數值可升可降；品階、元素、強化與遺物能力保留。</p>'+
     (plan.background?'<p>'+esc(plan.rule)+'</p><p>累計金幣上限：'+(plan.maxGold===null?'不設上限':fmt(plan.maxGold))+'。約每 3 秒重洗一次，離開遊戲仍會繼續。</p>':'')+
     (plan.reached?'<p class="sw-success">目前已符合目標。這次會記錄達標結果，不消耗材料。</p>':'');
   return '<section class="sw-confirm sw-card" data-sw-confirmation aria-label="確認工坊操作"><span class="sw-eyebrow">送出前確認</span><h3>'+esc(stop?'停止背景作業':plan.background?'開始背景'+(plan.kind==='enhance'?'強化':'洗鍊'):'本次'+(plan.kind==='enhance'?'強化':'洗鍊'))+'</h3><p class="sw-item-name">'+esc(plan.itemName)+'</p>'+details+
-    '<label class="sw-ack"><input type="checkbox" name="workshopAcknowledge" data-sw-ack '+(acknowledged?'checked ':'')+(busy?'disabled':'')+'><span>我已確認本次設定、消耗與結果規則</span></label>'+
-    '<footer class="sw-actions"><button type="button" class="sw-secondary" data-sw-cancel '+(busy?'disabled':'')+'>返回調整</button><button type="button" class="sw-primary" data-sw-confirm '+(!acknowledged||busy?'disabled':'')+'>'+(busy?'正在處理…':stop?'確認停止':plan.background?'確認開工':'確認執行一次')+'</button></footer></section>';
+    (autoEnhance?'':'<label class="sw-ack"><input type="checkbox" name="workshopAcknowledge" data-sw-ack '+(acknowledged?'checked ':'')+(busy?'disabled':'')+'><span>我已確認本次設定、消耗與結果規則</span></label>')+
+    '<footer class="sw-actions"><button type="button" class="sw-secondary" data-sw-cancel '+(busy?'disabled':'')+'>返回調整</button><button type="button" class="sw-primary" data-sw-confirm '+((!autoEnhance&&!acknowledged)||busy?'disabled':'')+'>'+(busy?'正在處理…':stop?'確認停止':plan.background?'確認開工':'確認執行一次')+'</button></footer></section>';
 }
 function resultHtml(result) {
   if(!result)return '';
@@ -454,8 +455,8 @@ function mount(root,host,options={}) {
     const cancel=root.querySelector('[data-sw-cancel]');if(cancel)cancel.onclick=()=>cancelPreview();
     const ack=root.querySelector('[data-sw-ack]');if(ack)ack.onchange=()=>{acknowledged=ack.checked;const button=root.querySelector('[data-sw-confirm]');if(button)button.disabled=!acknowledged||client.state.busy;};
     const confirm=root.querySelector('[data-sw-confirm]');if(confirm)confirm.onclick=()=>{
-      if(!acknowledged||ritual)return;const plan=client.state.preview,item=client.state.me?.equipment.find(e=>e.id===plan?.itemId);
-      if(!globalThis.RpgSceneRituals||!item||!['enhance','reroll'].includes(plan?.kind))return client.confirm(acknowledged);
+      const plan=client.state.preview;if((!acknowledged&&!(plan?.kind==='enhance'&&plan.background))||ritual)return;const item=client.state.me?.equipment.find(e=>e.id===plan?.itemId);
+      if(!globalThis.RpgSceneRituals||!item||!['enhance','reroll'].includes(plan?.kind))return client.confirm(acknowledged||(plan?.kind==='enhance'&&plan.background));
       const previous=client.state.result;ritual=globalThis.RpgSceneRituals.forge(root,{item,plan,icon:art(item),current:()=>!disposed&&client.current(),commit:async()=>{await client.confirm(true);return client.state.result!==previous?client.state.result:null;}});
       ritual.done.then(()=>{ritual=null;if(!disposed)paint();});
     };
