@@ -422,8 +422,8 @@
     }
     document.addEventListener('keydown',keydown);
     // /classic-next keeps the original Atlas refresh (30 s and on return) only while a 星圖派遣 run is active (owner t704u).
-    // /classic-next: during a run the visible battle frame's own Atlas sync drives updates; the page
-    // polls only when that frame is not syncing (other tab, paused, covered by a panel, or fallback).
+    // /classic-next: during a run the visible battle frame's own Atlas sync drives updates; the page
+    // polls only when that frame is not syncing (other tab, paused, covered by a panel, or fallback).
     const atlasLive=()=>!overlayOnly||running()&&host.frameSync?.()!==true;
     const visibility=()=>{if(!document.hidden&&validCharacter()&&atlasLive()){void refreshAll();if(!overlayOnly)void chatClient?.refresh();}};
     document.addEventListener('visibilitychange',visibility);
