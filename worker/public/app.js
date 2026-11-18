@@ -1274,7 +1274,7 @@
           starting=true;sync();ov.querySelectorAll('[data-f]').forEach(b=>b.disabled=true);res('auto');startAuto(ne,blessed,target).catch(err=>forgeFailure(ne,err.message));
         };
       }
-      ov.querySelectorAll('[data-f]').forEach((b) => { b.onclick = () => { ov.hidden = true; res(b.dataset.f);
+      ov.querySelectorAll('[data-f]').forEach((b) => { b.onclick = () => { window.RpgForgeRitual?.dispose?.(); ov.hidden = true; $('#app').inert=false; res(b.dataset.f);
       if (b.dataset.f === 'again' && ne) (kind === 'reroll' ? doReroll : guaranteed ? doGuaranteedEnhance : blessed ? doBlessedEnhance : doEnhance)(ne); else if (ne) itemSheet(ne.id); }; }); });
   }
   function sparks(ov, cols, n) {
